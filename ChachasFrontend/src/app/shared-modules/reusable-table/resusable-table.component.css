@@ -1,0 +1,35 @@
+.tablaContenedora{
+    width:100%;
+    height: 100%;
+    margin-left:-0.8%;
+    float: left;
+    overflow: scroll;
+}
+td, th {
+    font-family: 'open sans';
+    
+ }
+
+ th{
+     font-size: 140%;
+     text-align: center;
+ }
+
+ .letras{
+     font-size: 18px;
+     /*top: 40px;*/
+ }
+
+td button{
+    width: 90%;
+    height: 30px;
+    font-size:100%;
+    font-weight: bold;
+    background: rgba(241, 193, 35, 0.945);
+    color: #0a0a0c;
+    border-radius: 10px;
+    border: 1px;
+    line-height: 1px;
+    margin-left: 1px;
+    
+}
