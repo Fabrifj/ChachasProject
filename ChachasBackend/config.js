@@ -19,10 +19,10 @@ const db = firebase.firestore();
 
 // Obtener las colecciones necesarias
 const menu = db.collection("Menu");
-const producto = db.collection("Producto");
-const ingrediente = db.collection("Ingrediente");
-const sucursal = db.collection("Sucursal");
-const pedido = db.collection("Pedido");
+const product = db.collection("Producto");
+const ingredient = db.collection("Ingrediente");
+const subsidiary = db.collection("Sucursal");
+const order = db.collection("Pedido");
 
 
-module.exports = { firebase,producto,pedido,ingrediente,sucursal,menu};
+module.exports = { firebase,product,order,ingredient,subsidiary,menu};
