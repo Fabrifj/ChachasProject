@@ -23,6 +23,7 @@ npm init -y
 npm install express
 npm install nodemon
 npm install cors
+npm install firebase
 ```
 
 **Command to run the project**
