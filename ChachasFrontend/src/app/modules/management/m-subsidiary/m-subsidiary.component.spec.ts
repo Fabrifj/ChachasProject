@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubsidiaryComponent } from './subsidiary.component';
+import { MSubsidiaryComponent } from './m-subsidiary.component';
 
-describe('SubsidiaryComponent', () => {
-  let component: SubsidiaryComponent;
-  let fixture: ComponentFixture<SubsidiaryComponent>;
+describe('MSubsidiaryComponent', () => {
+  let component: MSubsidiaryComponent;
+  let fixture: ComponentFixture<MSubsidiaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubsidiaryComponent ]
+      declarations: [ MSubsidiaryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubsidiaryComponent);
+    fixture = TestBed.createComponent(MSubsidiaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
