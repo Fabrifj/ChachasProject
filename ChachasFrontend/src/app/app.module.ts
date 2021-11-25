@@ -16,6 +16,7 @@ import { ReusableTableComponent } from './shared-modules/reusable-table/resusabl
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +32,8 @@ import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsid
     ComSubMenuComponent,
     ModalComponent,
     ReusableTableComponent,
-    MSubsidiaryComponent
-
+    MSubsidiaryComponent,
+  
   ],
   imports: [
     BrowserModule,
