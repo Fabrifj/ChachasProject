@@ -1,11 +1,14 @@
 import { FactoryTarget } from '@angular/compiler';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdmiComponent } from './modules/admi/admi.component';
-import { FactoryComponent } from './modules/factory/factory.component';
+
+
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
-import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
+import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
+import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
+import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
+
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 
@@ -14,27 +17,24 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {
-    path: 'subsidiary', 
-    component: SubsidiaryComponent,
+    path: 'm-subsidiary', 
+    component: MSubsidiaryComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
-      {path: 'managment', component: ProducInventoryComponent},
+      
     ]
   },
   {
-    path: 'administration', 
-    component: AdmiComponent,
+    path: 'm-owner', 
+    component: MOwnerComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
-      {path: 'managment', component: ProducInventoryComponent},
+      
     ]
   },
   {
-    path: 'factory', 
-    component: FactoryComponent,
+    path: 'm-factory', 
+    component: MFactoryComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
-      {path: 'managment', component: ProducInventoryComponent},
+      
     ]
   },
 

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FactoryComponent } from './factory.component';
+import { MFactoryComponent } from './m-factory.component';
 
-describe('FactoryComponent', () => {
-  let component: FactoryComponent;
-  let fixture: ComponentFixture<FactoryComponent>;
+describe('MFactoryComponent', () => {
+  let component: MFactoryComponent;
+  let fixture: ComponentFixture<MFactoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FactoryComponent ]
+      declarations: [ MFactoryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FactoryComponent);
+    fixture = TestBed.createComponent(MFactoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
