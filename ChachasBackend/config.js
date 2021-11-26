@@ -1,5 +1,4 @@
 const firebase = require('firebase')
-const firestore = require('firebase/firestore')
 
 // Configuracion Firebase
 const firebaseConfig = {

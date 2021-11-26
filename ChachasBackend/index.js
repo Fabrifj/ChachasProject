@@ -28,7 +28,7 @@ app.delete('/api/product/:idproduct', async(req, res) => {
     res.send(response);
 })
 
-app.update('/api/product:idproduct', async(req, res) => {
+app.put('/api/product:idproduct', async(req, res) => {
     var productToUpdate = req.params.idproduct;
     var body = req.body;
     const response = await fnProduct.updateProduct(productToUpdate, body);
