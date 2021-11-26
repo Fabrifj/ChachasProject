@@ -1,15 +1,3 @@
-<!-- <div class="product-card">
-    <div class="product-image">
-        <span class="discount-tag">50% de descuento</span>
-        <img src="../imagenes/ford.jpeg" width="230" height="320" class="product-thumb" alt="">
-        <button class="card-btn"> agregar a favoritos</button>
-    </div>
-    <div class="product-info">
-        <h2 class="product-brand">FORD</h2>
-        <p class="product-short-des">2014 Ford Fusion Car.</p>
-        <span class="price">100Bs.</span> <span class="actual-price">200Bs.</span>
-    </div>
-</div> -->
 <div class="card mb-4 shadow-sm">
     <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.Image" />
   
@@ -20,12 +8,17 @@
         <!-- <i *ngIf="addedToWishlist" class="fas fa-heart float-right" (click)="handleRemoveFromWishlist()"></i>
         <i *ngIf="!addedToWishlist" class="far fa-heart float-right" (click)="handleAddToWishlist()"></i> -->
       </p>
-      <p class="card-text">{{ productItem.Description | slice: 0:80 }}...</p>
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-primary product-btn" (click)="AddToCart()">Add to
-            Cart</button>
-        </div>
-      </div>
+      <p class="card-text">{{ productItem.Description | slice: 0:80 }}</p>
+      <div class="row">
+        <form [formGroup]="checkoutForm" (ngSubmit)="AddToCart()">
+          <div class="col-md-5">
+              <input formControlName="unitsInput" class="form-control form-control-sm" type="number" placeholder="Units"/> 
+          </div>
+          <div class="col-md-4">
+              <div class="btn-group">
+                  <button type="submit" class="btn btn-sm btn-primary product-btn">Add to Cart</button>
+              </div>             
+          </div>
+        </form>
     </div>
   </div>

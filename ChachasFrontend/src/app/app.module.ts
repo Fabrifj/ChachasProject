@@ -17,6 +17,7 @@ import { ModalComponent } from './shared-modules/modal/modal.component';
 import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,9 +40,12 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule
   ],
+  exports:[CatalogCardComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
