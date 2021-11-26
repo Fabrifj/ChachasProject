@@ -1,41 +1,74 @@
-const express = require('express');
-const cors = require('cors');
+const {product} = require('./config');
 
-const app = express();
-const PORT = 4000;
+async function getAllProducts(){
+    const snapshot = await product.get();
+    const list = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+    }))
+    return list;
+}
 
-app.use(express.json());
-app.use(cors());
+async function createProduct(body){
+    await product.add(body);
+    return body;
+}
 
-const fnProduct = require('./product');
+async function deleteProduct(idproduct){
+    var res = null;
+    await product.doc(idproduct).delete().then((doc) => {
+        res ="deleted"
+    }).catch((error) => {
+        res = "Error deleting product"
+    });
+    return res;
+}
 
-// CRUD Product
-//Get
-app.get('/api/product', async(req, res) => {
-    const products = await fnProduct.getAllProducts();
-    res.send(products);
-})
+async function updateProduct(idproduct, body){
+    var res = null
+    await product.doc(idproduct).update(body).then(() => {
+        res = body;
+    }).catch((error) => {
+        res = "Error updating product"
+    });
+    return res;
+}
 
-app.post('/api/product', async(req, res) => {
-    var newproduct = req.body;
-    const response = await fnProduct.createProduct(newproduct);
-    res.send(response);
-})
+// get product by id
+async function getProductById(idproduct){
+    var res = null
+    await product.doc(idproduct).get().then((doc) => {
+        if (doc.exists) {
+            res = { id: doc.id, ...doc.data() }
+            console.log("Informacion de la compra:", doc.data());
+          } else {
+            respuesta = "La compra no existe";
+            console.log("La compra no existe");
+          }
+    }).catch((error) => {
+        res = "Error retrieving product"
+    });
+    return res;
+}
+// update inventory after sale
+async function updateProductAfterSale(idproduct, quantity){
+    var res = null
+    var productToUpdate = await getProductById(idproduct)
+    console.log(productToUpdate)
+    productToUpdate.CantidadInventario = parseInt (productToUpdate.CantidadInventario, 10) - quantity
+    await product.doc(idproduct).update(productToUpdate).then(() => {
+        res = productToUpdate;
+    }).catch((error) => {
+        res = "Error updating product"
+    });
+    return res;
+}
 
-app.delete('/api/product/:idproduct', async(req, res) => {
-    var productToDelete = req.params.idproduct;
-    const response = await fnProduct.deleteProduct(productToDelete);
-    res.send(response);
-})
-
-app.put('/api/product:idproduct', async(req, res) => {
-    var productToUpdate = req.params.idproduct;
-    var body = req.body;
-    const response = await fnProduct.updateProduct(productToUpdate, body);
-    res.send(response)
-})
-
-app.listen(
-    PORT,
-    () => console.log(`Its alive on http://localhost:${PORT}`)
-)
+module.exports = {
+    getAllProducts,
+    createProduct,
+    deleteProduct,
+    updateProduct,
+    getProductById,
+    updateProductAfterSale
+};
