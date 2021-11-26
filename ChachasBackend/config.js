@@ -1,14 +1,11 @@
-const firebase = require('firebase')
-
-// Configuracion Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBaYLt0HTHh6KMWc0bgXLwlkEcLhgr2dCM",
-    authDomain: "chachas-95493.firebaseapp.com",
-    projectId: "chachas-95493",
-    storageBucket: "chachas-95493.appspot.com",
-    messagingSenderId: "968365837839",
-    appId: "1:968365837839:web:73d090ad4b9d7544f29d7a"
-  };
+  apiKey: "AIzaSyBaYLt0HTHh6KMWc0bgXLwlkEcLhgr2dCM",
+  authDomain: "chachas-95493.firebaseapp.com",
+  projectId: "chachas-95493",
+  storageBucket: "chachas-95493.appspot.com",
+  messagingSenderId: "968365837839",
+  appId: "1:968365837839:web:73d090ad4b9d7544f29d7a"
+};
 
 
 // Inicializar Firebase
