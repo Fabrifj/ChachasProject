@@ -15,6 +15,8 @@ import { ModalComponent } from './shared-modules/modal/modal.component';
 import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
+import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsid
     ModalComponent,
     ReusableTableComponent,
     MSubsidiaryComponent,
+    MsInventaryComponent,
+    MfSubsidiaryComponent,
   
   ],
   imports: [
