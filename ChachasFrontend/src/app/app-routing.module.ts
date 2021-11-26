@@ -8,6 +8,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
+import {CatalogComponent} from './shared-modules/catalog/catalog.component'
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -37,7 +38,10 @@ const routes: Routes = [
       {path: 'managment', component: ProducInventoryComponent},
     ]
   },
-
+  {
+    path: 'catalog', 
+    component: CatalogComponent
+  },
 
 
 

@@ -1,3 +1,5 @@
 <div class="row">
-    <app-catalog-card></app-catalog-card>
+    <div class="col-md-4" *ngFor="let producEle of products">
+        <app-catalog-card [productItem]="producEle"></app-catalog-card>
+      </div>
 </div>

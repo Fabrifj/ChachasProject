@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {productModel} from '../../../models/product.model'
 
 @Component({
   selector: 'app-catalog-card',
@@ -9,7 +10,11 @@ export class CatalogCardComponent implements OnInit {
 
   constructor() { }
 
+  @Input() productItem!: productModel;
   ngOnInit(): void {
+  }
+  AddToCart(){
+    
   }
 
 }

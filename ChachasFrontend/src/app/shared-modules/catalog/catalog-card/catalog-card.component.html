@@ -1,4 +1,4 @@
-<div class="product-card">
+<!-- <div class="product-card">
     <div class="product-image">
         <span class="discount-tag">50% de descuento</span>
         <img src="../imagenes/ford.jpeg" width="230" height="320" class="product-thumb" alt="">
@@ -9,22 +9,22 @@
         <p class="product-short-des">2014 Ford Fusion Car.</p>
         <span class="price">100Bs.</span> <span class="actual-price">200Bs.</span>
     </div>
-</div>
+</div> -->
 <div class="card mb-4 shadow-sm">
-    <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.imageUrl" />
+    <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.Image" />
   
     <div class="card-body">
+      <h3 class="card-title">{{productItem.Name}}</h3>
       <p class="card-text">
-        <strong>{{ productItem.price | currency:'INR' }}</strong>
-        <i *ngIf="addedToWishlist" class="fas fa-heart float-right" (click)="handleRemoveFromWishlist()"></i>
-        <i *ngIf="!addedToWishlist" class="far fa-heart float-right" (click)="handleAddToWishlist()"></i>
+        <strong>{{ productItem.Price | currency:"BOB":"symbol" }}</strong>
+        <!-- <i *ngIf="addedToWishlist" class="fas fa-heart float-right" (click)="handleRemoveFromWishlist()"></i>
+        <i *ngIf="!addedToWishlist" class="far fa-heart float-right" (click)="handleAddToWishlist()"></i> -->
       </p>
-      <p class="card-text">{{ productItem.description | slice: 0:80 }}...</p>
+      <p class="card-text">{{ productItem.Description | slice: 0:80 }}...</p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-primary product-btn" (click)="handleAddToCart()">Add to
+          <button type="button" class="btn btn-sm btn-primary product-btn" (click)="AddToCart()">Add to
             Cart</button>
-          <button type="button" class="btn btn-sm btn-outline-secondary product-btn">View Details</button>
         </div>
       </div>
     </div>
