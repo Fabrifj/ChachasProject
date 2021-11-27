@@ -4,6 +4,10 @@
 
 ### Angular ###
 ## Angular ##
+.angular/
+/.angular
+/.angular/
+
 # compiled output
 dist/
 tmp/
