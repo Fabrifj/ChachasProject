@@ -1,19 +1,44 @@
-<h2>Detalle de compra</h2>
-<ul class="list-group">
-    <li *ngFor="let comp of productComponents" class="list-group-item justify-content-between align-items-center">
-        <h6>
-            {{comp.product.name}}
-            <span class="badge badge-info badge-pill">Cantidad: {{comp.product.quantity}}</span>
-        </h6>
-        <ng-container *ngIf="comp.edit; else notEditing">
-            <div class="form-group mx-sm-3 mb-2">
-                <input type="text" placeholder="Cantidad" #quantityInput>
-                <button class="btn btn-info btn-sm" (click)="acceptEditOfProductQuantity(comp, quantityInput.value)">Aceptar</button>
+<!-- <h2>Detalle de compra</h2> -->
+<div class="details-container">
+    <div class="details-heading"><h1>Detalle compra</h1></div>
+    <ul class="list-group">
+        <li *ngFor="let comp of productComponents" class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="wrapper">
+                <div class="sale-details">
+                    <div class="image-parent">
+                        <img [src]="comp.product.image" class="chachas-image">
+                        {{comp.product.name}}
+                        <span class="badge badge-info badge-pill">Cantidad: {{comp.product.quantity}}</span>
+                    </div>
+                    <ng-container *ngIf="comp.edit; else notEditing">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input type="text" placeholder="Cantidad" #quantityInput>
+                            <button class="btn btn-info btn-sm" (click)="acceptEditOfProductQuantity(comp, quantityInput.value)">Aceptar</button>
+                        </div>
+                    </ng-container>
+        
+                    <ng-template #notEditing>
+                        <button class="btn btn-info btn-sm" (click)="editProductQuantity(comp)">Editar cantidad</button>
+                    </ng-template>
+                </div>
+                <div class="product-info">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="badge badge-info badge-pill">
+                                Precio por unidad: {{comp.product.price}}
+                            </span>
+                            <span class="badge badge-info badge-pill">
+                                Precio total: {{comp.totalPrice}}
+                            </span>
+                        </li>
+                        <li>{{comp.product.description}}</li>
+                    </ul>
+                </div>
             </div>
-        </ng-container>
-
-        <ng-template #notEditing>
-            <button class="btn btn-info btn-sm" (click)="editProductQuantity(comp)">Editar cantidad</button>
-        </ng-template>
-    </li>
-</ul>
+        </li>
+        <div class="forwards-backwards-choice">
+            <button class="btn btn-info btn-sm" (click)="keepChoosing()">Seguir escogiendo</button>
+            <button class="btn btn-info btn-sm" (click)="acceptProductChoice()">Aceptar</button>
+        </div>
+    </ul>
+</div>
