@@ -1,0 +1,19 @@
+<h2>Detalle de compra</h2>
+<ul class="list-group">
+    <li *ngFor="let comp of productComponents" class="list-group-item justify-content-between align-items-center">
+        <h6>
+            {{comp.product.name}}
+            <span class="badge badge-info badge-pill">Cantidad: {{comp.product.quantity}}</span>
+        </h6>
+        <ng-container *ngIf="comp.edit; else notEditing">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" placeholder="Cantidad" #quantityInput>
+                <button class="btn btn-info btn-sm" (click)="acceptEditOfProductQuantity(comp, quantityInput.value)">Aceptar</button>
+            </div>
+        </ng-container>
+
+        <ng-template #notEditing>
+            <button class="btn btn-info btn-sm" (click)="editProductQuantity(comp)">Editar cantidad</button>
+        </ng-template>
+    </li>
+</ul>
