@@ -34,13 +34,13 @@ jobs:
       # Entrar al Frontend
       - name: Entrar a Frontend
         run: cd ChachasFrontend
-        
+      # Despues de CD chachasFE
+      - name: Donde estamos despues cd chachas FE
+        run: pwd
       # Runs a set of commands to build
       - name: Build
-        run: ng build --prod
-      # Despues del build
-      - name: Donde estamos despues del build
-        run: pwd
+        run: npm run build --prod
+      
       # sotre the artifact
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
