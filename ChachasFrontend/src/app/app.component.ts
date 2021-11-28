@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ChachasProject';
+  status: boolean = false;
+  clickEvent(){
+      this.status = !this.status;       
+  }
+
+  sideBarOpen = true;
+  ngOnInit() {}
+
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
+  }
 }
