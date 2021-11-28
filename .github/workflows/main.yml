@@ -34,8 +34,8 @@ jobs:
       #Entrar al Frontend
       #- name: Entrar a Frontend
       #  run: cd ChachasFrontend
-      - script: cd ChachasFrontend && pwd
-        displayName: 'npm build'
+      script: 
+      - cd ChachasFrontend && pwd
       # Despues de CD chachasFE
       - name: Donde estamos despues cd chachas FE
         run: pwd
