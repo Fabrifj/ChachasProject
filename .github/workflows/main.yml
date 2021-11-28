@@ -51,8 +51,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
       # build the app
+      #- name: Entrar a Frontend
+      #  run: cd ChachasFrontend
       - name: Build the app artifact for prod
-        run: cd ChachasFrontend
         run: npm run build --prod
       # ddeploy the app artifact to firebase
       - name: Deploy angular app to Firebase
