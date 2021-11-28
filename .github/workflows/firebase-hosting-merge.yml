@@ -11,7 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      # Install the dependencies need to build the app
+      - name: Install Dependencies from Frontend
+        working-directory: ./ChachasFrontend
+        run: npm install
+      # Install the dependencies need to build the app
+      - name: Install Dependencies from Backend
+        working-directory: ./ChachasBackend
+        run: npm install
+      - name: Build
+        working-directory: ./ChachasFrontend
+        run: npm run build --prod
+      
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
