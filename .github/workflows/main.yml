@@ -31,17 +31,17 @@ jobs:
       # Entrar al Frontend
       - name: Donde estamos
         run: pwd
-      # Entrar al Frontend
+      #Entrar al Frontend
       #- name: Entrar a Frontend
       #  run: cd ChachasFrontend
-      - script: cd ChachasFrontend && npm build --prod
+      - script: cd ChachasFrontend && pwd
         displayName: 'npm build'
       # Despues de CD chachasFE
       - name: Donde estamos despues cd chachas FE
         run: pwd
       # Runs a set of commands to build
-      #- name: Build
-      #  run: npm run build --prod
+      - name: Build
+        run: npm run build --prod
       
       # sotre the artifact
       - name: Archive Production Artifact
