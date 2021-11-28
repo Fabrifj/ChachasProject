@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CatalogComponent} from '../../shared-modules/catalog/catalog.component'
 
 @Component({
   selector: 'app-home',
