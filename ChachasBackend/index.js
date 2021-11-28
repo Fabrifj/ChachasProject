@@ -50,6 +50,13 @@ app.put('/api/product/:idproduct', async(req, res) => {
     res.send(response)
 })
 
+app.get('/api/product/subsidiary/:idSub/type/:type', async(req, res) => {
+    var idSub = req.params.idSub;
+    var type = req.params.type;
+    const response = await fnProduct.getProductSubsidiaryType(idSub, type);
+    res.send(response)
+})
+
 app.listen(
     PORT,
     () => console.log(`Its alive on http://localhost:${PORT}`)

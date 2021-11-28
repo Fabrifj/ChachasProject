@@ -64,11 +64,20 @@ async function updateProductAfterSale(idproduct, quantity){
     return res;
 }
 
+// Get a list of products froma certain subsidiary and type
+async function getProductSubsidiaryType(idSub, type){
+  const snapshot = await product.where('Origen', "==", idSub).where('Tipo', "==", type).get();
+  const list = snapshot.docs.map((doc) => ({id:doc.id, ...doc.data()}));
+  console.log(list);
+  return list;
+}
+
 module.exports = {
-    getAllProducts,
-    createProduct,
-    deleteProduct,
-    updateProduct,
-    getProductById,
-    updateProductAfterSale
+  getAllProducts,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  getProductById,
+  updateProductAfterSale,
+  getProductSubsidiaryType
 };
