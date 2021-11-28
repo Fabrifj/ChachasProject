@@ -34,6 +34,7 @@ jobs:
       # Entrar al Frontend
       - name: Entrar a Frontend
         run: cd ChachasFrontend
+        
       # Runs a set of commands to build
       - name: Build
         run: ng build --prod
