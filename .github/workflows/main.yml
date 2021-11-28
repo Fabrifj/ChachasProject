@@ -32,9 +32,9 @@ jobs:
       - name: Donde estamos
         run: pwd
       # Entrar al Frontend
-      - name: Entrar a Frontend
-        run: cd ChachasFrontend
-      - script: cd ./ChachasFrontend && npm build --prod
+      #- name: Entrar a Frontend
+      #  run: cd ChachasFrontend
+      - script: cd ChachasFrontend && npm build --prod
         displayName: 'npm build'
       # Despues de CD chachasFE
       - name: Donde estamos despues cd chachas FE
