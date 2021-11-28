@@ -28,6 +28,8 @@ jobs:
       # Runs a set of commands to build
       - name: Build
         run: cd ChachasFrontend
+      # Entrar al Frontend
+      - name: Entrar a Frontend
         run: npm run build --prod
       # sotre the artifact
       - name: Archive Production Artifact
