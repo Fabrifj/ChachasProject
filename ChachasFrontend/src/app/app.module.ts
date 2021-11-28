@@ -35,7 +35,6 @@ import { MatListModule } from '@angular/material/list';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +53,9 @@ import { FormsModule } from '@angular/forms';
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
+    HeaderComponent,
+    DashboardComponent,
+    SidenavComponent,
   
   ],
   imports: [
