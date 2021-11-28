@@ -28,11 +28,11 @@ jobs:
       # Install the dependencies need to build the app
       - name: Install Dependencies
         run: npm install
-      # Runs a set of commands to build
-      - name: Build
-        run: cd ChachasFrontend
       # Entrar al Frontend
       - name: Entrar a Frontend
+        run: cd ChachasFrontend
+      # Runs a set of commands to build
+      - name: Build
         run: npm run build --prod
       # sotre the artifact
       - name: Archive Production Artifact
