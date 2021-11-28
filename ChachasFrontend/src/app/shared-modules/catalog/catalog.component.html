@@ -1,1 +1,7 @@
-<p>catalog works!</p>
+<div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let producEle of products; let i = index">
+            <app-catalog-card [productItem]="producEle" [index]="i"></app-catalog-card>
+        </div>
+    </div>
+</div>
