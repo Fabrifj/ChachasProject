@@ -142,8 +142,8 @@ experimentIns =
   ];
 
   nameProdButtons: string[]= ["Registrar Merma"];
-  nameDrinkButtons: string[] = ["Aumentar Cantidad Refrescos"];
-  nameInsButtons: string[] = ["Aumentar Cantidad Insumos"];
+  nameDrinkButtons: string[] = ["Registrar Compra"];
+  nameInsButtons: string[] = ["Registrar Consumo Insumo"];
   constructor(public modalService:ModalService) { }
 
   ngOnInit(): void {
@@ -192,11 +192,11 @@ experimentIns =
         this.modalService.abrir("modalMerma-01");
 
     }
-    else if (response[0] == "Aumentar Cantidad Refrescos")
+    else if (response[0] == "Registrar Compra")
     {
       this.modalService.abrir("modalStock-01");
     }
-    else if (response[0] == "Aumentar Cantidad Insumos")
+    else if (response[0] == "Registrar Consumo Insumo")
     {
       this.modalService.abrir("modalIns-01");
     }

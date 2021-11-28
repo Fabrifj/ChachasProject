@@ -39,23 +39,26 @@
 
     <div class="buttonsSection">
         <hr />
-        <button style="margin: 50px; padding: 10px" type="button" class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
-        <button style="margin: 50px; padding: 10px" type="button" class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+        <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
+        <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+        <button class="btn" >Agregar a stock</button>
     </div>
 
 </div>
 
-
-<jw-modal id="modalTransaction-01" altura="80" >
+<!--   boton realizar transaccion -->
+<jw-modal id="modalTransaction-01" altura="80" ancho="80">
     
     <h1>Modal Transaccion:</h1>
    
-    <app-reusable-table
+    <div class="miniTable">
+        <app-reusable-table
         [datos]="infoProd" 
         [columnas]="columnsProdTransaction" 
         colorLetra="black"
-        >
+        altura="50">
         </app-reusable-table>
+    </div>
     
     <div class="botones">
         <button class="btnSend" (click)="modalService.abrir('modalConfirmation');">Mandar</button>
@@ -64,10 +67,9 @@
  </jw-modal>
 
 
-
-<jw-modal id="modalMerma-01" altura="60" >
-    <h1>merma</h1>
-   
+<!--   boton reagistrar merma -->
+<jw-modal id="modalMerma-01" altura="50" ancho="80" >
+    
     
     
     <div class="botones">
@@ -77,19 +79,33 @@
  </jw-modal>
 
 
- <jw-modal id="modalStock-01" altura="60" >
-    <h1>stock</h1>
-   
+ 
+<!--   boton modificar stock -->
+ <jw-modal id="modalStock-01" altura="70" ancho="90" >
     
-    
-    <div class="botones">
-
-       <button class="btnCerrar" (click)="modalService.cerrar('modalStock-01');">Cancelar</button>
+    <div class="modal-header">
+        <h4 class="modal-title">Comprar Producto</h4>
     </div>
+    <div class="modal-body">
+        <p>Producto Seleccionado</p>
+        <input type="text" placeholder="Ingrese Cantidad">
+    </div>
+
+    <div class="modal-footer">
+        
+        <div class="botones">
+            <button class="btnSend">registrar</button>
+           <button class="btnCerrar" (click)="modalService.cerrar('modalStock-01');">Cancelar</button>
+        </div>
+    </div>
+    
+    
  </jw-modal>
 
 
- <jw-modal id="modalIns-01" altura="60" >
+ 
+<!--   boton registrar uso salsas  -->
+ <jw-modal id="modalIns-01" altura="70" ancho="90" >
     <h1>insumos</h1>
    
     
@@ -102,14 +118,19 @@
 
 
 
- <jw-modal id="modalSubsidiaries-01" altura="80" >
+<!--   boton ver sucursales -->
+ <jw-modal id="modalSubsidiaries-01" altura="60" ancho="80" >
     <h1>Subsidiaries:</h1>
    
-    <app-reusable-table
-    [datos]="infoProd" 
-    [columnas]="columnsProdTransaction" 
-    colorLetra="black">
-    </app-reusable-table>
+    <div class="miniTable">
+        <app-reusable-table
+        [datos]="infoProd" 
+        [columnas]="columnsProdTransaction" 
+        colorLetra="black"
+        altura="50">
+        </app-reusable-table>
+    </div>
+   
     
     <div class="botones">
 
@@ -117,13 +138,14 @@
     </div>
  </jw-modal>
 
- <jw-modal id="modalConfirmation" altura="80" >
-    <h1>Confirmacion:</h1>
+
+ <!--   boton confirmar accion  -->
+ <jw-modal id="modalConfirmation" altura="50" ancho="70" >
    
-    <h2>Esta seguro que desea realizar la transaccion?</h2>
+    <h3>Esta seguro que desea realizar la transaccion?</h3>
     
     <div class="botones">
-        <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');">OK</button>
+        <button class="btnSend" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');">OK</button>
        <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');">Cancelar</button>
     </div>
  </jw-modal>
