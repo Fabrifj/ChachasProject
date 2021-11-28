@@ -7,6 +7,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
+import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 
 const routes: Routes = [
@@ -37,10 +38,10 @@ const routes: Routes = [
       {path: 'managment', component: ProducInventoryComponent},
     ]
   },
-
-
-
-
+  {
+    path: 'details', 
+    component: DisplayOrderInfoComponent
+  }
 ];
 
 @NgModule({

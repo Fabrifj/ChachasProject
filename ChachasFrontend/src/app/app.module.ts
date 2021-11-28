@@ -16,6 +16,7 @@ import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-me
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
+import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -36,6 +37,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ComSubMenuComponent,
     ModalComponent,
     ReusableTableComponent,
+    DisplayOrderInfoComponent
     CatalogCardComponent
 
   ],
