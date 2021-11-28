@@ -27,13 +27,14 @@ jobs:
         run: npm install
       # Runs a set of commands to build
       - name: Build
+        run: cd ChachasFrontend
         run: npm run build --prod
       # sotre the artifact
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
-          name: PruebaAngular4
-          path: ./dist/PruebaAngular4
+          name: ChachasProject
+          path: ./ChachasFrontend/dist/ChachasProject
   # deploy job   
   deploy:
     name: Deploy to firebase
@@ -51,6 +52,7 @@ jobs:
         run: npm install
       # build the app
       - name: Build the app artifact for prod
+        run: cd ChachasFrontend
         run: npm run build --prod
       # ddeploy the app artifact to firebase
       - name: Deploy angular app to Firebase
