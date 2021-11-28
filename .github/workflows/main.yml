@@ -33,7 +33,7 @@ jobs:
         run: pwd
       # Entrar al Frontend
       - name: Entrar a Frontend
-        run: cd .\\ChachasProject\\ChachasFrontend\\
+        run: cd .\\ChachasFrontend\\
       # Runs a set of commands to build
       - name: Build
         run: npm run build --prod
