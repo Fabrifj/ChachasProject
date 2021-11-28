@@ -10,7 +10,7 @@ jw-modal .jw-modal {
     z-index: 1000;
     overflow: auto;
     padding: 20px;
-    background: url(https://st.depositphotos.com/3470617/4920/v/950/depositphotos_49203401-stock-illustration-pizza-background.jpg);
+    background-color:#dcc865; 
     background-size: cover;
     margin: 40px;
     width: 60%;

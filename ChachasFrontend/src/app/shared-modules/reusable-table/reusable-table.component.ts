@@ -2,9 +2,9 @@ import { Component, OnInit,OnChanges,Input, Output, EventEmitter } from '@angula
 import { ReusableTableService } from './reusable-table-service';
 
 @Component({
-  selector: 'app-resusable-table',
-  templateUrl: './resusable-table.component.html',
-  styleUrls: ['./resusable-table.component.css']
+  selector: 'app-reusable-table',
+  templateUrl: './reusable-table.component.html',
+  styleUrls: ['./reusable-table.component.css']
 })
 export class ReusableTableComponent implements OnInit {
 
