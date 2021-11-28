@@ -4,9 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { CatalogComponent } from './shared-modules/catalog/catalog.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
-import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
-import { FactoryComponent } from './modules/factory/factory.component';
-import { AdmiComponent } from './modules/admi/admi.component';
 import { LoginComponent } from './modules/login/login.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
 import { FooterComponent } from './modules/footer/footer.component';
@@ -15,6 +12,10 @@ import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-me
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
+import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
+import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,9 +42,7 @@ import { FormsModule } from '@angular/forms';
     CatalogComponent,
     SalesComponent,
     HomeComponent,
-    SubsidiaryComponent,
-    FactoryComponent,
-    AdmiComponent,
+  
     LoginComponent,
     NavbarComponent,
     FooterComponent,
@@ -52,10 +51,10 @@ import { FormsModule } from '@angular/forms';
     ComSubMenuComponent,
     ModalComponent,
     ReusableTableComponent,
-    HeaderComponent,
-    SidenavComponent,
-    DashboardComponent,
-
+    MSubsidiaryComponent,
+    MsInventaryComponent,
+    MfSubsidiaryComponent,
+  
   ],
   imports: [
     BrowserModule,

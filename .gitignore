@@ -4,6 +4,10 @@
 
 ### Angular ###
 ## Angular ##
+.angular/
+/.angular
+/.angular/
+
 # compiled output
 dist/
 tmp/
@@ -32,6 +36,9 @@ e2e/*.map
 
 # System Files
 .DS_Store/
+
+#Added by team
+.angular/
 
 ### Node ###
 # Logs
