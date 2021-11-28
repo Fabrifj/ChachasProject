@@ -13,6 +13,8 @@ jobs:
     name: Build
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -26,23 +28,17 @@ jobs:
       - name: npm init
         run: npm init -y
       # Install the dependencies need to build the app
-      - name: Install Dependencies
+      - name: Install Dependencies from Frontend
+        working-directory: ./ChachasFrontend
         run: npm install
-      # Entrar al Frontend
-      - name: Donde estamos
-        run: pwd
-      #Entrar al Frontend
-      #- name: Entrar a Frontend
-      #  run: cd ChachasFrontend
-      script: 
-      - cd ChachasFrontend && pwd
-      # Despues de CD chachasFE
-      - name: Donde estamos despues cd chachas FE
-        run: pwd
+      # Install the dependencies need to build the app
+      - name: Install Dependencies from Backend
+        working-directory: ./ChachasBackend
+        run: npm install
       # Runs a set of commands to build
       - name: Build
+        working-directory: ./ChachasFrontend
         run: npm run build --prod
-      
       # sotre the artifact
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
@@ -63,11 +59,13 @@ jobs:
           node-version: '12.x'
       # Install the dependencies need to build the app
       - name: Install Dependencies
+        working-directory: ./ChachasFrontend
         run: npm install
       # build the app
       #- name: Entrar a Frontend
       #  run: cd ChachasFrontend
       - name: Build the app artifact for prod
+        working-directory: ./ChachasFrontend
         run: npm run build --prod
       # ddeploy the app artifact to firebase
       - name: Deploy angular app to Firebase
