@@ -10,7 +10,7 @@ import { FooterComponent } from './modules/footer/footer.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-menu.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
-import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
+import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
@@ -55,10 +55,11 @@ import { SidenavComponent } from './modules/sidenav/sidenav.component';
     ListSubMenuComponent,
     ComSubMenuComponent,
     ModalComponent,
-    ReusableTableComponent,
+    
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
+    ReusableTableComponent
   
   ],
   imports: [

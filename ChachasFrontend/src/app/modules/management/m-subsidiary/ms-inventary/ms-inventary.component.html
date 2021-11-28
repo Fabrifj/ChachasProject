@@ -1,1 +1,129 @@
-<p>ms-inventary works!</p>
+<div class="inventarySection">
+    <div class="drinkSection">
+        <app-reusable-table
+            [datos]="infoDri" 
+            [columnas]="columnsDri" 
+            colorLetra="black"
+            [nombreBotones]="nameDrinkButtons"
+            (parentMethod)="functionChooseObj($event)"
+        >
+        </app-reusable-table>
+    
+    </div>
+    
+    <div class="sauceSection">
+        <app-reusable-table
+            [datos]="infoIns" 
+            [columnas]="columnsIns" 
+            colorLetra="black"
+            [nombreBotones]="nameInsButtons"
+            (parentMethod)="functionChooseObj($event)">
+            
+        </app-reusable-table>
+    
+    
+    </div>
+    
+    <div class="productSection">
+        <app-reusable-table
+        [datos]="infoProd" 
+        [columnas]="columnsProd" 
+        colorLetra="black"
+        [nombreBotones]="nameProdButtons"
+        (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+    
+    </div>
+    
+    
+
+    <div class="buttonsSection">
+        <hr />
+        <button style="margin: 50px; padding: 10px" type="button" class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
+        <button style="margin: 50px; padding: 10px" type="button" class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+    </div>
+
+</div>
+
+
+<jw-modal id="modalTransaction-01" altura="80" >
+    
+    <h1>Modal Transaccion:</h1>
+   
+    <app-reusable-table
+        [datos]="infoProd" 
+        [columnas]="columnsProdTransaction" 
+        colorLetra="black"
+        >
+        </app-reusable-table>
+    
+    <div class="botones">
+        <button class="btnSend" (click)="modalService.abrir('modalConfirmation');">Mandar</button>
+       <button class="btnCerrar" (click)="modalService.cerrar('modalTransaction-01');">Cancelar</button>
+    </div>
+ </jw-modal>
+
+
+
+<jw-modal id="modalMerma-01" altura="60" >
+    <h1>merma</h1>
+   
+    
+    
+    <div class="botones">
+
+       <button class="btnCerrar" (click)="modalService.cerrar('modalMerma-01');">Cancelar</button>
+    </div>
+ </jw-modal>
+
+
+ <jw-modal id="modalStock-01" altura="60" >
+    <h1>stock</h1>
+   
+    
+    
+    <div class="botones">
+
+       <button class="btnCerrar" (click)="modalService.cerrar('modalStock-01');">Cancelar</button>
+    </div>
+ </jw-modal>
+
+
+ <jw-modal id="modalIns-01" altura="60" >
+    <h1>insumos</h1>
+   
+    
+    
+    <div class="botones">
+
+       <button class="btnCerrar" (click)="modalService.cerrar('modalIns-01');">Cancelar</button>
+    </div>
+ </jw-modal>
+
+
+
+ <jw-modal id="modalSubsidiaries-01" altura="80" >
+    <h1>Subsidiaries:</h1>
+   
+    <app-reusable-table
+    [datos]="infoProd" 
+    [columnas]="columnsProdTransaction" 
+    colorLetra="black">
+    </app-reusable-table>
+    
+    <div class="botones">
+
+       <button class="btnCerrar" (click)="modalService.cerrar('modalSubsidiaries-01');">Cerrar</button>
+    </div>
+ </jw-modal>
+
+ <jw-modal id="modalConfirmation" altura="80" >
+    <h1>Confirmacion:</h1>
+   
+    <h2>Esta seguro que desea realizar la transaccion?</h2>
+    
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');">OK</button>
+       <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');">Cancelar</button>
+    </div>
+ </jw-modal>
