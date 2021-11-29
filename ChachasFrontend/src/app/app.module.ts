@@ -19,6 +19,7 @@ import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +38,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ComSubMenuComponent,
     ModalComponent,
     ReusableTableComponent,
-    DisplayOrderInfoComponent
-    CatalogCardComponent
+    DisplayOrderInfoComponent,
+    CatalogCardComponent,
+    ClientInfoComponent
 
   ],
   imports: [
