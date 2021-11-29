@@ -10,7 +10,7 @@ import { FooterComponent } from './modules/footer/footer.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-menu.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
-import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
+import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
@@ -19,11 +19,11 @@ import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidi
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './modules/header/header.component';
+
 import { HomeComponent } from './modules/home/home.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SidenavComponent } from './modules/sidenav/sidenav.component';
+
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -32,8 +32,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
+
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './modules/header/header.component';
+import { SidenavComponent } from './modules/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -41,21 +45,20 @@ import { FormsModule } from '@angular/forms';
     CatalogComponent,
     SalesComponent,
     HomeComponent,
-  
+    HeaderComponent,
     LoginComponent,
     NavbarComponent,
+    SidenavComponent,
     FooterComponent,
     ProducInventoryComponent,
     ListSubMenuComponent,
     ComSubMenuComponent,
     ModalComponent,
-    ReusableTableComponent,
+    
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
-    HeaderComponent,
-    DashboardComponent,
-    SidenavComponent,
+    ReusableTableComponent
   
   ],
   imports: [

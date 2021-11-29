@@ -1,0 +1,45 @@
+
+<div class="tablaContenedora">
+    <table class="table table-bordered  ">
+        <thead>
+            <tr>
+                
+                <th *ngFor="let nombreTexoC of titulosTextos">{{nombreTexoC}}</th>
+                <th *ngFor="let nombrecolumna of columnas">{{nombrecolumna.header}}</th>
+                
+            </tr>
+
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let dato of datos;let i = index" >
+
+                
+                <td *ngFor="let nombreTexoC of titulosTextos; let j = index  ">
+
+                    <input type="text" id="{{'textoCantidad' + i + j}}" (keyup)="guardarDT()" (ngModelChange)="guardarDT()" value="0">
+                </td>
+
+                <td *ngFor= "let nombrecolumna of columnas">
+                    <span class="letras"> {{dato[nombrecolumna.field]}}</span>
+                    
+                </td>
+
+                <td *ngFor= "let boton of nombreBotones">
+                    <button 
+                    class="botones" 
+                    (click)="botonPresionado(boton,dato)">
+                        
+                        {{boton}}</button> 
+                    
+                </td>
+                
+                
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    
+</div>

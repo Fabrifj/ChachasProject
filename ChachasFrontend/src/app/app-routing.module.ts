@@ -19,10 +19,9 @@ import { ModalComponent } from './shared-modules/modal/modal.component';
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
-  {path: 'dashboard', component: DashboardComponent},
   {path: 'login', component: LoginComponent},
   {path: 'modal', component: ModalComponent},
-  {path: '**', pathMatch: 'full', redirectTo: 'modal'},
+ // {path: '**', pathMatch: 'full', redirectTo: 'modal'},
   {
     path: 'm-subsidiary', 
     component: MSubsidiaryComponent,

@@ -57,7 +57,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     // open modal
     abrir(): void {
          //cambiar altura
-         console.log("altura:" + this.altura);
+         
          var altura = this.altura + "%";
          const elem = document.getElementsByClassName('jw-modal');
          for (let i =0 ; i< elem.length ; i++){
@@ -70,7 +70,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
 
          //cambiar ancho
-         console.log("altura:" + this.ancho);
+         
          var ancho = this.ancho + "%";
          const elem2 = document.getElementsByClassName('jw-modal');
          for (let i =0 ; i< elem2.length ; i++){
