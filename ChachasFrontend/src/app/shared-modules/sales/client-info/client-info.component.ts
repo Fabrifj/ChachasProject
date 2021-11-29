@@ -18,7 +18,9 @@ export class ClientInfoComponent implements OnInit {
             name: ['', Validators.required],
             lastName: ['', Validators.required],
             email: ['', Validators.compose([Validators.email, Validators.required])],
-            number: ['', Validators.required]
+            nit: ['', Validators.required],
+            number: ['', Validators.required],
+            
         })
     }
 
@@ -27,7 +29,7 @@ export class ClientInfoComponent implements OnInit {
     sendData(values: any){
         console.log(values)
     }
-    
+
   ngOnInit(): void {
   }
 
