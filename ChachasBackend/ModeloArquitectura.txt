@@ -73,7 +73,11 @@ Sucursal
 	"Id":"jhijborhibibo",
 	"Nombre":"",
 	"Direccion":"",//
-	"Localizacion":"",//Es el punto geografico con latitud y longitud
+	"Localizacion":
+    {
+        "Longitud":"-16.505606488907098"
+        "Latitud":"-68.1637419498145"
+    },//Es el punto geografico con latitud y longitud
 	"Telefono":
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
 }
@@ -129,6 +133,17 @@ Pedido:
 	"IdSucursal":"",
 }
 =========================================================================
+Empleado:
+{
+    "Cuenta":"Stephany123",
+    "Password":"Pass123",
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
+    "Nombre":"Stephany",
+    "ApellidoP":"Duran",
+    "ApellidoM":"Borda",
+    "CI":"6793482",
+    "Cargo":"Chef",
+}
 
 
 
