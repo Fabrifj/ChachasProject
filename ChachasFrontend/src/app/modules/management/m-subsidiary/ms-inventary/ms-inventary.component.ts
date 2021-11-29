@@ -179,8 +179,6 @@ experimentIns =
   }
 
 
-
-
   //function register merma
   functionChooseObj(response:any){
     this.selectedObject = response[1];
