@@ -24,6 +24,7 @@ Producto
 	],
 	"Costo":7,
 	"CantidadInventario":500,
+    "CantidadMinima":
 },
 
 {
@@ -36,27 +37,42 @@ Producto
 	"Cantidad":16,
 	"Mermas":
 	[
-		
-	]
+        
+	],
+    "CantidadMinima":
 },
+
 {
 	"Id":"BCHEBCOOkkkBDOH",
-	"Tipo":"Refresco"
+	"Tipo":"Refresco" //Puede ser refresco o aceite
 	"Nombre":"Coca-Cola" 
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,
 	"Precio":13,
-	"Cantidad":20
+	"Cantidad":20,
+    "CantidadMinima":
 },
 {
 	"Id":"BCHEBCOOkkkBDOH",
-	"Tipo":"Ingrediente"  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-	"Nombre":"Aceite"
+	"Tipo":"InsumoSucursal" //Estos se compra la sucursal
+	"Nombre":"Aceite" 
+	"Origen": "ID-SUCURSAL",
+	"Costo":10,
+	"CantidadInventario":1600,
+	"CantidadMedida":900,
+	"TipoUnidad":"ml",
+    "CantidadMinima":
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"InsumoFabrica"  //Estos se proveen de la fabrica
+	"Nombre":"Salsa Picante"
 	"Origen": "ID-SUCURSAL",
 	"Costo":7,
-	"CantidadInventario":1600
+	"CantidadInventario":1600,
 	"CantidadMedida":900,
-	"TipoUnidad":"ml"
+	"TipoUnidad":"ml",
+    "CantidadMinima":
 }
 =========================================================================
 
@@ -133,9 +149,9 @@ Pedido:
 	"IdSucursal":"",
 }
 =========================================================================
-Empleado:
+Empleado://Todavia falta discutirlo, esta sujeto a cambios
 {
-    "Cuenta":"Stephany123",
+    "Cuenta":"Stephany123",//Estamos pensando que la cuenta puede ser el ID, y que la cuenta igual podria ser el CI directamente
     "Password":"Pass123",
     "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
     "Nombre":"Stephany",
@@ -144,6 +160,28 @@ Empleado:
     "CI":"6793482",
     "Cargo":"Chef",
 }
-
+=========================================================================
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",
+	"Costo":200,
+	"Cantidad":10,
+	"Origen":"ID-SUCURSAL",
+},
+//Esta solo es para el tipo InsumoSucursal
+{
+	"Id":"",
+	"Tipo":"InsumoSucursal"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",//Pertenece al id del Aceite, en este ejemplo
+	"Costo":200,
+	"CantidadMedida":900, //Esta medida debe basarse en el tipo medida del producto, ej, el aceite se mide en ml, por lo que aqui son 900 ml
+	"Origen":"ID-SUCURSAL",
+}
+=========================================================================
 
 
