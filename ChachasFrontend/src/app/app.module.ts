@@ -42,8 +42,8 @@ import { AppHttpService } from './core-modules/app-http.service';
     ModalComponent,
     ReusableTableComponent,
     DisplayOrderInfoComponent,
-    CatalogCardComponent
-
+    CatalogCardComponent,
+    ClientInfoComponent
   ],
   imports: [
     FormsModule,

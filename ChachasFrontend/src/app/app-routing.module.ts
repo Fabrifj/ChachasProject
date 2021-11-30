@@ -9,6 +9,7 @@ import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
 import { CatalogComponent } from './shared-modules/catalog/catalog.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
+import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 
@@ -28,6 +29,8 @@ const routes: Routes = [
           {path: '', redirectTo: 'catalog', pathMatch: 'full'},
           {path: 'catalog', component: CatalogComponent},
           {path: 'display-order', component: DisplayOrderInfoComponent},
+          {path: 'client-info', component: ClientInfoComponent},
+
 
         ]
       },

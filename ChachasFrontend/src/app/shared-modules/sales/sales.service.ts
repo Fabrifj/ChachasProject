@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ProductModel } from 'src/app/models/product.model';
 import { ProductToPurchaseModel } from 'src/app/models/productToPurchase.model';
-import { PurchaseModel } from 'src/app/models/purchase.model';
+import { ClientInfoModel, DirectionModel, PurchaseModel } from 'src/app/models/purchase.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,8 +49,11 @@ export class SalesService {
 
   }
   // send the puchase to a http service to do a post 
-  makePurchase(){
-
+  makePurchase(clientInfo: ClientInfoModel | any){
+    let date: Date = new Date(); 
+    let dire: DirectionModel= new DirectionModel("Sucursal");  
+    let purchase:PurchaseModel = {Direction:dire, PurchaseDetail:this.productsToPurchase, ClientInfo:clientInfo, Date:date }
+    console.log(purchase)
   }
   
 }
