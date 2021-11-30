@@ -1,14 +1,14 @@
 const { subsidiary, firebase } = require('./config');
+const fnHerramientas = require("./herramientas");
 
-async function getSubsidiaries(){
-    const snapshot = await subsidiary.get();
-    const lista = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data()
-    }))
-    return lista;
-  }
-
+async function getSubsidiaries()
+{
+    return fnHerramientas.getDocs("Sucursal");
+}
+async function getSubsidiary(idSubsidiary)
+{
+    return fnHerramientas.getDoc(idSubsidiary,"Sucursal");
+}
 //CrearCategoria
 /**
  * 
@@ -41,8 +41,20 @@ async function createSubsidiary(body){
     return respuesta;
   }
 
+async function updateSubsidiary(idSubsidiary, body)
+{
+    return fnHerramientas.updateDoc(idSubsidiary,body,"Sucursal");
+}
+async function deleteSubsidiary(idSubsidiary)
+{
+    return fnHerramientas.deleteDoc(idSubsidiary,"Sucursal");
+}
+
 
   module.exports = {
     getSubsidiaries,
-    createSubsidiary
+    createSubsidiary,
+    deleteSubsidiary,
+    updateSubsidiary,
+    getSubsidiary
   };
