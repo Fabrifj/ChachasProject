@@ -24,7 +24,7 @@ Producto
 	],
 	"Costo":7,
 	"CantidadInventario":500,
-    "CantidadMinima":
+  "CantidadMinima":
 },
 
 {
@@ -39,7 +39,7 @@ Producto
 	[
         
 	],
-    "CantidadMinima":
+  "CantidadMinima":
 },
 
 {
@@ -50,7 +50,7 @@ Producto
 	"Costo":10,
 	"Precio":13,
 	"Cantidad":20,
-    "CantidadMinima":
+  "CantidadMinima":
 },
 {
 	"Id":"BCHEBCOOkkkBDOH",
@@ -61,7 +61,7 @@ Producto
 	"CantidadInventario":1600,
 	"CantidadMedida":900,
 	"TipoUnidad":"ml",
-    "CantidadMinima":
+  "CantidadMinima":
 },
 {
 	"Id":"BCHEBCOOkkkBDOH",
@@ -72,7 +72,7 @@ Producto
 	"CantidadInventario":1600,
 	"CantidadMedida":900,
 	"TipoUnidad":"ml",
-    "CantidadMinima":
+  "CantidadMinima":
 }
 =========================================================================
 
