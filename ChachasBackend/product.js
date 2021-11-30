@@ -92,6 +92,16 @@ async function getProductSubsidiaryType(idSub, type) {
   return list;
 }
 
+// Get a list of products froma certain subsidiary 
+async function getProductSubsidiary(idSub) {
+  const snapshot = await product
+    .where("Origen", "==", idSub)
+    .get();
+  const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  console.log(list);
+  return list;
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -100,4 +110,5 @@ module.exports = {
   getProductById,
   updateProductAfterSale,
   getProductSubsidiaryType,
+  getProductSubsidiary 
 };

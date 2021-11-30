@@ -60,6 +60,12 @@ app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
   const response = await fnProduct.getProductSubsidiaryType(idSub, type);
   res.send(response);
 });
+//Get all products in subsidiary
+app.get("/api/product/subsidiary/:idSub", async (req, res) => {
+  var idSub = req.params.idSub;
+  const response = await fnProduct.getProductSubsidiary(idSub);
+  res.send(response);
+});
 
 // CRUD Orders
 
