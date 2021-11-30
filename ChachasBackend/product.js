@@ -53,7 +53,6 @@ async function getProductById(idproduct) {
         res = { id: doc.id, ...doc.data() };
         console.log("Informacion de la compra:", doc.data());
       } else {
-        respuesta = "La compra no existe";
         console.log("La compra no existe");
       }
     })
@@ -89,7 +88,11 @@ async function getProductSubsidiaryType(idSub, type) {
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   console.log(list);
-  return list;
+  if(list.length == 0){
+    return null;
+  }else{
+    return list;
+  }
 }
 
 // Get a list of products froma certain subsidiary 

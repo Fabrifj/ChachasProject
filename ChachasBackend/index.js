@@ -54,6 +54,7 @@ app.put("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+// Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
   var idSub = req.params.idSub;
   var type = req.params.type;
@@ -65,6 +66,20 @@ app.get("/api/product/subsidiary/:idSub", async (req, res) => {
   var idSub = req.params.idSub;
   const response = await fnProduct.getProductSubsidiary(idSub);
   res.send(response);
+});
+
+//Endpoint to get all the products of type "Chacha" and "Refresco"
+app.get("/api/product/ChachaRefresco/:idSub", async (req ,res) => {
+  var idSub = req.params.idSub;
+  var respuesta;
+  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+  var refrescos = await fnProduct.getProductSubsidiaryType(idSub, "Refresco");
+  if (chachas == null || refrescos == null){
+    respuesta = null;
+  }else{
+    respuesta = chachas.concat(refrescos);
+  }
+  res.send(respuesta);
 });
 
 // CRUD Orders
