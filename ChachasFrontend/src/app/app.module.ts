@@ -16,10 +16,13 @@ import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-me
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { ReusableTableComponent } from './shared-modules/reusable-table/resusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
+import { CommonModule } from '@angular/common';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AppHttpService } from './core-modules/app-http.service';
 
 @NgModule({
   declarations: [
@@ -39,15 +42,17 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
     ModalComponent,
     ReusableTableComponent,
     DisplayOrderInfoComponent,
-    CatalogCardComponent,
-    ClientInfoComponent
+    CatalogCardComponent
 
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule
   ],
   exports:[CatalogCardComponent],
   providers: [],

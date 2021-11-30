@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {productModel} from '../../models/product.model'
+import {ProductModel} from '../../models/product.model'
+import { SalesService } from '../sales/sales.service';
 
 @Component({
   selector: 'app-catalog',
@@ -8,15 +9,10 @@ import {productModel} from '../../models/product.model'
 })
 export class CatalogComponent implements OnInit {
 
-  constructor() { }
-  products: productModel[]=[]
+  constructor( private salesService: SalesService) { }
+  products: ProductModel[]=[]
   ngOnInit(): void {
-    this.products = [{Name:"empa",Price:15,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"},
-                      {Name:"empa",Price:16,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"},
-                      {Name:"empa",Price:14,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"},
-                      {Name:"empa",Price:16,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"},
-                      {Name:"empa",Price:15,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"},
-                      {Name:"empa",Price:15,Image:"https://bit.ly/3HYcNx2",Description:"Carne, queso y huevo"}]
+    this.products = this.salesService.getProductList()
   }
 
 }

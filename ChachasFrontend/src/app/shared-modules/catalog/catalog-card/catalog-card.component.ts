@@ -1,6 +1,7 @@
 import { Component,  OnInit, Input } from '@angular/core';
-import {productModel} from '../../../models/product.model';
+import {ProductModel} from '../../../models/product.model';
 import { FormBuilder } from '@angular/forms';
+import { SalesService } from '../../sales/sales.service';
 
 @Component({
   selector: 'app-catalog-card',
@@ -9,9 +10,9 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CatalogCardComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder,) { }
+  constructor(private formBuilder: FormBuilder, private salesService:SalesService) { }
 
-  @Input() productItem!: productModel;
+  @Input() productItem!: ProductModel;
   @Input() index=0
   
   checkoutForm = this.formBuilder.group({
@@ -23,6 +24,8 @@ export class CatalogCardComponent implements OnInit {
   AddToCart(){
     //TO-DO Pasar los datos al servicio
     console.warn('Cantidad', this.checkoutForm.value['unitsInput'],'Index',this.index);
+
+    this.salesService.addProductToPurchase(this.index,this.checkoutForm.value['unitsInput'])
     this.checkoutForm.reset();
   }
 

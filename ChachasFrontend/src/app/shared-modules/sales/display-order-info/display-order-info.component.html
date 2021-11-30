@@ -1,4 +1,7 @@
+
 <!-- <h2>Detalle de compra</h2> -->
+<!-- <button type="button" class="btn btn-info">Catalogo</button>-->
+
 <div class="details-container">
     <div class="details-heading"><h1>Detalle compra</h1></div>
     <ul class="list-group">
@@ -6,9 +9,9 @@
             <div class="wrapper">
                 <div class="sale-details">
                     <div class="image-parent">
-                        <img [src]="comp.product.image" class="chachas-image">
-                        {{comp.product.name}}
-                        <span class="badge badge-info badge-pill">Cantidad: {{comp.product.quantity}}</span>
+                        <img [src]="comp.product.Image" class="chachas-image">
+                        {{comp.product.Name}}
+                        <span class="badge badge-info badge-pill">Cantidad: {{comp.product.Quantity}}</span>
                     </div>
                     <ng-container *ngIf="comp.edit; else notEditing">
                         <div class="form-group mx-sm-3 mb-2">
@@ -25,19 +28,19 @@
                     <ul class="list-unstyled">
                         <li>
                             <span class="badge badge-info badge-pill">
-                                Precio por unidad: {{comp.product.price}}
+                                Precio por unidad: {{comp.product.Price}}
                             </span>
                             <span class="badge badge-info badge-pill">
                                 Precio total: {{comp.totalPrice}}
                             </span>
                         </li>
-                        <li>{{comp.product.description}}</li>
+                        <li>{{comp.product.Description}}</li>
                     </ul>
                 </div>
             </div>
         </li>
         <div class="forwards-backwards-choice">
-            <button class="btn btn-info btn-sm" (click)="keepChoosing()">Seguir escogiendo</button>
+            <button class="btn btn-info btn-sm" (click)="keepChoosing()" routerLink="../catalog">Seguir escogiendo</button>
             <button class="btn btn-info btn-sm" (click)="acceptProductChoice()">Aceptar</button>
         </div>
     </ul>
