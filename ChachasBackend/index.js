@@ -9,6 +9,8 @@ app.use(cors());
 
 const fnProduct = require('./product');
 const { product } = require('./config');
+const fnOrder = require('./order');
+const fnProduct = require('./product');
 
 // CRUD Product
 //Get
@@ -55,6 +57,26 @@ app.get('/api/product/subsidiary/:idSub/type/:type', async(req, res) => {
     var type = req.params.type;
     const response = await fnProduct.getProductSubsidiaryType(idSub, type);
     res.send(response)
+})
+
+// CRUD Orders
+
+//Get all orders 
+app.get('/api/order', async(req, res) => {
+    const orders = await fnOrder.getAllOrders();
+    res.send(orders);
+})
+//Create order
+app.post('/api/order', async(req, res) => {
+    var newOrder = req.body;
+    const response = await fnOrder.createOrder(newOrder);
+    res.send(response);
+})
+//Delete order
+app.delete('/api/order/:idOrder', async(req, res) => {
+    var orderToDelete = req.params.idOrder;
+    const response = await fnOrder.deleteOrder(orderToDelete);
+    res.send(response);
 })
 
 app.listen(

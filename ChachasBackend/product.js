@@ -54,7 +54,6 @@ async function getProductById(idproduct){
 async function updateProductAfterSale(idproduct, quantity){
     var res = null
     var productToUpdate = await getProductById(idproduct)
-    console.log(productToUpdate)
     productToUpdate.CantidadInventario = parseInt (productToUpdate.CantidadInventario, 10) - quantity
     await product.doc(idproduct).update(productToUpdate).then(() => {
         res = productToUpdate;
@@ -81,3 +80,4 @@ module.exports = {
   updateProductAfterSale,
   getProductSubsidiaryType
 };
+
