@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class DisplayOrderInfoComponent implements OnInit {
 
   productComponents: editComponent[] = []
+  productsQuantity: number = 0
 
   productosPrueba: Product[] = [
     {name: "Chacha de Charque", quantity: 10, price: 12, image: "https://img.freepik.com/foto-gratis/empanadas-espanolas-tipicas-blanco_123827-9710.jpg?size=626&ext=jpg", description: "es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."},
@@ -22,6 +23,7 @@ export class DisplayOrderInfoComponent implements OnInit {
       let aux: editComponent = {product: producto, edit: false, totalPrice: total}
       this.productComponents.push(aux)
     }
+    this.productsQuantity = this.productComponents.length
   }
 
   ngOnInit(): void {
@@ -41,6 +43,11 @@ export class DisplayOrderInfoComponent implements OnInit {
 
     comp.edit = false
     console.log("The element is now: " + comp.edit)
+  }
+
+  deleteProductFromList(compToDelete: editComponent) {
+    this.productComponents = this.productComponents.filter(component => component !== compToDelete)
+    this.productsQuantity = this.productComponents.length
   }
 
   acceptProductChoice() {
