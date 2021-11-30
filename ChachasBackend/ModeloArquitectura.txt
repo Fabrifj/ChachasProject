@@ -161,7 +161,7 @@ Empleado:
     "Cargo":"Chef",
 }
 =========================================================================
-Compra:
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
 //Esta solo es para el tipo refrescos
 {
 	"Id":"",
