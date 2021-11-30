@@ -151,7 +151,7 @@ Pedido:
 =========================================================================
 Empleado:
 {
-    "Cuenta":"Stephany123",
+    "Cuenta":"Stephany123",//Estamos pensando que la cuenta puede ser el ID, y que la cuenta igual podria ser el CI directamente
     "Password":"Pass123",
     "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
     "Nombre":"Stephany",
@@ -160,6 +160,26 @@ Empleado:
     "CI":"6793482",
     "Cargo":"Chef",
 }
-
-
+=========================================================================
+Compra:
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",
+	"Costo":200,
+	"Cantidad":10,
+	"Origen":"ID-SUCURSAL",
+},
+//Esta solo es para el tipo InsumoSucursal
+{
+	"Id":"",
+	"Tipo":"InsumoSucursal"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",//Pertenece al id del Aceite, en este ejemplo
+	"Costo":200,
+	"CantidadMedida":900, //Esta medida debe basarse en el tipo medida del producto, ej, el aceite se mide en ml, por lo que aqui son 900 ml
+	"Origen":"ID-SUCURSAL",
+}
 
