@@ -7,8 +7,7 @@ const PORT = 4000;
 app.use(express.json());
 app.use(cors());
 
-const fnProduct = require('./product');
-const { product } = require('./config');
+
 const fnOrder = require('./order');
 const fnProduct = require('./product');
 
