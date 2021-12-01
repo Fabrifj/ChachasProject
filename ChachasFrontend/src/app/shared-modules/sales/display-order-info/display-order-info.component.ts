@@ -31,7 +31,6 @@ export class DisplayOrderInfoComponent implements OnInit {
 
   editProductQuantity(comp: editComponent) {
     comp.edit = true
-    console.log("The element is now: " + comp.edit)
   }
 
   acceptEditOfProductQuantity(comp: editComponent, newQuantity: string) {
@@ -42,7 +41,6 @@ export class DisplayOrderInfoComponent implements OnInit {
     comp.totalPrice = newTotal
 
     comp.edit = false
-    console.log("The element is now: " + comp.edit)
   }
 
   deleteProductFromList(compToDelete: editComponent) {

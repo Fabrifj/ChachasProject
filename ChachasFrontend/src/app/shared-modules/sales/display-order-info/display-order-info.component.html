@@ -12,7 +12,7 @@
                     </div>
                     <ng-container *ngIf="comp.edit; else notEditing">
                         <div class="form-group mx-sm-3 mb-2">
-                            <input type="text" placeholder="Cantidad" #quantityInput>
+                            <input type="text" placeholder="Cantidad" #quantityInput class="quantity-input">
                             <button class="btn btn-info btn-sm" (click)="acceptEditOfProductQuantity(comp, quantityInput.value)">Aceptar</button>
                         </div>
                     </ng-container>
@@ -26,7 +26,7 @@
                     <ul class="list-unstyled">
                         <li>
                             <span class="badge badge-info badge-pill">
-                                Precio por unidad: {{comp.product.price}}
+                                Bs por unidad: {{comp.product.price}}
                             </span>
                             <span class="badge badge-info badge-pill">
                                 Precio total: {{comp.totalPrice}}
