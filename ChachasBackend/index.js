@@ -126,7 +126,7 @@ app.put("/api/product/:idproduct", async (req, res) => {
 });
 
 //Update product's attributes after a sale
-app.put("/api/product/:idproduct", async (req, res) => {
+app.put("/api/product/afterSale/:idproduct", async (req, res) => {
   var productToUpdate = req.params.idproduct;
   var body = req.body;
   var quantity = parseInt(body.CantidadInventario, 10);

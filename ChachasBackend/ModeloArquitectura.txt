@@ -37,7 +37,10 @@ Producto
 	"CantidadInventario":16,
 	"Mermas":
 	[
-        
+    {
+      "Fecha":"",
+      "Cantidad":"""
+    }    
 	],
   "CantidadMinima":
 },
