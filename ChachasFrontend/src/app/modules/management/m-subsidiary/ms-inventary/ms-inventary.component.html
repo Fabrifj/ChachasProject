@@ -54,13 +54,7 @@
     </div>
     <div class="modal-body">
         <p>Nombre del prodcuto</p>
-        <input type="text" placeholder="Ingrese el nombre">
-
-        <p>Costo</p>
-        <input type="text" placeholder="Ingrese el costo">
-
-        <p>Precio</p>
-        <input type="text" placeholder="Ingrese el precio">
+        <input type="text" [(ngModel)]="this.selectedObject.Nombre" disabled>
 
         <p>Cantidad</p>
         <input type="text" placeholder="Ingrese la cantidad">
@@ -69,7 +63,7 @@
     <div class="modal-footer">
 
         <div class="botones">
-            <button class="btnSend">registrar</button>
+            <button class="btnSend">Registrar</button>
         </div>
         <div class="botones">
             <button class="btnCerrar" (click)="modalService.cerrar('modalMerma-01');">Cancelar</button>
@@ -80,7 +74,7 @@
 
 
 
-<!--   boton modificar stock -->
+<!--   boton realizar compra -->
 <jw-modal id="modalStock-01" altura="85" ancho="30">
 
     <div class="modal-header">
@@ -88,19 +82,16 @@
     </div>
     <div class="modal-body">
         <p>Nombre del prodcuto</p>
-        <input type="text" placeholder="Ingrese el nombre">
+        <!-- <input type="text" placeholder="Ingrese el nombre"> -->
+        <input type="text" [(ngModel)]="this.selectedObject.IdMenu" disabled>
 
         <p>Costo</p>
-        <input type="text" placeholder="Ingrese el costo">
-
-        <p>Precio</p>
-        <input type="text" placeholder="Ingrese el precio">
+        <input type="text" placeholder="Ingrese el costo del producto">
 
         <p>Cantidad</p>
         <input type="text" placeholder="Ingrese la cantidad">
 
     </div>
-
     <div class="modal-footer">
 
         <div class="botones">
@@ -110,11 +101,7 @@
             <button class="btnCerrar" (click)="modalService.cerrar('modalStock-01');">Cancelar</button>
         </div>
     </div>
-
-
 </jw-modal>
-
-
 
 <!--   boton registrar uso salsas  -->
 <jw-modal id="modalIns-01" altura="85" ancho="30">
@@ -123,7 +110,7 @@
     </div>
     <div class="modal-body">
         <p>Nombre del prodcuto</p>
-        <input type="text" placeholder="Ingrese el nombre">
+        <input type="text" [(ngModel)]="this.selectedObject.Nombre" disabled>
 
         <p>Cantidad inventario</p>
         <input type="text" placeholder="Ingrese la cantidad">
@@ -138,19 +125,15 @@
         <input type="text" placeholder="Ingrese el costo">
 
     </div>
-
     <div class="modal-footer">
-
         <div class="botones">
-            <button class="btnSend">registrar</button>
+            <button class="btnSend">Registrar</button>
         </div>
         <div class="botones">
             <button class="btnCerrar" (click)="modalService.cerrar('modalIns-01');">Cancelar</button>
         </div>
     </div>
 </jw-modal>
-
-
 
 <!--   boton ver sucursales -->
 <jw-modal id="modalSubsidiaries-01" altura="60" ancho="80">
@@ -166,7 +149,6 @@
         <button class="btnCerrar" (click)="modalService.cerrar('modalSubsidiaries-01');">Cerrar</button>
     </div>
 </jw-modal>
-
 
 <!--   boton confirmar accion  -->
 <jw-modal id="modalConfirmation" altura="50" ancho="70">

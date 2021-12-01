@@ -4,14 +4,14 @@ import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
-  styleUrls: ['./ms-inventary.component.css']
+  styleUrls: ['./ms-inventary.component.css'],
+  template: `
+    <input type="number" [ngModel]="percent" (ngModelChange)="onPercentChange($event)" />
+  `,
+
 })
 export class MsInventaryComponent implements OnInit {
-
-
-
-
-  experimentProd =
+   experimentProd =
   
   [
     {
@@ -33,9 +33,10 @@ export class MsInventaryComponent implements OnInit {
     "Cantidad":16
   }
 
+  
 
 ]
-
+  
 experimentDrink =
   
   [
@@ -144,7 +145,7 @@ experimentIns =
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
-  constructor(public modalService:ModalService) { }
+  constructor(public modalService:ModalService) { } 
 
   ngOnInit(): void {
 
@@ -179,6 +180,8 @@ experimentIns =
   }
 
 
+
+
   //function register merma
   functionChooseObj(response:any){
     this.selectedObject = response[1];
@@ -202,6 +205,6 @@ experimentIns =
   }
 
   
-
+// registro 
 
 }
