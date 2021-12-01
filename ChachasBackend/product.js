@@ -113,5 +113,5 @@ module.exports = {
   getProductById,
   updateProductAfterSale,
   getProductSubsidiaryType,
-  getProductSubsidiary 
+  getProductSubsidiary
 };
