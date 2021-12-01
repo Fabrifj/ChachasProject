@@ -23,6 +23,7 @@ const product = db.collection("Producto");
 const ingredient = db.collection("Ingrediente");
 const subsidiary = db.collection("Sucursal");
 const order = db.collection("Pedido");
+const employee = db.collection("Empleado");
 
 
-module.exports = { firebase,product,order,ingredient,subsidiary,menu};
+module.exports = { firebase,product,order,ingredient,subsidiary,menu,employee};
