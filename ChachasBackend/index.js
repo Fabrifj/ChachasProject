@@ -11,6 +11,7 @@ const fnOrder = require("./order");
 const fnProduct = require("./product");
 const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
+const fnEmployee = require("./employee");
 
 // CRUD Product
 //Get
@@ -180,4 +181,44 @@ app.delete("/api/menu/:id", async (req, res) => {
   res.send(resp);
 });
 
+/*===================================
+          CRUD EMPLOYEE
+===================================*/
+// Create Employee
+app.post("/api/employee", async (req, res) => {
+  var body = req.body;
+  const respuesta = await fnEmployee.createEmployee(body);
+  res.send(respuesta);
+});
+
+// Get Employees
+app.get("/api/employee", async (req, res) => {
+  const respuesta = await fnEmployee.getEmployees();
+  res.send(respuesta);
+});
+//Get Employee by Id
+app.get("/api/employee/:id", async (req, res) => {
+  const idEmp = req.params.id;
+  const respuesta = await fnEmployee.getEmployee(idEmp);
+  res.send(respuesta);
+});
+//Update Employee
+app.put("/api/employee/:id", async (req, res) => {
+  const body = req.body;
+  const idEmp = req.params.id;
+  const respuesta = await fnEmployee.updateEmployee(idEmp, body);
+  res.send(respuesta);
+});
+//Change Password Employee
+app.put("/api/employee", async (req, res) => {
+  const body = req.body;
+  const respuesta = await fnEmployee.updatePassword(body);
+  res.send(respuesta);
+});
+//Delete Employee
+app.delete("/api/subsidiary/:id", async (req, res) => {
+  const idEmp = req.params.id;
+  const respuesta = await fnEmployee.deleteEmployee(idEmp);
+  res.send(respuesta);
+});
 app.listen(4000, () => console.log("Up and Running on 4000"));
