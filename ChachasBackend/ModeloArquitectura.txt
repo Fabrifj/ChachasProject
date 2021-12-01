@@ -1,0 +1,149 @@
+COLECCIONES:
+=========================================================================
+Producto
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"Nombre":"Chacha Prehecha de Carne"
+	"Origen": "Fabrica",
+	"Receta": 
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"Costo":7,
+	"CantidadInventario":500,
+},
+
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"Chacha"
+	"IdMenu":"rnfqubrvibvi" //Esto representa a la Chacha de Carne 
+	"Origen": "ID-SUCURSAL",
+	"Costo":7,
+	"Precio":10,
+	"Cantidad":16,
+	"Mermas":
+	[
+		
+	]
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"Refresco"
+	"Nombre":"Coca-Cola" 
+	"Origen": "ID-SUCURSAL",
+	"Costo":10,
+	"Precio":13,
+	"Cantidad":20
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"Ingrediente"  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
+	"Nombre":"Aceite"
+	"Origen": "ID-SUCURSAL",
+	"Costo":7,
+	"CantidadInventario":1600
+	"CantidadMedida":900,
+	"TipoUnidad":"ml"
+}
+=========================================================================
+
+Menu
+{
+	"Nombre": "Chacha de Carne",
+	"Id":"JIDBORBI",
+	"ImgURL":""
+}
+
+=========================================================================
+Sucursal
+{
+	"Id":"jhijborhibibo",
+	"Nombre":"",
+	"Direccion":"",//
+	"Localizacion":
+    {
+        "Longitud":"-16.505606488907098"
+        "Latitud":"-68.1637419498145"
+    },//Es el punto geografico con latitud y longitud
+	"Telefono":
+	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
+}
+=========================================================================
+Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
+[
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	},
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	}
+]
+
+=========================================================================
+Pedido:
+{
+	"Tipo":"Online" //Puede ser "Online" o Point Of Sales "POS"
+	"Dir"://SOLO SI ES ONLINE, validar que se escogio una sucursal en el mismo departamento
+	{
+		"FormaEntrega":
+		"DireccionGPS":
+		"DireccionEscrita":
+		"AclaracionDireccion":
+	}
+	"Detalle": 
+	[
+		{
+			"Cantidad": 2,
+			"Precio": 10,//Precio de cada chacha de carne
+			"IdProducto": "xHsRl949N5aptvF0M7vt",
+			"Nombre": "Chacha Carne"
+		},
+		
+    ],
+	DatosCliente:
+	{
+		"Correo":"",
+		"Numero":,
+		"Nit":,
+		"RazonSocial": //Este es el apellido del cliente
+	}
+	"IdSucursal":"",
+}
+=========================================================================
+Empleado:
+{
+    "Cuenta":"Stephany123",
+    "Password":"Pass123",
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
+    "Nombre":"Stephany",
+    "ApellidoP":"Duran",
+    "ApellidoM":"Borda",
+    "CI":"6793482",
+    "Cargo":"Chef",
+}
+
+
+
