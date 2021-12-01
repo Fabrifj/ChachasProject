@@ -13,7 +13,9 @@ const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
 
-// CRUD Product
+/*===================================
+          CRUD PRODUCT
+===================================*/
 //Get
 app.get("/api/product", async (req, res) => {
   const products = await fnProduct.getAllProducts();
@@ -80,6 +82,21 @@ app.get("/api/product/ChachaRefresco/:idSub", async (req ,res) => {
     respuesta = null;
   }else{
     respuesta = chachas.concat(refrescos);
+  }
+  res.send(respuesta);
+});
+
+//Endpoint to get all the products of type "Chacha" and "InsumoFabrica" and Subsidiary info
+app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
+  var idSub = req.params.idSub;
+  var respuesta;
+  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+  var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+  var sucursalInfo = await fnSubsidiary.getSubsidiary(idSub);
+  if (chachas == null || insumos == null || sucursalInfo == null){
+    respuesta = null;
+  }else{
+    respuesta = (chachas.concat(insumos)).concat(sucursalInfo);
   }
   res.send(respuesta);
 });
