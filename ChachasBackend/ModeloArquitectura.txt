@@ -149,15 +149,14 @@ Pedido:
 	"IdSucursal":"",
 }
 =========================================================================
-Empleado://Todavia falta discutirlo, esta sujeto a cambios
+Empleado:
 {
-    "Cuenta":"Stephany123",//Estamos pensando que la cuenta puede ser el ID, y que la cuenta igual podria ser el CI directamente
+    "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
     "Password":"Pass123",
     "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
-    "CI":"6793482",
     "Cargo":"Chef",
 }
 =========================================================================
@@ -165,23 +164,37 @@ Compra: //Todavia falta discutirlo, esta sujeto a cambios
 //Esta solo es para el tipo refrescos
 {
 	"Id":"",
-	"Tipo":"Refresco"
+	"Tipo":"Refresco"//O puede ser "InsumoSucursal"
 	"Fecha":"2021-11-25",
 	"IdProducto":"",
 	"Costo":200,
-	"Cantidad":10,
+	"Cantidad":10,//Lo que se introduzca tiene que estar medido como su producto
 	"Origen":"ID-SUCURSAL",
 },
-//Esta solo es para el tipo InsumoSucursal
+
+=========================================================================
+Transaccion
 {
 	"Id":"",
-	"Tipo":"InsumoSucursal"
-	"Fecha":"2021-11-25",
-	"IdProducto":"",//Pertenece al id del Aceite, en este ejemplo
-	"Costo":200,
-	"CantidadMedida":900, //Esta medida debe basarse en el tipo medida del producto, ej, el aceite se mide en ml, por lo que aqui son 900 ml
-	"Origen":"ID-SUCURSAL",
-}
-=========================================================================
+	"Fecha":"2020-03-23"
+	"IdOrigen":"",
+	"IdDestino":""
+	"ListaProductos":
+	[
+		{
+			"IdProducto":"",
+			"Tipo":"Chacha" //O tipo Refresco, porque se miden unitariamente
+			"Cantidad":,
+			"NombreProducto":,
+		},
+		{
+			"IdProducto":"",
+			"Tipo":"InsumoFabrica"//O tipo InsumoSucursal, porque se miden NO unitariamente
+			"CantidadMedida":1000,
+			"TipoUnidad":"ml",
+			"NombreProducto":"Salsa Picante"
+		}
+	]
+}//Preguntarle al Inge
 
 
