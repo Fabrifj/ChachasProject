@@ -34,7 +34,7 @@ Producto
 	"Origen": "ID-SUCURSAL",
 	"Costo":7,
 	"Precio":10,
-	"Cantidad":16,
+	"CantidadInventario":16,
 	"Mermas":
 	[
         
@@ -49,7 +49,7 @@ Producto
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,
 	"Precio":13,
-	"Cantidad":20,
+	"CantidadInventario":20,
   "CantidadMinima":
 },
 {
