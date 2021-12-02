@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 
+import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+import { AppHttpService } from 'src/app/services/app-http.service';
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -200,7 +201,7 @@ experimentSub =
 
 
   selectedValue:any;
-  constructor(public modalService:ModalService) { }
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
 
   ngOnInit(): void {
 
@@ -217,8 +218,20 @@ experimentSub =
   getProducts(){
 
     this.infoProd = JSON.parse(JSON.stringify(this.experimentProd));
+    
+    this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
+     
+      console.log("los productos son",jsonFile);
+      
+      
 
-      console.log()
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
+
+      
   }
 
   getSauce(){

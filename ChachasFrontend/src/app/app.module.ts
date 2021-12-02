@@ -39,6 +39,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AppHttpService } from './services/app-http.service';
 
 @NgModule({
   declarations: [
@@ -75,9 +77,10 @@ import { FormsModule } from '@angular/forms';
     MatDividerModule,
     MatListModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AppHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
