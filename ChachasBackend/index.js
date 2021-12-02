@@ -12,6 +12,7 @@ const fnProduct = require("./product");
 const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
+const fnPurchase = require("./purchase");
 
 // CRUD Product
 //Get
@@ -20,7 +21,7 @@ app.get("/api/product", async (req, res) => {
   res.send(products);
 });
 
-app.post("/api/product", async (req, res) => {
+app.post("/api/product/refresco", async (req, res) => {
   var newproduct = req.body;
   const response = await fnProduct.createProduct(newproduct);
   res.send(response);
@@ -219,6 +220,42 @@ app.put("/api/employee", async (req, res) => {
 app.delete("/api/subsidiary/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
+  res.send(respuesta);
+});
+
+/*===================================
+          CRUD EMPLOYEE
+===================================*/
+// Create Purchase
+app.post("/api/purchase", async (req, res) => {
+  var body = req.body;
+  const respuesta = await fnPurchase.createPurchase(body);
+  res.send(respuesta);
+});
+
+// Get Purchase
+app.get("/api/purchase", async (req, res) => {
+  const respuesta = await fnPurchase.getPurchases();
+  res.send(respuesta);
+});
+//Get Purchase by Id
+app.get("/api/purchase/:id", async (req, res) => {
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.getPurchase(idPur);
+  res.send(respuesta);
+});
+//Update Purchase
+app.put("/api/purchase/:id", async (req, res) => {
+  const body = req.body;
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.updatePurchase(idPur, body);
+  res.send(respuesta);
+});
+
+//Delete Purchase
+app.delete("/api/subsidiary/:id", async (req, res) => {
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
 app.listen(4000, () => console.log("Up and Running on 4000"));

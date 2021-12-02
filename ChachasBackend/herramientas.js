@@ -7,6 +7,26 @@ function stringAFecha(fecha) {
   var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
   return mydate;
 }
+
+function stringAFirebaseTimestamp(fecha)
+{
+  const timestamp = firebase.firestore.Timestamp.fromDate(stringAFecha(body.Fecha));
+  return timestamp;
+}
+function dateAFirebaseTimestamp(date)
+{
+  const timestamp = firebase.firestore.Timestamp.fromDate(date);
+  return timestamp;
+}
+//Create doc
+async function createDoc(data, nombreEntidad){
+  await db.collection(nombreEntidad).add(data);
+  respuesta = {
+    "Mensaje" : `${nombreEntidad} agregado correctamente`,
+    "Elemento": data
+  }
+  return respuesta;
+}
 //Get all docs
 async function getDocs(nombreEntidad){
   const snapshot = await db.collection(nombreEntidad).get();
@@ -71,5 +91,8 @@ module.exports = {
   updateDoc,
   deleteDoc,
   getDoc,
-  getDocs
+  getDocs,
+  createDoc,
+  stringAFirebaseTimestamp,
+  dateAFirebaseTimestamp
 };
