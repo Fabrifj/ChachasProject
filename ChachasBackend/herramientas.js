@@ -66,10 +66,23 @@ async function deleteDoc(idDoc,nombreEntidad) {
   });
   return respuesta;
 }
+//CrearDoc
+async function createDoc(data, nombreEntidad){
+  await db.collection(nombreEntidad).add(data);
+  respuesta = {
+    "Mensaje" : `${nombreEntidad} agregado correctamente`,
+    "Elemento": data
+  }
+  return respuesta;
+}
+
+
+
 module.exports = {
   stringAFecha,
   updateDoc,
   deleteDoc,
   getDoc,
-  getDocs
+  getDocs,
+  createDoc
 };

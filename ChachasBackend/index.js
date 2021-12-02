@@ -12,6 +12,7 @@ const fnProduct = require("./product");
 const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
+const fnTransaction = require("./transaction");
 
 /*=================================
           CRUD PRODUCT
@@ -296,6 +297,17 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
   res.send(respuesta);
 });
+
+/**
+ * CRUD Transaction
+ */
+// Create Employee
+app.post("/api/transaction", async (req, res) => {
+  var body = req.body;
+  const respuesta = await fnTransaction.createTransaction(body);
+  res.send(respuesta);
+});
+
 
 
 
