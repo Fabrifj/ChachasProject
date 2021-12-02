@@ -97,7 +97,7 @@ export class ReusableTableComponent implements OnInit {
     
     console.log(this.misDatos);
 
-    this.parentMethod.emit(['GuardarTodo',this.misDatos])
+    this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }
 
   getId(j:any,i:any){

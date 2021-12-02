@@ -35,9 +35,10 @@ import { MatListModule } from '@angular/material/list';
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+
 import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { SidenavComponent } from './modules/sidenav/sidenav.component';
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
-    ReusableTableComponent
+    ReusableTableComponent,
+    
   
   ],
   imports: [
