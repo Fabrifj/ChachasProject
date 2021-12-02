@@ -251,11 +251,18 @@ async function updateMermasProduct(idProd,body) {
 async function getProductTransaction(idMenu,IdOrigen){
   var miDoc = null;
   console.log("entra a la funcion con: ", idMenu, IdOrigen);
-  var nuevo = await getAllProducts()
-    
-  var resultado = nuevo.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
+  var productos = await getAllProducts();
+  var resultado = null;
+
+  productos.forEach(async (producto) => {
+    //console.log(producto.Origen);
+    if(producto.Origen == IdOrigen && producto.IdMenu == idMenu && producto.Tipo == "Chacha"){
+      resultado = producto;
+    }
+  });
   
-  console.log("todos los productos",resultado);
+  //var resultado = productos.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
+  console.log("El producto",resultado);
 
   return resultado;
 }

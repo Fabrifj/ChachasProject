@@ -360,11 +360,9 @@ app.put("/api/purchase/:id", async (req, res) => {
   const respuesta = await fnPurchase.updatePurchase(idPur, body);
   res.send(respuesta);
 });
-/**-------------------
- * -------------------
- * CRUD Transaction
- * -------------------
- */
+/*===================================
+          CRUD TRANSACTION
+===================================*/
 // Create Transaccion
 app.post("/api/transaction", async (req, res) => {
   var body = req.body;
