@@ -12,126 +12,20 @@ export class MsInventaryComponent implements OnInit {
 
 
 
-  experimentProd =
-  
-  [
-    {
-    "Id":"JHI",
-    "Tipo":"Chacha",
-    "IdMenu":"Chacha de aji", //Esto representa a la Chacha de Carne 
-    "Origen": "ID-SUCURSAL",
-    "Costo":7,
-    "Precio":10,
-    "Cantidad":16
-  },
-  {
-    "Id":"JHI",
-    "Tipo":"Chacha",
-    "IdMenu":"Chacha charque" ,//Esto representa a la Chacha de Carne 
-    "Origen": "ID-SUCURSAL",
-    "Costo":7,
-    "Precio":10,
-    "Cantidad":16
-  }
-
-
-]
-
-experimentDrink =
-  
-  [
-  {
-    "Id":"BCHEBCOOkkkBDOH",
-    "Tipo":"Refresco",
-    "Nombre":"Sprite", //Esto representa a la Chacha de Carne 
-    "Origen": "ID-SUCURSAL",
-    "Costo":10,
-    "Precio":15,
-    "Cantidad":16
-  },
-  {
-    "Id":"BCHEBCOOkkkBDOH",
-    "Tipo":"Refresco",
-    "Nombre":"CocaCola " ,//Esto representa a la Chacha de Carne 
-    "Origen": "ID-SUCURSAL",
-    "Costo":8,
-    "Precio":14,
-    "Cantidad":16
-  }
-
-
-]
-
-experimentIns =
-  
-  [
-    
-  {
-    "Id":"BCH",
-	"Tipo":"Insumo",  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-	"Nombre":"Aceite",
-	"Origen": "ID-SUCURSAL",
-	"Costo":7,
-	"CantidadInventario":1600,
-	"CantidadMedida":900,
-	"TipoUnidad":"ml"
-},
-  {
-    "Id":"BCH",
-	"Tipo":"Insumo",  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-	"Nombre":"Salsa picante",
-	"Origen": "ID-SUCURSAL",
-	"Costo":7,
-	"CantidadInventario":1600,
-	"CantidadMedida":900,
-	"TipoUnidad":"ml"},
-
-
-]
-
-
-
-
-
-experimentSub =
-  
-  [
-    
-  {
-    "id":"jajajask", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-	"Nombre":"sucursal 1",
-    "ubicacion": "avenida 2"
-},
-{
-  "id":"skji", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-"Nombre":"sucursal 2" ,
-"ubicacion": "avenida 2"
-
-},
-{
-  "id":"smm", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-"Nombre":"sucursal 3",
-"ubicacion": "avenida 2"
-
-}
-
-
-]
-  
-  
   
   
   selectedObject:any = {}
   selectedInfo:any = {}
   
 
+  //chachas
   infoProd: any | undefined;
   
   columnsProd = [
     {field:'IdMenu',header:'Nombre'},
+    {field:'CantidadInventario',header:'Stock En Inventario'},
     {field:'Costo',header:'Costo'},
-    {field:'Precio',header:'Precio'},
-    {field:'Cantidad',header:'Cantidad'}
+    {field:'Precio',header:'Precio'}
 
   ];
 
@@ -143,10 +37,10 @@ experimentSub =
 
  
 
-  infoIns: any | undefined;
-  columnsIns = [
+  infoInsFab: any | undefined;
+  columnsInsFab = [
     {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Cantidad Inventario'},
+    {field:'CantidadInventario',header:'Stock en Inventario'},
     {field:'CantidadMedida',header:'Cantidad Medida'},
     {field:'TipoUnidad',header:'Tipo Unidad'},
     {field:'Costo',header:'Costo'}
@@ -156,19 +50,30 @@ experimentSub =
 
   ];
 
-  columnsInsMini = [
+  columnsInsFabMini = [
     {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Cantidad en esta sucursal'}
+    {field:'CantidadInventario',header:'Stock en Inventario'}
 
   ];
 
   infoDri: any | undefined;
   columnsDri = [
     {field:'Nombre',header:'Nombre'},
-    {field:'Costo',header:'Costo'},
-
+    {field:'CantidadInventario',header:'Stock en Inventario'},
     {field:'Precio',header:'Precio'},
-    {field:'Cantidad',header:'Cantidad'}
+    {field:'Costo',header:'Costo'}
+  
+   // {field:'Imagen',header:'Imagen'}
+    
+
+  ];
+  infoInsSub: any | undefined;
+  columnsInsSub = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Stock en Inventario'},
+    {field:'Costo',header:'Costo'},
+    {field:'TipoUnidad',header:'Tipo de Unidad'}
+    
   
    // {field:'Imagen',header:'Imagen'}
     
@@ -180,7 +85,7 @@ experimentSub =
   infoSub: any | undefined;
   columnsSub = [
     {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Cantidad Inventario'},
+    {field:'CantidadInventario',header:'Stock en Inventario'},
     {field:'CantidadMedida',header:'Cantidad Medida'},
     {field:'TipoUnidad',header:'Tipo Unidad'},
     {field:'Costo',header:'Costo'}
@@ -214,12 +119,25 @@ experimentSub =
     this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
 
     this.todayDate = new Date().toLocaleDateString();
-    this.getProducts();
-    this.getDrink();
-    this.getSauce();
-    this.getSubsidiaries();
     
-    this.getProductsBySubsidiary()
+    
+    this.getDrink();
+
+    //get insumos fabrica
+    this.getSauce();
+    //get Subsidiario
+    this.getSubsidiaries();
+
+    //get insumos sucursal 
+    this.getOtherInvSub();
+    
+    //get all productos
+    this.getProductsBySubsidiary();
+    //get chachas
+    this.getProdChachas()
+
+
+    
   }
 
   getProducts(){
@@ -229,8 +147,7 @@ experimentSub =
     this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
      
       console.log("los productos son",jsonFile);
-      
-      
+    
 
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -248,7 +165,7 @@ experimentSub =
     this.serviceHttp.getProductsBySubsidiary(id).subscribe((jsonFile:any)=>{
      
       console.log("los productos de sucursal son",jsonFile);
-      this.infoProd =jsonFile;
+      
       
 
     } ,(error)=>{
@@ -259,6 +176,22 @@ experimentSub =
 
       
   }
+  getProdChachas(){
+
+    var id = this.idSubsidiary;
+    
+    this.serviceHttp.getProductsBySubsidiaryAndType(id,"Chacha").subscribe((jsonFile:any)=>{
+     
+      console.log("las chachas son",jsonFile);
+      this.infoProd =jsonFile;
+      
+
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
+  }
   getSauce(){
 
     var id = this.idSubsidiary;
@@ -266,7 +199,7 @@ experimentSub =
     this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoFabrica").subscribe((jsonFile:any)=>{
      
       console.log("las salsas son",jsonFile);
-      this.infoIns =jsonFile;
+      this.infoInsFab =jsonFile;
       
 
     } ,(error)=>{
@@ -284,7 +217,7 @@ experimentSub =
     this.serviceHttp.getProductsBySubsidiaryAndType(id,"Refresco").subscribe((jsonFile:any)=>{
      
       console.log("la los refrescos son",jsonFile);
-      this.infoDri =jsonFile;
+      this.infoDri = jsonFile;
       
 
     } ,(error)=>{
@@ -301,7 +234,7 @@ experimentSub =
     this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoSucursal").subscribe((jsonFile:any)=>{
      
       console.log("los insumos de sucursal son",jsonFile);
-      this.infoDri = this.infoDri + jsonFile;
+      this.infoInsSub =jsonFile;
       
 
     } ,(error)=>{
@@ -310,7 +243,19 @@ experimentSub =
     } )
 
   }
+  getSubsidiaries(){
 
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
+     
+      console.log("las sucursales son son",jsonFile);
+      this.infoSub =jsonFile;
+      
+
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+  }
 
   creatSub(body:any){
 
@@ -329,19 +274,7 @@ experimentSub =
 
   }
 
-  getSubsidiaries(){
-
-    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
-     
-      console.log("las sucursales son son",jsonFile);
-      this.infoSub =jsonFile;
-      
-
-    } ,(error)=>{
-        console.log("hubo error con productos")
-
-    } )
-  }
+  
 
   //function register merma
   functionChooseObj(response:any){
@@ -380,6 +313,10 @@ experimentSub =
   sendTransaction(){
     
   }
+
+
+  // Initialize and add the map
+    
 
  
 
