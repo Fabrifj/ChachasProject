@@ -14,8 +14,11 @@ const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
 
-// CRUD Product
-//Get
+/*=================================
+          CRUD PRODUCT
+==================================*/
+
+//GetAllProducts
 app.get("/api/product", async (req, res) => {
   const products = await fnProduct.getAllProducts();
   res.send(products);
@@ -40,22 +43,13 @@ app.put("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get a product by its ID
 app.get("/api/product/:idproduct", async (req, res) => {
   var productToGet = req.params.idproduct;
   const response = await fnProduct.getProductById(productToGet);
   res.send(response);
 });
 
-app.put("/api/product/:idproduct", async (req, res) => {
-  var productToUpdate = req.params.idproduct;
-  var body = req.body;
-  var quantity = parseInt(body.CantidadInventario, 10);
-  const response = await fnProduct.updateProductAfterSale(
-    productToUpdate,
-    quantity
-  );
-  res.send(response);
-});
 
 // Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
@@ -64,6 +58,7 @@ app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
   const response = await fnProduct.getProductSubsidiaryType(idSub, type);
   res.send(response);
 });
+
 //Get all products in subsidiary
 app.get("/api/product/subsidiary/:idSub", async (req, res) => {
   var idSub = req.params.idSub;
@@ -85,19 +80,123 @@ app.get("/api/product/ChachaRefresco/:idSub", async (req ,res) => {
   res.send(respuesta);
 });
 
-// CRUD Orders
+//Endpoint to get all the products of type "Chacha" and "InsumoFabrica" and Subsidiary info
+app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
+  var idSub = req.params.idSub;
+  var respuesta;
+  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+  var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+  var sucursalInfo = await fnSubsidiary.getSubsidiary(idSub);
+  if (chachas == null || insumos == null || sucursalInfo == null){
+    respuesta = null;
+  }else{
+    respuesta = (chachas.concat(insumos)).concat(sucursalInfo);
+  }
+  res.send(respuesta);
+});
+
+// Endpoint to update product cost and inventory by mean
+app.put("/api/product/costInventoryByMean/:idproduct", async (req ,res) => {
+  var idproduct = req.params.idproduct;
+  var body = req.body;
+  var respuesta = await fnProduct.updateProductPriceByMean(idproduct, body);
+  res.send(respuesta);
+});
+
+//Create generic product
+app.post("/api/product", async (req, res) => {
+  var newproduct = req.body;
+  const response = await fnProduct.createProduct(newproduct);
+  res.send(response);
+});
+
+//Create product of type Chacha
+app.post("/api/productChacha", async (req, res) => {
+  var type = "Chacha"
+  var body = req.body;
+  const response = await fnProduct.createProductType(body, type);
+  res.send(response);
+});
+
+//Create product of type Refresco
+app.post("/api/productRefresco", async (req, res) => {
+  var type = "Refresco"
+  var body = req.body;
+  const response = await fnProduct.createProductType(body, type);
+  res.send(response);
+});
+
+//Create product of type InsumoSucursal
+app.post("/api/productInsumoSucursal", async (req, res) => {
+  var type = "InsumoSucursal"
+  var body = req.body;
+  const response = await fnProduct.createProductType(body, type);
+  res.send(response);
+});
+
+//Create product of type InsumoFabrica
+app.post("/api/productInsumoFabrica", async (req, res) => {
+  var type = "InsumoFabrica"
+  var body = req.body;
+  const response = await fnProduct.createProductType(body, type);
+  res.send(response);
+});
+
+
+//UpdateProduct
+app.put("/api/product/:idproduct", async (req, res) => {
+  var productToUpdate = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateProduct(productToUpdate, body);
+  res.send(response);
+});
+
+//Update product's attributes after a sale
+app.put("/api/product/afterSale/:idproduct", async (req, res) => {
+  var productToUpdate = req.params.idproduct;
+  var body = req.body;
+  var quantity = parseInt(body.CantidadInventario, 10);
+  const response = await fnProduct.updateProductAfterSale(
+    productToUpdate,
+    quantity
+  );
+  res.send(response);
+});
+
+//Update Mermas of a product of type chachas
+app.put("/api/product/mermas/:idproduct", async (req, res) => {
+  var idProd = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateMermasProduct(idProd, body);
+  res.send(response);
+});
+
+
+//DeleteProduct
+app.delete("/api/product/:idproduct", async (req, res) => {
+  var productToDelete = req.params.idproduct;
+  const response = await fnProduct.deleteProduct(productToDelete);
+  res.send(response);
+});
+
+
+/*=================================
+          CRUD ORDER
+==================================*/
 
 //Get all orders
 app.get("/api/order", async (req, res) => {
   const orders = await fnOrder.getAllOrders();
   res.send(orders);
 });
+
 //Create order
 app.post("/api/order", async (req, res) => {
   var newOrder = req.body;
   const response = await fnOrder.createOrder(newOrder);
   res.send(response);
 });
+
 //Delete order
 app.delete("/api/order/:idOrder", async (req, res) => {
   var orderToDelete = req.params.idOrder;
@@ -106,9 +205,10 @@ app.delete("/api/order/:idOrder", async (req, res) => {
 });
 
 
-/*===================================
+/*================================
           CRUD SUBSIDIARY
-===================================*/
+==================================*/
+
 // Create Subsidiary
 app.post("/api/subsidiary", async (req, res) => {
   var body = req.body;
@@ -146,7 +246,7 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
 
 /*===================================
           CRUD MENU
-===================================*/
+==================================*/
 // Create Menu
 app.post("/api/menu", async (req, res) => {
   var body = req.body;
@@ -184,7 +284,7 @@ app.delete("/api/menu/:id", async (req, res) => {
 
 /*===================================
           CRUD EMPLOYEE
-===================================*/
+==================================*/
 // Create Employee
 app.post("/api/employee", async (req, res) => {
   var body = req.body;
@@ -258,4 +358,6 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
+
+
 app.listen(4000, () => console.log("Up and Running on 4000"));
