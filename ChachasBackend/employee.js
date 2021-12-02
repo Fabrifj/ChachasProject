@@ -3,11 +3,11 @@ const fnHerramientas = require("./herramientas");
 
 async function getEmployees()
 {
-    return fnHerramientas.getDocs("Empleado");
+    return await fnHerramientas.getDocs("Empleado");
 }
 async function getEmployee(idEmp)
 {
-    return fnHerramientas.getDoc(idEmp,"Empleado");
+    return await fnHerramientas.getDoc(idEmp,"Empleado");
 }
 
 /**
@@ -37,7 +37,7 @@ async function createEmployee(body)
 }
 async function updateEmployee(idEmp, body)
 {
-    return fnHerramientas.updateDoc(idEmp,body,"Empleado");
+    return await fnHerramientas.updateDoc(idEmp,body,"Empleado");
 }
 /**
  * 
@@ -52,11 +52,11 @@ async function updatePassword(body)
 {
     const idEmp = body.IdEmpleado;
     delete body.IdEmpleado;
-    return fnHerramientas.updateDoc(idEmp,body,"Empleado");
+    return await fnHerramientas.updateDoc(idEmp,body,"Empleado");
 }
 async function deleteEmployee(idEmp)
 {
-    return fnHerramientas.deleteDoc(idEmp,"Empleado");
+    return await fnHerramientas.deleteDoc(idEmp,"Empleado");
 }
 
 module.exports = {
