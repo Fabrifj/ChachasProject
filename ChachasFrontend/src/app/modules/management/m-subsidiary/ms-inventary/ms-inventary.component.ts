@@ -201,23 +201,30 @@ experimentSub =
 
 
   selectedValue:any;
+
+
+  idSubsidiary:any ="";
+
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
 
   ngOnInit(): void {
 
 
     //
+    this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
+
     this.todayDate = new Date().toLocaleDateString();
     this.getProducts();
     this.getDrink();
     this.getSauce();
     this.getSubsidiaries();
-
+    
+    this.getProductsBySubsidiary()
   }
 
   getProducts(){
 
-    this.infoProd = JSON.parse(JSON.stringify(this.experimentProd));
+  
     
     this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
      
@@ -234,26 +241,106 @@ experimentSub =
       
   }
 
+  getProductsBySubsidiary(){
+
+    var id = this.idSubsidiary;
+    
+    this.serviceHttp.getProductsBySubsidiary(id).subscribe((jsonFile:any)=>{
+     
+      console.log("los productos de sucursal son",jsonFile);
+      this.infoProd =jsonFile;
+      
+
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
+
+      
+  }
   getSauce(){
 
-    this.infoIns = JSON.parse(JSON.stringify(this.experimentIns));
+    var id = this.idSubsidiary;
+    
+    this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+     
+      console.log("las salsas son",jsonFile);
+      this.infoIns =jsonFile;
+      
 
-      console.log()
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
   }
 
 
   getDrink(){
 
-    this.infoDri = JSON.parse(JSON.stringify(this.experimentDrink));
+    var id = this.idSubsidiary;
+    
+    this.serviceHttp.getProductsBySubsidiaryAndType(id,"Refresco").subscribe((jsonFile:any)=>{
+     
+      console.log("la los refrescos son",jsonFile);
+      this.infoDri =jsonFile;
+      
 
-      console.log()
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
+  }
+
+  getOtherInvSub(){
+
+    var id = this.idSubsidiary;
+    
+    this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoSucursal").subscribe((jsonFile:any)=>{
+     
+      console.log("los insumos de sucursal son",jsonFile);
+      this.infoDri = this.infoDri + jsonFile;
+      
+
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+
+  }
+
+
+  creatSub(body:any){
+
+    
+    
+    this.serviceHttp.postSub(body).subscribe((jsonFile:any)=>{
+     
+      console.log("Creado sucursal correctamente");
+     
+      
+
+    } ,(error)=>{
+        console.log("hubo error con sucursal")
+
+    } )
+
   }
 
   getSubsidiaries(){
 
-    this.infoSub = JSON.parse(JSON.stringify(this.experimentSub));
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
+     
+      console.log("las sucursales son son",jsonFile);
+      this.infoSub =jsonFile;
+      
 
-      console.log(this.infoSub);
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
   }
 
   //function register merma

@@ -37,7 +37,11 @@ export class AppHttpService {
 
     return this.http.get(paths.GetSubsidiary)
   }
+  postSub(body:any){
+    
+    return this.http.get(paths.CreateSubsidiary,body);
 
+  }
 
 
 
