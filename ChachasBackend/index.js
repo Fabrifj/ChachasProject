@@ -101,6 +101,13 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   res.send(respuesta);
 });
 
+app.put("/api/product/MediaProducto/:idproduct", async (req ,res) => {
+  var idproduct = req.params.idproduct;
+  var body = req.body;
+  var respuesta = await fnProduct.updateProductPriceByMean(idproduct, body);
+  res.send(respuesta);
+});
+
 // CRUD Orders
 
 //Get all orders
