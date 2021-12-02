@@ -154,6 +154,13 @@ app.delete("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+app.get("/api/productTransaction", async (req, res) => {
+  var body = req.body;
+  console.log("entra a la busqueda de transaction product");
+  const prod = await fnProduct.getProductTransaction(body.IdMenu,body.Origen);
+  res.send(prod);
+});
+
 
 /*=================================
           CRUD ORDER
@@ -298,13 +305,40 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-/**
+/**-------------------
+ * -------------------
  * CRUD Transaction
+ * -------------------
  */
-// Create Employee
+// Create Transaccion
 app.post("/api/transaction", async (req, res) => {
   var body = req.body;
   const respuesta = await fnTransaction.createTransaction(body);
+  res.send(respuesta);
+});
+
+// Get Transaction
+app.get("/api/transaction", async (req, res) => {
+  const respuesta = await fnTransaction.getTransactions();
+  res.send(respuesta);
+});
+//Get Transaction by Id
+app.get("/api/transaction/:id", async (req, res) => {
+  const idEmp = req.params.id;
+  const respuesta = await fnTransaction.getTransaction(idEmp);
+  res.send(respuesta);
+});
+//Update Transaction
+app.put("/api/transaction/:id", async (req, res) => {
+  const body = req.body;
+  const idEmp = req.params.id;
+  const respuesta = await fnTransaction.updateTransaction(idEmp, body);
+  res.send(respuesta);
+});
+//Delete Transaction
+app.delete("/api/Transaction/:id", async (req, res) => {
+  const idEmp = req.params.id;
+  const respuesta = await fnTransaction.deleteTransaction(idEmp);
   res.send(respuesta);
 });
 

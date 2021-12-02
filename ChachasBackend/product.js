@@ -1,5 +1,6 @@
 const { firebase,product } = require("./config");
 const fnHerramientas = require('./herramientas');
+const db = firebase.firestore();
 
 //GetAllProducts or the collection
 async function getAllProducts() {
@@ -208,6 +209,18 @@ async function updateMermasProduct(idProd,body) {
   return respuesta;
 }
 
+async function getProductTransaction(idMenu,IdOrigen){
+  var miDoc = null;
+  console.log("entra a la funcion con: ", idMenu, IdOrigen);
+  var nuevo = await getAllProducts()
+    
+  var resultado = nuevo.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
+  
+  console.log("todos los productos",resultado);
+
+  return resultado;
+}
+
 
 module.exports = {
   getAllProducts,
@@ -219,5 +232,6 @@ module.exports = {
   getProductSubsidiaryType,
   getProductSubsidiary,
   createProductType,
-  updateMermasProduct
+  updateMermasProduct,
+  getProductTransaction
 };
