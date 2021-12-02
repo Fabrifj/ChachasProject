@@ -112,9 +112,9 @@ async function getProductById(idproduct) {
     .then((doc) => {
       if (doc.exists) {
         res = { id: doc.id, ...doc.data() };
-        console.log("Informacion de la compra:", doc.data());
+        console.log("Informacion del producto:", doc.data());
       } else {
-        console.log("La compra no existe");
+        console.log("El producto no existe");
       }
     })
     .catch((error) => {
@@ -170,7 +170,7 @@ Generar un metodo para actualizar el costo de un producto
 basandose en la media. (Tomar en cuenta cantidad y costo)
   Lo que nos pasan
     {
-      "CostoUnitario":"",
+      "Costo":"",
       "IdProducto":"",
       "Cantidad":""
     }
@@ -184,12 +184,12 @@ async function updateProductPriceByMean(idproduct, body){
   var productToUpdate = await getProductById(idproduct)//product.doc(idproduct).get().data;
   console.log(productToUpdate);
   if(productToUpdate.Tipo == "InsumoSucursal" || productToUpdate.Tipo == "InsumoFabrica" ){ 
-    costoEstandarizado = (productToUpdate.CantidadMedida * body.CostoUnitario) / body.Cantidad;
+    costoEstandarizado = (productToUpdate.CantidadMedida * body.Costo) / body.Cantidad;
     nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad)
     costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
     //console.log("Costo final: ", costoFinal);
   }else{
-    costoEstandarizado = body.CostoUnitario/body.Cantidad;
+    costoEstandarizado = body.Costo/body.Cantidad;
     nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad);
     costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
     //console.log("Costo final: ", costoFinal);

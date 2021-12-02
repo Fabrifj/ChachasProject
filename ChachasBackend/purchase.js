@@ -1,14 +1,16 @@
+
 const { purchase, firebase } = require('./config');
 const fnHerramientas = require("./herramientas");
 const fnProduct = require("./product");
 
+
 async function getPurchase(idPurchase)
 {
-    return fnHerramientas.getDoc(idPurchase,"Compra");
+    return await fnHerramientas.getDoc(idPurchase,"Compra");
 }
 async function getPurchases()
 {
-    return fnHerramientas.getDocs("Compra");
+    return await fnHerramientas.getDocs("Compra");
 }
 
 /**
@@ -25,17 +27,21 @@ async function getPurchases()
  */
 async function createPurchase(body)
 {
-    body.Fecha = fnHerramientas.stringAFirebaseTimestamp(body.Fecha);
-    var miProd = fnProduct.getProductById(body.IdProducto);
+    console.log("Body: ", body);
+    var fecha = body.Fecha;
+    var nuevaFecha = fnHerramientas.stringAFirebaseTimestamp(fecha);
+    body.Fecha = nuevaFecha;
+    var miProd = await fnProduct.getProductById(body.IdProducto);
+    console.log("MIPRODUCTO: >>>",miProd)
     body.Tipo = miProd.Tipo;
     var updCosto = 
     {
-        "IdProducto":body.IdProducto,
-        "Cantidad":body.Cantidad,
-        "Costo":body.Costo
+        "Cantidad": parseFloat(body.Cantidad),
+        "Costo":parseFloat(body.Costo)
     }
-    //Aqui estaria el metodo de los chicos si tan solo lo hubieran hecho >:(
-    return fnHerramientas.createDoc(body,"Compra");
+    console.log("UPDCOSTO: ",updCosto);
+    fnProduct.updateProductPriceByMean(body.IdProducto, updCosto);
+    return await fnHerramientas.createDoc(body,"Compra");
 }
 async function updatePurchase(idPurchase, body)
 {
@@ -43,11 +49,11 @@ async function updatePurchase(idPurchase, body)
     {
         body.FechaNacimiento = fnHerramientas.stringAFirebaseTimestamp(body.Fecha);
     }
-    return fnHerramientas.updateDoc(idPurchase,body,"Compra");
+    return await fnHerramientas.updateDoc(idPurchase,body,"Compra");
 }
 async function deletePurchase(idPurchase)
 {
-    return fnHerramientas.deleteDoc(idPurchase,"Compra");
+    return await fnHerramientas.deleteDoc(idPurchase,"Compra");
 }
 
 

@@ -13,6 +13,7 @@ const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
+const fnHerramientas = require("./herramientas");
 
 /*=================================
           CRUD PRODUCT
@@ -358,6 +359,20 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
-
+/*===================================
+          ENDPOINT PRUEBA
+===================================*/
+// Create Purchase
+app.post("/api/prueba", async (req, res) => {
+  var body = {
+    "Fecha":"2021-11-25",
+    "IdProducto":"T6lLnsuaDHfDAVW38E2f",
+    "Costo":10,
+    "Cantidad":1000,
+    "Origen":"mAlmWL1myFMGbZW8WHw3"
+  }
+  const respuesta = await fnHerramientas.createDoc(body,"Compra");
+  res.send(respuesta);
+});
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
