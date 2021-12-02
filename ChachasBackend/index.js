@@ -324,7 +324,7 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
 });
 
 /*===================================
-          CRUD EMPLOYEE
+          CRUD PURCHASE
 ===================================*/
 // Create Purchase
 app.post("/api/purchase", async (req, res) => {

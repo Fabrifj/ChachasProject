@@ -18,5 +18,30 @@
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",
-  "DeleteOrder":"/api/order/:idOrder"
+  "DeleteOrder":"/api/order/:idOrder",
+
+  "CreateSubsidiary":"/api/subsidiary",
+  "GetSubsidiary":"/api/subsidiary",
+  "GetSubsidiaryId":"/api/subsidiary/:id",
+  "UpdateSubdidiaryId":"/api/subsidiary/:id",
+  "DeleteSubsidiary":"/api/subsidiary/:id",
+
+  "CreateMenu":"/api/menu",
+  "GetMenus":"/api/menu",
+  "GetMenuName":"/api/menu/getMenuName",
+  "UpdateMenu":"/api/menu/:id",
+  "DeleteMenuId":"/api/menu/:id",
+
+  "CreateEmployee":"/api/employee",
+  "GetEmployees":"/api/employee",
+  "GetEmployeeId":"/api/employee/:id",
+  "UpdateEmployee":"/api/employee/:id",
+  "UpdatePasswordEmployee":"/api/employee",
+  "DeleteEmployee":"/api/subsidiary/:id",
+
+  "CreatePurchase":"/api/purchase",
+  "GetPurchases":"/api/purchase",
+  "GetPurchase":"/api/purchase/:id",
+  "UpdatePurchase":"/api/purchase/:id",
+  "DeletePurchase":"/api/subsidiary/:id"
 }
