@@ -1,12 +1,23 @@
 <div class="inventarySection">
+    
+    
     <div class="drinkSection">
+        <h1>Tabla de los Refrescos</h1>
         <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
         </app-reusable-table>
 
     </div>
 
+    
+    <div class="insumoSucSection">
+        <h1>Tabla de los insumos de sucursal</h1>
+        <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+
+    </div>
     <div class="sauceSection">
-        <app-reusable-table [datos]="infoIns" [columnas]="columnsIns" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
+        <h1>Tabla de las Salsas</h1>
+        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
 
         </app-reusable-table>
 
@@ -14,6 +25,7 @@
     </div>
 
     <div class="productSection">
+        <h1>Tabla de las Chachas</h1>
         <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
         </app-reusable-table>
 
@@ -70,8 +82,8 @@
         
 
         <app-reusable-table 
-        [datos]="infoIns" 
-        [columnas]="columnsInsMini" 
+        [datos]="infoInsFab" 
+        [columnas]="columnsInsFabMini" 
         (parentMethod) = "functionChooseObj($event)"
         colorLetra="black"
         [titulosTextos]="titlesProd"
@@ -215,10 +227,17 @@
     
     <h1>My First Google Map</h1>
     
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30602.465332490927!2d-68.1468436!3d-16.5105328!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f2070095bc74b%3A0xde9811e47e71159a!2sLas%20Chachas!5e0!3m2!1ses-419!2sbo!4v1638370285489!5m2!1ses-419!2sbo" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <iframe
+        width="600"
+        height="450"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDBEvNvM5Wwr9l5lUggHeBYmQxuQXifBeY
+            &q=Space+Needle,Seattle+WA">
+    </iframe>
     
-    
-
+   
 
 
     <div class="botones">
