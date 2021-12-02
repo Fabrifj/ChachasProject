@@ -14,6 +14,7 @@
   "UpdateProductAfterSales":"/api/product/afterSale/:idproduct",
   "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
   "DeleteProduct":"/api/product/:idproduct",
+  "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",

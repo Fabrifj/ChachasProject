@@ -75,7 +75,13 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   res.send(respuesta);
 });
 
-
+// Endpoint to update product cost and inventory by mean
+app.put("/api/product/costInventoryByMean/:idproduct", async (req ,res) => {
+  var idproduct = req.params.idproduct;
+  var body = req.body;
+  var respuesta = await fnProduct.updateProductPriceByMean(idproduct, body);
+  res.send(respuesta);
+});
 
 //Create generic product
 app.post("/api/product", async (req, res) => {

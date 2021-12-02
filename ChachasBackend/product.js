@@ -165,6 +165,45 @@ async function getProductSubsidiary(idSub) {
   console.log(list);
   return list;
 }
+/*
+Generar un metodo para actualizar el costo de un producto
+basandose en la media. (Tomar en cuenta cantidad y costo)
+  Lo que nos pasan
+    {
+      "CostoUnitario":"",
+      "IdProducto":"",
+      "Cantidad":""
+    }
+*/
+
+async function updateProductPriceByMean(idproduct, body){
+  var res = null;
+  var costoFinal = 0;
+  var costoEstandarizado = 0;
+  var nuevaCantidadInventarioTotal = 0;
+  var productToUpdate = await getProductById(idproduct)//product.doc(idproduct).get().data;
+  console.log(productToUpdate);
+  if(productToUpdate.Tipo == "InsumoSucursal" || productToUpdate.Tipo == "InsumoFabrica" ){ 
+    costoEstandarizado = (productToUpdate.CantidadMedida * body.CostoUnitario) / body.Cantidad;
+    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad)
+    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+    //console.log("Costo final: ", costoFinal);
+  }else{
+    costoEstandarizado = body.CostoUnitario/body.Cantidad;
+    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad);
+    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+    //console.log("Costo final: ", costoFinal);
+  }
+  console.log("nuevaCantidadInvetario: ", nuevaCantidadInventarioTotal)
+  console.log("Costo final: ", costoFinal)
+  
+  await product.doc(idproduct).set({
+   "CantidadInventario": nuevaCantidadInventarioTotal, 
+   "Costo": costoFinal
+  }, { merge: true });
+  res = await getProductById(idproduct);
+  return res;
+}
 
 //Update mermas of an product
 /*
@@ -218,6 +257,7 @@ module.exports = {
   updateProductAfterSale,
   getProductSubsidiaryType,
   getProductSubsidiary,
+  updateProductPriceByMean,
   createProductType,
   updateMermasProduct
 };
