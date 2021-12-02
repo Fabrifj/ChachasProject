@@ -12,6 +12,7 @@ const fnProduct = require("./product");
 const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
+const fnPurchase = require("./purchase");
 
 /*=================================
           CRUD PRODUCT
@@ -21,6 +22,25 @@ const fnEmployee = require("./employee");
 app.get("/api/product", async (req, res) => {
   const products = await fnProduct.getAllProducts();
   res.send(products);
+});
+
+app.post("/api/product/refresco", async (req, res) => {
+  var newproduct = req.body;
+  const response = await fnProduct.createProduct(newproduct);
+  res.send(response);
+});
+
+app.delete("/api/product/:idproduct", async (req, res) => {
+  var productToDelete = req.params.idproduct;
+  const response = await fnProduct.deleteProduct(productToDelete);
+  res.send(response);
+});
+
+app.put("/api/product/:idproduct", async (req, res) => {
+  var productToUpdate = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateProduct(productToUpdate, body);
+  res.send(response);
 });
 
 //Get a product by its ID
@@ -303,6 +323,41 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
+/*===================================
+          CRUD PURCHASE
+===================================*/
+// Create Purchase
+app.post("/api/purchase", async (req, res) => {
+  var body = req.body;
+  const respuesta = await fnPurchase.createPurchase(body);
+  res.send(respuesta);
+});
+
+// Get Purchase
+app.get("/api/purchase", async (req, res) => {
+  const respuesta = await fnPurchase.getPurchases();
+  res.send(respuesta);
+});
+//Get Purchase by Id
+app.get("/api/purchase/:id", async (req, res) => {
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.getPurchase(idPur);
+  res.send(respuesta);
+});
+//Update Purchase
+app.put("/api/purchase/:id", async (req, res) => {
+  const body = req.body;
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.updatePurchase(idPur, body);
+  res.send(respuesta);
+});
+
+//Delete Purchase
+app.delete("/api/subsidiary/:id", async (req, res) => {
+  const idPur = req.params.id;
+  const respuesta = await fnPurchase.deletePurchase(idPur);
+  res.send(respuesta);
+});
 
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
