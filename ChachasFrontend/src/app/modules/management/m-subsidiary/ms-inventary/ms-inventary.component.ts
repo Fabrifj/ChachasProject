@@ -15,7 +15,7 @@ export class MsInventaryComponent implements OnInit {
   
   [
     {
-    "Id":"BCHEBCOOkkkBDOH",
+    "Id":"JHI",
     "Tipo":"Chacha",
     "IdMenu":"Chacha de aji", //Esto representa a la Chacha de Carne 
     "Origen": "ID-SUCURSAL",
@@ -24,7 +24,7 @@ export class MsInventaryComponent implements OnInit {
     "Cantidad":16
   },
   {
-    "Id":"BCHEBCOOkkkBDOH",
+    "Id":"JHI",
     "Tipo":"Chacha",
     "IdMenu":"Chacha charque" ,//Esto representa a la Chacha de Carne 
     "Origen": "ID-SUCURSAL",
@@ -39,7 +39,7 @@ export class MsInventaryComponent implements OnInit {
 experimentDrink =
   
   [
-    {
+  {
     "Id":"BCHEBCOOkkkBDOH",
     "Tipo":"Refresco",
     "Nombre":"Sprite", //Esto representa a la Chacha de Carne 
@@ -66,7 +66,7 @@ experimentIns =
   [
     
   {
-    "Id":"BCHEBCOOkkkBDOH",
+    "Id":"BCH",
 	"Tipo":"Insumo",  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
 	"Nombre":"Aceite",
 	"Origen": "ID-SUCURSAL",
@@ -76,7 +76,7 @@ experimentIns =
 	"TipoUnidad":"ml"
 },
   {
-    "Id":"BCHEBCOOkkkBDOH",
+    "Id":"BCH",
 	"Tipo":"Insumo",  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
 	"Nombre":"Salsa picante",
 	"Origen": "ID-SUCURSAL",
@@ -87,11 +87,41 @@ experimentIns =
 
 
 ]
+
+
+
+
+
+experimentSub =
+  
+  [
+    
+  {
+    "id":"jajajask", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
+	"Nombre":"sucursal 1",
+    "ubicacion": "avenida 2"
+},
+{
+  "id":"skji", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
+"Nombre":"sucursal 2" ,
+"ubicacion": "avenida 2"
+
+},
+{
+  "id":"smm", //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
+"Nombre":"sucursal 3",
+"ubicacion": "avenida 2"
+
+}
+
+
+]
+  
   
   
   
   selectedObject:any = {}
-
+  selectedInfo:any = {}
   
 
   infoProd: any | undefined;
@@ -99,21 +129,18 @@ experimentIns =
   columnsProd = [
     {field:'IdMenu',header:'Nombre'},
     {field:'Costo',header:'Costo'},
-   
     {field:'Precio',header:'Precio'},
     {field:'Cantidad',header:'Cantidad'}
-  
-    
 
   ];
 
-  columnsProdTransaction = [
+  columnsProdMini = [
     {field:'IdMenu',header:'Nombre'},
-    {field:'Cantidad',header:'Cantidad'}
-  
-    
+    {field:'Cantidad',header:'Cantidad en esta sucursal'}
 
   ];
+
+ 
 
   infoIns: any | undefined;
   columnsIns = [
@@ -125,6 +152,12 @@ experimentIns =
   
    // {field:'Imagen',header:'Imagen'}
     
+
+  ];
+
+  columnsInsMini = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Cantidad en esta sucursal'}
 
   ];
 
@@ -141,18 +174,43 @@ experimentIns =
 
   ];
 
+
+
+  infoSub: any | undefined;
+  columnsSub = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Cantidad Inventario'},
+    {field:'CantidadMedida',header:'Cantidad Medida'},
+    {field:'TipoUnidad',header:'Tipo Unidad'},
+    {field:'Costo',header:'Costo'}
+  
+   // {field:'Imagen',header:'Imagen'}
+    
+
+  ];
+
+
   nameProdButtons: string[]= ["Registrar Merma"];
-  nameDrinkButtons: string[] = ["Aumentar Cantidad Refrescos"];
-  nameInsButtons: string[] = ["Aumentar Cantidad Insumos"];
+  nameDrinkButtons: string[] = ["Registrar Compra"];
+  nameInsButtons: string[] = ["Registrar Consumo Insumo"];
+
+
+  titlesProd:string [] = ['Cantidad para sucursal'];
+  todayDate:string="";
+
+
+  selectedValue:any;
   constructor(public modalService:ModalService) { }
 
   ngOnInit(): void {
 
 
     //
+    this.todayDate = new Date().toLocaleDateString();
     this.getProducts();
     this.getDrink();
     this.getSauce();
+    this.getSubsidiaries();
 
   }
 
@@ -178,8 +236,12 @@ experimentIns =
       console.log()
   }
 
+  getSubsidiaries(){
 
+    this.infoSub = JSON.parse(JSON.stringify(this.experimentSub));
 
+      console.log(this.infoSub);
+  }
 
   //function register merma
   functionChooseObj(response:any){
@@ -192,18 +254,34 @@ experimentIns =
         this.modalService.abrir("modalMerma-01");
 
     }
-    else if (response[0] == "Aumentar Cantidad Refrescos")
+    else if (response[0] == "Registrar Compra")
     {
       this.modalService.abrir("modalStock-01");
     }
-    else if (response[0] == "Aumentar Cantidad Insumos")
+    else if (response[0] == "Registrar Consumo Insumo")
     {
       this.modalService.abrir("modalIns-01");
+    }
+    else if (response[0] == 'GuardarTodo'){
+      this.selectedObject = []
+      let indice = response[2];
+      this.selectedInfo[indice] = response[1]
+      console.log("Informacion:",this.selectedInfo)
     }
 
   }
 
-  
+
+  assignCorporationToManage(selectedValue:any) {
+    console.log(selectedValue)
+  }
+
+
+  sendTransaction(){
+    
+  }
+
+ 
 
 
 }

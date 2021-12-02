@@ -21,6 +21,8 @@ export class ReusableTableComponent implements OnInit {
   @Input() titulosTextos :string[] = [];
 
   @Input() botonGuardarDatos : string="no";
+
+
   
   @Output() parentMethod = new EventEmitter<any>();
 
@@ -50,13 +52,6 @@ export class ReusableTableComponent implements OnInit {
 
    });
 
-
-   
-  
-
-
-   
-   
     /*for (let i =0 ; i< elem.length ; i++){
         console.log(i);
         const e = elem[i];
@@ -102,7 +97,7 @@ export class ReusableTableComponent implements OnInit {
     
     console.log(this.misDatos);
 
-    this.parentMethod.emit(['GuardarTodo',this.misDatos])
+    this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }
 
   getId(j:any,i:any){

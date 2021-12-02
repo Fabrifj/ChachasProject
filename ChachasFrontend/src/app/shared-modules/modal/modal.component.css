@@ -10,12 +10,14 @@ jw-modal .jw-modal {
     z-index: 1000;
     overflow: auto;
     padding: 20px;
-    background-color:#dcc865; 
+    background-color: white; 
     background-size: cover;
     margin: 40px;
     width: 60%;
     height: 80%;
     justify-content: center ;
+    box-shadow: 5px 5px 5px 1px gray;
+
     
     
 }
