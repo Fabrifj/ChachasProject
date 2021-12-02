@@ -33,17 +33,61 @@
 <!--   boton realizar transaccion -->
 <jw-modal id="modalTransaction-01" altura="80" ancho="80">
 
-    <h1>Modal Transaccion:</h1>
+    <div class="modal-header">
+     
+    <h2>Seleccione a quien desea mandar:</h2>
+            
+    <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue" >
+        <option selected>None</option>
+        <option *ngFor="let sucursal of infoSub;">{{sucursal.Nombre}}</option>
+        
+    </select>
+    
+            <p>{{selectedValue}}</p>
+        
+        <h2>Fecha de hoy:</h2>
+        <h3>{{todayDate}}</h3>
 
-    <div class="miniTable">
-        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdTransaction" colorLetra="black" altura="50">
-        </app-reusable-table>
+        
+
     </div>
+    
+    <div class="modal-body">
+        
+        <h2>Productos chachas:</h2>
 
+        
+
+        <app-reusable-table 
+        [datos]="infoProd" 
+        [columnas]="columnsProdMini" 
+        (parentMethod) = "functionChooseObj($event)"
+        colorLetra="black"
+        [titulosTextos]="titlesProd"
+        botonGuardarDatos = 'si'
+        indice= "4">
+        </app-reusable-table> 
+        
+
+        <app-reusable-table 
+        [datos]="infoIns" 
+        [columnas]="columnsInsMini" 
+        (parentMethod) = "functionChooseObj($event)"
+        colorLetra="black"
+        [titulosTextos]="titlesProd"
+        botonGuardarDatos = 'si'
+        indice="5">
+        </app-reusable-table> 
+        
+    </div>
     <div class="botones">
-        <button class="btnSend" (click)="modalService.abrir('modalConfirmation');">Mandar</button>
-        <button class="btnCerrar" (click)="modalService.cerrar('modalTransaction-01');">Cancelar</button>
+
+        <div class="botones">
+            <button class="btnSend" (click)="modalService.abrir('modalConfirmation');">Mandar</button>
+            <button class="btnCerrar" (click)="modalService.cerrar('modalTransaction-01');">Cancelar</button>
+        </div>
     </div>
+    
 </jw-modal>
 
 
@@ -157,9 +201,25 @@
     <h1>Subsidiaries:</h1>
 
     <div class="miniTable">
-        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdTransaction" colorLetra="black" altura="50">
+        <app-reusable-table 
+        [datos]="infoSub" 
+        [columnas]="columnsSub" 
+        colorLetra="black" 
+        altura="50"
+        indice="6">
         </app-reusable-table>
     </div>
+
+
+  
+    
+    <h1>My First Google Map</h1>
+    
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30602.465332490927!2d-68.1468436!3d-16.5105328!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f2070095bc74b%3A0xde9811e47e71159a!2sLas%20Chachas!5e0!3m2!1ses-419!2sbo!4v1638370285489!5m2!1ses-419!2sbo" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    
+    
+
+
 
     <div class="botones">
 
