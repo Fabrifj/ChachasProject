@@ -375,48 +375,53 @@ export class MsInventaryComponent implements OnInit {
       }
     });
 
-    var listaProdSend :any = {}
-    let i = 0 ;
+    var listaProdSend :any = [];
+   
     this.selectedInfo[5].forEach((producto:any) => {
       if(producto.CantidadParaSucursal != "0"){
-      var auxListProd :any = {}
+      
+     
       console.log("==>" , producto.IdMenu);
-      auxListProd.IdProducto =producto.id;
-      auxListProd.Tipo = "Chacha";
-      auxListProd.Cantidad = producto.CantidadParaSucursal;
-      auxListProd.NombreProducto = producto.IdMenu;
 
-      listaProdSend[i] = auxListProd;
-      i++;
+
+      listaProdSend.push({
+        IdProducto:producto.id,
+        Tipo : "Chacha",
+        IdMenu:producto.IdMenu,
+        Cantidad: producto.CantidadParaSucursal,
+        NombreProducto :producto.IdMenu
+
+      });
+      
 
       }
     });
     this.selectedInfo[6].forEach((producto:any) => {
       console.log("==>" , producto.Nombre);
      if(producto.CantidadParaSucursal != "0"){
-
-      var auxListProd :any = {}
       
-      auxListProd.IdProducto =producto.id;
-      auxListProd.Tipo = "InsumoFabrica";
-      auxListProd.Cantidad = producto.CantidadParaSucursal;
-      auxListProd.CantidadMedida = producto.CantidadMedida;
-      auxListProd.TipoUnidad = producto.TipoUnidad;
-      auxListProd.NombreProducto = producto.Nombre;
+      listaProdSend.push({
+        
+        IdProducto:producto.id,
+        Tipo : "InsumoFabrica",
+        Cantidad: producto.CantidadParaSucursal,
+        CantidadMedida : producto.CantidadMedida,
+        TipoUnidad : producto.TipoUnidad,
+        NombreProducto : producto.Nombre
 
-      listaProdSend[i]=auxListProd;
-      i++;
+      });
+    
 
      }
       
     });
 
-    var listaProdSend2 :any = {}
-    listaProdSend2 = JSON.stringify(listaProdSend)
+    var listaProdSend2 :any = []
+    listaProdSend2 = listaProdSend;
     console.log("lis", listaProdSend)
 
     var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend2 })
-    this.createTransaction(transaction);
+    this.createTransaction(JSON.parse(transaction));
 
   }
 
