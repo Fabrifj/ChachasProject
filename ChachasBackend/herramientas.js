@@ -1,11 +1,41 @@
 const firebase = require('firebase')
 const db = firebase.firestore();
 function stringAFecha(fecha) {
-  var parts = fecha.split("-");
-  // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-  // January - 0, February - 1, etc.
-  var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
-  return mydate;
+  var myDate = null;
+  if(fecha.includes("T"))
+  {
+    myDate =  new Date(fecha);
+  
+  }else
+  {
+    var parts = fecha.split("-");
+    // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+    // January - 0, February - 1, etc.
+    myDate = new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
+  
+  return myDate;
+}
+
+function stringAFirebaseTimestamp(fecha)
+{
+  const timestamp = firebase.firestore.Timestamp.fromDate(stringAFecha(fecha));
+  return timestamp;
+}
+function dateAFirebaseTimestamp(date)
+{
+  const timestamp = firebase.firestore.Timestamp.fromDate(date);
+  return timestamp;
+}
+//Create doc
+async function createDoc(data, nombreEntidad){
+  await db.collection(nombreEntidad).add(data);
+  respuesta = {
+    "Mensaje" : `${nombreEntidad} agregado correctamente`,
+    "Elemento": data
+  }
+  return respuesta;
 }
 //Get all docs
 async function getDocs(nombreEntidad){
@@ -66,10 +96,25 @@ async function deleteDoc(idDoc,nombreEntidad) {
   });
   return respuesta;
 }
+//CrearDoc
+async function createDoc(data, nombreEntidad){
+  await db.collection(nombreEntidad).add(data);
+  respuesta = {
+    "Mensaje" : `${nombreEntidad} agregado correctamente`,
+    "Elemento": data
+  }
+  return respuesta;
+}
+
+
+
 module.exports = {
   stringAFecha,
   updateDoc,
   deleteDoc,
   getDoc,
-  getDocs
+  getDocs,
+  createDoc,
+  stringAFirebaseTimestamp,
+  dateAFirebaseTimestamp
 };

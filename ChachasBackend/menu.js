@@ -62,7 +62,7 @@ async function getMenuName(men) {
     "Nombre": "Chacha de Carne",
     "ImgURL":""
  }
- * 
+ *
  * @returns
  */
 

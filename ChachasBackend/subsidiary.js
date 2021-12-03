@@ -3,11 +3,11 @@ const fnHerramientas = require("./herramientas");
 
 async function getSubsidiaries()
 {
-    return fnHerramientas.getDocs("Sucursal");
+    return await fnHerramientas.getDocs("Sucursal");
 }
 async function getSubsidiary(idSubsidiary)
 {
-    return fnHerramientas.getDoc(idSubsidiary,"Sucursal");
+    return await fnHerramientas.getDoc(idSubsidiary,"Sucursal");
 }
 //CrearCategoria
 /**
@@ -43,11 +43,11 @@ async function createSubsidiary(body){
 
 async function updateSubsidiary(idSubsidiary, body)
 {
-    return fnHerramientas.updateDoc(idSubsidiary,body,"Sucursal");
+    return await fnHerramientas.updateDoc(idSubsidiary,body,"Sucursal");
 }
 async function deleteSubsidiary(idSubsidiary)
 {
-    return fnHerramientas.deleteDoc(idSubsidiary,"Sucursal");
+    return await fnHerramientas.deleteDoc(idSubsidiary,"Sucursal");
 }
 
 

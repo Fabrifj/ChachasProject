@@ -24,6 +24,7 @@ Producto
 	],
 	"Costo":7,
 	"CantidadInventario":500,
+  "CantidadMinima":
 },
 
 {
@@ -33,30 +34,48 @@ Producto
 	"Origen": "ID-SUCURSAL",
 	"Costo":7,
 	"Precio":10,
-	"Cantidad":16,
+	"CantidadInventario":16,
 	"Mermas":
 	[
-		
-	]
+    {
+      "Fecha":"",
+      "Cantidad":"""
+    }    
+	],
+  "CantidadMinima":
 },
+
 {
 	"Id":"BCHEBCOOkkkBDOH",
-	"Tipo":"Refresco"
+	"Tipo":"Refresco" //Puede ser refresco o aceite
 	"Nombre":"Coca-Cola" 
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,
 	"Precio":13,
-	"Cantidad":20
+	"CantidadInventario":20,
+  "CantidadMinima":
 },
 {
 	"Id":"BCHEBCOOkkkBDOH",
-	"Tipo":"Ingrediente"  //Puede ser tambien alguna salsa MEJOR QUE SEA INSUMO
-	"Nombre":"Aceite"
+	"Tipo":"InsumoSucursal" //Estos se compra la sucursal
+	"Nombre":"Aceite" 
+	"Origen": "ID-SUCURSAL",
+	"Costo":10,
+	"CantidadInventario":1600,
+	"CantidadMedida":900,
+	"TipoUnidad":"ml",
+  "CantidadMinima":
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"InsumoFabrica"  //Estos se proveen de la fabrica
+	"Nombre":"Salsa Picante"
 	"Origen": "ID-SUCURSAL",
 	"Costo":7,
-	"CantidadInventario":1600
+	"CantidadInventario":1600,
 	"CantidadMedida":900,
-	"TipoUnidad":"ml"
+	"TipoUnidad":"ml",
+  "CantidadMinima":
 }
 =========================================================================
 
@@ -135,15 +154,51 @@ Pedido:
 =========================================================================
 Empleado:
 {
-    "Cuenta":"Stephany123",
+    "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
     "Password":"Pass123",
     "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
-    "CI":"6793482",
     "Cargo":"Chef",
 }
+=========================================================================
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"//O puede ser "InsumoSucursal"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",
+	"Costo":200,
+	"Cantidad":10,//Lo que se introduzca tiene que estar medido como su producto
+	"Origen":"ID-SUCURSAL",
+},
 
-
-
+=========================================================================
+Transaccion
+{
+	"Id":"",
+	"Fecha":"2020-03-23"
+	"IdOrigen":"",
+	"IdDestino":""
+	"ListaProductos":
+	[
+		{
+			"IdProducto":"",
+			"Tipo":"Chacha" //O tipo Refresco, porque se miden unitariamente
+			"Cantidad":,
+			"NombreProducto":,
+		},
+		{
+			"IdProducto":"",
+			"Tipo":"InsumoFabrica"//O tipo InsumoSucursal, porque se miden NO unitariamente
+			"CantidadMedida":1000,
+			"TipoUnidad":"ml",
+			"NombreProducto":"Salsa Picante"
+		}
+	]
+}//Preguntarle al Inge
+=========================================================================
+Pedido/Confirmacion para el siguiente modulo
+=========================================================================
