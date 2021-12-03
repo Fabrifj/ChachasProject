@@ -1,10 +1,11 @@
 {
-  "name": "Chachas-Backend",
+  "name": "chachas-backend",
   "version": "1.0.0",
   "description": "Guide for the installation of the needed tools.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve" : "nodemon index.js"
   },
   "keywords": [],
   "author": "",
