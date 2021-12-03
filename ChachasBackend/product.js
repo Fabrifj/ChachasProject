@@ -1,5 +1,6 @@
 const { firebase,product } = require("./config");
 const fnHerramientas = require('./herramientas');
+const db = firebase.firestore();
 
 //GetAllProducts or the collection
 async function getAllProducts() {
@@ -271,6 +272,26 @@ async function updateExpenseSupplySubsidiary(idProducto, body)
 
 }
   
+async function getProductTransaction(idMenu,IdOrigen){
+  var miDoc = null;
+  console.log("entra a la funcion con: ", idMenu, IdOrigen);
+  var productos = await getAllProducts();
+  var resultado = null;
+
+  productos.forEach(async (producto) => {
+    //console.log(producto.Origen);
+    if(producto.Origen == IdOrigen && producto.IdMenu == idMenu && producto.Tipo == "Chacha"){
+      resultado = producto;
+    }
+  });
+  
+  //var resultado = productos.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
+  console.log("El producto",resultado);
+
+  return resultado;
+}
+
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -283,5 +304,6 @@ module.exports = {
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
-  updateExpenseSupplySubsidiary
+  updateExpenseSupplySubsidiary,
+  getProductTransaction
 };
