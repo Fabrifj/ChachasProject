@@ -41,6 +41,10 @@ import { SidenavComponent } from './modules/sidenav/sidenav.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppHttpService } from './services/app-http.service';
+import { AgmCoreModule } from '@agm/core';
+
+
+
 
 @NgModule({
   declarations: [
@@ -78,7 +82,10 @@ import { AppHttpService } from './services/app-http.service';
     MatListModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
+    })
   ],
   providers: [AppHttpService],
   bootstrap: [AppComponent]

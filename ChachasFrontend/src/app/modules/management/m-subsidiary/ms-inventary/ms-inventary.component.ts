@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/services/app-http.service';
@@ -85,16 +85,25 @@ export class MsInventaryComponent implements OnInit {
   infoSub: any | undefined;
   columnsSub = [
     {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Stock en Inventario'},
-    {field:'CantidadMedida',header:'Cantidad Medida'},
-    {field:'TipoUnidad',header:'Tipo Unidad'},
-    {field:'Costo',header:'Costo'}
+    {field:'Direccion',header:'Direccion'},
+    {field:'Departamento',header:'Departamento'},
+    {field:'Telefono',header:'Telefono'}
   
    // {field:'Imagen',header:'Imagen'}
     
-
   ];
 
+  infoSubs :any = [];
+  columnsSubs = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'Direccion',header:'Direccion'},
+    {field:'Departamento',header:'Departamento'},
+    {field:'Telefono',header:'Telefono'},
+    {field:'infoInventario',header:'Producto => Stock Inventario'}
+  
+   // {field:'Imagen',header:'Imagen'}
+    
+  ];
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
@@ -109,6 +118,13 @@ export class MsInventaryComponent implements OnInit {
 
 
   idSubsidiary:any ="";
+
+
+
+  latitude:any="";
+  longitude:any="";
+  zoom=17;
+
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
 
@@ -134,11 +150,20 @@ export class MsInventaryComponent implements OnInit {
     //get all productos
     this.getProductsBySubsidiary();
     //get chachas
-    this.getProdChachas()
+    this.getProdChachas();
 
 
     
+
+
+      this.latitude = -16.489689;
+      this.longitude= -68.119293;
+    
   }
+
+  
+
+
 
   getProducts(){
 
@@ -181,14 +206,10 @@ export class MsInventaryComponent implements OnInit {
     var id = this.idSubsidiary;
     
     this.serviceHttp.getProductsBySubsidiaryAndType(id,"Chacha").subscribe((jsonFile:any)=>{
-     
       console.log("las chachas son",jsonFile);
       this.infoProd =jsonFile;
-      
-
     } ,(error)=>{
-        console.log("hubo error con productos")
-
+        console.log("hubo error con productos");
     } )
 
   }
@@ -250,6 +271,7 @@ export class MsInventaryComponent implements OnInit {
       console.log("las sucursales son son",jsonFile);
       this.infoSub =jsonFile;
       
+      this.getProductsOfSucursales();
 
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -305,20 +327,65 @@ export class MsInventaryComponent implements OnInit {
   }
 
 
-  assignCorporationToManage(selectedValue:any) {
-    console.log(selectedValue)
-  }
-
-
   sendTransaction(){
     
   }
 
+  getProductsOfSucursales(){
 
-  // Initialize and add the map
-    
+    console.log("Infosub 2", this.infoSub);
+   
+    let i =0;
+    this.infoSub.forEach((element:any) => {
+      
+      if(this.idSubsidiary != element.Id ){
 
- 
+        var auxinfoSubs :any ={};
+        auxinfoSubs.Nombre = element.Nombre;
+        auxinfoSubs.Direccion = element.Direccion;
+        auxinfoSubs.Departamento=element.Departamento;
+        auxinfoSubs.Telefono= element.Telefono;
+
+
+
+        var chachas:any ;
+        var salsas:any ;
+        this.serviceHttp.getProductsBySubsidiaryAndType(element.Id,"Chacha").subscribe((jsonFile:any)=>{
+          var datos = jsonFile;
+          
+          console.log("datos chacha",datos);
+          /*jsonFile.forEach((chacha:any) => {
+            chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " ]";
+          });*/
+        } ,(error)=>{
+            console.log("hubo error chachas de otros");
+        } );
+        this.serviceHttp.getProductsBySubsidiaryAndType(element.Id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+          
+          var datos = jsonFile;
+          console.log("datos insumo fabrica",datos);
+         /* jsonFile.forEach((salsa:any) => {
+            chachas = chachas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " ]";
+          });*/
+        } ,(error)=>{
+            console.log("hubo error con salsas de otros");
+        } )
+
+
+        auxinfoSubs.infoInventario = chachas;
+
+        console.log("auxinfo",auxinfoSubs);
+        this.infoSubs[i] = auxinfoSubs;
+        i++;
+      }
+     
+      
+      
+    });
+
+
+  }
+
 
 
 }
