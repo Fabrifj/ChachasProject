@@ -2,19 +2,20 @@ const firebase = require('firebase')
 const db = firebase.firestore();
 function stringAFecha(fecha) {
   var myDate = null;
-  if(fecha.includes("T"))
+  if(fecha != null)
   {
-    myDate =  new Date(fecha);
-  
-  }else
-  {
-    var parts = fecha.split("-");
-    // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-    // January - 0, February - 1, etc.
-    myDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    if(fecha.includes("T"))
+    {
+      myDate =  new Date(fecha);
+    
+    }else
+    {
+      var parts = fecha.split("-");
+      // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+      // January - 0, February - 1, etc.
+      myDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    }
   }
-
-  
   return myDate;
 }
 

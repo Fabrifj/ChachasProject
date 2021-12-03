@@ -47,7 +47,7 @@ Producto
 
 {
 	"Id":"BCHEBCOOkkkBDOH",
-	"Tipo":"Refresco" //Puede ser refresco o aceite
+	"Tipo":"Refresco" //Puede ser refresco
 	"Nombre":"Coca-Cola" 
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,
