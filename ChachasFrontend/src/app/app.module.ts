@@ -32,14 +32,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
-
-
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-
 import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppHttpService } from './services/app-http.service';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
@@ -92,7 +88,7 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
   exports:[CatalogCardComponent],
 
   providers: [AppHttpService],
-s
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
