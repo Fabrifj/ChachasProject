@@ -15,6 +15,7 @@
   "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
   "DeleteProduct":"/api/product/:idproduct",
   "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
+  "UpdateExpenseSupplySubsidiary":"/api/product/expense/:idproduct",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",
