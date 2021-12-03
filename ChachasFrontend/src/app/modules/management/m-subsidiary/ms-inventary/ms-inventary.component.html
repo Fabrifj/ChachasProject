@@ -209,13 +209,13 @@
 
 
 <!--   boton ver sucursales -->
-<jw-modal id="modalSubsidiaries-01" altura="60" ancho="80">
+<jw-modal id="modalSubsidiaries-01" altura="90" ancho="90">
     <h1>Subsidiaries:</h1>
 
     <div class="miniTable">
         <app-reusable-table 
-        [datos]="infoSub" 
-        [columnas]="columnsSub" 
+        [datos]="infoSubs" 
+        [columnas]="columnsSubs" 
         colorLetra="black" 
         altura="50"
         indice="6">
@@ -225,19 +225,13 @@
 
   
     
-    <h1>My First Google Map</h1>
-    
-    <iframe
-        width="600"
-        height="450"
-        style="border:0"
-        loading="lazy"
-        allowfullscreen
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDBEvNvM5Wwr9l5lUggHeBYmQxuQXifBeY
-            &q=Space+Needle,Seattle+WA">
-    </iframe>
-    
-   
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
+
+        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude">
+
+
+        </agm-marker>
+    </agm-map>
 
 
     <div class="botones">

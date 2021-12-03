@@ -38,10 +38,14 @@ import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppHttpService } from './services/app-http.service';
+import { AgmCoreModule } from '@agm/core';
+
+
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -82,9 +86,12 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
     MatListModule,
     NgbModule,
     CommonModule,
-    FormsModule,
-    HttpClientModule
-  ],  
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
+    })
+  ],
+  
   exports:[CatalogCardComponent],
 
   providers: [AppHttpService],
