@@ -30,7 +30,26 @@ export class AppHttpService {
 
   }
 
-  
+  postProductRefresco(body:any){
+    
+    return this.http.post(paths.CreateProductRefresco,body);
+
+  } 
+  updateMerma(idProd:any , body:any){
+    
+    return this.http.put(paths.UpdateMermasOfAProduct+idProd,body);
+
+  }
+  postInsumoSucursal(body:any){
+    
+    return this.http.post(paths.CreateProductInsumoSucursal,body);
+
+  }
+  postInsumoFabrica(body:any){
+    
+    return this.http.post(paths.CreateProductInsumoFabrica,body);
+
+  }
 
   //Sucursal
   getSubsidiary(){
