@@ -35,15 +35,21 @@ import { MatListModule } from '@angular/material/list';
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
 
 import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
-import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { AppHttpService } from './services/app-http.service';
 import { AgmCoreModule } from '@agm/core';
 
 
+import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
+import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
+
+import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -60,16 +66,18 @@ import { AgmCoreModule } from '@agm/core';
     ProducInventoryComponent,
     ListSubMenuComponent,
     ComSubMenuComponent,
-    ModalComponent,
-    
+    ModalComponent,    
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
     ReusableTableComponent,
-    
-  
+    DisplayOrderInfoComponent,
+    CatalogCardComponent,
+    ClientInfoComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -81,13 +89,17 @@ import { AgmCoreModule } from '@agm/core';
     MatDividerModule,
     MatListModule,
     NgbModule,
-    FormsModule,
+    CommonModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
     })
   ],
+  
+  exports:[CatalogCardComponent],
+
   providers: [AppHttpService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
