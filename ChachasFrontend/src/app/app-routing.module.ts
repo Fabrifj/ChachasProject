@@ -6,7 +6,10 @@ import { FactoryComponent } from './modules/factory/factory.component';
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/login/login.component';
 import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
+import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
+import { CatalogComponent } from './shared-modules/catalog/catalog.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
+import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 
@@ -18,7 +21,19 @@ const routes: Routes = [
     path: 'subsidiary', 
     component: SubsidiaryComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
+      {path: '', redirectTo: 'sales', pathMatch: 'full'},
+      { 
+        path: 'sales', 
+        component: SalesComponent,
+        children:[
+          {path: '', redirectTo: 'catalog', pathMatch: 'full'},
+          {path: 'catalog', component: CatalogComponent},
+          {path: 'display-order', component: DisplayOrderInfoComponent},
+          {path: 'client-info', component: ClientInfoComponent},
+
+
+        ]
+      },
       {path: 'managment', component: ProducInventoryComponent},
     ]
   },
@@ -26,7 +41,6 @@ const routes: Routes = [
     path: 'administration', 
     component: AdmiComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
       {path: 'managment', component: ProducInventoryComponent},
     ]
   },
@@ -34,7 +48,6 @@ const routes: Routes = [
     path: 'factory', 
     component: FactoryComponent,
     children:[
-      {path: 'sales', component: SalesComponent},
       {path: 'managment', component: ProducInventoryComponent},
     ]
   },

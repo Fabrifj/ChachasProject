@@ -1,4 +1,4 @@
-export class productModel {
+export class ProductModel {
     public Price: number;
     public Name: string;
     public Image: string;
