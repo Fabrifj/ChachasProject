@@ -37,6 +37,9 @@ e2e/*.map
 # System Files
 .DS_Store/
 
+#Added by team
+.angular/
+
 ### Node ###
 # Logs
 logs
