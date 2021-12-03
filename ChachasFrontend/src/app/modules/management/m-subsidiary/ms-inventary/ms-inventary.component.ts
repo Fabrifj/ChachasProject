@@ -336,56 +336,77 @@ export class MsInventaryComponent implements OnInit {
     console.log("Infosub 2", this.infoSub);
    
     let i =0;
-    this.infoSub.forEach((element:any) => {
+    
+    
+   this.infoSub.forEach((element:any) => {
+     
+
+    
+    if(this.idSubsidiary != element.id ){
+
+      var auxinfoSubs :any ={};
+      auxinfoSubs.Nombre = element.Nombre;
+      auxinfoSubs.Direccion = element.Direccion;
+      auxinfoSubs.Departamento=element.Departamento;
+      auxinfoSubs.Telefono= element.Telefono;
+
+
+
+      var chachas:any ="";
       
-      if(this.idSubsidiary != element.Id ){
+      this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
+         
+        
+        console.log("datos chacha",jsonFile);
+        jsonFile.forEach((chacha:any) => {
 
-        var auxinfoSubs :any ={};
-        auxinfoSubs.Nombre = element.Nombre;
-        auxinfoSubs.Direccion = element.Direccion;
-        auxinfoSubs.Departamento=element.Departamento;
-        auxinfoSubs.Telefono= element.Telefono;
-
-
-
-        var chachas:any ;
-        var salsas:any ;
-        this.serviceHttp.getProductsBySubsidiaryAndType(element.Id,"Chacha").subscribe((jsonFile:any)=>{
-          var datos = jsonFile;
           
-          console.log("datos chacha",datos);
-          /*jsonFile.forEach((chacha:any) => {
-            chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " ]";
-          });*/
-        } ,(error)=>{
-            console.log("hubo error chachas de otros");
-        } );
-        this.serviceHttp.getProductsBySubsidiaryAndType(element.Id,"InsumoFabrica").subscribe((jsonFile:any)=>{
-          
-          var datos = jsonFile;
-          console.log("datos insumo fabrica",datos);
-         /* jsonFile.forEach((salsa:any) => {
-            chachas = chachas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " ]";
-          });*/
-        } ,(error)=>{
-            console.log("hubo error con salsas de otros");
-        } )
+          chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " ]";
+
+          console.log("string chachas:" ,chachas);
+        });
+
+        
+      } ,(error)=>{
+          console.log("hubo error chachas de otros");
+      } );
+      this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+        
+        var datos = jsonFile;
+        console.log("datos insumo fabrica",datos);
+       /*jsonFile.forEach((salsa:any) => {
+          chachas = chachas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " ]";
+        });*/
+      } ,(error)=>{
+          console.log("hubo error con salsas de otros");
+      } )
 
 
-        auxinfoSubs.infoInventario = chachas;
+      auxinfoSubs.infoInventario = chachas;
 
-        console.log("auxinfo",auxinfoSubs);
-        this.infoSubs[i] = auxinfoSubs;
-        i++;
-      }
+      console.log("auxinfo",auxinfoSubs);
+      this.infoSubs[i] = auxinfoSubs;
+      i++;
+    }
+   });
      
       
       
-    });
+    }
 
+    
+    
+    
+    
+      
+     
 
   }
 
 
 
-}
+  
+
+
+
+
