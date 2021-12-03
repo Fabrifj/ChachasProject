@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
+import {CatalogComponent} from '../../shared-modules/catalog/catalog.component'
 
 @Component({
   selector: 'app-home',
