@@ -2,6 +2,7 @@ import { AfterContentInit, Component, OnInit } from '@angular/core';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/services/app-http.service';
+import { Element } from '@angular/compiler';
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -99,8 +100,8 @@ export class MsInventaryComponent implements OnInit {
     {field:'Direccion',header:'Direccion'},
     {field:'Departamento',header:'Departamento'},
     {field:'Telefono',header:'Telefono'},
-    {field:'infoInventario',header:'Producto => Stock Inventario'}
-  
+    {field:'infoInvSalsas',header:'Salsas => Stock Inventario'},
+    {field:'infoInvChachas',header:'Chachas => Stock Inventario'}
    // {field:'Imagen',header:'Imagen'}
     
   ];
@@ -110,8 +111,8 @@ export class MsInventaryComponent implements OnInit {
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
 
-  titlesProd:string [] = ['Cantidad para sucursal'];
-  todayDate:string="";
+  titlesProd:string [] = ['CantidadParaSucursal'];
+  todayDate:any = undefined;
 
 
   selectedValue:any;
@@ -123,7 +124,7 @@ export class MsInventaryComponent implements OnInit {
 
   latitude:any="";
   longitude:any="";
-  zoom=17;
+  zoom=20;
 
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
@@ -134,7 +135,21 @@ export class MsInventaryComponent implements OnInit {
     //
     this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
 
-    this.todayDate = new Date().toLocaleDateString();
+    var today = new Date();
+    let dia :string=today.getDate().toString();
+      let anio =today.getFullYear().toString();
+      let mes = (today.getMonth() +1).toString();
+
+      if(mes.length == 1){
+
+        mes  = "0" + mes;
+      }
+      if(dia.length == 1){
+
+        dia  = "0" + dia;
+      }
+      this.todayDate = anio + "-" + mes + "-" + dia;
+    
     
     
     this.getDrink();
@@ -271,7 +286,7 @@ export class MsInventaryComponent implements OnInit {
       console.log("las sucursales son son",jsonFile);
       this.infoSub =jsonFile;
       
-    this.getProductsOfSucursales();
+      this.getProductsOfSucursales();
 
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -327,8 +342,82 @@ export class MsInventaryComponent implements OnInit {
   }
 
 
+
+  createTransaction(body:any){
+
+    console.log("BODY:",body)
+    this.serviceHttp.postTransaction(body)
+    .subscribe((jsonFile:any)=>{
+
+
+      alert('transaction realizada correctamente');
+
+    } ,(error)=>{
+        console.log("hubo error con crear transaction")
+
+    } )
+
+  }
+
   sendTransaction(){
     
+
+    console.log("Informacion:",this.selectedInfo);
+
+    var date = this.todayDate;
+    console.log("sucursal:",this.selectedValue);
+
+    var idSubDestiny = "";
+    this.infoSub.forEach((element:any) => {
+      if (element.Nombre == this.selectedValue){
+        //es la sucursal que quiero
+        idSubDestiny = element.id;
+      }
+    });
+
+    var listaProdSend :any = {}
+    let i = 0 ;
+    this.selectedInfo[5].forEach((producto:any) => {
+      if(producto.CantidadParaSucursal != "0"){
+      var auxListProd :any = {}
+      console.log("==>" , producto.IdMenu);
+      auxListProd.IdProducto =producto.id;
+      auxListProd.Tipo = "Chacha";
+      auxListProd.Cantidad = producto.CantidadParaSucursal;
+      auxListProd.NombreProducto = producto.IdMenu;
+
+      listaProdSend[i] = auxListProd;
+      i++;
+
+      }
+    });
+    this.selectedInfo[6].forEach((producto:any) => {
+      console.log("==>" , producto.Nombre);
+     if(producto.CantidadParaSucursal != "0"){
+
+      var auxListProd :any = {}
+      
+      auxListProd.IdProducto =producto.id;
+      auxListProd.Tipo = "InsumoFabrica";
+      auxListProd.Cantidad = producto.CantidadParaSucursal;
+      auxListProd.CantidadMedida = producto.CantidadMedida;
+      auxListProd.TipoUnidad = producto.TipoUnidad;
+      auxListProd.NombreProducto = producto.Nombre;
+
+      listaProdSend[i]=auxListProd;
+      i++;
+
+     }
+      
+    });
+
+    var listaProdSend2 :any = {}
+    listaProdSend2 = JSON.stringify(listaProdSend)
+    console.log("lis", listaProdSend)
+
+    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend2 })
+    this.createTransaction(transaction);
+
   }
 
   getProductsOfSucursales(){
@@ -336,7 +425,6 @@ export class MsInventaryComponent implements OnInit {
     console.log("Infosub 2", this.infoSub);
    
     let i =0;
-    
     
    this.infoSub.forEach((element:any) => {
      
@@ -353,38 +441,37 @@ export class MsInventaryComponent implements OnInit {
 
 
       var chachas:any ="";
-      
+      var salsas: any = ""; 
       this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
          
         
-        console.log("datos chacha",jsonFile);
+        
         jsonFile.forEach((chacha:any) => {
 
           
-          chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " ]";
-
+          chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " Unidades ]";
+          
           console.log("string chachas:" ,chachas);
         });
-
-        
+        auxinfoSubs.infoInvChachas = chachas;
+   
       } ,(error)=>{
           console.log("hubo error chachas de otros");
       } );
       this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
         
-        var datos = jsonFile;
-        console.log("datos insumo fabrica",datos);
-       /*jsonFile.forEach((salsa:any) => {
-          chachas = chachas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " ]";
-        });*/
+        
+       jsonFile.forEach((salsa:any) => {
+          salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ]";
+        });
+        auxinfoSubs.infoInvSalsas = salsas;
+
       } ,(error)=>{
           console.log("hubo error con salsas de otros");
       } )
 
 
-      auxinfoSubs.infoInventario = chachas;
-
-      console.log("auxinfo",auxinfoSubs);
+     
       this.infoSubs[i] = auxinfoSubs;
       i++;
     }
@@ -544,11 +631,18 @@ regInFab(){
     
     
     
+  
+
+    
+    
+    
     
       
      
 
+
   
+
 
 
 

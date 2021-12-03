@@ -43,5 +43,13 @@
   "GetPurchases":"/api/purchase",
   "GetPurchase":"/api/purchase/:id",
   "UpdatePurchase":"/api/purchase/:id",
-  "DeletePurchase":"/api/subsidiary/:id"
+  "DeletePurchase":"/api/subsidiary/:id",
+
+
+
+  "CreateTransaction":"/api/transaction",
+  "GetTransaction":"/api/transaction",
+  "GetTransactionId":"/api/transaction/:id",
+  "UpdateTransaction":"/api/transaction/:id",
+  "DeleteTransaction":"/api/transaction/:id"
 }

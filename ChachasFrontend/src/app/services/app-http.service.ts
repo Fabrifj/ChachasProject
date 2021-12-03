@@ -63,6 +63,14 @@ export class AppHttpService {
   }
 
 
+  //Transaction
+  postTransaction(body:any){
+
+
+    return this.http.post(paths.CreateTransaction,body)
+  }
+
+
 
 
 }

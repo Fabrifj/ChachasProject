@@ -54,30 +54,28 @@
 
         <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue">
         <option selected>None</option>
-        <option *ngFor="let sucursal of infoSub;">{{sucursal.Nombre}}</option>
+        <option *ngFor="let sucursal of infoSubs;" >{{sucursal.Nombre}}</option>
         
     </select>
 
-        <p>{{selectedValue}}</p>
+        
 
         <h2>Fecha de hoy:</h2>
         <h3>{{todayDate}}</h3>
-
 
 
     </div>
 
     <div class="modal-body">
 
-        <h2>Productos chachas:</h2>
+        
 
 
-
-        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="4">
+        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5">
         </app-reusable-table>
 
 
-        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFabMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5">
+        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFabMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="6">
         </app-reusable-table>
 
     </div>
@@ -302,8 +300,13 @@
     
     <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
 
-        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude">
+        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true" >
+            <agm-info-window>
+                <h2>
+                    {{sub.Nombre}}
+                </h2>
 
+            </agm-info-window>
 
         </agm-marker>
     </agm-map>
@@ -322,7 +325,7 @@
     <h3>Esta seguro que desea realizar la transaccion?</h3>
 
     <div class="botones">
-        <button class="btnSend" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');">OK</button>
+        <button class="btnSend" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');sendTransaction();">OK</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');">Cancelar</button>
     </div>
 </jw-modal>
