@@ -296,12 +296,9 @@
         </app-reusable-table>
     </div>
 
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
 
-
-
-    <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
-
-        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true" >
+        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
             <agm-info-window>
                 <h2>
                     {{sub.Nombre}}
@@ -310,7 +307,7 @@
             </agm-info-window>
 
         </agm-marker>
-    </agm-map> -->
+    </agm-map>
 
 
     <div class="botones">
