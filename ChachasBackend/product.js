@@ -247,7 +247,30 @@ async function updateMermasProduct(idProd,body) {
   
   return respuesta;
 }
+/**
+ * 
+ * @param {string} idProducto 
+ * @param 
+ * {
+      Gasto:1000
+ * } body Gasto hace referencia a cuanto se gasto de ese producto, segun como ese producto esta medido.
+ */
+async function updateExpenseSupplySubsidiary(idProducto, body)
+{
+  const expense = parseFloat(body.Gasto)
+  const miProd = await fnHerramientas.getDoc(idProducto,"Producto");
+  const upd={
+    CantidadInventario: parseFloat(miProd.CantidadInventario)-expense
+  }
+  var resp = null;
+  if(upd.CantidadInventario >= 0)
+  {
+    resp= await fnHerramientas.updateDoc(idProducto,upd,"Producto");
+  }else
+  
+  return "No existe cantidad necesaria para ese gasto";
 
+}
 async function getProductTransaction(idMenu,IdOrigen){
   var miDoc = null;
   console.log("entra a la funcion con: ", idMenu, IdOrigen);
@@ -280,5 +303,6 @@ module.exports = {
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
+  updateExpenseSupplySubsidiary,
   getProductTransaction
 };
