@@ -172,7 +172,13 @@ app.put("/api/product/mermas/:idproduct", async (req, res) => {
   res.send(response);
 });
 
-
+//Update CantidadInventario of a product giving it's expense (spent quantity)
+app.put("/api/product/expense/:idproduct", async (req, res) => {
+  var idProd = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateExpenseSupplySubsidiary(idProd, body);
+  res.send(response);
+});
 //DeleteProduct
 app.delete("/api/product/:idproduct", async (req, res) => {
   var productToDelete = req.params.idproduct;
