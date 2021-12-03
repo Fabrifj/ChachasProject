@@ -58,7 +58,7 @@
         
     </select>
 
-        
+
 
         <h2>Fecha de hoy:</h2>
         <h3>{{todayDate}}</h3>
@@ -68,7 +68,7 @@
 
     <div class="modal-body">
 
-        
+
 
 
         <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5">
@@ -230,6 +230,9 @@
         <p>Cantidad</p>
         <input type="text" id="insCantidad" placeholder="Ingrese la cantidad">
 
+        <p>Cantidad Medida</p>
+        <input type="text" id="insCantidadSMed" placeholder="Ingrese la cantidad medida">
+
         <p>Cantidad minima</p>
         <input type="text" id="insCantidadMin" placeholder="Ingrese la cantidad mínima">
 
@@ -263,6 +266,9 @@
         <p>Cantidad</p>
         <input type="text" id="insCantidadF" placeholder="Ingrese la cantidad">
 
+        <p>Cantidad Medida</p>
+        <input type="text" id="insCantidadFMed" placeholder="Ingrese la cantidad medida">
+
         <p>Cantidad minima</p>
         <input type="text" id="insCantidadMinF" placeholder="Ingrese la cantidad mínima">
 
@@ -286,19 +292,14 @@
     <h1>Subsidiaries:</h1>
 
     <div class="miniTable">
-        <app-reusable-table 
-        [datos]="infoSubs" 
-        [columnas]="columnsSubs" 
-        colorLetra="black" 
-        altura="50"
-        indice="6">
+        <app-reusable-table [datos]="infoSubs" [columnas]="columnsSubs" colorLetra="black" altura="50" indice="6">
         </app-reusable-table>
     </div>
 
 
-  
-    
-    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
+
+
+    <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
 
         <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true" >
             <agm-info-window>
@@ -309,7 +310,7 @@
             </agm-info-window>
 
         </agm-marker>
-    </agm-map>
+    </agm-map> -->
 
 
     <div class="botones">
