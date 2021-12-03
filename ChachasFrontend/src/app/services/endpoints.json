@@ -14,6 +14,7 @@
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
     "UpdateMermasOfAProduct": "/api/product/mermas/:idproduct",
     "DeleteProduct": "/api/product/:idproduct",
+    "UpdateExpenseSupplySubsidiary": "/api/product/expense/:idproduct",
 
 
     "GetAllOrders": "/api/order",
@@ -45,13 +46,13 @@
     "DeleteEmployee": "/api/subsidiary/:id",
 
 
-    
 
-  "CreateTransaction":"/api/transaction",
-  "GetTransaction":"/api/transaction",
-  "GetTransactionId":"/api/transaction/:id",
-  "UpdateTransaction":"/api/transaction/:id",
-  "DeleteTransaction":"/api/transaction/:id"
+
+    "CreateTransaction": "/api/transaction",
+    "GetTransaction": "/api/transaction",
+    "GetTransactionId": "/api/transaction/:id",
+    "UpdateTransaction": "/api/transaction/:id",
+    "DeleteTransaction": "/api/transaction/:id"
 
 
 

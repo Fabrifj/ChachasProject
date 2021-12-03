@@ -69,7 +69,12 @@ export class AppHttpService {
 
     return this.http.post(paths.CreateTransaction,body)
   }
+  //Registrar consumo
+  updateConsumo(idProd:any , body:any ){
+    
+    return this.http.put(paths.UpdateExpenseSupplySubsidiary+idProd,body);
 
+  }
 
 
 
