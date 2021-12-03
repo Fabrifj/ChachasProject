@@ -42,7 +42,16 @@
     "GetEmployeeId": "/api/employee/:id",
     "UpdateEmployee": "/api/employee/:id",
     "UpdatePasswordEmployee": "/api/employee",
-    "DeleteEmployee": "/api/subsidiary/:id"
+    "DeleteEmployee": "/api/subsidiary/:id",
+
+
+    
+
+  "CreateTransaction":"/api/transaction",
+  "GetTransaction":"/api/transaction",
+  "GetTransactionId":"/api/transaction/:id",
+  "UpdateTransaction":"/api/transaction/:id",
+  "DeleteTransaction":"/api/transaction/:id"
 
 
 

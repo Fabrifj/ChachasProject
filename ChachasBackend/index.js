@@ -389,7 +389,7 @@ app.put("/api/transaction/:id", async (req, res) => {
   res.send(respuesta);
 });
 //Delete Transaction
-app.delete("/api/Transaction/:id", async (req, res) => {
+app.delete("/api/transaction/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnTransaction.deleteTransaction(idEmp);
   res.send(respuesta);
