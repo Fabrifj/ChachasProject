@@ -2,9 +2,9 @@ import { Component, OnInit,OnChanges,Input, Output, EventEmitter } from '@angula
 import { ReusableTableService } from './reusable-table-service';
 
 @Component({
-  selector: 'app-resusable-table',
-  templateUrl: './resusable-table.component.html',
-  styleUrls: ['./resusable-table.component.css']
+  selector: 'app-reusable-table',
+  templateUrl: './reusable-table.component.html',
+  styleUrls: ['./reusable-table.component.css']
 })
 export class ReusableTableComponent implements OnInit {
 
@@ -21,6 +21,8 @@ export class ReusableTableComponent implements OnInit {
   @Input() titulosTextos :string[] = [];
 
   @Input() botonGuardarDatos : string="no";
+
+
   
   @Output() parentMethod = new EventEmitter<any>();
 
@@ -50,13 +52,6 @@ export class ReusableTableComponent implements OnInit {
 
    });
 
-
-   
-  
-
-
-   
-   
     /*for (let i =0 ; i< elem.length ; i++){
         console.log(i);
         const e = elem[i];
@@ -102,7 +97,7 @@ export class ReusableTableComponent implements OnInit {
     
     console.log(this.misDatos);
 
-    this.parentMethod.emit(['GuardarTodo',this.misDatos])
+    this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }
 
   getId(j:any,i:any){

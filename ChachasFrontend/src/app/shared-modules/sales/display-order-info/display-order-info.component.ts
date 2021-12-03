@@ -11,6 +11,7 @@ import { SalesService } from '../sales.service';
 export class DisplayOrderInfoComponent implements OnInit {
 
   productComponents: editComponent[] = []
+  productsQuantity: number = 0
 
   productosPrueba: ProductToPurchaseModel[] = [];
 
@@ -21,6 +22,7 @@ export class DisplayOrderInfoComponent implements OnInit {
       let aux: editComponent = {product: producto, edit: false, totalPrice: total}
       this.productComponents.push(aux)
     }
+    this.productsQuantity = this.productComponents.length
   }
 
   ngOnInit(): void {
@@ -28,7 +30,6 @@ export class DisplayOrderInfoComponent implements OnInit {
 
   editProductQuantity(comp: editComponent) {
     comp.edit = true
-    console.log("The element is now: " + comp.edit)
   }
 
   acceptEditOfProductQuantity(comp: editComponent, newQuantity: string) {
@@ -39,7 +40,11 @@ export class DisplayOrderInfoComponent implements OnInit {
     comp.totalPrice = newTotal
 
     comp.edit = false
-    console.log("The element is now: " + comp.edit)
+  }
+
+  deleteProductFromList(compToDelete: editComponent) {
+    this.productComponents = this.productComponents.filter(component => component !== compToDelete)
+    this.productsQuantity = this.productComponents.length
   }
 
   acceptProductChoice() {
