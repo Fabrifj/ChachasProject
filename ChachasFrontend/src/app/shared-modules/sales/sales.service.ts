@@ -23,8 +23,10 @@ export class SalesService {
     appHttpService.getProductListHttp().subscribe(
       (jsonFile) => {
         console.log(jsonFile);
-        //this.productList = <ProductModel[]>jsonFile;
+        this.productList = <ProductModel[]>jsonFile;
       });
+      console.log(this.productList);
+
   }
 
   // Get the product list from a http request
