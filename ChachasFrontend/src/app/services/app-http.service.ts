@@ -15,7 +15,7 @@ export class AppHttpService {
 
   getAllProducts() {
     
-    return this.http.get(paths.GetAllProducts)
+    return this.http.get(paths.GetAllProducts,{responseType: 'json'})
   }
 
   getProductsBySubsidiaryAndType(idSub:any , type:any ){

@@ -20,12 +20,11 @@ export class SalesService {
                               ];
 
   constructor(private appHttpService : AppHttpService) { 
-    // appHttpService.getProductListHttp().subscribe(
-    //   (jsonFile) => {
-    //     console.log(jsonFile);
-    //     this.productList = <ProductModel[]>jsonFile;
-    //   });
-    // this.purchase = new PurchaseModel();
+    appHttpService.getProductListHttp().subscribe(
+      (jsonFile) => {
+        console.log(jsonFile);
+        //this.productList = <ProductModel[]>jsonFile;
+      });
   }
 
   // Get the product list from a http request
@@ -36,6 +35,7 @@ export class SalesService {
   getPurchaseDetail(){
     return this.productsToPurchase
   }
+  // we made a update from the list products to buy 
   getPurchaseDetailEdited(newListProduct:ProductToPurchaseModel[] ){
     this.productsToPurchase = newListProduct;
   }
@@ -53,7 +53,8 @@ export class SalesService {
     let date: Date = new Date(); 
     let dire: DirectionModel= new DirectionModel("Sucursal");  
     let purchase:PurchaseModel = {Direction:dire, PurchaseDetail:this.productsToPurchase, ClientInfo:clientInfo, Date:date }
-    console.log(purchase)
+    this.appHttpService.postPurchase(purchase);
+    this.productsToPurchase=[];
   }
   
 }
