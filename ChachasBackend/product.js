@@ -1,5 +1,6 @@
-const { firebase,product } = require("./config");
-const fnHerramientas = require('./herramientas');
+const { firebase, product } = require("./config");
+const fnHerramientas = require("./herramientas");
+const fnMenu = require("./menu");
 const db = firebase.firestore();
 
 //GetAllProducts or the collection
@@ -61,7 +62,7 @@ async function getAllProducts() {
 */
 
 //Create a new product of some type
-async function createProductType(body, type){
+async function createProductType(body, type) {
   body.Tipo = type;
   body.Costo = 0;
   await product.add(body);
@@ -149,21 +150,43 @@ async function getProductSubsidiaryType(idSub, type) {
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  console.log(list);
-  if(list.length == 0){
+
+  // Get more information of products of type chachas.
+  if (type == "Chacha") {
+    for await (const product of list) {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
+
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
+    }
+  }
+
+  if (list.length == 0) {
     return null;
-  }else{
+  } else {
     return list;
   }
 }
 
-//Get a list of products froma certain subsidiary 
+//Get a list of products froma certain subsidiary
 async function getProductSubsidiary(idSub) {
-  const snapshot = await product
-    .where("Origen", "==", idSub)
-    .get();
+  const snapshot = await product.where("Origen", "==", idSub).get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  console.log(list);
+
+  for await (const product of list) {
+    if (product.Tipo == "Chacha") {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
+
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
+    }
+  }
   return list;
 }
 /*
@@ -177,31 +200,46 @@ basandose en la media. (Tomar en cuenta cantidad y costo)
     }
 */
 
-async function updateProductPriceByMean(idproduct, body){
+async function updateProductPriceByMean(idproduct, body) {
   var res = null;
   var costoFinal = 0;
   var costoEstandarizado = 0;
   var nuevaCantidadInventarioTotal = 0;
-  var productToUpdate = await getProductById(idproduct)//product.doc(idproduct).get().data;
+  var productToUpdate = await getProductById(idproduct); //product.doc(idproduct).get().data;
   console.log(productToUpdate);
-  if(productToUpdate.Tipo == "InsumoSucursal" || productToUpdate.Tipo == "InsumoFabrica" ){ 
-    costoEstandarizado = (productToUpdate.CantidadMedida * body.Costo) / body.Cantidad;
-    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad)
-    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+  if (
+    productToUpdate.Tipo == "InsumoSucursal" ||
+    productToUpdate.Tipo == "InsumoFabrica"
+  ) {
+    costoEstandarizado =
+      (productToUpdate.CantidadMedida * body.Costo) / body.Cantidad;
+    nuevaCantidadInventarioTotal =
+      productToUpdate.CantidadInventario + body.Cantidad;
+    costoFinal =
+      (body.Cantidad * costoEstandarizado +
+        productToUpdate.CantidadInventario * productToUpdate.Costo) /
+      nuevaCantidadInventarioTotal;
     //console.log("Costo final: ", costoFinal);
-  }else{
-    costoEstandarizado = body.Costo/body.Cantidad;
-    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad);
-    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+  } else {
+    costoEstandarizado = body.Costo / body.Cantidad;
+    nuevaCantidadInventarioTotal =
+      productToUpdate.CantidadInventario + body.Cantidad;
+    costoFinal =
+      (body.Cantidad * costoEstandarizado +
+        productToUpdate.CantidadInventario * productToUpdate.Costo) /
+      nuevaCantidadInventarioTotal;
     //console.log("Costo final: ", costoFinal);
   }
-  console.log("nuevaCantidadInvetario: ", nuevaCantidadInventarioTotal)
-  console.log("Costo final: ", costoFinal)
-  
-  await product.doc(idproduct).set({
-   "CantidadInventario": nuevaCantidadInventarioTotal, 
-   "Costo": costoFinal
-  }, { merge: true });
+  console.log("nuevaCantidadInvetario: ", nuevaCantidadInventarioTotal);
+  console.log("Costo final: ", costoFinal);
+
+  await product.doc(idproduct).set(
+    {
+      CantidadInventario: nuevaCantidadInventarioTotal,
+      Costo: costoFinal,
+    },
+    { merge: true }
+  );
   res = await getProductById(idproduct);
   return res;
 }
@@ -215,40 +253,58 @@ async function updateProductPriceByMean(idproduct, body){
 */
 
 //Update the information of mermas of a product
-async function updateMermasProduct(idProd,body) {
+async function updateMermasProduct(idProd, body) {
   var respuesta = null;
-  var date = fnHerramientas.stringAFecha(body.Fecha)
+  var date = fnHerramientas.stringAFecha(body.Fecha);
   body.Fecha = firebase.firestore.Timestamp.fromDate(new Date(date));
   console.log(body);
 
-  await product.doc(idProd).get().then(async (doc) => {
-    if(doc.exists){
-      var prodData = doc.data();
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
 
-      if(prodData.Mermas){
-          
-        console.log("Ya hay mermas");
-        await product.doc(idProd).update({
-         "Mermas" : firebase.firestore.FieldValue.arrayUnion(body)
-        });
-        console.log("Merma information added correctly");
-
-      }else{
-        console.log("No hay mermas");
-        await product.doc(idProd).set({"Mermas": body}, {merge: true});
-        console.log("Merma information added correctly")
+        if (prodData.Mermas) {
+          console.log("Ya hay mermas");
+          await product.doc(idProd).update({
+            Mermas: firebase.firestore.FieldValue.arrayUnion(body),
+          });
+          console.log("Merma information added correctly");
+        } else {
+          console.log("No hay mermas");
+          await product.doc(idProd).set({ Mermas: body }, { merge: true });
+          console.log("Merma information added correctly");
+        }
+        respuesta = await getProductById(idProd);
+      } else {
+        console.log("The product does not exist");
       }
-      respuesta = await getProductById(idProd);
-    
-    }else{
-      console.log("The product does not exist")
-    }
-  })
-  
+    });
+
   return respuesta;
 }
-
-async function getProductTransaction(idMenu,IdOrigen){
+/**
+ * 
+ * @param {string} idProducto 
+ * @param 
+ * {
+      Gasto:1000
+ * } body Gasto hace referencia a cuanto se gasto de ese producto, segun como ese producto esta medido.
+ */
+async function updateExpenseSupplySubsidiary(idProducto, body) {
+  const expense = parseFloat(body.Gasto);
+  const miProd = await fnHerramientas.getDoc(idProducto, "Producto");
+  const upd = {
+    CantidadInventario: parseFloat(miProd.CantidadInventario) - expense,
+  };
+  var resp = null;
+  if (upd.CantidadInventario >= 0) {
+    resp = await fnHerramientas.updateDoc(idProducto, upd, "Producto");
+  } else return "No existe cantidad necesaria para ese gasto";
+}
+async function getProductTransaction(idMenu, IdOrigen) {
   var miDoc = null;
   console.log("entra a la funcion con: ", idMenu, IdOrigen);
   var productos = await getAllProducts();
@@ -256,17 +312,20 @@ async function getProductTransaction(idMenu,IdOrigen){
 
   productos.forEach(async (producto) => {
     //console.log(producto.Origen);
-    if(producto.Origen == IdOrigen && producto.IdMenu == idMenu && producto.Tipo == "Chacha"){
+    if (
+      producto.Origen == IdOrigen &&
+      producto.IdMenu == idMenu &&
+      producto.Tipo == "Chacha"
+    ) {
       resultado = producto;
     }
   });
-  
+
   //var resultado = productos.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
-  console.log("El producto",resultado);
+  console.log("El producto", resultado);
 
   return resultado;
 }
-
 
 module.exports = {
   getAllProducts,
@@ -280,5 +339,6 @@ module.exports = {
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
-  getProductTransaction
+  updateExpenseSupplySubsidiary,
+  getProductTransaction,
 };
