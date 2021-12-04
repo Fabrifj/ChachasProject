@@ -12,9 +12,9 @@
     "CreateProductInsumoFabrica": "/api/productInsumoFabrica",
     "UpdateProduct": "/api/product/:idproduct",
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
-    "UpdateMermasOfAProduct": "/api/product/mermas/:idproduct",
+    "UpdateMermasOfAProduct": "/api/product/mermas/",
     "DeleteProduct": "/api/product/:idproduct",
-    "UpdateExpenseSupplySubsidiary": "/api/product/expense/:idproduct",
+    "UpdateExpenseSupplySubsidiary": "/api/product/expense/",
 
 
     "GetAllOrders": "/api/order",
@@ -52,7 +52,10 @@
     "GetTransaction": "/api/transaction",
     "GetTransactionId": "/api/transaction/:id",
     "UpdateTransaction": "/api/transaction/:id",
-    "DeleteTransaction": "/api/transaction/:id"
+    "DeleteTransaction": "/api/transaction/:id",
+
+
+    "CreatePurchase":"/api/purchase"
 
 
 
