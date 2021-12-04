@@ -88,9 +88,8 @@ export class AppHttpService {
   //purchase
   postPurchase2(body:any){
 
-
-   // return this.http.post(paths.CreatePurchase,body)
-
+    //metodo chicas
+    
    return this.http.post(paths.crearCompra , body)
   }
 
