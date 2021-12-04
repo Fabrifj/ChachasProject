@@ -78,4 +78,13 @@ export class AppHttpService {
 
 
 
+
+  //purchase
+  postPurchase(body:any){
+
+
+    return this.http.post(paths.CreatePurchase,body)
+  }
+
+
 }

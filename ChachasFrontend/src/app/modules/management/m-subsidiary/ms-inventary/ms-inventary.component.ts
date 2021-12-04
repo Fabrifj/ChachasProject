@@ -452,27 +452,38 @@ export class MsInventaryComponent implements OnInit {
       var salsas: any = ""; 
       this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
          
-        
-        
-        jsonFile.forEach((chacha:any) => {
+        if(jsonFile != null){
+
+
+
+          jsonFile.forEach((chacha:any) => {
 
           
-          chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " Unidades ]";
-          
-          console.log("string chachas:" ,chachas);
-        });
-        auxinfoSubs.infoInvChachas = chachas;
+            chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " Unidades ]";
+            
+            console.log("string chachas:" ,chachas);
+          });
+          auxinfoSubs.infoInvChachas = chachas;
+        }
+        
+        
    
       } ,(error)=>{
           console.log("hubo error chachas de otros");
       } );
       this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
         
+        if(jsonFile != null){
+
+          jsonFile.forEach((salsa:any) => {
+            salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ]";
+          });
+          auxinfoSubs.infoInvSalsas = salsas;
+
+
+        }
         
-       jsonFile.forEach((salsa:any) => {
-          salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ]";
-        });
-        auxinfoSubs.infoInvSalsas = salsas;
+       
 
       } ,(error)=>{
           console.log("hubo error con salsas de otros");
@@ -519,6 +530,8 @@ regConsumo(){
   var idProd = this.selectedObject.Id;
   var origen = this.idSubsidiary ;
 
+
+  //formato cambiar,falta fehca, id producto , formato mas sencillo.
   var consu = JSON.stringify({Nombre: nombre,  CantidadInventario : cantidadInv, CantidadMedida : cantidadMed, CantidadMinima: cantidadMin, Origen: origen  })
   console.log(consu)
   this.serviceHttp.updateConsumo(idProd,JSON.parse(consu))
@@ -538,6 +551,10 @@ regConsumo(){
 }
 regCompra(){
 
+
+  //revidar los metodos de 
+
+
   var costo = parseInt((<HTMLInputElement>document.getElementById("proCosto")).value);
   var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidad")).value) ;
   
@@ -550,7 +567,7 @@ regCompra(){
   console.log(comp)
   console.log(idProd)
 
-  this.serviceHttp.postInsumoSucursal(JSON.parse(comp))
+  this.serviceHttp.postPurchase(JSON.parse(comp))
     .subscribe((jsonFile:any)=>{
 
 
