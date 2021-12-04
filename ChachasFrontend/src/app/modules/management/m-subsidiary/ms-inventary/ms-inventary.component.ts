@@ -502,7 +502,7 @@ regMerma(){
 
   var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
   var cantidad = parseInt((<HTMLInputElement>document.getElementById("proMerma")).value);
-  var idProd = this.selectedObject.IdMenu;
+  var idProd = this.selectedObject.idMenu;
 
   var merm = JSON.stringify({Fecha: fecha, Cantidad: cantidad})
   console.log(merm)
@@ -523,16 +523,12 @@ regMerma(){
 
 regConsumo(){
 
+  var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
   var nombre = this.selectedObject.Nombre;
-  var cantidadInv = parseInt((<HTMLInputElement>document.getElementById("proCantidadMedSal")).value );
-  var cantidadMed= parseInt(this.selectedObject.CantidadMedida);
-  var cantidadMin = parseInt(this.selectedObject.CantidadMinima) ;
-  var idProd = this.selectedObject.Id;
-  var origen = this.idSubsidiary ;
+  var gastoInv = parseInt((<HTMLInputElement>document.getElementById("proGasto")).value );
+  var idProd = this.selectedObject.id;
 
-
-  //formato cambiar,falta fehca, id producto , formato mas sencillo.
-  var consu = JSON.stringify({Nombre: nombre,  CantidadInventario : cantidadInv, CantidadMedida : cantidadMed, CantidadMinima: cantidadMin, Origen: origen  })
+  var consu = JSON.stringify({ Gasto : gastoInv})
   console.log(consu)
   this.serviceHttp.updateConsumo(idProd,JSON.parse(consu))
     .subscribe((jsonFile:any)=>{
@@ -544,8 +540,6 @@ regConsumo(){
         console.log("Error al crear bien")
 
     } )
-
-    
 
   
 }
