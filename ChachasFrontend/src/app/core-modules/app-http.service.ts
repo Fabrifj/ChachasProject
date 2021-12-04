@@ -84,6 +84,16 @@ export class AppHttpService {
     return this.http.put(paths.UpdateExpenseSupplySubsidiary+idProd,body);
 
   }
+  
+  //purchase
+  postPurchase2(body:any){
+
+
+   // return this.http.post(paths.CreatePurchase,body)
+
+   return this.http.post(paths.crearCompra , body)
+  }
+
 
 
 }

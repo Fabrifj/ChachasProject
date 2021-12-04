@@ -46,7 +46,7 @@
 </div>
 
 <!--   boton realizar transaccion -->
-<jw-modal id="modalTransaction-01" altura="80" ancho="80">
+<jw-modal id="modalTransaction-01" altura="80" ancho="90">
 
     <div class="modal-header">
 
@@ -71,11 +71,11 @@
 
 
 
-        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5">
+        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5" nombreDistintivo="textoCantidadN">
         </app-reusable-table>
 
 
-        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFabMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="6">
+        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFabMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="6" nombreDistintivo="textoCantidadC">
         </app-reusable-table>
 
     </div>
@@ -291,7 +291,7 @@
     <h1>Subsidiaries:</h1>
 
     <div class="miniTable">
-        <app-reusable-table [datos]="infoSubs" [columnas]="columnsSubs" colorLetra="black" altura="50" indice="6">
+        <app-reusable-table [datos]="infoSubs" [columnas]="columnsSubs" colorLetra="black" altura="50" indice="7">
         </app-reusable-table>
     </div>
 
