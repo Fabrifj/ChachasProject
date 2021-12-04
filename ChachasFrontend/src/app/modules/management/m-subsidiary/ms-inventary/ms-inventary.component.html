@@ -38,8 +38,8 @@
         <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
         <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
         <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Insumo Sucrusal</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Insumo Fabrica</button>
+        <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
+        <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
 
     </div>
 
@@ -165,11 +165,10 @@
         <p>Tipo Unidad</p>
         <input type="text" [(ngModel)]="this.selectedObject.TipoUnidad" disabled>
 
-        <p>Cantidad Minima</p>
-        <input type="text" [(ngModel)]="this.selectedObject.CantidadMinima" disabled>
+        <p>Gasto</p>
+        <input type="text" id="proGasto" placeholder="Ingrese la cantidad gastada">
 
-        <p>Cantidad Medida</p>
-        <input type="text" id="proCantidadMedSal" placeholder="Ingrese la cantidad sobrante">
+        <input type="text" id="fechaPro" value={{todayDate}} disabled>
 
     </div>
     <div class="modal-footer">
