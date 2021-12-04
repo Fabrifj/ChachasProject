@@ -1,8 +1,7 @@
 import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
-import { AppHttpService } from 'src/app/services/app-http.service';
-import { Element } from '@angular/compiler';
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -652,28 +651,3 @@ regInFab(){
 
 }
       
-    
-
-    
-    
-    
-  
-
-    
-    
-    
-    
-      
-     
-
-
-  
-
-
-
-
-  
-
-
-
-

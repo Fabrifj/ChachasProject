@@ -42,9 +42,9 @@
             </div>
         </li>
         <div class="forwards-backwards-choice">
-            <button class="btn btn-info btn-sm" (click)="keepChoosing()">Seguir escogiendo</button>
+            <button class="btn btn-info btn-sm" (click)="keepChoosing()" routerLink="../catalog">Seguir escogiendo</button>
             <ng-container *ngIf="productsQuantity > 0">
-                <button class="btn btn-info btn-sm" (click)="acceptProductChoice()">Aceptar</button>
+                <button class="btn btn-info btn-sm" (click)="acceptProductChoice()" routerLink="../client-info">Aceptar</button>
             </ng-container>
 
         </div>
