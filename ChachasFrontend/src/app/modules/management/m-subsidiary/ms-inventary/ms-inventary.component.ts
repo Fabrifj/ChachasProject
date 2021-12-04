@@ -123,7 +123,7 @@ export class MsInventaryComponent implements OnInit {
 
   latitude:any="";
   longitude:any="";
-  zoom=20;
+  zoom=16;
 
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
@@ -518,172 +518,186 @@ export class MsInventaryComponent implements OnInit {
      
   }
 //Metodos de POST 
-regMerma(){
+  regMerma(){
 
-  var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
-  var cantidad = parseInt((<HTMLInputElement>document.getElementById("proMerma")).value);
-  var idProd = this.selectedObject.idMenu;
+    var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proMerma")).value);
+    var idProd = this.selectedObject.idMenu;
 
-  var merm = JSON.stringify({Fecha: fecha, Cantidad: cantidad})
-  console.log(merm)
-  console.log(fecha)
-    this.serviceHttp.updateMerma(idProd,JSON.parse(merm))
-    .subscribe((jsonFile:any)=>{
-
-
-      alert('Merma creada correctamente');
-
-    } ,(error)=>{
-        console.log("Error al crear merma")
-
-    } )
-
-    this.getProdChachas();
-
-  
-}
-
-regConsumo(){
-
-  var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
-  var nombre = this.selectedObject.Nombre;
-  var gastoInv = parseInt((<HTMLInputElement>document.getElementById("proGasto")).value );
-  var idProd = this.selectedObject.id;
-
-  var consu = JSON.stringify({ Gasto : gastoInv})
-  console.log(consu)
-  this.serviceHttp.updateConsumo(idProd,JSON.parse(consu))
-    .subscribe((jsonFile:any)=>{
+    var merm = JSON.stringify({Fecha: fecha, Cantidad: cantidad})
+    console.log(merm)
+    console.log(fecha)
+      this.serviceHttp.updateMerma(idProd,JSON.parse(merm))
+      .subscribe((jsonFile:any)=>{
 
 
-      alert('Consumo creado correctamente');
+        alert('Merma creada correctamente');
+        this.getProdChachas();
 
-    } ,(error)=>{
-        console.log("Error al crear bien")
+      } ,(error)=>{
+          console.log("Error al crear merma")
 
-    } )
+      } )
 
-  this.getOtherInvSub();
-  this.getSauce();
-  this.getDrink();
-}
-regCompra(){
+      this.getProdChachas();
 
-
-  //revidar los metodos de 
-
-
-  var costo = parseInt((<HTMLInputElement>document.getElementById("proCosto")).value);
-  var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidad")).value) ;
-  
-  var idProd = this.selectedObject.id;
-  var origen = this.idSubsidiary ;
-  var fecha = (<HTMLInputElement>document.getElementById("fechaC")).value;
- 
-
-  var comp = JSON.stringify({IdProducto: idProd, Fecha: fecha, Costo: costo, Cantidad: cantidad , Origen: origen })
-  console.log(comp)
-  console.log(idProd)
-
-  this.serviceHttp.postPurchase2(JSON.parse(comp))
-    .subscribe((jsonFile:any)=>{
-
-
-      alert('Compra creada correctamente');
-
-    } ,(error)=>{
-        console.log("Error al crear la compra")
-
-    } )
-
-    this.getOtherInvSub();
-
-    this.getDrink();
-}
-regProducto(){
-  var nombre = (<HTMLInputElement>document.getElementById("proName")).value;
-  var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidadInv")).value) ;
-  var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("proCantidadMin")).value );
-  var origen = this.idSubsidiary;
-  var precioPro= parseInt((<HTMLInputElement>document.getElementById("proPrecio")).value );
-  
-
-  var prod = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, Origen: origen , Precio: precioPro})
-  console.log(prod)
-
-  console.log((<HTMLInputElement>document.getElementById("proName")).value)
-
-   this.serviceHttp.postProductRefresco(JSON.parse(prod))
-    .subscribe((jsonFile:any)=>{
-      alert('Producto creada correctamente');
-
-    } ,(error)=>{
-        console.log("Error al crear el producto refresco")
-
-    } ) 
-
-    this.getOtherInvSub();
-    this.getProdChachas();
-    this.getProductsBySubsidiary();
-    this.getDrink();
-}
-regInSuc(){
-  var nombre = (<HTMLInputElement>document.getElementById("insName")).value;
-  var tipo = (<HTMLInputElement>document.getElementById("insUS")).value;
-  var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidad")).value );
-  var cantidadMEDS = parseInt((<HTMLInputElement>document.getElementById("insCantidadSMed")).value );
-  var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMin")).value );
-  var origen = this.idSubsidiary;
-
-  var inSu = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDS, Origen: origen , TipoUnidad: tipo})
-  console.log(inSu)
-
-  console.log((<HTMLInputElement>document.getElementById("proName")).value)
-
-  this.serviceHttp.postInsumoSucursal(JSON.parse(inSu))
-  .subscribe((jsonFile:any)=>{
-
-
-    alert('Insumo sucursal creado correctamente');
-
-  } ,(error)=>{
-      console.log("Error al crear insumo sucrusal")
-
-  } )
-
-  this.getOtherInvSub();
-
-    this.getDrink();
-}
-regInFab(){
-    var nombre = (<HTMLInputElement>document.getElementById("insNameF")).value;
-    var tipo = (<HTMLInputElement>document.getElementById("insUF")).value;
-    var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidadF")).value );
-    var cantidadMEDF = parseInt((<HTMLInputElement>document.getElementById("insCantidadFMed")).value );
     
-    var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMinF")).value );
-    var origen = this.idSubsidiary;
+  }
 
-    var inFa = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDF,Origen: origen  , TipoUnidad: tipo})
-    console.log(inFa)
+  regConsumo(){
+
+    var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
+    var nombre = this.selectedObject.Nombre;
+    var gastoInv = parseInt((<HTMLInputElement>document.getElementById("proGasto")).value );
+    var idProd = this.selectedObject.id;
+
+    var consu = JSON.stringify({ Gasto : gastoInv})
+    console.log(consu)
+    this.serviceHttp.updateConsumo(idProd,JSON.parse(consu))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Consumo creado correctamente');
+        this.getSauce();
+        this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear bien")
+
+      } )
+
+    
+    
+      this.getSauce();
+      this.getDrink();
+  }
+  regCompra(){
+
+
+    //revidar los metodos de 
+
+
+    var costo = parseInt((<HTMLInputElement>document.getElementById("proCosto")).value);
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidad")).value) ;
+    
+    var idProd = this.selectedObject.id;
+    var origen = this.idSubsidiary ;
+    var fecha = (<HTMLInputElement>document.getElementById("fechaC")).value;
+  
+
+    var comp = JSON.stringify({IdProducto: idProd, Fecha: fecha, Costo: costo, Cantidad: cantidad , Origen: origen })
+    console.log(comp)
+    console.log(idProd)
+
+    this.serviceHttp.postPurchase2(JSON.parse(comp))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Compra creada correctamente');
+        this.getOtherInvSub();
+
+      this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear la compra")
+
+      } )
+
+      this.getOtherInvSub();
+
+      this.getDrink();
+  }
+  regProducto(){
+    var nombre = (<HTMLInputElement>document.getElementById("proName")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidadInv")).value) ;
+    var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("proCantidadMin")).value );
+    var origen = this.idSubsidiary;
+    var precioPro= parseInt((<HTMLInputElement>document.getElementById("proPrecio")).value );
+    
+
+    var prod = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, Origen: origen , Precio: precioPro})
+    console.log(prod)
 
     console.log((<HTMLInputElement>document.getElementById("proName")).value)
 
-    this.serviceHttp.postInsumoFabrica(JSON.parse(inFa))
+    this.serviceHttp.postProductRefresco(JSON.parse(prod))
+      .subscribe((jsonFile:any)=>{
+        alert('Producto creada correctamente');
+
+        this.getOtherInvSub();
+        this.getProdChachas();
+        this.getProductsBySubsidiary();
+        this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear el producto refresco")
+
+      } ) 
+
+      this.getOtherInvSub();
+      this.getProdChachas();
+      this.getProductsBySubsidiary();
+      this.getDrink();
+  }
+  regInSuc(){
+    var nombre = (<HTMLInputElement>document.getElementById("insName")).value;
+    var tipo = (<HTMLInputElement>document.getElementById("insUS")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidad")).value );
+    var cantidadMEDS = parseInt((<HTMLInputElement>document.getElementById("insCantidadSMed")).value );
+    var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMin")).value );
+    var origen = this.idSubsidiary;
+
+    var inSu = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDS, Origen: origen , TipoUnidad: tipo})
+    console.log(inSu)
+
+    console.log((<HTMLInputElement>document.getElementById("proName")).value)
+
+    this.serviceHttp.postInsumoSucursal(JSON.parse(inSu))
     .subscribe((jsonFile:any)=>{
 
 
-      alert('Insumo fabrica creado correctamente');
+      alert('Insumo sucursal creado correctamente');
 
     } ,(error)=>{
-        console.log("Error al crear insumo fabrica")
+        console.log("Error al crear insumo sucrusal")
 
     } )
 
+    this.getOtherInvSub();
 
-    this.getSauce();
-    this.getProdChachas();
-}
+      this.getDrink();
+  }
+  regInFab(){
+      var nombre = (<HTMLInputElement>document.getElementById("insNameF")).value;
+      var tipo = (<HTMLInputElement>document.getElementById("insUF")).value;
+      var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidadF")).value );
+      var cantidadMEDF = parseInt((<HTMLInputElement>document.getElementById("insCantidadFMed")).value );
+      
+      var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMinF")).value );
+      var origen = this.idSubsidiary;
+
+      var inFa = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDF,Origen: origen  , TipoUnidad: tipo})
+      console.log(inFa)
+
+      console.log((<HTMLInputElement>document.getElementById("proName")).value)
+
+      this.serviceHttp.postInsumoFabrica(JSON.parse(inFa))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Insumo fabrica creado correctamente');
+        this.getSauce();
+        this.getProdChachas();
+
+      } ,(error)=>{
+          console.log("Error al crear insumo fabrica")
+
+      } )
+
+
+      this.getSauce();
+      this.getProdChachas();
+  }
 
 }
       

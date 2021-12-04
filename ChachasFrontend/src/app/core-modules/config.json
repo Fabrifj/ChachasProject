@@ -22,7 +22,7 @@
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",
     "DeleteOrder": "/api/order/:idOrder",
-    "UpdateExpenseSupplySubsidiary":"",
+    "UpdateExpenseSupplySubsidiary":"/api/product/expense/",
 
     "CreateSubsidiary": "/api/subsidiary",
     "GetSubsidiary": "/api/subsidiary",
