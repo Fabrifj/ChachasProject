@@ -17,7 +17,7 @@
                 
                 <td *ngFor="let nombreTexoC of titulosTextos; let j = index  ">
 
-                    <input type="text" id="{{'textoCantidad' + i + j}}" (keyup)="guardarDT()" (ngModelChange)="guardarDT()" value="0">
+                    <input type="text" id="{{this.nombreDistintivo + i + j}}" (keyup)="guardarDT()" (ngModelChange)="guardarDT()" value="0">
                 </td>
 
                 <td *ngFor= "let nombrecolumna of columnas">

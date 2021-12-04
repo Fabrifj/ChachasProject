@@ -23,7 +23,7 @@ export class ReusableTableComponent implements OnInit {
   @Input() botonGuardarDatos : string="no";
 
 
-  
+  @Input() nombreDistintivo : string = "textoCantidad"
   @Output() parentMethod = new EventEmitter<any>();
 
   espacioCantidadI :any ;
@@ -82,7 +82,7 @@ export class ReusableTableComponent implements OnInit {
       var indice2 = 0 ;
       this.titulosTextos.forEach((titulo:any) => {
 
-        var nombreCC  = 'textoCantidad' + indice1 + indice2 ; 
+        var nombreCC  = this.nombreDistintivo + indice1 + indice2 ; 
         console.log(nombreCC)
         var valor = (<HTMLInputElement>document.getElementById(nombreCC)).value ;
 
@@ -95,7 +95,7 @@ export class ReusableTableComponent implements OnInit {
     });
     
     
-    console.log(this.misDatos);
+   
 
     this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }

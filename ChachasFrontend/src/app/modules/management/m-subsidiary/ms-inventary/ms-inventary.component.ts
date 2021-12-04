@@ -17,13 +17,13 @@ export class MsInventaryComponent implements OnInit {
   
   selectedObject:any = {}
   selectedInfo:any = {}
-  
+ 
 
   //chachas
   infoProd: any | undefined;
   
   columnsProd = [
-    {field:'IdMenu',header:'Nombre'},
+    {field:'Nombre',header:'Nombre'},
     {field:'CantidadInventario',header:'Stock En Inventario'},
     {field:'Costo',header:'Costo'},
     {field:'Precio',header:'Precio'}
@@ -31,8 +31,8 @@ export class MsInventaryComponent implements OnInit {
   ];
 
   columnsProdMini = [
-    {field:'IdMenu',header:'Nombre'},
-    {field:'Cantidad',header:'Cantidad en esta sucursal'}
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Cantidad en esta sucursal'}
 
   ];
 
@@ -132,10 +132,10 @@ export class MsInventaryComponent implements OnInit {
   ngOnInit(): void {
 
 
-    //
-    this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
+    //GfkkDi4yFpCCVFW2RlF9
+    //this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
 
-    
+    this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
     this.todayDate=new Date().toISOString().slice(0, 10);
 /*
     var today = "";
@@ -336,13 +336,16 @@ export class MsInventaryComponent implements OnInit {
       this.modalService.abrir("modalIns-01");
     }
     else if (response[0] == 'GuardarTodo'){
-      this.selectedObject = []
+      this.selectedObject = [];
       let indice = response[2];
       this.selectedInfo[indice] = response[1]
-      console.log("Informacion:",this.selectedInfo)
+      
+
+      
     }
 
   }
+  
 
 
 
@@ -423,8 +426,9 @@ export class MsInventaryComponent implements OnInit {
     listaProdSend2 = listaProdSend;
     console.log("lis", listaProdSend)
 
-    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend2 })
-    this.createTransaction(JSON.parse(transaction));
+    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
+    console.log("Transaccion:",JSON.parse(transaction));
+    // /this.createTransaction(JSON.parse(transaction));
 
   }
 
@@ -459,7 +463,7 @@ export class MsInventaryComponent implements OnInit {
           jsonFile.forEach((chacha:any) => {
 
           
-            chachas = chachas + "\n [ " + chacha.IdMenu + " ] => [ " + chacha.CantidadInventario + " Unidades ]";
+            chachas = chachas + "\n [ " + chacha.Nombre + " ] => [ " + chacha.CantidadInventario + " Unidades ] \n";
             
             console.log("string chachas:" ,chachas);
           });
@@ -476,7 +480,7 @@ export class MsInventaryComponent implements OnInit {
         if(jsonFile != null){
 
           jsonFile.forEach((salsa:any) => {
-            salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ]";
+            salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ] \n";
           });
           auxinfoSubs.infoInvSalsas = salsas;
 
