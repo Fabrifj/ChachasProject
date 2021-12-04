@@ -12,23 +12,23 @@
     "CreateProductInsumoFabrica": "/api/productInsumoFabrica",
     "UpdateProduct": "/api/product/:idproduct",
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
-    "UpdateMermasOfAProduct": "/api/product/mermas/:idproduct",
+    "UpdateMermasOfAProduct": "/api/product/mermas/",
     "DeleteProduct": "/api/product/:idproduct",
-    "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
+    "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/",
+
+
+    "crearCompra":"/api/purchase",
 
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",
     "DeleteOrder": "/api/order/:idOrder",
     "UpdateExpenseSupplySubsidiary":"",
 
-
     "CreateSubsidiary": "/api/subsidiary",
     "GetSubsidiary": "/api/subsidiary",
     "GetSubsidiaryId": "/api/subsidiary/:id",
     "UpdateSubdidiaryId": "/api/subsidiary/:id",
     "DeleteSubsidiary": "/api/subsidiary/:id",
-
-
 
     "CreateMenu": "/api/menu",
     "GetMenus": "/api/menu",
@@ -44,15 +44,12 @@
     "UpdatePasswordEmployee": "/api/employee",
     "DeleteEmployee": "/api/subsidiary/:id",
 
-
+    "CreateTransaction":"/api/transaction",
+    "GetTransaction":"/api/transaction",
+    "GetTransactionId":"/api/transaction/:id",
+    "UpdateTransaction":"/api/transaction/:id",
+    "DeleteTransaction":"/api/transaction/:id"
     
 
-  "CreateTransaction":"/api/transaction",
-  "GetTransaction":"/api/transaction",
-  "GetTransactionId":"/api/transaction/:id",
-  "UpdateTransaction":"/api/transaction/:id",
-  "DeleteTransaction":"/api/transaction/:id"
-
-
-
+    
 }
