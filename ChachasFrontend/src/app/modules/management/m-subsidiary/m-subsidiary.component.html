@@ -1,2 +1,5 @@
+<button type="button" class="btn btn-default" routerLink="managment" id="BInventary" *ngIf="showVariable==true" (click)="click()">Inventario</button>
+<button type="button" class="btn btn-default" routerLink="sales" id="BSales" *ngIf="showVariable==false" (click)="click()">Ventas</button>
 
-<app-ms-inventary></app-ms-inventary>
+<router-outlet></router-outlet>
+

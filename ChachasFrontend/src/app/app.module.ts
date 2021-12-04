@@ -37,7 +37,6 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './modules/header/header.component';
 import { SidenavComponent } from './modules/sidenav/sidenav.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppHttpService } from './services/app-http.service';
 import { AgmCoreModule } from '@agm/core';
 
 
@@ -46,6 +45,7 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppHttpService } from './core-modules/app-http.service';
 
 
 @NgModule({

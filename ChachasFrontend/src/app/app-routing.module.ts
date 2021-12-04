@@ -16,6 +16,7 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
+import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 
 
 
@@ -41,7 +42,7 @@ const routes: Routes = [
           {path: 'client-info', component: ClientInfoComponent},
         ]
       },
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'managment', component: MsInventaryComponent},
     ]
   },
   {
