@@ -47,20 +47,21 @@ export class DisplayOrderInfoComponent implements OnInit {
     this.productsQuantity = this.productComponents.length
 
   }
+ 
+  acceptProductChoice() {
+    this.updatedList();
+    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+  }
   updatedList(){
     this.productosPrueba = [];
     this.productComponents.forEach((element)=>{
-      this.productosPrueba.push.apply(element.product)
+      this.productosPrueba.push(element.product)
     })
   }
-
-  acceptProductChoice() {
-    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
-
-  }
-
   keepChoosing() {
+    this.updatedList();
     this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+
   }
 }
 

@@ -14,7 +14,7 @@
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
     "UpdateMermasOfAProduct": "/api/product/mermas/",
     "DeleteProduct": "/api/product/:idproduct",
-    "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/",
+    "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
 
 
     "crearCompra":"/api/purchase",
