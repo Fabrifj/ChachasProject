@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ProductModel } from 'src/app/models/product.model';
 import { ProductToPurchaseModel } from 'src/app/models/productToPurchase.model';
@@ -13,6 +14,7 @@ export class SalesService implements OnInit{
   productsToPurchase: ProductToPurchaseModel[]=[];
   productList: ProductModel[]=[]
 
+
   constructor(private appHttpService : AppHttpService) { 
     appHttpService.getProductListHttp().subscribe(
       (jsonFile) => {
@@ -20,7 +22,6 @@ export class SalesService implements OnInit{
         this.productList = <ProductModel[]>jsonFile;
         console.log(this.productList)
       });
-      console.log("s"+this.productList);
 
   }
   ngOnInit(){
@@ -36,7 +37,7 @@ export class SalesService implements OnInit{
     return this.productsToPurchase
   }
   // we made a update from the list products to buy 
-  getPurchaseDetailEdited(newListProduct:ProductToPurchaseModel[] ){
+  updatePurchaseDetailEdited(newListProduct:ProductToPurchaseModel[] ){
     this.productsToPurchase = newListProduct;
   }
   // adde products to products list to purchase 
@@ -54,6 +55,8 @@ export class SalesService implements OnInit{
     let dire: DirectionModel= new DirectionModel("Sucursal");  
     let purchase:PurchaseModel = {Direction:dire, PurchaseDetail:this.productsToPurchase, ClientInfo:clientInfo, Date:date }
     this.appHttpService.postPurchase(purchase);
+    alert("Se completo la venta ")
+
     console.log(purchase);
     this.productsToPurchase=[];
   }

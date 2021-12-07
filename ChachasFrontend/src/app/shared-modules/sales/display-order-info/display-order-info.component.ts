@@ -45,7 +45,7 @@ export class DisplayOrderInfoComponent implements OnInit {
   deleteProductFromList(compToDelete: editComponent) {
     this.productComponents = this.productComponents.filter(component => component !== compToDelete)
     this.productsQuantity = this.productComponents.length
-
+    this.updatedList()
   }
  
   acceptProductChoice() {
@@ -57,10 +57,16 @@ export class DisplayOrderInfoComponent implements OnInit {
     this.productComponents.forEach((element)=>{
       this.productosPrueba.push(element.product)
     })
+    console.log(this.productosPrueba)
   }
+
+  acceptProductChoice() {
+    this.salesService.updatePurchaseDetailEdited(this.productosPrueba)
+
+  }
+
   keepChoosing() {
-    this.updatedList();
-    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+    this.salesService.updatePurchaseDetailEdited(this.productosPrueba)
 
   }
 }
