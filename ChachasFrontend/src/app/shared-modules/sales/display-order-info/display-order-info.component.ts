@@ -45,9 +45,17 @@ export class DisplayOrderInfoComponent implements OnInit {
   deleteProductFromList(compToDelete: editComponent) {
     this.productComponents = this.productComponents.filter(component => component !== compToDelete)
     this.productsQuantity = this.productComponents.length
+
+  }
+  updatedList(){
+    this.productosPrueba = [];
+    this.productComponents.forEach((element)=>{
+      this.productosPrueba.push.apply(element.product)
+    })
   }
 
   acceptProductChoice() {
+    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
 
   }
 
