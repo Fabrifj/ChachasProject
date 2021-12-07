@@ -38,77 +38,72 @@ async function getTransaction(idTran)
  * @returns 
  */
  async function createTransaction(body) 
- {
-     body.Fecha = firebase.firestore.Timestamp.fromDate(fnHerramientas.stringAFecha(body.Fecha));
-     //return fnHerramientas.createDoc(body,"Transaccion");
-     //restar los productos del origen
-     var listaProd = body.ListaProductos;
-     var origen = body.IdOrigen;
-     var destino = body.IdDestino;
-     
- 
-     var cantidad;
-     var tipo;
-     var idMenu;
-     //console.log("listaProd: ",listaProd,"origen: ",origen,"destino: ", destino);
- 
-     for await (const element of listaProd){
-         
-         cantidad = element.Cantidad;
-         console.log("CANTIDAD",element.Cantidad);        
-         tipo =element.Tipo;
- 
-         if(tipo=="Chacha"){
- 
-             //Se extrae la cantidad de cierto producto.
-             fnProduct.updateProductAfterSale(element.IdProducto, cantidad);
- 
-             //se aumenta la cantidad al nuevo producto
-             idMenu=element.IdMenu;
-             await fnProduct.getProductTransaction(idMenu, destino).then(prodDestino => {
-                 prodDestino.CantidadInventario = prodDestino.CantidadInventario + cantidad;
-                 
-                 console.log("cantidad:",prodDestino);
-                 console.log("el producto a aumentar:",prodDestino);
-                 fnProduct.updateProduct(prodDestino.id, prodDestino); //No se pero el ai se crea solo.
-             });
- 
-             //se gurada la transaccion
-             
- 
-         }else{
-             console.log("Es una salsa");
-             //Se extrae la cantidad de cierto producto
-             //await fnProduct.updateProductAfterSale(element.Nombre,element.Cantidad);
-             //console.log("nombre del producto salsa:",element.Nombre,element.Cantidad);
- 
-             //se aumenta la cantidad al nuevo product
-             var miDoc = null;
-             var productos = await fnProduct.getAllProducts();
-             var resultado = null;
-             
-             console.log("paso");
- 
-             productos.forEach(async (producto) => {
-                 console.log(producto.Origen)
-                 if(producto.Origen == origen && producto.Nombre == element.Nombre && producto.Tipo == "InsumoFabrica"){
-                     
-                 resultado = producto;
-                 resultado.CantidadInventario = resultado.CantidadInventario - element.Cantidad;
-                 fnProduct.updateProduct(resultado.id, resultado); //No se pero el ai se crea solo.
-                 }
-             });
- 
-             
- 
-             fnHerramientas.createDoc(body,"Transaccion");
-             
-             
- 
- 
-         }
-     };
- }
+{
+    body.Fecha = firebase.firestore.Timestamp.fromDate(fnHerramientas.stringAFecha(body.Fecha));
+    //return fnHerramientas.createDoc(body,"Transaccion");
+    //restar los productos del origen
+    var listaProd = body.ListaProductos;
+    var origen = body.IdOrigen;
+    var destino = body.IdDestino;
+    
+
+    var cantidad;
+    var tipo;
+    var idMenu;
+    //console.log("listaProd: ",listaProd,"origen: ",origen,"destino: ", destino);
+
+    for await (const element of listaProd){
+        
+        cantidad = element.Cantidad;
+        console.log("CANTIDAD",element.Cantidad);        
+        tipo =element.Tipo;
+
+        if(tipo=="Chacha"){
+
+            //Se extrae la cantidad de cierto producto.
+            fnProduct.updateProductAfterSale(element.IdProducto, cantidad);
+
+            //se aumenta la cantidad al nuevo producto
+            idMenu=element.IdMenu;
+            await fnProduct.getProductTransaction(idMenu, destino).then(prodDestino => {
+                prodDestino.CantidadInventario = prodDestino.CantidadInventario + cantidad;
+                console.log("cantidad:",prodDestino);
+                console.log("el producto a aumentar:",prodDestino);
+                fnProduct.updateProduct(prodDestino.id, prodDestino); //No se pero el ai se crea solo.
+            });
+
+            //se gurada la transaccion
+            
+
+        }else{
+            
+            var miDoc = null;
+            var productos = await fnProduct.getAllProducts();
+            var resultado = null;
+            
+            console.log("paso");
+
+            productos.forEach(async (producto) => {
+                console.log(producto.Origen,"y nombre",producto.Nombre,"tipo",producto.Tipo);
+                
+                if(producto.Origen == origen && producto.Nombre == element.Nombre && producto.Tipo == "InsumoFabrica"){
+                console.log("nombre del producto Destino,",producto);
+                resultado = producto;
+                resultado.CantidadInventario = resultado.CantidadInventario - element.Cantidad;
+                fnProduct.updateProduct(resultado.id, resultado); //No se pero el ai se crea solo.
+                }
+                if(producto.Origen == destino && producto.Nombre == element.Nombre && producto.Tipo == "InsumoFabrica"){
+                    console.log("nombre del producto Destino,",producto);
+                    resultado = producto;
+                    resultado.CantidadInventario = resultado.CantidadInventario + element.Cantidad;
+                    fnProduct.updateProduct(resultado.id, resultado); //No se pero el ai se crea solo.
+                }
+            });
+
+            fnHerramientas.createDoc(body,"Transaccion");
+        }
+    };
+}
 
 
 /**
