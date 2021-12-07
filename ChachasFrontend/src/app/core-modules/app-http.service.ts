@@ -15,7 +15,8 @@ export class AppHttpService {
   constructor(private http: HttpClient ) { }
 
   getProductListHttp(){
-    return this.http.get<ProductModel[]>(paths.GetAllProductFromASubsidiary);
+    console.log("Estamos en get all lit product");
+    return this.http.get(paths.GetAllProductFromASubsidiary);
   }
   postPurchase(purchase:any){
     return this.http.post(paths.CreateOrder, purchase)
