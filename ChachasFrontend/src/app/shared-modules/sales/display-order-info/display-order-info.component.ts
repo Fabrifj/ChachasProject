@@ -47,6 +47,11 @@ export class DisplayOrderInfoComponent implements OnInit {
     this.productsQuantity = this.productComponents.length
     this.updatedList()
   }
+ 
+  acceptProductChoice() {
+    this.updatedList();
+    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+  }
   updatedList(){
     this.productosPrueba = [];
     this.productComponents.forEach((element)=>{
@@ -62,6 +67,7 @@ export class DisplayOrderInfoComponent implements OnInit {
 
   keepChoosing() {
     this.salesService.updatePurchaseDetailEdited(this.productosPrueba)
+
   }
 }
 
