@@ -45,22 +45,23 @@ export class DisplayOrderInfoComponent implements OnInit {
   deleteProductFromList(compToDelete: editComponent) {
     this.productComponents = this.productComponents.filter(component => component !== compToDelete)
     this.productsQuantity = this.productComponents.length
-
+    this.updatedList()
   }
   updatedList(){
     this.productosPrueba = [];
     this.productComponents.forEach((element)=>{
-      this.productosPrueba.push.apply(element.product)
+      this.productosPrueba.push(element.product)
     })
+    console.log(this.productosPrueba)
   }
 
   acceptProductChoice() {
-    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+    this.salesService.updatePurchaseDetailEdited(this.productosPrueba)
 
   }
 
   keepChoosing() {
-    this.salesService.getPurchaseDetailEdited(this.productosPrueba)
+    this.salesService.updatePurchaseDetailEdited(this.productosPrueba)
   }
 }
 

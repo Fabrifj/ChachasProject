@@ -27,6 +27,7 @@ export class CatalogCardComponent implements OnInit {
 
     this.salesService.addProductToPurchase(this.index,this.checkoutForm.value['unitsInput'])
     this.checkoutForm.reset();
+    alert("Se logro ingresar  el producto correctamente")
   }
 
 }
