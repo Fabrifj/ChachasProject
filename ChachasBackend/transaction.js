@@ -37,7 +37,7 @@ async function getTransaction(idTran)
  }
  * @returns 
  */
-async function createTransaction(body) 
+ async function createTransaction(body) 
 {
     body.Fecha = firebase.firestore.Timestamp.fromDate(fnHerramientas.stringAFecha(body.Fecha));
     //return fnHerramientas.createDoc(body,"Transaccion");
@@ -45,41 +45,64 @@ async function createTransaction(body)
     var listaProd = body.ListaProductos;
     var origen = body.IdOrigen;
     var destino = body.IdDestino;
+    
 
     var cantidad;
+    var tipo;
+    var idMenu;
     //console.log("listaProd: ",listaProd,"origen: ",origen,"destino: ", destino);
 
     for await (const element of listaProd){
+        
         cantidad = element.Cantidad;
+        console.log("CANTIDAD",element.Cantidad);        
+        tipo =element.Tipo;
 
-        await fnProduct.getProductById(element.IdProducto).then(producto =>{
-            console.log("el origen es: ", origen);
-            fnProduct.getProductTransaction(producto.IdMenu, origen).then(prodOrigen => {
-                if(prodOrigen.CantidadInventario>cantidad)
-                {
-                    console.log("entra x q sise puede la transaccion", prodOrigen);
-                    //Se extrae la cantidad de cierto producto.
-                    fnProduct.updateProductAfterSale(prodOrigen.id, cantidad);
+        if(tipo=="Chacha"){
 
-                    //se aumenta la cantidad al nuevo producto.
-                    console.log("El producto al que se le suma es:",producto);
-                    producto.CantidadInventario = producto.CantidadInventario + cantidad;
-                    fnProduct.updateProduct(producto.id, producto);
+            //Se extrae la cantidad de cierto producto.
+            fnProduct.updateProductAfterSale(element.IdProducto, cantidad);
 
-                    //se gurada la transaccion
-                    fnHerramientas.createDoc(body,"Transaccion");
-
-
-                }else{
-                    console.log("No se puede realizar la transaccion porq no hay suficiente cantidad en el producto: ", prodOrigen);
-                }
-                
+            //se aumenta la cantidad al nuevo producto
+            idMenu=element.IdMenu;
+            await fnProduct.getProductTransaction(idMenu, destino).then(prodDestino => {
+                prodDestino.CantidadInventario = prodDestino.CantidadInventario + cantidad;
+                console.log("cantidad:",prodDestino);
+                console.log("el producto a aumentar:",prodDestino);
+                fnProduct.updateProduct(prodDestino.id, prodDestino); //No se pero el ai se crea solo.
             });
-        } );
+
+            //se gurada la transaccion
+            
+
+        }else{
+            
+            var miDoc = null;
+            var productos = await fnProduct.getAllProducts();
+            var resultado = null;
+            
+            console.log("paso");
+
+            productos.forEach(async (producto) => {
+                console.log(producto.Origen,"y nombre",producto.Nombre,"tipo",producto.Tipo);
+                
+                if(producto.Origen == origen && producto.Nombre == element.Nombre && producto.Tipo == "InsumoFabrica"){
+                console.log("nombre del producto Destino,",producto);
+                resultado = producto;
+                resultado.CantidadInventario = resultado.CantidadInventario - element.Cantidad;
+                fnProduct.updateProduct(resultado.id, resultado); //No se pero el ai se crea solo.
+                }
+                if(producto.Origen == destino && producto.Nombre == element.Nombre && producto.Tipo == "InsumoFabrica"){
+                    console.log("nombre del producto Destino,",producto);
+                    resultado = producto;
+                    resultado.CantidadInventario = resultado.CantidadInventario + element.Cantidad;
+                    fnProduct.updateProduct(resultado.id, resultado); //No se pero el ai se crea solo.
+                }
+            });
+
+            fnHerramientas.createDoc(body,"Transaccion");
+        }
     };
-
-
-
 }
 
 
