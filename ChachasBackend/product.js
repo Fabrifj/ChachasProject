@@ -285,6 +285,27 @@ async function updateMermasProduct(idProd, body) {
 
   return respuesta;
 }
+
+async function getMermaSubsidiary(idSub) {
+  var list = null;
+  var result = [];
+  await product.where("Origen", "==", idSub).get().then((snapshot) => {
+    list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    for (i in list) {
+      if (list[i].Mermas){
+        for (j in list[i].Mermas) {
+          list[i].Mermas[j].Fecha = (list[i].Mermas[j].Fecha).toDate().toDateString();
+          result.push(list[i].Mermas[j])
+        }
+      }
+    }
+  }).catch((error) => {
+    console.log(`Failed to get list of mermas: ${error}`);
+  });
+  
+  return result;
+}
+
 /**
  * 
  * @param {string} idProducto 
@@ -341,4 +362,5 @@ module.exports = {
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
+  getMermaSubsidiary
 };

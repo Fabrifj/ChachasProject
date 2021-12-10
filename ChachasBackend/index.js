@@ -257,7 +257,13 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-
+//get mermas from subsidiary
+app.get("/api/subsidiaryMermas/:id", async (req, res) => {
+  console.log('hi')
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnProduct.getMermaSubsidiary(idSubsidiary);
+  res.send(respuesta);
+});
 
 /*===================================
           CRUD MENU
