@@ -257,7 +257,8 @@ async function updateMermasProduct(idProd, body) {
   var respuesta = null;
   var date = fnHerramientas.stringAFecha(body.Fecha);
   body.Fecha = firebase.firestore.Timestamp.fromDate(new Date(date));
-  console.log(body);
+  var cantidadMermas = body.Cantidad;
+  var cantidadInventario; 
 
   await product
     .doc(idProd)
@@ -265,18 +266,22 @@ async function updateMermasProduct(idProd, body) {
     .then(async (doc) => {
       if (doc.exists) {
         var prodData = doc.data();
+        cantidadInventario = prodData.CantidadInventario - cantidadMermas;
+        if(cantidadInventario < 0){
+          return "SIN STOCK DE CHACHAS";
+        }
 
         if (prodData.Mermas) {
-          console.log("Ya hay mermas");
           await product.doc(idProd).update({
             Mermas: firebase.firestore.FieldValue.arrayUnion(body),
           });
           console.log("Merma information added correctly");
         } else {
-          console.log("No hay mermas");
           await product.doc(idProd).set({ Mermas: body }, { merge: true });
           console.log("Merma information added correctly");
         }
+
+        await product.doc(idProd).set({CantidadInventario: cantidadInventario}, {merge:true});
         respuesta = await getProductById(idProd);
       } else {
         console.log("The product does not exist");
