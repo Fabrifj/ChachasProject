@@ -48,10 +48,10 @@ export class DisplayOrderInfoComponent implements OnInit {
     this.updatedList()
   }
  
-  acceptProductChoice() {
+ /*acceptProductChoice() {
     this.updatedList();
     this.salesService.getPurchaseDetailEdited(this.productosPrueba)
-  }
+  }*/
   updatedList(){
     this.productosPrueba = [];
     this.productComponents.forEach((element)=>{
