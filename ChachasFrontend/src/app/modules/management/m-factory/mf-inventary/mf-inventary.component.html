@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn" (click)="modalService.abrir('');">Crear Producto</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn" (click)="modalService.abrir('');">Historial de mermas</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn" (click)="modalService.abrir('');">Crear Ingrediente</button>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="PreProductsSection">
+                <h1>Tabla de los Productos Prehechos</h1>
+                <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionRegistroCompra($event)">
+                </app-reusable-table>
+        
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="IngredientsSection">
+                <h1>Tabla de los Ingredientes</h1>
+                <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionRegistroCompra($event)">
+                </app-reusable-table>
+        
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
