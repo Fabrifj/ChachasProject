@@ -8,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class MFactoryComponent implements OnInit {
 
   constructor() { }
-
+  showVariable : boolean = true; 
   ngOnInit(): void {
+
+  }
+  click(){
+    this.showVariable =! this.showVariable
+    console.log(this.showVariable)
+  }
+t(): void {
   }
 
 }

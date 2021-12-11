@@ -12,4 +12,9 @@ export class MfInventaryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
+  functionSelectObj(response :any){
+
+  }
 }

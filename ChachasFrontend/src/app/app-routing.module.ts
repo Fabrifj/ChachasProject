@@ -17,6 +17,8 @@ import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-
 import { SalesComponent } from './shared-modules/sales/sales.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
+import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 
 
 
@@ -42,7 +44,7 @@ const routes: Routes = [
           {path: 'client-info', component: ClientInfoComponent},
         ]
       },
-      {path: 'managment', component: MsInventaryComponent},
+      {path: 'inventary', component: MsInventaryComponent},
     ]
   },
   {
@@ -59,7 +61,8 @@ const routes: Routes = [
     component: MFactoryComponent,
     children:[
 
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'inventary', component: MfInventaryComponent},
+      {path:'subsidiary',component: MfSubsidiaryComponent}
     ]
   },
   {

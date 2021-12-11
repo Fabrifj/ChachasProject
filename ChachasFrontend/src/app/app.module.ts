@@ -15,7 +15,7 @@ import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
-
+import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,6 +46,7 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
+import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
 
 
 @NgModule({
@@ -66,6 +67,8 @@ import { AppHttpService } from './core-modules/app-http.service';
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
+    MfInventaryComponent,
+    MFactoryComponent,
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
