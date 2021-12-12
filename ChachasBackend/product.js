@@ -353,6 +353,33 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
+async function getMermasProd(idProd){
+  var resp = null;
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        
+        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
+          var menu = await fnMenu.getMenuId(prodData.IdMenu);
+          resp = {
+            "Nombre": menu.Nombre,
+            "Mermas": prodData.Mermas,
+            "Sucursal": prodData.Origen
+          }
+          console.log("Tthe product have mermas");
+        } else {
+          console.log("The product does not have information of mermas");
+        }
+      } else {
+        console.log("The product does not exist");
+      }
+    }); 
+  return resp;
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -367,5 +394,6 @@ module.exports = {
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
-  getMermaSubsidiary
+  getMermaSubsidiary,
+  getMermasProd
 };
