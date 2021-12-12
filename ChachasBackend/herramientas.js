@@ -106,8 +106,6 @@ async function createDoc(data, nombreEntidad){
   return respuesta;
 }
 
-
-
 module.exports = {
   stringAFecha,
   updateDoc,

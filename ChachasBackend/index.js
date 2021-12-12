@@ -173,7 +173,13 @@ app.put("/api/product/mermas/:idproduct", async (req, res) => {
   res.send(response);
 });
 
-
+//Update CantidadInventario of a product giving it's expense (spent quantity)
+app.put("/api/product/expense/:idproduct", async (req, res) => {
+  var idProd = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateExpenseSupplySubsidiary(idProd, body);
+  res.send(response);
+});
 //DeleteProduct
 app.delete("/api/product/:idproduct", async (req, res) => {
   var productToDelete = req.params.idproduct;
@@ -251,7 +257,13 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-
+//get mermas from subsidiary
+app.get("/api/subsidiaryMermas/:id", async (req, res) => {
+  console.log('hi')
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnProduct.getMermaSubsidiary(idSubsidiary);
+  res.send(respuesta);
+});
 
 /*===================================
           CRUD MENU
@@ -389,7 +401,7 @@ app.put("/api/transaction/:id", async (req, res) => {
   res.send(respuesta);
 });
 //Delete Transaction
-app.delete("/api/Transaction/:id", async (req, res) => {
+app.delete("/api/transaction/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnTransaction.deleteTransaction(idEmp);
   res.send(respuesta);

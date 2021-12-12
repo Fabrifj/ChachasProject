@@ -1,5 +1,13 @@
 COLECCIONES:
 =========================================================================
+Merma
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"IdMenu":,
+	"IdSucursal":"",
+	"Fecha":"",
+	"Cantidad":
+}
 Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
@@ -24,7 +32,12 @@ Producto
 	],
 	"Costo":7,
 	"CantidadInventario":500,
+<<<<<<< HEAD
   "CantidadMinima":
+=======
+  "CantidadMinima":,
+  "IdMenu":,
+>>>>>>> Prototype2
 },
 
 {
@@ -47,7 +60,11 @@ Producto
 
 {
 	"Id":"BCHEBCOOkkkBDOH",
+<<<<<<< HEAD
+	"Tipo":"Refresco" //Puede ser refresco
+=======
 	"Tipo":"Refresco" //Puede ser refresco o aceite
+>>>>>>> Prototype2
 	"Nombre":"Coca-Cola" 
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,
@@ -181,7 +198,12 @@ Transaccion
 	"Id":"",
 	"Fecha":"2020-03-23"
 	"IdOrigen":"",
+<<<<<<< HEAD
 	"IdDestino":""
+=======
+	"IdDestino":"",
+	"Tipo":"Sucursal",
+>>>>>>> Prototype2
 	"ListaProductos":
 	[
 		{
@@ -198,7 +220,29 @@ Transaccion
 			"NombreProducto":"Salsa Picante"
 		}
 	]
+<<<<<<< HEAD
 }//Preguntarle al Inge
+=======
+},
+{
+	"Id":"",
+	"Tipo":"Fabrica",
+	"Fecha":"2020-03-23",
+	"IdOrigen":"Fabrica",//Cuando sea tipo fabrica, en la lista de productos el tipo siempre sera "Merma"
+	"IdDestino":"",//Alguna sucursal
+	"ListaProductos":
+	[
+		{
+			//FE solo provee IdProductoFabrica O IdProductoSucursal
+			"IdProductoFabrica":"",
+			"IdProductoSucursal":"ijoihbuibiu",
+			"Tipo":"Merma" //O tipo "Chachas" en caso de traspaso Sucursal -> Fabrica
+			"Cantidad":,
+			"NombreProducto":,
+		}
+	]
+}
+>>>>>>> Prototype2
 =========================================================================
 Pedido/Confirmacion para el siguiente modulo
 =========================================================================

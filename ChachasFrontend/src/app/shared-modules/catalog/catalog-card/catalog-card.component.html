@@ -1,0 +1,24 @@
+<div class="card mb-4 shadow-sm">
+    <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.ImgURL" />
+  
+    <div class="card-body">
+      <h3 class="card-title">{{productItem.Nombre}}</h3>
+      <p class="card-text">
+        <strong>{{ productItem.Precio | currency:"BOB":"symbol" }}</strong>
+        <!-- <i *ngIf="addedToWishlist" class="fas fa-heart float-right" (click)="handleRemoveFromWishlist()"></i>
+        <i *ngIf="!addedToWishlist" class="far fa-heart float-right" (click)="handleAddToWishlist()"></i> -->
+      </p>
+      <p class="card-text">"---"</p>
+      <div class="row">
+        <form [formGroup]="checkoutForm" (ngSubmit)="AddToCart()">
+          <div class="col-md-5">
+              <input formControlName="unitsInput" class="form-control form-control-sm" type="number" placeholder="Units"/> 
+          </div>
+          <div class="col-md-4">
+              <div class="btn-group">
+                  <button type="submit" class="btn btn-sm btn-primary product-btn">Add to Cart</button>
+              </div>             
+          </div>
+        </form>
+    </div>
+  </div>

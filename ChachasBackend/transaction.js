@@ -37,7 +37,7 @@ async function getTransaction(idTran)
  }
  * @returns 
  */
-async function createTransaction(body) 
+ async function createTransaction(body) 
 {
     body.Fecha = firebase.firestore.Timestamp.fromDate(fnHerramientas.stringAFecha(body.Fecha));
     //return fnHerramientas.createDoc(body,"Transaccion");
