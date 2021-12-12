@@ -194,6 +194,12 @@ app.get("/api/productTransaction", async (req, res) => {
   res.send(prod);
 });
 
+app.get("/api/product/mermas/:idProd", async (req, res) => {
+  var idProd = req.params.idProd;
+  const response = await fnProduct.getMermasProd(idProd);
+  res.send(response);
+});
+
 
 /*=================================
           CRUD ORDER
