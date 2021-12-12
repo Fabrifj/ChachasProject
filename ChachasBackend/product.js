@@ -369,7 +369,7 @@ async function getMermasProd(idProd){
             "Mermas": prodData.Mermas,
             "Sucursal": prodData.Origen
           }
-          console.log("The product have mermas");
+          console.log("Tthe product have mermas");
         } else {
           console.log("The product does not have information of mermas");
         }

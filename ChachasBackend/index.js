@@ -15,6 +15,7 @@ const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
 const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
+const fnIngredient = require('./ingredient');
 
 /*=================================
           CRUD PRODUCT
@@ -421,6 +422,41 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
+
+/*===================================
+          CRUD INGREDIENT
+===================================*/
+
+// Get all ingredients
+app.get("/api/ingredient", async (req, res) => {
+  const respuesta = await fnIngredient.getIngredients();
+  res.send(respuesta);
+});
+
+//Get ingredient by Id
+app.get("/api/ingredient/:id", async (req, res) => {
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.getIngredient(idIn);
+  res.send(respuesta);
+});
+
+//Update Ingredient
+app.put("/api/ingredient/:id", async (req, res) => {
+  const body = req.body;
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.updateIngredient(idIn, body);
+  res.send(respuesta);
+});
+//Delete Transaction
+app.delete("/api/ingredient/:id", async (req, res) => {
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.deleteIngredient(idIn);
+  res.send(respuesta);
+});
+
+
+
+
 /*===================================
           ENDPOINT PRUEBA
 ===================================*/
