@@ -427,6 +427,13 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
           CRUD INGREDIENT
 ===================================*/
 
+//Create ingredient info
+app.post("/api/ingredientInfo", async (req, res) => {
+  var newIngredient = req.body;
+  const response = await fnIngredient.createIngredientInfo(newIngredient);
+  res.send(response);
+});
+
 // Get all ingredients
 app.get("/api/ingredient", async (req, res) => {
   const respuesta = await fnIngredient.getIngredients();
