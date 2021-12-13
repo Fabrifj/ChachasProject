@@ -31,9 +31,5 @@ export class HomeComponent implements OnInit {
   }
   
 
-   verificar(){
-    var myInput:any = document.getElementById("tipo");
-  } 
-
 }
 
