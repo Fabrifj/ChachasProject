@@ -34,6 +34,12 @@ app.get("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProducts();
+  res.send(response);
+});
+
 // Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
   var idSub = req.params.idSub;
@@ -418,6 +424,13 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
 /*===================================
           CRUD INGREDIENT
 ===================================*/
+
+//Create ingredient info
+app.post("/api/ingredientInfo", async (req, res) => {
+  var newIngredient = req.body;
+  const response = await fnIngredient.createIngredientInfo(newIngredient);
+  res.send(response);
+});
 
 // Get all ingredients
 app.get("/api/ingredient", async (req, res) => {

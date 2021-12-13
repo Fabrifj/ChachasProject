@@ -1,6 +1,12 @@
 const {ingredient} = require('./config');
 const fnHerramientas = require("./herramientas");
 
+//create ingredient
+async function createIngredientInfo(body)
+{
+    return fnHerramientas.createDoc(body,"Ingrediente");
+}
+
 // Get all the ingredients
 async function getIngredients()
 {
@@ -48,6 +54,7 @@ module.exports = {
   getIngredients,
   getIngredient,
   updateIngredient,
-  deleteIngredient
+  deleteIngredient,
+  createIngredientInfo
 }
 
