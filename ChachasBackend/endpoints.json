@@ -1,6 +1,7 @@
 {
   "GetAllProducts":"/api/product",
   "GetProductById":"/api/product/:idproduct",
+  "GetProductsWithIngredients":"/api/products",
   "GetProductsBySubsidiaryAndType":"/api/product/subsidiary/:idSub/type/:type",
   "GetProductsBySubsidiary":"/api/product/subsidiary/:idSub",
   "GetProductBySubisidiary_Chacha_Refresco":"/api/product/ChachaRefresco/:idSub",
