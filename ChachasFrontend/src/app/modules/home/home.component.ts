@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import {CatalogComponent} from '../../shared-modules/catalog/catalog.component'
+import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+
 
 @Component({
   selector: 'app-home',
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
     this.displayStyle = "none";
   }
   
-  constructor() { }
+  constructor(public modalService:ModalService) { }
   
 
   ngOnInit(): void {
@@ -29,4 +31,9 @@ export class HomeComponent implements OnInit {
   }
   
 
+   verificar(){
+    var myInput:any = document.getElementById("tipo");
+  } 
+
 }
+

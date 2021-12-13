@@ -4,16 +4,46 @@
     </div>
     <mat-divider></mat-divider>
     <h2 matSubheader class="mt-2">APPLICATIONS</h2>
-    <a mat-list-item routerLink="/home" routerLinkActive="list-item-active" class="upper">
-        <mat-icon>home</mat-icon> Home
-    </a>
 
-    <a mat-list-item [routerLink]="['/m-subsidiary/managment']" routerLinkActive="list-item-active" class="upper">
-        <mat-icon>store</mat-icon> Inventario
-    </a>
+    <div class="general">
+        <a mat-list-item routerLink="/home" routerLinkActive="list-item-active" class="upper">
+            <mat-icon>home</mat-icon> Home
+        </a>
 
-    <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper">
-        <mat-icon>add_shopping_cart</mat-icon> Ventas</a>
+    </div>
 
+    <div *ngIf="isShownS" class="sucursal">
+        <a mat-list-item [routerLink]="['/m-subsidiary/managment']" routerLinkActive="list-item-active" class="upper">
+            <mat-icon>store</mat-icon> Inventario
+        </a>
+
+        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper">
+            <mat-icon>add_shopping_cart</mat-icon> Ventas</a>
+
+        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>attach_money</mat-icon> Transaccion</a>
+
+    </div>
+
+    <div *ngIf="isShownF" class="factory">
+        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>fastfood</mat-icon> Agregar Ingredientes</a>
+    </div>
+
+    <div *ngIf="isShownO" class="owner">
+        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>person_pin</mat-icon> Agregar Empleados</a>
+    </div>
+
+    <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">
+        Inciar Sesion
+    </button>
+
+    <jw-modal id="modalSubsidiaries-01" altura="90" ancho="90">
+        <h1>Subsidiaries:</h1>
+        <input type="text" id="tipo">
+        <button class="btnSend" (click)="verificar();modalService.cerrar('modalSubsidiaries-01');">Submit</button>
+
+    </jw-modal>
 
 </mat-nav-list>
