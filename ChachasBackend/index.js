@@ -53,6 +53,11 @@ app.get("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProducts();
+  res.send(response);
+});
 
 // Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
