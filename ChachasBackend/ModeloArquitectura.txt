@@ -6,7 +6,10 @@ Merma
 	"IdMenu":,
 	"IdSucursal":"",
 	"Fecha":"",
-	"Cantidad":
+	"Cantidad":,
+	"Estado": //Revision, Aprobado
+	"Observacion": //Ninguna
+	"CantidadRecibida":
 }
 Producto
 {
@@ -32,12 +35,8 @@ Producto
 	],
 	"Costo":7,
 	"CantidadInventario":500,
-<<<<<<< HEAD
-  "CantidadMinima":
-=======
   "CantidadMinima":,
   "IdMenu":,
->>>>>>> Prototype2
 },
 
 {
@@ -52,7 +51,7 @@ Producto
 	[
     {
       "Fecha":"",
-      "Cantidad":"""
+      "Cantidad":""
     }    
 	],
   "CantidadMinima":
@@ -60,11 +59,7 @@ Producto
 
 {
 	"Id":"BCHEBCOOkkkBDOH",
-<<<<<<< HEAD
-	"Tipo":"Refresco" //Puede ser refresco
-=======
 	"Tipo":"Refresco" //Puede ser refresco o aceite
->>>>>>> Prototype2
 	"Nombre":"Coca-Cola" 
 	"Origen": "ID-SUCURSAL",
 	"Costo":10,

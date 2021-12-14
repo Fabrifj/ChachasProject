@@ -15,6 +15,7 @@ const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
 const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
+const fnMerma = require("./merma");
 
 /*=================================
           CRUD PRODUCT
@@ -415,6 +416,49 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
+
+/*================================
+          CRUD MERMA
+==================================*/
+
+// Create Merma
+app.post("/api/merma", async (req, res) => {
+  var body = req.body;
+  const respuesta = await fnMerma.createMerma(body);
+  res.send(respuesta);
+});
+
+// Get Mermas
+app.get("/api/merma", async (req, res) => {
+  const respuesta = await fnMerma.getMermas();
+  res.send(respuesta);
+});
+//Get Merma by Id
+app.get("/api/merma/:id", async (req, res) => {
+  const idMerma = req.params.id;
+  const respuesta = await fnMerma.getMerma(idMerma);
+  res.send(respuesta);
+});
+//Update Merma
+app.put("/api/merma/:id", async (req, res) => {
+  const body = req.body;
+  const idMerma = req.params.id;
+  const respuesta = await fnMerma.updateMerma(idMerma, body);
+  res.send(respuesta);
+});
+
+//Delete Merma
+app.delete("/api/merma/:id", async (req, res) => {
+  const idMerma = req.params.id;
+  const respuesta = await fnMerma.deleteMerma(idMerma);
+  res.send(respuesta);
+});
+
+
+
+
+
+
 /*===================================
           ENDPOINT PRUEBA
 ===================================*/
