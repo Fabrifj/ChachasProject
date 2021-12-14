@@ -190,7 +190,19 @@ app.delete("/api/product/:idproduct", async (req, res) => {
   const response = await fnProduct.deleteProduct(productToDelete);
   res.send(response);
 });
-
+//Create Product Factory
+app.post("/api/productFactory", async (req, res) => {
+  const body = req.body;
+  const response = await fnProduct.createProductFactory(body);
+  res.send(response);
+});
+//Update Product Factory
+app.put("/api/productFactory/:idproduct", async (req, res) => {
+  const body = req.body;
+  const idProd = req.params.idproduct;
+  const response = await fnProduct.updateProductFactory(idProd,body);
+  res.send(response);
+});
 
 /*=================================
           CRUD ORDER
