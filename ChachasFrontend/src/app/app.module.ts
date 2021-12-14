@@ -47,6 +47,9 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
 import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -92,7 +95,9 @@ import { MFactoryComponent } from './modules/management/m-factory/m-factory.comp
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
-    })
+    }),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   
   exports:[CatalogCardComponent],

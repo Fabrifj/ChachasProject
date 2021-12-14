@@ -48,7 +48,18 @@
     "GetTransaction":"/api/transaction",
     "GetTransactionId":"/api/transaction/:id",
     "UpdateTransaction":"/api/transaction/:id",
-    "DeleteTransaction":"/api/transaction/:id"
+    "DeleteTransaction":"/api/transaction/:id",
+
+
+
+
+
+    "GetIngredients":"/api/ingredient",
+    "CreateIngInfo":"/api/ingredientInfo",
+    "GetIngredientId":"/api/ingredient/:id",
+    "UpdateIngredient":"/api/ingredient/",
+    "DeleteIngredient":"/api/ingredient/:id"
+
     
 
     

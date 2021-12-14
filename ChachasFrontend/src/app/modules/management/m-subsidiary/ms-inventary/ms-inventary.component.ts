@@ -2,6 +2,12 @@ import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+
+
+
+
+
+
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -107,6 +113,10 @@ export class MsInventaryComponent implements OnInit {
   zoom=16;
 
 
+
+
+
+
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
 
   ngOnInit(): void {
@@ -141,7 +151,7 @@ export class MsInventaryComponent implements OnInit {
  
   }
 
-  
+
 
   getProductsBySubsidiary(){
   
@@ -153,6 +163,9 @@ export class MsInventaryComponent implements OnInit {
 
   }
   getProdChachas(){
+
+
+   
 
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
