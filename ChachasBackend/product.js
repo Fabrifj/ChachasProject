@@ -400,7 +400,165 @@ async function getMermasProd(idProd){
     }); 
   return resp;
 }
+/**
+ * 
+ * @param {*} idProd 
+ * @param 
+{
 
+
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+	"Precio": 5,
+	"CantidadMinima":5,
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+	
+}
+ body 
+ */
+async function updateProductFactory(idProd,body)
+{
+
+}
+/**
+ * 
+ * @param {*} idProd 
+ * @param 
+{
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+  "IdMenu":"bbihbihbvuhvu",
+	"CantidadMinima":,
+	"ListaIngredientes":[
+		{
+			"IdIngrediente":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+
+} body 
+ */
+
+/**
+Producto
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"Nombre":"Chacha Prehecha de Carne"
+	"Origen": "Fabrica",
+	"Receta": 
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"Costo":7,
+	"CantidadInventario":500,
+  "CantidadMinima":,
+  "IdMenu":,
+}
+Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
+[
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	},
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	}
+]
+ */
+async function createProductFactory(body)
+{
+  const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+  body.ListaIngredientes=calculo.ListaIngredientes;
+  body.Costo = calculo.Costo;
+  body.CantidadInventario=0;; 
+  body.Origen="Fabrica";
+  //console.log("ChachaCompleta: ",body);
+  fnHerramientas.createDoc(body,"Producto");
+  return body;
+  
+}
+/**
+ * 
+ * @param 
+{
+
+
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+  "IdMenu":"jbibohiboihbo",
+	"Precio": 5,
+	"CantidadMinima":5,
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+	
+} body 
+ */
+async function updateProductFactory(idProd,body)
+{
+  if(body.hasOwnProperty('ListaIngredientes') )
+  {
+    const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+    body.ListaIngredientes = calculo.ListaIngredientes;
+    body.Costo = calculo.Costo;
+
+  }
+  return await fnHerramientas.updateDoc(idProd,body,"Producto");
+}
+async function calculateCostChachaFactory(listaIngredientes)
+{
+  var costoTot = 0;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente,"Ingrediente");
+    ing.Nombre = myIng.Nombre;
+    ing.CantidadMedida = ing.Cantidad;
+    delete ing.Cantidad;
+    ing.Costo = parseFloat(ing.CantidadMedida)*(parseFloat(myIng.CostoMedio)/parseFloat(myIng.CantidadMedida));
+    costoTot+=ing.Costo;
+
+  }
+  //console.log("ListaIngredientes: ",listaIngredientes);
+  return {"Costo":costoTot,"ListaIngredientes":listaIngredientes}
+}
 module.exports = {
   getAllProducts,
   createProduct,
@@ -417,5 +575,9 @@ module.exports = {
   getProductTransaction,
   getMermaSubsidiary,
   getMermasProd,
-  getProducts
+  getProducts,
+  createProductFactory,
+  calculateCostChachaFactory,
+  updateProductFactory
+
 };

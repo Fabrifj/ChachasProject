@@ -13,11 +13,13 @@
   "CreateProductRefresco":"/api/productRefresco",
   "CreateProductInsumoSucursal":"/api/productInsumoSucursal",
   "CreateProductInsumoFabrica":"/api/productoInsumoFabrica",
+  "CreateProductFactory":"/api/productFactory",
   "UpdateProduct":"/api/product/:idproduct",
   "UpdateProductAfterSales":"/api/product/afterSale/:idproduct",
   "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
   "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
   "UpdateExpenseSupplySubsidiary":"/api/product/expense/:idproduct",
+  "UpdateProductFactory":"/api/productFactory/:idproduct",
   "DeleteProduct":"/api/product/:idproduct",
 
   "GetAllOrders":"/api/order",
