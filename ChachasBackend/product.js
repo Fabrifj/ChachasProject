@@ -400,34 +400,8 @@ async function getMermasProd(idProd){
     }); 
   return resp;
 }
-/**
- * 
- * @param {*} idProd 
- * @param 
-{
 
 
-	"Nombre" : "Chacha de carne",
-	"TipoUnidad:"Kg.",
-	"Precio": 5,
-	"CantidadMinima":5,
-	"ListaIngredientes":[
-		{
-			"Nombre":"",
-			"Cantidad": , 
-			"TipoUnidad" :  
-		}
-		
-	]
-	
-	
-}
- body 
- */
-async function updateProductFactory(idProd,body)
-{
-
-}
 /**
  * 
  * @param {*} idProd 
@@ -450,56 +424,9 @@ async function updateProductFactory(idProd,body)
 } body 
  */
 
-/**
-Producto
-{
-	"Id":"BCHEBCOOQCBDOH",
-	"Nombre":"Chacha Prehecha de Carne"
-	"Origen": "Fabrica",
-	"Receta": 
-	[
-		{
-			"IdIngrediente":"jibdjwdibciw",
-			"Nombre": Carne,
-			"CantidadMedida": 0.25,
-			"TipoUnidad":"kg",
-			"Costo": 5
-		},
-		{
-			"IdIngrediente":"cndcbiaksmp",
-			"Nombre": Tomate,
-			"CantidadMedida": 0.5,
-			"TipoUnidad":"kg",
-			"Costo": 2
-		}
-	],
-	"Costo":7,
-	"CantidadInventario":500,
-  "CantidadMinima":,
-  "IdMenu":,
-}
-Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
-[
-	{
-		"Id":"NDNDWCW283819",
-		"Nombre":"Cebolla",
-		"CantidadInventario":10,
-		"CantidadMedida":1,
-		"TipoUnidad":"kg",
-		"CostoMedio":3
-	},
-	{
-		"Id":"NDNDWCW283819",
-		"Nombre":"Cebolla",
-		"CantidadInventario":10,
-		"CantidadMedida":1,
-		"TipoUnidad":"kg",
-		"CostoMedio":3
-	}
-]
- */
 async function createProductFactory(body)
 {
+  body = await checkMenu(body,null);
   const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
   body.ListaIngredientes=calculo.ListaIngredientes;
   body.Costo = calculo.Costo;
@@ -542,8 +469,53 @@ async function updateProductFactory(idProd,body)
     body.Costo = calculo.Costo;
 
   }
+  body = await checkMenu(body,idProd);
   return await fnHerramientas.updateDoc(idProd,body,"Producto");
 }
+async function checkMenu(body,idProd)
+{
+  if(body.hasOwnProperty('Nombre'))
+  {
+    const myMenu = await fnMenu.getMenuName({"Nombre":body.Nombre});
+    const upd = {
+      "Nombre": body.Nombre
+   }
+    if(myMenu !=null && myMenu.length > 0)
+    {
+      body.IdMenu = myMenu[0].id;
+      console.log("MY MENU:",myMenu[0].id);
+      await fnHerramientas.updateDoc(myMenu[0].id, upd,"Menu");
+    }
+    else
+    {
+      const res = await fnHerramientas.createDoc(upd,"Menu");
+      console.log("SE CREA NUEVO MENU");
+      body.IdMenu = res.id;
+    }
+    delete body.Nombre;
+  }
+  if(body.hasOwnProperty('ImgURL'))
+  {
+    if(body.hasOwnProperty('IdMenu'))
+    {
+      await fnMenu.updateMenu(body.IdMenu, {"ImgURL":body.ImgURL});
+    }
+    else
+    {
+      if(idProd != null)
+      {
+        const myProd = await fnHerramientas.getDoc(idProd,"Producto");
+        await fnMenu.updateMenu(myProd.IdMenu, {"ImgURL":body.ImgURL});
+
+      }
+      
+    }
+    delete body.ImgURL;
+  }
+  return body;
+}
+
+
 async function calculateCostChachaFactory(listaIngredientes)
 {
   var costoTot = 0;

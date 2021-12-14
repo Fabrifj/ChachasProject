@@ -515,14 +515,9 @@ app.delete("/api/ingredient/:id", async (req, res) => {
 ===================================*/
 // Create Purchase
 app.post("/api/prueba", async (req, res) => {
-  var body = {
-    "Fecha":"2021-11-25",
-    "IdProducto":"T6lLnsuaDHfDAVW38E2f",
-    "Costo":10,
-    "Cantidad":1000,
-    "Origen":"mAlmWL1myFMGbZW8WHw3"
-  }
-  const respuesta = await fnHerramientas.createDoc(body,"Compra");
+  var body = {"Prueba":"Prueba"}
+  const respuesta = await fnHerramientas.createDoc(body,"Menu");
+  console.log("MI ID ES ESTEEEEEE>>>>",respuesta.id);
   res.send(respuesta);
 });
 
