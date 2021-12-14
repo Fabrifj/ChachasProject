@@ -15,6 +15,7 @@ const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
 const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
+const fnIngredient = require('./ingredient');
 
 /*=================================
           CRUD PRODUCT
@@ -26,25 +27,6 @@ app.get("/api/product", async (req, res) => {
   res.send(products);
 });
 
-app.post("/api/product/refresco", async (req, res) => {
-  var newproduct = req.body;
-  const response = await fnProduct.createProduct(newproduct);
-  res.send(response);
-});
-
-app.delete("/api/product/:idproduct", async (req, res) => {
-  var productToDelete = req.params.idproduct;
-  const response = await fnProduct.deleteProduct(productToDelete);
-  res.send(response);
-});
-
-app.put("/api/product/:idproduct", async (req, res) => {
-  var productToUpdate = req.params.idproduct;
-  var body = req.body;
-  const response = await fnProduct.updateProduct(productToUpdate, body);
-  res.send(response);
-});
-
 //Get a product by its ID
 app.get("/api/product/:idproduct", async (req, res) => {
   var productToGet = req.params.idproduct;
@@ -52,6 +34,11 @@ app.get("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProducts();
+  res.send(response);
+});
 
 // Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
@@ -97,13 +84,21 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   res.send(respuesta);
 });
 
-// Endpoint to update product cost and inventory by mean
-app.put("/api/product/costInventoryByMean/:idproduct", async (req ,res) => {
-  var idproduct = req.params.idproduct;
+// Get the transation of a product
+app.get("/api/productTransaction", async (req, res) => {
   var body = req.body;
-  var respuesta = await fnProduct.updateProductPriceByMean(idproduct, body);
-  res.send(respuesta);
+  console.log("entra a la busqueda de transaction product");
+  const prod = await fnProduct.getProductTransaction(body.IdMenu,body.Origen);
+  res.send(prod);
 });
+
+// Get the mermas of a product
+app.get("/api/product/mermas/:idProd", async (req, res) => {
+  var idProd = req.params.idProd;
+  const response = await fnProduct.getMermasProd(idProd);
+  res.send(response);
+});
+
 
 //Create generic product
 app.post("/api/product", async (req, res) => {
@@ -173,6 +168,14 @@ app.put("/api/product/mermas/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+// Endpoint to update product cost and inventory by mean
+app.put("/api/product/costInventoryByMean/:idproduct", async (req ,res) => {
+  var idproduct = req.params.idproduct;
+  var body = req.body;
+  var respuesta = await fnProduct.updateProductPriceByMean(idproduct, body);
+  res.send(respuesta);
+});
+
 //Update CantidadInventario of a product giving it's expense (spent quantity)
 app.put("/api/product/expense/:idproduct", async (req, res) => {
   var idProd = req.params.idproduct;
@@ -180,18 +183,12 @@ app.put("/api/product/expense/:idproduct", async (req, res) => {
   const response = await fnProduct.updateExpenseSupplySubsidiary(idProd, body);
   res.send(response);
 });
+
 //DeleteProduct
 app.delete("/api/product/:idproduct", async (req, res) => {
   var productToDelete = req.params.idproduct;
   const response = await fnProduct.deleteProduct(productToDelete);
   res.send(response);
-});
-
-app.get("/api/productTransaction", async (req, res) => {
-  var body = req.body;
-  console.log("entra a la busqueda de transaction product");
-  const prod = await fnProduct.getProductTransaction(body.IdMenu,body.Origen);
-  res.send(prod);
 });
 
 
@@ -257,7 +254,13 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-
+//get mermas from subsidiary
+app.get("/api/subsidiaryMermas/:id", async (req, res) => {
+  console.log('hi')
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnProduct.getMermaSubsidiary(idSubsidiary);
+  res.send(respuesta);
+});
 
 /*===================================
           CRUD MENU
@@ -338,6 +341,14 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
+//Authenticate employee
+app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
+  const username = req.params.username;
+  const pass = req.params.pass;
+  const resp = await fnEmployee.authenticateEmployee(username, pass);
+  res.send(resp);
+});
+
 /*===================================
           CRUD PURCHASE
 ===================================*/
@@ -409,6 +420,48 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   const respuesta = await fnPurchase.deletePurchase(idPur);
   res.send(respuesta);
 });
+
+/*===================================
+          CRUD INGREDIENT
+===================================*/
+
+//Create ingredient info
+app.post("/api/ingredientInfo", async (req, res) => {
+  var newIngredient = req.body;
+  const response = await fnIngredient.createIngredientInfo(newIngredient);
+  res.send(response);
+});
+
+// Get all ingredients
+app.get("/api/ingredient", async (req, res) => {
+  const respuesta = await fnIngredient.getIngredients();
+  res.send(respuesta);
+});
+
+//Get ingredient by Id
+app.get("/api/ingredient/:id", async (req, res) => {
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.getIngredient(idIn);
+  res.send(respuesta);
+});
+
+//Update Ingredient
+app.put("/api/ingredient/:id", async (req, res) => {
+  const body = req.body;
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.updateIngredient(idIn, body);
+  res.send(respuesta);
+});
+//Delete Transaction
+app.delete("/api/ingredient/:id", async (req, res) => {
+  const idIn = req.params.id;
+  const respuesta = await fnIngredient.deleteIngredient(idIn);
+  res.send(respuesta);
+});
+
+
+
+
 /*===================================
           ENDPOINT PRUEBA
 ===================================*/

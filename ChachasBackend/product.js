@@ -1,4 +1,4 @@
-const { firebase, product } = require("./config");
+const { firebase, product, menu } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
 const db = firebase.firestore();
@@ -171,6 +171,27 @@ async function getProductSubsidiaryType(idSub, type) {
   }
 }
 
+//Get a list of products with ingredients
+async function getProducts() {
+  const snapshot = await product.orderBy("Receta").get();
+  const list = snapshot.docs.map((doc) => ({ ListaIngredientes: doc.Receta, ...doc.data() }));
+  for (i in list) {
+    menuName = await fnMenu.getMenuId(list[i].IdMenu);
+    list[i].Nombre = menuName.Nombre;
+    delete list[i].Origen;
+    delete list[i].id;
+    delete list[i].IdMenu;
+    list[i].Receta = list[i].Receta.map(({IdIngrediente, ...rest}) => rest);
+    list[i].Receta = list[i].Receta.map(({Costo, ...rest}) => rest);
+  }
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
 //Get a list of products froma certain subsidiary
 async function getProductSubsidiary(idSub) {
   const snapshot = await product.where("Origen", "==", idSub).get();
@@ -257,7 +278,8 @@ async function updateMermasProduct(idProd, body) {
   var respuesta = null;
   var date = fnHerramientas.stringAFecha(body.Fecha);
   body.Fecha = firebase.firestore.Timestamp.fromDate(new Date(date));
-  console.log(body);
+  var cantidadMermas = body.Cantidad;
+  var cantidadInventario; 
 
   await product
     .doc(idProd)
@@ -265,18 +287,22 @@ async function updateMermasProduct(idProd, body) {
     .then(async (doc) => {
       if (doc.exists) {
         var prodData = doc.data();
+        cantidadInventario = prodData.CantidadInventario - cantidadMermas;
+        if(cantidadInventario < 0){
+          return "SIN STOCK DE CHACHAS";
+        }
 
         if (prodData.Mermas) {
-          console.log("Ya hay mermas");
           await product.doc(idProd).update({
             Mermas: firebase.firestore.FieldValue.arrayUnion(body),
           });
           console.log("Merma information added correctly");
         } else {
-          console.log("No hay mermas");
           await product.doc(idProd).set({ Mermas: body }, { merge: true });
           console.log("Merma information added correctly");
         }
+
+        await product.doc(idProd).set({CantidadInventario: cantidadInventario}, {merge:true});
         respuesta = await getProductById(idProd);
       } else {
         console.log("The product does not exist");
@@ -285,6 +311,27 @@ async function updateMermasProduct(idProd, body) {
 
   return respuesta;
 }
+
+async function getMermaSubsidiary(idSub) {
+  var list = null;
+  var result = [];
+  await product.where("Origen", "==", idSub).get().then((snapshot) => {
+    list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    for (i in list) {
+      if (list[i].Mermas){
+        for (j in list[i].Mermas) {
+          list[i].Mermas[j].Fecha = (list[i].Mermas[j].Fecha).toDate().toDateString();
+          result.push(list[i].Mermas[j])
+        }
+      }
+    }
+  }).catch((error) => {
+    console.log(`Failed to get list of mermas: ${error}`);
+  });
+  
+  return result;
+}
+
 /**
  * 
  * @param {string} idProducto 
@@ -327,6 +374,33 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
+async function getMermasProd(idProd){
+  var resp = null;
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        
+        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
+          var menu = await fnMenu.getMenuId(prodData.IdMenu);
+          resp = {
+            "Nombre": menu.Nombre,
+            "Mermas": prodData.Mermas,
+            "Sucursal": prodData.Origen
+          }
+          console.log("Tthe product have mermas");
+        } else {
+          console.log("The product does not have information of mermas");
+        }
+      } else {
+        console.log("The product does not exist");
+      }
+    }); 
+  return resp;
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -341,4 +415,7 @@ module.exports = {
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
+  getMermaSubsidiary,
+  getMermasProd,
+  getProducts
 };
