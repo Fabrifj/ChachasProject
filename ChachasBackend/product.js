@@ -353,6 +353,19 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
+product
+  .where("Origen", "==", "mAlmWL1myFMGbZW8WHw3")
+  .onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        //console.log(change.doc.data().CantidadInventario);  
+        if (change.doc.data().CantidadMinima >change.doc.data().CantidadInventario ) {
+              console.log(`EL PRODUCTO PASO EL MINIMO ${change.doc.id}`);
+          }
+      });
+  });
+ 
+
+
 module.exports = {
   getAllProducts,
   createProduct,
