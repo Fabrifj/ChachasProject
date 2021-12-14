@@ -1,5 +1,6 @@
-const { firebase,product } = require("./config");
-const fnHerramientas = require('./herramientas');
+const { firebase, product, menu } = require("./config");
+const fnHerramientas = require("./herramientas");
+const fnMenu = require("./menu");
 const db = firebase.firestore();
 
 //GetAllProducts or the collection
@@ -61,7 +62,7 @@ async function getAllProducts() {
 */
 
 //Create a new product of some type
-async function createProductType(body, type){
+async function createProductType(body, type) {
   body.Tipo = type;
   body.Costo = 0;
   await product.add(body);
@@ -149,21 +150,64 @@ async function getProductSubsidiaryType(idSub, type) {
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  console.log(list);
-  if(list.length == 0){
+
+  // Get more information of products of type chachas.
+  if (type == "Chacha") {
+    for await (const product of list) {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
+
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
+    }
+  }
+
+  if (list.length == 0) {
     return null;
-  }else{
+  } else {
     return list;
   }
 }
 
-//Get a list of products froma certain subsidiary 
+//Get a list of products with ingredients
+async function getProducts() {
+  const snapshot = await product.orderBy("Receta").get();
+  const list = snapshot.docs.map((doc) => ({ ListaIngredientes: doc.Receta, ...doc.data() }));
+  for (i in list) {
+    menuName = await fnMenu.getMenuId(list[i].IdMenu);
+    list[i].Nombre = menuName.Nombre;
+    delete list[i].Origen;
+    delete list[i].id;
+    delete list[i].IdMenu;
+    list[i].Receta = list[i].Receta.map(({IdIngrediente, ...rest}) => rest);
+    list[i].Receta = list[i].Receta.map(({Costo, ...rest}) => rest);
+  }
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
+//Get a list of products froma certain subsidiary
 async function getProductSubsidiary(idSub) {
-  const snapshot = await product
-    .where("Origen", "==", idSub)
-    .get();
+  const snapshot = await product.where("Origen", "==", idSub).get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  console.log(list);
+
+  for await (const product of list) {
+    if (product.Tipo == "Chacha") {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
+
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
+    }
+  }
   return list;
 }
 /*
@@ -177,31 +221,46 @@ basandose en la media. (Tomar en cuenta cantidad y costo)
     }
 */
 
-async function updateProductPriceByMean(idproduct, body){
+async function updateProductPriceByMean(idproduct, body) {
   var res = null;
   var costoFinal = 0;
   var costoEstandarizado = 0;
   var nuevaCantidadInventarioTotal = 0;
-  var productToUpdate = await getProductById(idproduct)//product.doc(idproduct).get().data;
+  var productToUpdate = await getProductById(idproduct); //product.doc(idproduct).get().data;
   console.log(productToUpdate);
-  if(productToUpdate.Tipo == "InsumoSucursal" || productToUpdate.Tipo == "InsumoFabrica" ){ 
-    costoEstandarizado = (productToUpdate.CantidadMedida * body.Costo) / body.Cantidad;
-    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad)
-    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+  if (
+    productToUpdate.Tipo == "InsumoSucursal" ||
+    productToUpdate.Tipo == "InsumoFabrica"
+  ) {
+    costoEstandarizado =
+      (productToUpdate.CantidadMedida * body.Costo) / body.Cantidad;
+    nuevaCantidadInventarioTotal =
+      productToUpdate.CantidadInventario + body.Cantidad;
+    costoFinal =
+      (body.Cantidad * costoEstandarizado +
+        productToUpdate.CantidadInventario * productToUpdate.Costo) /
+      nuevaCantidadInventarioTotal;
     //console.log("Costo final: ", costoFinal);
-  }else{
-    costoEstandarizado = body.Costo/body.Cantidad;
-    nuevaCantidadInventarioTotal = (productToUpdate.CantidadInventario + body.Cantidad);
-    costoFinal = ((body.Cantidad * costoEstandarizado)+(productToUpdate.CantidadInventario * productToUpdate.Costo))/nuevaCantidadInventarioTotal
+  } else {
+    costoEstandarizado = body.Costo / body.Cantidad;
+    nuevaCantidadInventarioTotal =
+      productToUpdate.CantidadInventario + body.Cantidad;
+    costoFinal =
+      (body.Cantidad * costoEstandarizado +
+        productToUpdate.CantidadInventario * productToUpdate.Costo) /
+      nuevaCantidadInventarioTotal;
     //console.log("Costo final: ", costoFinal);
   }
-  console.log("nuevaCantidadInvetario: ", nuevaCantidadInventarioTotal)
-  console.log("Costo final: ", costoFinal)
-  
-  await product.doc(idproduct).set({
-   "CantidadInventario": nuevaCantidadInventarioTotal, 
-   "Costo": costoFinal
-  }, { merge: true });
+  console.log("nuevaCantidadInvetario: ", nuevaCantidadInventarioTotal);
+  console.log("Costo final: ", costoFinal);
+
+  await product.doc(idproduct).set(
+    {
+      CantidadInventario: nuevaCantidadInventarioTotal,
+      Costo: costoFinal,
+    },
+    { merge: true }
+  );
   res = await getProductById(idproduct);
   return res;
 }
@@ -215,52 +274,291 @@ async function updateProductPriceByMean(idproduct, body){
 */
 
 //Update the information of mermas of a product
-async function updateMermasProduct(idProd,body) {
+async function updateMermasProduct(idProd, body) {
   var respuesta = null;
-  var date = fnHerramientas.stringAFecha(body.Fecha)
+  var date = fnHerramientas.stringAFecha(body.Fecha);
   body.Fecha = firebase.firestore.Timestamp.fromDate(new Date(date));
-  console.log(body);
+  var cantidadMermas = body.Cantidad;
+  var cantidadInventario; 
 
-  await product.doc(idProd).get().then(async (doc) => {
-    if(doc.exists){
-      var prodData = doc.data();
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        cantidadInventario = prodData.CantidadInventario - cantidadMermas;
+        if(cantidadInventario < 0){
+          return "SIN STOCK DE CHACHAS";
+        }
 
-      if(prodData.Mermas){
-          
-        console.log("Ya hay mermas");
-        await product.doc(idProd).update({
-         "Mermas" : firebase.firestore.FieldValue.arrayUnion(body)
-        });
-        console.log("Merma information added correctly");
+        if (prodData.Mermas) {
+          await product.doc(idProd).update({
+            Mermas: firebase.firestore.FieldValue.arrayUnion(body),
+          });
+          console.log("Merma information added correctly");
+        } else {
+          await product.doc(idProd).set({ Mermas: body }, { merge: true });
+          console.log("Merma information added correctly");
+        }
 
-      }else{
-        console.log("No hay mermas");
-        await product.doc(idProd).set({"Mermas": body}, {merge: true});
-        console.log("Merma information added correctly")
+        await product.doc(idProd).set({CantidadInventario: cantidadInventario}, {merge:true});
+        respuesta = await getProductById(idProd);
+      } else {
+        console.log("The product does not exist");
       }
-      respuesta = await getProductById(idProd);
-    
-    }else{
-      console.log("The product does not exist")
-    }
-  })
-  
+    });
+
   return respuesta;
 }
 
-async function getProductTransaction(idMenu,IdOrigen){
+async function getMermaSubsidiary(idSub) {
+  var list = null;
+  var result = [];
+  await product.where("Origen", "==", idSub).get().then((snapshot) => {
+    list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    for (i in list) {
+      if (list[i].Mermas){
+        for (j in list[i].Mermas) {
+          list[i].Mermas[j].Fecha = (list[i].Mermas[j].Fecha).toDate().toDateString();
+          result.push(list[i].Mermas[j])
+        }
+      }
+    }
+  }).catch((error) => {
+    console.log(`Failed to get list of mermas: ${error}`);
+  });
+  
+  return result;
+}
+
+/**
+ * 
+ * @param {string} idProducto 
+ * @param 
+ * {
+      Gasto:1000
+ * } body Gasto hace referencia a cuanto se gasto de ese producto, segun como ese producto esta medido.
+ */
+async function updateExpenseSupplySubsidiary(idProducto, body) {
+  const expense = parseFloat(body.Gasto);
+  const miProd = await fnHerramientas.getDoc(idProducto, "Producto");
+  const upd = {
+    CantidadInventario: parseFloat(miProd.CantidadInventario) - expense,
+  };
+  var resp = null;
+  if (upd.CantidadInventario >= 0) {
+    resp = await fnHerramientas.updateDoc(idProducto, upd, "Producto");
+  } else return "No existe cantidad necesaria para ese gasto";
+}
+async function getProductTransaction(idMenu, IdOrigen) {
   var miDoc = null;
   console.log("entra a la funcion con: ", idMenu, IdOrigen);
-  var nuevo = await getAllProducts()
-    
-  var resultado = nuevo.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
-  
-  console.log("todos los productos",resultado);
+  var productos = await getAllProducts();
+  var resultado = null;
+
+  productos.forEach(async (producto) => {
+    //console.log(producto.Origen);
+    if (
+      producto.Origen == IdOrigen &&
+      producto.IdMenu == idMenu &&
+      producto.Tipo == "Chacha"
+    ) {
+      resultado = producto;
+    }
+  });
+
+  //var resultado = productos.filter(elem => elem.Tipo == "Chacha" && elem.Origen == IdOrigen && elem.IdMenu == idMenu);
+  console.log("El producto", resultado);
 
   return resultado;
 }
 
+async function getMermasProd(idProd){
+  var resp = null;
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        
+        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
+          var menu = await fnMenu.getMenuId(prodData.IdMenu);
+          resp = {
+            "Nombre": menu.Nombre,
+            "Mermas": prodData.Mermas,
+            "Sucursal": prodData.Origen
+          }
+          console.log("Tthe product have mermas");
+        } else {
+          console.log("The product does not have information of mermas");
+        }
+      } else {
+        console.log("The product does not exist");
+      }
+    }); 
+  return resp;
+}
+/**
+ * 
+ * @param {*} idProd 
+ * @param 
+{
 
+
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+	"Precio": 5,
+	"CantidadMinima":5,
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+	
+}
+ body 
+ */
+async function updateProductFactory(idProd,body)
+{
+
+}
+/**
+ * 
+ * @param {*} idProd 
+ * @param 
+{
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+  "IdMenu":"bbihbihbvuhvu",
+	"CantidadMinima":,
+	"ListaIngredientes":[
+		{
+			"IdIngrediente":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+
+} body 
+ */
+
+/**
+Producto
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"Nombre":"Chacha Prehecha de Carne"
+	"Origen": "Fabrica",
+	"Receta": 
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"Costo":7,
+	"CantidadInventario":500,
+  "CantidadMinima":,
+  "IdMenu":,
+}
+Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
+[
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	},
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	}
+]
+ */
+async function createProductFactory(body)
+{
+  const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+  body.ListaIngredientes=calculo.ListaIngredientes;
+  body.Costo = calculo.Costo;
+  body.CantidadInventario=0;; 
+  body.Origen="Fabrica";
+  //console.log("ChachaCompleta: ",body);
+  fnHerramientas.createDoc(body,"Producto");
+  return body;
+  
+}
+/**
+ * 
+ * @param 
+{
+
+
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+  "IdMenu":"jbibohiboihbo",
+	"Precio": 5,
+	"CantidadMinima":5,
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+	
+} body 
+ */
+async function updateProductFactory(idProd,body)
+{
+  if(body.hasOwnProperty('ListaIngredientes') )
+  {
+    const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+    body.ListaIngredientes = calculo.ListaIngredientes;
+    body.Costo = calculo.Costo;
+
+  }
+  return await fnHerramientas.updateDoc(idProd,body,"Producto");
+}
+async function calculateCostChachaFactory(listaIngredientes)
+{
+  var costoTot = 0;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente,"Ingrediente");
+    ing.Nombre = myIng.Nombre;
+    ing.CantidadMedida = ing.Cantidad;
+    delete ing.Cantidad;
+    ing.Costo = parseFloat(ing.CantidadMedida)*(parseFloat(myIng.CostoMedio)/parseFloat(myIng.CantidadMedida));
+    costoTot+=ing.Costo;
+
+  }
+  //console.log("ListaIngredientes: ",listaIngredientes);
+  return {"Costo":costoTot,"ListaIngredientes":listaIngredientes}
+}
 module.exports = {
   getAllProducts,
   createProduct,
@@ -273,5 +571,13 @@ module.exports = {
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
-  getProductTransaction
+  updateExpenseSupplySubsidiary,
+  getProductTransaction,
+  getMermaSubsidiary,
+  getMermasProd,
+  getProducts,
+  createProductFactory,
+  calculateCostChachaFactory,
+  updateProductFactory
+
 };

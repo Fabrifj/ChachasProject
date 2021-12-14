@@ -1,6 +1,5 @@
-const { menu, firebase } = require('./config');
-
-
+const { menu, firebase } = require("./config");
+const fnTools = require("./herramientas");
 //CreateMenu
 /**
  * @param {} body tiene que tener la siguiente estructura:
@@ -12,23 +11,23 @@ const { menu, firebase } = require('./config');
  * @returns
  */
 
- async function createMenu(body){
-    await menu.add(body);
-    respuesta = {
-        "Message" : "Menu correctly added!",
-        "Menu": body
-    }
-    return respuesta;
+async function createMenu(body) {
+  await menu.add(body);
+  respuesta = {
+    Message: "Menu correctly added!",
+    Menu: body,
+  };
+  return respuesta;
 }
 
 //Get all the Menus
-async function getMenus(){
-    const snapshot = await menu.get();
-    const lista = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data()
-    }))
-    return lista;
+async function getMenus() {
+  const snapshot = await menu.get();
+  const lista = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return lista;
 }
 
 // Get Menu by name
@@ -40,20 +39,27 @@ async function getMenus(){
  * @returns
  */
 async function getMenuName(men) {
-    let query = await menu.where('Nombre', '==', men.Nombre);
-    let querySnapshot = await query.get();
-    let respuesta = null;
-    
-    if (querySnapshot.empty) {
-      console.log(`No encontramos el menu con el nombre: ${men.Nombre}`);
-    } else {
-      console.log('Encontramos el menu: ', men.Nombre);
-      respuesta = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    }
-    return respuesta;
+  let query = await menu.where("Nombre", "==", men.Nombre);
+  let querySnapshot = await query.get();
+  let respuesta = null;
+
+  if (querySnapshot.empty) {
+    console.log(`No encontramos el menu con el nombre: ${men.Nombre}`);
+  } else {
+    console.log("Encontramos el menu: ", men.Nombre);
+    respuesta = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
   }
+  return respuesta;
+}
 
-
+//GetMenuById
+async function getMenuId(idMenu) {
+  var respuesta = fnTools.getDoc(idMenu, "Menu");
+  return respuesta;
+}
 
 //UpdateMenu
 /**
@@ -62,46 +68,48 @@ async function getMenuName(men) {
     "Nombre": "Chacha de Carne",
     "ImgURL":""
  }
- * 
+ *
  * @returns
  */
 
-async function updateMenu(idMen, men) {  
-    var respuesta = null;
-    await menu.doc(idMen).update(men)
-    .then(() => 
-    {
-      respuesta = men;  
+async function updateMenu(idMen, men) {
+  var respuesta = null;
+  await menu
+    .doc(idMen)
+    .update(men)
+    .then(() => {
+      respuesta = men;
       console.log("Menu fue actualizado correctamente!");
     })
-    .catch((error) => 
-    {
-        // The document probably doesn't exist.
-        console.error("Error al actualizar el menu: ", error);
+    .catch((error) => {
+      // The document probably doesn't exist.
+      console.error("Error al actualizar el menu: ", error);
     });
-  
-    return respuesta;
-}
 
+  return respuesta;
+}
 
 //Delete Menu by Id
 async function deleteMenu(idMen) {
-    var respuesta = null;
-    await menu.doc(idMen).delete().then(() => {
-      respuesta = "Menu correctamente eliminada!"
+  var respuesta = null;
+  await menu
+    .doc(idMen)
+    .delete()
+    .then(() => {
+      respuesta = "Menu correctamente eliminada!";
       console.log(respuesta);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.error("Error al eliminar el menu: ", error);
     });
-    return respuesta;
-  }
-
+  return respuesta;
+}
 
 module.exports = {
-    getMenus,
-    getMenuName,
-    createMenu,
-    updateMenu,
-    deleteMenu
-    
-  };
+  getMenus,
+  getMenuId,
+  getMenuName,
+  createMenu,
+  updateMenu,
+  deleteMenu,
+};

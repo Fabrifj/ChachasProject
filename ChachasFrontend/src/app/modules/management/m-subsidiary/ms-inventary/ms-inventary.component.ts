@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
-import { AppHttpService } from 'src/app/services/app-http.service';
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -11,18 +11,15 @@ export class MsInventaryComponent implements OnInit {
 
 
 
-
-  
-  
   selectedObject:any = {}
   selectedInfo:any = {}
-  
+ 
 
   //chachas
   infoProd: any | undefined;
   
   columnsProd = [
-    {field:'IdMenu',header:'Nombre'},
+    {field:'Nombre',header:'Nombre'},
     {field:'CantidadInventario',header:'Stock En Inventario'},
     {field:'Costo',header:'Costo'},
     {field:'Precio',header:'Precio'}
@@ -30,8 +27,8 @@ export class MsInventaryComponent implements OnInit {
   ];
 
   columnsProdMini = [
-    {field:'IdMenu',header:'Nombre'},
-    {field:'Cantidad',header:'Cantidad en esta sucursal'}
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Cantidad en esta sucursal'}
 
   ];
 
@@ -44,9 +41,12 @@ export class MsInventaryComponent implements OnInit {
     {field:'CantidadMedida',header:'Cantidad Medida'},
     {field:'TipoUnidad',header:'Tipo Unidad'},
     {field:'Costo',header:'Costo'}
-  
-   // {field:'Imagen',header:'Imagen'}
-    
+
+  ];
+
+  columnsInsFabMini = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Stock en Inventario'}
 
   ];
 
@@ -61,10 +61,7 @@ export class MsInventaryComponent implements OnInit {
     {field:'Nombre',header:'Nombre'},
     {field:'CantidadInventario',header:'Stock en Inventario'},
     {field:'Precio',header:'Precio'},
-    {field:'Costo',header:'Costo'}
-  
-   // {field:'Imagen',header:'Imagen'}
-    
+    {field:'Costo',header:'Costo'}  
 
   ];
   infoInsSub: any | undefined;
@@ -73,26 +70,31 @@ export class MsInventaryComponent implements OnInit {
     {field:'CantidadInventario',header:'Stock en Inventario'},
     {field:'Costo',header:'Costo'},
     {field:'TipoUnidad',header:'Tipo de Unidad'}
-    
   
-   // {field:'Imagen',header:'Imagen'}
-    
-
   ];
-
 
 
   infoSub: any | undefined;
   columnsSub = [
     {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Stock en Inventario'},
-    {field:'CantidadMedida',header:'Cantidad Medida'},
-    {field:'TipoUnidad',header:'Tipo Unidad'},
-    {field:'Costo',header:'Costo'}
+    {field:'Direccion',header:'Direccion'},
+    {field:'Departamento',header:'Departamento'},
+    {field:'Telefono',header:'Telefono'}
   
    // {field:'Imagen',header:'Imagen'}
     
+  ];
 
+  infoSubs :any = [];
+  columnsSubs = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'Direccion',header:'Direccion'},
+    {field:'Departamento',header:'Departamento'},
+    {field:'Telefono',header:'Telefono'},
+    {field:'infoInvSalsas',header:'Salsas => Stock Inventario'},
+    {field:'infoInvChachas',header:'Chachas => Stock Inventario'}
+   // {field:'Imagen',header:'Imagen'}
+    
   ];
 
 
@@ -100,105 +102,78 @@ export class MsInventaryComponent implements OnInit {
   nameDrinkButtons: string[] = ["Registrar Compra"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
-
-  titlesProd:string [] = ['Cantidad para sucursal'];
-  todayDate:string="";
-
+  titlesProd:string [] = ['CantidadParaSucursal'];
+  todayDate:any = undefined;
 
   selectedValue:any;
 
-
   idSubsidiary:any ="";
+
+  latitude:any="";
+  longitude:any="";
+  zoom=16;
+
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
 
   ngOnInit(): void {
 
-
-    //
+    //representacion de  la sucursal en la que nos encontramos.
+    //this.idSubsidiary = "GfkkDi4yFpCCVFW2RlF9";
     this.idSubsidiary = "mAlmWL1myFMGbZW8WHw3";
+    this.todayDate=new Date().toISOString().slice(0, 10);
+    this.latitude = -16.489689;
+    this.longitude= -68.119293;
+  
 
-    this.todayDate = new Date().toLocaleDateString();
-    
-    
+    //obtener refrescos
     this.getDrink();
 
-    //get insumos fabrica
+    //obtener insumos fabrica
     this.getSauce();
-    //get Subsidiario
+    
+    //obtener Subsidiario
     this.getSubsidiaries();
 
-    //get insumos sucursal 
+    //obetner insumos sucursal 
     this.getOtherInvSub();
     
     //get all productos
     this.getProductsBySubsidiary();
-    //get chachas
-    this.getProdChachas()
-
-
     
-  }
+    //get chachas
+    this.getProdChachas();
 
-  getProducts(){
+
+ 
+  }
 
   
-    
-    this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
-     
-      console.log("los productos son",jsonFile);
-    
-
-    } ,(error)=>{
-        console.log("hubo error con productos")
-
-    } )
-
-
-      
-  }
 
   getProductsBySubsidiary(){
-
-    var id = this.idSubsidiary;
-    
-    this.serviceHttp.getProductsBySubsidiary(id).subscribe((jsonFile:any)=>{
-     
-      console.log("los productos de sucursal son",jsonFile);
+  
+    this.serviceHttp.getProductsBySubsidiary(this.idSubsidiary).subscribe((jsonFile:any)=>{
       
-      
-
     } ,(error)=>{
         console.log("hubo error con productos")
-
     } )
 
-
-      
   }
   getProdChachas(){
 
-    var id = this.idSubsidiary;
-    
-    this.serviceHttp.getProductsBySubsidiaryAndType(id,"Chacha").subscribe((jsonFile:any)=>{
-     
-      console.log("las chachas son",jsonFile);
-      this.infoProd =jsonFile;
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
-
+      this.infoProd =jsonFile;
     } ,(error)=>{
-        console.log("hubo error con productos")
-
+        console.log("hubo error con productos");
     } )
 
   }
   getSauce(){
 
-    var id = this.idSubsidiary;
-    
-    this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{
      
-      console.log("las salsas son",jsonFile);
+     
       this.infoInsFab =jsonFile;
       
 
@@ -212,34 +187,20 @@ export class MsInventaryComponent implements OnInit {
 
   getDrink(){
 
-    var id = this.idSubsidiary;
-    
-    this.serviceHttp.getProductsBySubsidiaryAndType(id,"Refresco").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Refresco").subscribe((jsonFile:any)=>{
      
-      console.log("la los refrescos son",jsonFile);
       this.infoDri = jsonFile;
-      
-
     } ,(error)=>{
         console.log("hubo error con productos")
-
     } )
-
   }
 
   getOtherInvSub(){
 
-    var id = this.idSubsidiary;
-    
-    this.serviceHttp.getProductsBySubsidiaryAndType(id,"InsumoSucursal").subscribe((jsonFile:any)=>{
-     
-      console.log("los insumos de sucursal son",jsonFile);
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoSucursal").subscribe((jsonFile:any)=>{
       this.infoInsSub =jsonFile;
-      
-
     } ,(error)=>{
         console.log("hubo error con productos")
-
     } )
 
   }
@@ -247,9 +208,10 @@ export class MsInventaryComponent implements OnInit {
 
     this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
      
-      console.log("las sucursales son son",jsonFile);
+      
       this.infoSub =jsonFile;
       
+      this.getProductsOfSucursales();
 
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -257,9 +219,7 @@ export class MsInventaryComponent implements OnInit {
     } )
   }
 
-  creatSub(body:any){
-
-    
+  creatSubsidiary(body:any){
     
     this.serviceHttp.postSub(body).subscribe((jsonFile:any)=>{
      
@@ -276,11 +236,28 @@ export class MsInventaryComponent implements OnInit {
 
   
 
+
+  createTransaction(body:any){
+
+    
+    this.serviceHttp.postTransaction(body)
+    .subscribe((jsonFile:any)=>{
+
+      alert('transaction realizada correctamente');
+      this.getProdChachas();
+      this.getSauce();
+      this.getSubsidiaries();
+
+    } ,(error)=>{
+        console.log("hubo error con crear transaction")
+
+    } )
+
+  }
+
   //function register merma
   functionChooseObj(response:any){
     this.selectedObject = response[1];
-
-
 
     if (response[0] == "Registrar Merma"){
 
@@ -296,29 +273,309 @@ export class MsInventaryComponent implements OnInit {
       this.modalService.abrir("modalIns-01");
     }
     else if (response[0] == 'GuardarTodo'){
-      this.selectedObject = []
+      this.selectedObject = [];
       let indice = response[2];
       this.selectedInfo[indice] = response[1]
-      console.log("Informacion:",this.selectedInfo)
+      
+
+      
     }
 
   }
-
-
-  assignCorporationToManage(selectedValue:any) {
-    console.log(selectedValue)
-  }
+  
 
 
   sendTransaction(){
+    var date = this.todayDate;
+    
+    var idSubDestiny = "";
+    this.infoSub.forEach((element:any) => {
+      if (element.Nombre == this.selectedValue){
+        //es la sucursal que quiero
+        idSubDestiny = element.id;
+      }
+    });
+
+    var listaProdSend :any = [];
+    if(this.selectedInfo[5] != null){
+      this.selectedInfo[5].forEach((producto:any) => {
+
+        var cantidadPSucursal = parseInt(producto.CantidadParaSucursal);
+
+        
+        if(producto.CantidadParaSucursal != "0" && cantidadPSucursal < producto.CantidadInventario){
+        
+        listaProdSend.push({
+          IdProducto:producto.id,
+          Tipo : "Chacha",
+          IdMenu:producto.IdMenu,
+          Cantidad: cantidadPSucursal,
+          Nombre :producto.IdMenu
+  
+        });
+        
+        }
+
+      });
+
+    }
+    if(this.selectedInfo[6] != null){
+
+      this.selectedInfo[6].forEach((producto:any) => {
+
+        var cantidadPSucursal = parseFloat(producto.CantidadParaSucursal);
+
+
+        if(producto.CantidadParaSucursal != "0" && cantidadPSucursal < producto.CantidadInventario){
+          
+          listaProdSend.push({
+            
+            IdProducto:producto.id,
+            Tipo : "InsumoFabrica",
+            Cantidad: cantidadPSucursal,
+            CantidadMedida : producto.CantidadMedida,
+            TipoUnidad : producto.TipoUnidad,
+            Nombre : producto.Nombre
+          });
+        }
+        });
+    }
+    
+    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
+    
+    this.createTransaction(JSON.parse(transaction));
+   
+  }
+
+  getProductsOfSucursales(){
+
+    let i =0;
+    this.infoSub.forEach((element:any) => {
+      if(this.idSubsidiary != element.id ){
+        var auxinfoSubs :any ={};
+        auxinfoSubs.Nombre = element.Nombre;
+        auxinfoSubs.Direccion = element.Direccion;
+        auxinfoSubs.Departamento=element.Departamento;
+        auxinfoSubs.Telefono= element.Telefono;
+
+
+        var chachas:any ="";
+        var salsas: any = ""; 
+        this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
+          
+          if(jsonFile != null){
+
+            jsonFile.forEach((chacha:any) => {
+              chachas = chachas + "\n [ " + chacha.Nombre + " ] => [ " + chacha.CantidadInventario + " Unidades ] \n"; 
+            });
+            auxinfoSubs.infoInvChachas = chachas;
+          }
+          
+        } ,(error)=>{
+            console.log("hubo error chachas de otros");
+        } );
+
+        this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+          if(jsonFile != null){
+            jsonFile.forEach((salsa:any) => {
+              salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ] \n";
+            });
+            auxinfoSubs.infoInvSalsas = salsas;
+          }
+          
+        } ,(error)=>{
+            console.log("hubo error con salsas de otros");
+        } )
+
+  
+        this.infoSubs[i] = auxinfoSubs;
+        i++;
+    }
+   });
+     
+  }
+
+//Metodos de POST 
+  regMerma(){
+
+    var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proMerma")).value);
+    var idProd = this.selectedObject.idMenu;
+
+    var merm = JSON.stringify({Fecha: fecha, Cantidad: cantidad})
+    console.log(merm)
+    console.log(fecha)
+      this.serviceHttp.updateMerma(idProd,JSON.parse(merm))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Merma creada correctamente');
+        this.getProdChachas();
+
+      } ,(error)=>{
+          console.log("Error al crear merma")
+
+      } )
+
+      this.getProdChachas();
+
     
   }
 
+  regConsumo(){
 
-  // Initialize and add the map
+    var fecha = (<HTMLInputElement>document.getElementById("fechaM")).value;
+    var nombre = this.selectedObject.Nombre;
+    var gastoInv = parseInt((<HTMLInputElement>document.getElementById("proGasto")).value );
+    var idProd = this.selectedObject.id;
+
+    var consu = JSON.stringify({ Gasto : gastoInv})
+    console.log(consu)
+    this.serviceHttp.updateConsumo(idProd,JSON.parse(consu))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Consumo creado correctamente');
+        this.getSauce();
+        this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear bien")
+
+      } )
+
+    
+    
+      this.getSauce();
+      this.getDrink();
+  }
+  regCompra(){
+
+
+    //revidar los metodos de 
+
+
+    var costo = parseInt((<HTMLInputElement>document.getElementById("proCosto")).value);
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidad")).value) ;
+    
+    var idProd = this.selectedObject.id;
+    var origen = this.idSubsidiary ;
+    var fecha = (<HTMLInputElement>document.getElementById("fechaC")).value;
+  
+
+    var comp = JSON.stringify({IdProducto: idProd, Fecha: fecha, Costo: costo, Cantidad: cantidad , Origen: origen })
+    console.log(comp)
+    console.log(idProd)
+
+    this.serviceHttp.postPurchase2(JSON.parse(comp))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Compra creada correctamente');
+        this.getOtherInvSub();
+
+      this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear la compra")
+
+      } )
+
+      this.getOtherInvSub();
+
+      this.getDrink();
+  }
+  regProducto(){
+    var nombre = (<HTMLInputElement>document.getElementById("proName")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("proCantidadInv")).value) ;
+    var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("proCantidadMin")).value );
+    var origen = this.idSubsidiary;
+    var precioPro= parseInt((<HTMLInputElement>document.getElementById("proPrecio")).value );
     
 
- 
+    var prod = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, Origen: origen , Precio: precioPro})
+    console.log(prod)
 
+    console.log((<HTMLInputElement>document.getElementById("proName")).value)
+
+    this.serviceHttp.postProductRefresco(JSON.parse(prod))
+      .subscribe((jsonFile:any)=>{
+        alert('Producto creada correctamente');
+
+        this.getOtherInvSub();
+        this.getProdChachas();
+        this.getProductsBySubsidiary();
+        this.getDrink();
+
+      } ,(error)=>{
+          console.log("Error al crear el producto refresco")
+
+      } ) 
+
+      this.getOtherInvSub();
+      this.getProdChachas();
+      this.getProductsBySubsidiary();
+      this.getDrink();
+  }
+  regInSuc(){
+    var nombre = (<HTMLInputElement>document.getElementById("insName")).value;
+    var tipo = (<HTMLInputElement>document.getElementById("insUS")).value;
+    var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidad")).value );
+    var cantidadMEDS = parseInt((<HTMLInputElement>document.getElementById("insCantidadSMed")).value );
+    var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMin")).value );
+    var origen = this.idSubsidiary;
+
+    var inSu = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDS, Origen: origen , TipoUnidad: tipo})
+    console.log(inSu)
+
+    console.log((<HTMLInputElement>document.getElementById("proName")).value)
+
+    this.serviceHttp.postInsumoSucursal(JSON.parse(inSu))
+    .subscribe((jsonFile:any)=>{
+
+
+      alert('Insumo sucursal creado correctamente');
+
+    } ,(error)=>{
+        console.log("Error al crear insumo sucrusal")
+
+    } )
+
+    this.getOtherInvSub();
+
+      this.getDrink();
+  }
+  regInFab(){
+      var nombre = (<HTMLInputElement>document.getElementById("insNameF")).value;
+      var tipo = (<HTMLInputElement>document.getElementById("insUF")).value;
+      var cantidad = parseInt((<HTMLInputElement>document.getElementById("insCantidadF")).value );
+      var cantidadMEDF = parseInt((<HTMLInputElement>document.getElementById("insCantidadFMed")).value );
+      
+      var cantidadMin= parseInt((<HTMLInputElement>document.getElementById("insCantidadMinF")).value );
+      var origen = this.idSubsidiary;
+
+      var inFa = JSON.stringify({Nombre: nombre, CantidadInventario : cantidad, CantidadMinima : cantidadMin, CantidadMedida : cantidadMEDF,Origen: origen  , TipoUnidad: tipo})
+      console.log(inFa)
+
+      console.log((<HTMLInputElement>document.getElementById("proName")).value)
+
+      this.serviceHttp.postInsumoFabrica(JSON.parse(inFa))
+      .subscribe((jsonFile:any)=>{
+
+
+        alert('Insumo fabrica creado correctamente');
+        this.getSauce();
+        this.getProdChachas();
+
+      } ,(error)=>{
+          console.log("Error al crear insumo fabrica")
+
+      } )
+
+
+      this.getSauce();
+      this.getProdChachas();
+  }
 
 }
+      

@@ -29,3 +29,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## package to install 
 npm install bootstrap@3
 npm i bootstrap-icons
+Npm install @angular/google-maps
+Npm install @types/googlemaps@3.39.13

@@ -1,14 +1,14 @@
 <div class="card mb-4 shadow-sm">
-    <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.Image" />
+    <img class="bd-placeholder-img card-img-top p-2" width="100%" [src]="productItem.ImgURL" />
   
     <div class="card-body">
-      <h3 class="card-title">{{productItem.Name}}</h3>
+      <h3 class="card-title">{{productItem.Nombre}}</h3>
       <p class="card-text">
-        <strong>{{ productItem.Price | currency:"BOB":"symbol" }}</strong>
+        <strong>{{ productItem.Precio | currency:"BOB":"symbol" }}</strong>
         <!-- <i *ngIf="addedToWishlist" class="fas fa-heart float-right" (click)="handleRemoveFromWishlist()"></i>
         <i *ngIf="!addedToWishlist" class="far fa-heart float-right" (click)="handleAddToWishlist()"></i> -->
       </p>
-      <p class="card-text">{{ productItem.Description | slice: 0:80 }}</p>
+      <p class="card-text">"---"</p>
       <div class="row">
         <form [formGroup]="checkoutForm" (ngSubmit)="AddToCart()">
           <div class="col-md-5">

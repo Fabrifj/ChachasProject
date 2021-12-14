@@ -1,7 +1,5 @@
-import { FactoryTarget } from '@angular/compiler';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
 
 import { HomeComponent } from './modules/home/home.component';
@@ -12,14 +10,13 @@ import { MOwnerComponent } from './modules/management/m-owner/m-owner.component'
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 
 
-import { SubsidiaryComponent } from './modules/subsidiary/subsidiary.component';
-import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/catalog-card.component';
 import { CatalogComponent } from './shared-modules/catalog/catalog.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
+import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 
 
 
@@ -43,11 +40,9 @@ const routes: Routes = [
           {path: 'catalog', component: CatalogComponent},
           {path: 'display-order', component: DisplayOrderInfoComponent},
           {path: 'client-info', component: ClientInfoComponent},
-
-
         ]
       },
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'managment', component: MsInventaryComponent},
     ]
   },
   {
