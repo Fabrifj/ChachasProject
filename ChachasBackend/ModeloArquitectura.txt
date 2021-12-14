@@ -11,7 +11,6 @@ Merma
 Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
-	"Nombre":"Chacha Prehecha de Carne"
 	"Origen": "Fabrica",
 	"Receta": 
 	[
