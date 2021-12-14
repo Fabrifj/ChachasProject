@@ -15,12 +15,14 @@ async function getMerma(idMerma)
  * @param {} body tiene que tener la siguiente estructura:
 Merma
 {
-	"Id":"BCHEBCOOQCBDOH",
 	"IdMenu":,
 	"IdSucursal":"",
 	"Fecha":"",
-	"Cantidad":
-}
+	"Cantidad":,
+  "Estado": "Revision", //Aprobado
+  "Observacion": "",
+  "CantidadRecibida":0
+  };
  * 
  * 
  * @returns 

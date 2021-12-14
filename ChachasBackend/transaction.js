@@ -67,7 +67,7 @@ async function getTransaction(idTran)
      "Fecha":"2020-03-23",
      "IdOrigen":"GfkkDi4yFpCCVFW2RlF9",
      "IdDestino":"mAlmWL1myFMGbZW8WHw3",
-     "Tipo":"Fabrica",
+     "Tipo":"Intercambio",
      "ListaProductos":
      [
         {
