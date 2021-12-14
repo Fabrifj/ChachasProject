@@ -1,4 +1,4 @@
-const { firebase, product } = require("./config");
+const { firebase, product, menu } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
 const db = firebase.firestore();
@@ -162,6 +162,27 @@ async function getProductSubsidiaryType(idSub, type) {
       product["ImgURL"] = image;
       product["Nombre"] = name;
     }
+  }
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
+//Get a list of products with ingredients
+async function getProducts() {
+  const snapshot = await product.orderBy("Receta").get();
+  const list = snapshot.docs.map((doc) => ({ ListaIngredientes: doc.Receta, ...doc.data() }));
+  for (i in list) {
+    menuName = await fnMenu.getMenuId(list[i].IdMenu);
+    list[i].Nombre = menuName.Nombre;
+    delete list[i].Origen;
+    delete list[i].id;
+    delete list[i].IdMenu;
+    list[i].Receta = list[i].Receta.map(({IdIngrediente, ...rest}) => rest);
+    list[i].Receta = list[i].Receta.map(({Costo, ...rest}) => rest);
   }
 
   if (list.length == 0) {
@@ -353,6 +374,33 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
+async function getMermasProd(idProd){
+  var resp = null;
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        
+        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
+          var menu = await fnMenu.getMenuId(prodData.IdMenu);
+          resp = {
+            "Nombre": menu.Nombre,
+            "Mermas": prodData.Mermas,
+            "Sucursal": prodData.Origen
+          }
+          console.log("Tthe product have mermas");
+        } else {
+          console.log("The product does not have information of mermas");
+        }
+      } else {
+        console.log("The product does not exist");
+      }
+    }); 
+  return resp;
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -367,5 +415,7 @@ module.exports = {
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
-  getMermaSubsidiary
+  getMermaSubsidiary,
+  getMermasProd,
+  getProducts
 };
