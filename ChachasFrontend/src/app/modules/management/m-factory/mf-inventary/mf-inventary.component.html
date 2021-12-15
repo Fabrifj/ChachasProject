@@ -1,0 +1,264 @@
+<div class="container-fluid">
+    <div class="row">
+
+         
+    <div class="col-md-4">
+            <button class="btn" (click)="openProductC('Crear');">Crear Producto</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn" (click)="openIngC('Crear');this.siModificoIng = false">Crear Ingrediente</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn" (click)="seeHistoryM();">Historial de mermas</button>
+        </div>
+        
+
+         
+        
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="PreProductsSection">
+                <h1>Tabla de los Productos Prehechos</h1>
+                
+                <app-reusable-table 
+                [datos]="infoProd"
+                [columnas]="columnsProd" 
+                colorLetra="black" 
+                [nombreBotones]="nameProdButtons" 
+                (parentMethod)="functionSelectObj($event)">
+                </app-reusable-table>
+                 
+                
+        
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="PreProductsSection">
+                <h1>Tabla de los salsas </h1>
+                
+                <app-reusable-table 
+                [datos]="infoSauce"
+                [columnas]="columnsSauce" 
+                colorLetra="black" 
+                [nombreBotones]="nameSauceButtons" 
+                (parentMethod)="functionSelectObj($event)">
+                </app-reusable-table>
+                 
+                
+        
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+           
+                <h1>Tabla de los Ingredientes</h1>
+                
+                <app-reusable-table 
+                [datos]="infoIng" 
+                [columnas]="columnsIng" 
+                colorLetra="black" 
+                [nombreBotones]="nameIngButtons" 
+                (parentMethod)="functionSelectObj($event)">
+                </app-reusable-table>
+        
+            
+
+        </div>
+
+
+    </div>
+
+    
+</div>
+
+
+<!-- registro y modificarcion -->
+<jw-modal id="modalProd-01" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Crear producto</h4>
+    </div>
+   
+    <div class="row">
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalProd-01');">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+<!-- produccion -->
+<jw-modal id="modalProd-02" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Hacer producto</h4>
+    </div>
+    <div class="row" *ngIf="siModificoProd">
+        <div class="col-md-12" >
+            <h3> Ingrediente a modificar:</h3>
+            <input class="inputTxt" id="ingMod" [(ngModel)]="this.selectedObj.Nombre" type="text" readonly> 
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Nombre Ingrediente:</h3>
+            <input class="inputTxt" id="ingName" type="text" [(ngModel)]="this.selectedObj.Nombre"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3> Tipo Unidad:</h3>
+                <input class="inputTxt" id="inUnitType" type="text" [(ngModel)]="this.selectedObj.TipoUnidad"> 
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3> Cantidad Minima:</h3>
+                <input class="inputTxt" id="inUnitType" type="number" [(ngModel)]="this.selectedObj.CantidadMinima"> 
+            
+        </div>
+    </div>
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalProd-02');">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+
+<!-- registro y modificacion -->
+<jw-modal id="modalIng-01" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Crear Ingrediente</h4>
+    </div>
+   
+
+    <div class="row" *ngIf="siModificoIng">
+        <div class="col-md-12" >
+            <h3> Ingrediente a modificar:</h3>
+            <input class="inputTxt" id="ingMod" [(ngModel)]="this.selectedObj.Nombre" type="text" readonly> 
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Nombre Ingrediente:</h3>
+            <input class="inputTxt" id="ingName" type="text" [(ngModel)]="this.selectedObj.Nombre"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3> Tipo Unidad:</h3>
+                <input class="inputTxt" id="inUnitType" type="text" [(ngModel)]="this.selectedObj.TipoUnidad"> 
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3> Cantidad Minima:</h3>
+                <input class="inputTxt" id="inUnitType" type="number" [(ngModel)]="this.selectedObj.CantidadMinima"> 
+            
+        </div>
+    </div>
+
+
+
+
+    <div class="modal-footer">
+        <button class="btnOk" id="btnOkIng" (click)="createIng()">{{nameButtonIng}}</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalIng-01');">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+<!-- compra -->
+<jw-modal id="modalIng-02" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Comprar Ingrediente</h4>
+    </div>
+   
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalIng-02');">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+
+
+<jw-modal id="modalMerma-01" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Historial de mermas</h4>
+    </div>
+    <div class="modal-body">
+        
+            
+                <h1>Tabla de las mermas</h1>
+
+                <app-reusable-table 
+                [datos]="infoMerm" 
+                [columnas]="columnsMerm" 
+                colorLetra="black">
+                </app-reusable-table>
+        
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalMerma-01');">Cancelar</button>
+    </div>
+
+</jw-modal>
+<jw-modal id="modalSauce-01" altura="85" ancho="80">
+    <div class="modal-header">
+        <h4 class="modal-title">Salsas</h4>
+    </div>
+   
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalSauce-01');">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+<jw-modal id="modalIng-03" altura="70" ancho="70">
+    <div class="modal-header">
+        <h4 class="modal-title">Tabla de Ingredientes en producto: {{this.selectedObj.Nombre}}</h4>
+    </div>
+   
+
+    <app-reusable-table 
+    [datos]="infoIngMini" 
+    [columnas]="columnsIngMini" 
+    colorLetra="black"
+    altura=50>
+    </app-reusable-table>
+
+
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalIng-03');">Cancelar</button>
+    </div>
+
+</jw-modal>
