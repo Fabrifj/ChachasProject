@@ -6,12 +6,14 @@ Merma
 	"IdMenu":,
 	"IdSucursal":"",
 	"Fecha":"",
-	"Cantidad":
+	"Cantidad":,
+	"Estado": //Revision, Aprobado
+	"Observacion": //Ninguna
+	"CantidadRecibida":
 }
 Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
-	"Nombre":"Chacha Prehecha de Carne"
 	"Origen": "Fabrica",
 	"Receta": 
 	[
@@ -48,7 +50,7 @@ Producto
 	[
     {
       "Fecha":"",
-      "Cantidad":"""
+      "Cantidad":""
     }    
 	],
   "CantidadMinima":

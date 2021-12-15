@@ -1,4 +1,4 @@
-const { firebase, product } = require("./config");
+const { firebase, product, menu } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
 const db = firebase.firestore();
@@ -162,6 +162,27 @@ async function getProductSubsidiaryType(idSub, type) {
       product["ImgURL"] = image;
       product["Nombre"] = name;
     }
+  }
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
+//Get a list of products with ingredients
+async function getProducts() {
+  const snapshot = await product.orderBy("Receta").get();
+  const list = snapshot.docs.map((doc) => ({ ListaIngredientes: doc.Receta, ...doc.data() }));
+  for (i in list) {
+    menuName = await fnMenu.getMenuId(list[i].IdMenu);
+    list[i].Nombre = menuName.Nombre;
+    delete list[i].Origen;
+    delete list[i].id;
+    delete list[i].IdMenu;
+    list[i].Receta = list[i].Receta.map(({IdIngrediente, ...rest}) => rest);
+    list[i].Receta = list[i].Receta.map(({Costo, ...rest}) => rest);
   }
 
   if (list.length == 0) {
@@ -366,6 +387,164 @@ product
  
 
 
+async function getMermasProd(idProd){
+  var resp = null;
+  await product
+    .doc(idProd)
+    .get()
+    .then(async (doc) => {
+      if (doc.exists) {
+        var prodData = doc.data();
+        
+        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
+          var menu = await fnMenu.getMenuId(prodData.IdMenu);
+          resp = {
+            "Nombre": menu.Nombre,
+            "Mermas": prodData.Mermas,
+            "Sucursal": prodData.Origen
+          }
+          console.log("Tthe product have mermas");
+        } else {
+          console.log("The product does not have information of mermas");
+        }
+      } else {
+        console.log("The product does not exist");
+      }
+    }); 
+  return resp;
+}
+
+
+/**
+ * 
+ * @param {*} idProd 
+ * @param 
+{
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"kg",
+  "ImgURL":,
+	"CantidadMinima":,
+	"ListaIngredientes":[
+		{
+			"IdIngrediente":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+
+} body 
+ */
+
+async function createProductFactory(body)
+{
+  body = await checkMenu(body,null);
+  const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+  body.ListaIngredientes=calculo.ListaIngredientes;
+  body.Costo = calculo.Costo;
+  body.CantidadInventario=0;; 
+  body.Origen="Fabrica";
+  //console.log("ChachaCompleta: ",body);
+  fnHerramientas.createDoc(body,"Producto");
+  return body;
+  
+}
+/**
+ * 
+ * @param 
+{
+
+
+	"Nombre" : "Chacha de carne",
+	"TipoUnidad:"Kg.",
+  "ImgURL":"",
+  "IdMenu":"jbibohiboihbo",
+	"Precio": 5,
+	"CantidadMinima":5,
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+	
+	
+} body 
+ */
+async function updateProductFactory(idProd,body)
+{
+  if(body.hasOwnProperty('ListaIngredientes') )
+  {
+    const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
+    body.ListaIngredientes = calculo.ListaIngredientes;
+    body.Costo = calculo.Costo;
+
+  }
+  body = await checkMenu(body,idProd);
+  return await fnHerramientas.updateDoc(idProd,body,"Producto");
+}
+async function checkMenu(body,idProd)
+{
+  if(body.hasOwnProperty('Nombre'))
+  {
+    const myMenu = await fnMenu.getMenuName({"Nombre":body.Nombre});
+    const upd = {
+      "Nombre": body.Nombre
+   }
+    if(myMenu !=null && myMenu.length > 0)
+    {
+      body.IdMenu = myMenu[0].id;
+      console.log("MY MENU:",myMenu[0].id);
+      await fnHerramientas.updateDoc(myMenu[0].id, upd,"Menu");
+    }
+    else
+    {
+      const res = await fnHerramientas.createDoc(upd,"Menu");
+      console.log("SE CREA NUEVO MENU");
+      body.IdMenu = res.id;
+    }
+    delete body.Nombre;
+  }
+  if(body.hasOwnProperty('ImgURL'))
+  {
+    if(body.hasOwnProperty('IdMenu'))
+    {
+      await fnMenu.updateMenu(body.IdMenu, {"ImgURL":body.ImgURL});
+    }
+    else
+    {
+      if(idProd != null)
+      {
+        const myProd = await fnHerramientas.getDoc(idProd,"Producto");
+        await fnMenu.updateMenu(myProd.IdMenu, {"ImgURL":body.ImgURL});
+
+      }
+      
+    }
+    delete body.ImgURL;
+  }
+  return body;
+}
+
+
+async function calculateCostChachaFactory(listaIngredientes)
+{
+  var costoTot = 0;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente,"Ingrediente");
+    ing.Nombre = myIng.Nombre;
+    ing.CantidadMedida = ing.Cantidad;
+    delete ing.Cantidad;
+    ing.Costo = parseFloat(ing.CantidadMedida)*(parseFloat(myIng.CostoMedio)/parseFloat(myIng.CantidadMedida));
+    costoTot+=ing.Costo;
+
+  }
+  //console.log("ListaIngredientes: ",listaIngredientes);
+  return {"Costo":costoTot,"ListaIngredientes":listaIngredientes}
+}
 module.exports = {
   getAllProducts,
   createProduct,
@@ -380,5 +559,11 @@ module.exports = {
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
-  getMermaSubsidiary
+  getMermaSubsidiary,
+  getMermasProd,
+  getProducts,
+  createProductFactory,
+  calculateCostChachaFactory,
+  updateProductFactory
+
 };
