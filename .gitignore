@@ -111,7 +111,7 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# dotenv en ronment variables file
 .env
 .env.test
 .env.production
@@ -246,5 +246,27 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,sublimetext,angular,node,windows
