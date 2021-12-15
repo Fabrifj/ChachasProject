@@ -1,4 +1,4 @@
-const { firebase, product, menu } = require("./config");
+const { firebase, product } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
 const db = firebase.firestore();
@@ -63,19 +63,10 @@ async function getAllProducts() {
 
 //Create a new product of some type
 async function createProductType(body, type) {
-  res = null;
   body.Tipo = type;
   body.Costo = 0;
-  body.TipoOrigen = "Sucursal";
-  await product.add(body).then((doc) => {
-      console.log("Product added");
-      res = body;
-    })
-    .catch((error) => {
-      console.log("Product not created");
-    });
-
-  return res;
+  await product.add(body);
+  return body;
 }
 
 //Create a generic product (Factory)
@@ -153,46 +144,24 @@ async function updateProductAfterSale(idproduct, quantity) {
 }
 
 //Get a list of products froma certain subsidiary and type
-async function getProductEntityType(idEnt, type) {
-  var res = null;
+async function getProductSubsidiaryType(idSub, type) {
   const snapshot = await product
-    .where("Origen", "==", idEnt)
+    .where("Origen", "==", idSub)
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  if(list.length > 0){
-     // Get more information of products of type chachas.
-    if (type == "Chacha") {
-      for await (const product of list) {
-        var idMenu = product.IdMenu;
-        var menu = await fnMenu.getMenuId(idMenu);
-        var image = menu.ImgURL;
-        var name = menu.Nombre;
+  // Get more information of products of type chachas.
+  if (type == "Chacha") {
+    for await (const product of list) {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
 
-        product["ImgURL"] = image;
-        product["Nombre"] = name;
-      }
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
     }
-    res = list;
-  }else{
-    console.log("Empty list, products not founded");
-  }
-  return res;
-}
-
-//Get a list of products with ingredients
-async function getProducts() {
-  const snapshot = await product.orderBy("Receta").get();
-  const list = snapshot.docs.map((doc) => ({ ListaIngredientes: doc.Receta, ...doc.data() }));
-  for (i in list) {
-    menuName = await fnMenu.getMenuId(list[i].IdMenu);
-    list[i].Nombre = menuName.Nombre;
-    delete list[i].Origen;
-    delete list[i].id;
-    delete list[i].IdMenu;
-    list[i].Receta = list[i].Receta.map(({IdIngrediente, ...rest}) => rest);
-    list[i].Receta = list[i].Receta.map(({Costo, ...rest}) => rest);
   }
 
   if (list.length == 0) {
@@ -203,8 +172,8 @@ async function getProducts() {
 }
 
 //Get a list of products froma certain subsidiary
-async function getProductEntity(idEnt) {
-  const snapshot = await product.where("Origen", "==", idEnt).get();
+async function getProductSubsidiary(idSub) {
+  const snapshot = await product.where("Origen", "==", idSub).get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
   for await (const product of list) {
@@ -220,7 +189,6 @@ async function getProductEntity(idEnt) {
   }
   return list;
 }
-
 /*
 Generar un metodo para actualizar el costo de un producto
 basandose en la media. (Tomar en cuenta cantidad y costo)
@@ -289,8 +257,7 @@ async function updateMermasProduct(idProd, body) {
   var respuesta = null;
   var date = fnHerramientas.stringAFecha(body.Fecha);
   body.Fecha = firebase.firestore.Timestamp.fromDate(new Date(date));
-  var cantidadMermas = body.Cantidad;
-  var cantidadInventario; 
+  console.log(body);
 
   await product
     .doc(idProd)
@@ -298,22 +265,18 @@ async function updateMermasProduct(idProd, body) {
     .then(async (doc) => {
       if (doc.exists) {
         var prodData = doc.data();
-        cantidadInventario = prodData.CantidadInventario - cantidadMermas;
-        if(cantidadInventario < 0){
-          return "SIN STOCK DE CHACHAS";
-        }
 
         if (prodData.Mermas) {
+          console.log("Ya hay mermas");
           await product.doc(idProd).update({
             Mermas: firebase.firestore.FieldValue.arrayUnion(body),
           });
           console.log("Merma information added correctly");
         } else {
+          console.log("No hay mermas");
           await product.doc(idProd).set({ Mermas: body }, { merge: true });
           console.log("Merma information added correctly");
         }
-
-        await product.doc(idProd).set({CantidadInventario: cantidadInventario}, {merge:true});
         respuesta = await getProductById(idProd);
       } else {
         console.log("The product does not exist");
@@ -322,27 +285,6 @@ async function updateMermasProduct(idProd, body) {
 
   return respuesta;
 }
-
-async function getMermasEntity(idEnt) {
-  var list = null;
-  var result = [];
-  await product.where("Origen", "==", idEnt).get().then((snapshot) => {
-    list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    for (i in list) {
-      if (list[i].Mermas){
-        for (j in list[i].Mermas) {
-          list[i].Mermas[j].Fecha = (list[i].Mermas[j].Fecha).toDate().toDateString();
-          result.push(list[i].Mermas[j])
-        }
-      }
-    }
-  }).catch((error) => {
-    console.log(`Failed to get list of mermas: ${error}`);
-  });
-  
-  return result;
-}
-
 /**
  * 
  * @param {string} idProducto 
@@ -385,177 +327,6 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
-product
-  .where("Origen", "==", "mAlmWL1myFMGbZW8WHw3")
-  .onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        //console.log(change.doc.data().CantidadInventario);  
-        if (change.doc.data().CantidadMinima >change.doc.data().CantidadInventario ) {
-              console.log(`EL PRODUCTO PASO EL MINIMO ${change.doc.id}`);
-          }
-      });
-  });
- 
-
-
-async function getMermasProd(idProd){
-  var resp = null;
-  await product
-    .doc(idProd)
-    .get()
-    .then(async (doc) => {
-      if (doc.exists) {
-        var prodData = doc.data();
-        
-        if (prodData.Tipo == "Chacha" && prodData.Mermas) {
-          var menu = await fnMenu.getMenuId(prodData.IdMenu);
-          resp = {
-            "Nombre": menu.Nombre,
-            "Mermas": prodData.Mermas,
-            "Sucursal": prodData.Origen
-          }
-          console.log("The product have mermas");
-        } else {
-          console.log("The product does not have information of mermas");
-        }
-      } else {
-        console.log("The product does not exist");
-      }
-    }); 
-  return resp;
-}
-
-
-/**
- * 
- * @param {*} idProd 
- * @param 
-{
-	"Nombre" : "Chacha de carne",
-	"TipoUnidad:"kg",
-  "ImgURL":,
-	"CantidadMinima":,
-	"ListaIngredientes":[
-		{
-			"IdIngrediente":"",
-			"Cantidad": , 
-			"TipoUnidad" :  
-		}
-		
-	]
-	
-
-} body 
- */
-
-async function createProductFactory(body)
-{
-  body = await checkMenu(body,null);
-  const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
-  body.ListaIngredientes=calculo.ListaIngredientes;
-  body.Costo = calculo.Costo;
-  body.CantidadInventario=0;; 
-  body.Origen="Fabrica";
-  //console.log("ChachaCompleta: ",body);
-  fnHerramientas.createDoc(body,"Producto");
-  return body;
-  
-}
-/**
- * 
- * @param 
-{
-
-
-	"Nombre" : "Chacha de carne",
-	"TipoUnidad:"Kg.",
-  "ImgURL":"",
-  "IdMenu":"jbibohiboihbo",
-	"Precio": 5,
-	"CantidadMinima":5,
-	"ListaIngredientes":[
-		{
-			"Nombre":"",
-			"Cantidad": , 
-			"TipoUnidad" :  
-		}
-		
-	]
-	
-	
-} body 
- */
-async function updateProductFactory(idProd,body)
-{
-  if(body.hasOwnProperty('ListaIngredientes') )
-  {
-    const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
-    body.ListaIngredientes = calculo.ListaIngredientes;
-    body.Costo = calculo.Costo;
-
-  }
-  body = await checkMenu(body,idProd);
-  return await fnHerramientas.updateDoc(idProd,body,"Producto");
-}
-async function checkMenu(body,idProd)
-{
-  if(body.hasOwnProperty('Nombre'))
-  {
-    const myMenu = await fnMenu.getMenuName({"Nombre":body.Nombre});
-    const upd = {
-      "Nombre": body.Nombre
-   }
-    if(myMenu !=null && myMenu.length > 0)
-    {
-      body.IdMenu = myMenu[0].id;
-      console.log("MY MENU:",myMenu[0].id);
-      await fnHerramientas.updateDoc(myMenu[0].id, upd,"Menu");
-    }
-    else
-    {
-      const res = await fnHerramientas.createDoc(upd,"Menu");
-      console.log("SE CREA NUEVO MENU");
-      body.IdMenu = res.id;
-    }
-    delete body.Nombre;
-  }
-  if(body.hasOwnProperty('ImgURL'))
-  {
-    if(body.hasOwnProperty('IdMenu'))
-    {
-      await fnMenu.updateMenu(body.IdMenu, {"ImgURL":body.ImgURL});
-    }
-    else
-    {
-      if(idProd != null)
-      {
-        const myProd = await fnHerramientas.getDoc(idProd,"Producto");
-        await fnMenu.updateMenu(myProd.IdMenu, {"ImgURL":body.ImgURL});
-
-      }
-      
-    }
-    delete body.ImgURL;
-  }
-  return body;
-}
-
-
-async function calculateCostChachaFactory(listaIngredientes)
-{
-  var costoTot = 0;
-  for await (const ing of listaIngredientes) {
-    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente,"Ingrediente");
-    ing.Nombre = myIng.Nombre;
-    ing.CantidadMedida = ing.Cantidad;
-    delete ing.Cantidad;
-    ing.Costo = parseFloat(ing.CantidadMedida)*(parseFloat(myIng.CostoMedio)/parseFloat(myIng.CantidadMedida));
-    costoTot+=ing.Costo;
-
-  }
-  //console.log("ListaIngredientes: ",listaIngredientes);
-  return {"Costo":costoTot,"ListaIngredientes":listaIngredientes}
-}
 module.exports = {
   getAllProducts,
   createProduct,
@@ -563,18 +334,11 @@ module.exports = {
   updateProduct,
   getProductById,
   updateProductAfterSale,
-  getProductEntityType,
-  getProductEntity,
+  getProductSubsidiaryType,
+  getProductSubsidiary,
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
-  getMermasEntity,
-  getMermasProd,
-  getProducts,
-  createProductFactory,
-  calculateCostChachaFactory,
-  updateProductFactory
-
 };

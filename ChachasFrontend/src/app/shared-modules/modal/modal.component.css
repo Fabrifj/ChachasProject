@@ -1,0 +1,46 @@
+jw-modal {
+    display: none;
+}
+jw-modal .jw-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: auto;
+    padding: 20px;
+    background-color: white; 
+    background-size: cover;
+    margin: 40px;
+    width: 60%;
+    height: 80%;
+    justify-content: center ;
+    box-shadow: 5px 5px 5px 1px gray;
+
+    
+    
+}
+jw-modal .jw-modal-cuerpo {
+    padding: 20px;
+    background:transparent;
+    margin: 40px;
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+    
+}
+jw-modal .jw-modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.75;
+    z-index: 900;
+}
+body.jw-modal-open {
+    overflow: hidden;
+}
+

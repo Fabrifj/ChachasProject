@@ -1,0 +1,61 @@
+.mat-icon {
+    vertical-align: middle;
+    margin-right: 2rem;
+}
+
+.logo {
+    text-align: center;
+    padding: 2.6rem 1rem;
+}
+
+.logo img {
+    width: 200;
+}
+
+.mat-divider {
+    border-top-width: 2px;
+    border-color: white;
+}
+
+.mat-list-item {
+    color: white;
+    font-size: 1rem;
+    height: 44px !important;
+    margin-bottom: 4px;
+}
+
+.mat-list-item-content {
+    border-radius: 5px;
+    margin: 0 8px;
+}
+
+.mat-list-item:hover {
+    background: #969226 !important;
+}
+
+.list-item-active {
+    color: #f2f5f7 !important;
+}
+
+.mat-list-item-content:hover {
+    background: #969226 !important;
+}
+
+.list-item-active:hover {
+    background: #969226;
+}
+
+.mat-subheader {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.upper {
+    background: #d09106;
+}
+
+.lower {
+    background: #d09106;
+}

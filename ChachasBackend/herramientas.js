@@ -98,19 +98,11 @@ async function deleteDoc(idDoc,nombreEntidad) {
 }
 //CrearDoc
 async function createDoc(data, nombreEntidad){
-  var respuesta = null;
-  await db.collection(nombreEntidad).add(data).then(docRef => {
-    console.log("ID Documento: ", docRef.id);
-    respuesta = {
-      "Mensaje" : `${nombreEntidad} agregado correctamente`,
-      "Elemento": data,
-      "id":docRef.id
-    }
-})
-.catch(function(error) {
-    console.error(`Error agregando documento a ${nombreEntidad}: `, error);
-});
-  
+  await db.collection(nombreEntidad).add(data);
+  respuesta = {
+    "Mensaje" : `${nombreEntidad} agregado correctamente`,
+    "Elemento": data
+  }
   return respuesta;
 }
 
