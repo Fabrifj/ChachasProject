@@ -19,6 +19,7 @@ export class LoginService {
   getUser(){
     return this.user;
   }
+  
   getAccountType(){
     return this.accountType; 
   }
