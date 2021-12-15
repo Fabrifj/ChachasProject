@@ -94,6 +94,8 @@ export class AppHttpService {
    return this.http.post(paths.crearCompra , body)
   }
 
-
+  login(body:any){
+    return this.http.get(paths.crearCompra)
+  }
 
 }
