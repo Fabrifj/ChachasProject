@@ -9,7 +9,7 @@ app.use(cors());
 
 const fnOrder = require("./order");
 const fnProduct = require("./product");
-const fnSubsidiary = require("./subsidiary");
+const fnEntity = require("./entity");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
@@ -76,7 +76,7 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   var respuesta;
   var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
   var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
-  var sucursalInfo = await fnSubsidiary.getSubsidiary(idSub);
+  var sucursalInfo = await fnEntity.getSubsidiary(idSub);
   if (chachas == null || insumos == null || sucursalInfo == null){
     respuesta = null;
   }else{
@@ -237,33 +237,33 @@ app.delete("/api/order/:idOrder", async (req, res) => {
 // Create Subsidiary
 app.post("/api/subsidiary", async (req, res) => {
   var body = req.body;
-  const respuesta = await fnSubsidiary.createSubsidiary(body);
+  const respuesta = await fnEntity.createSubsidiary(body);
   res.send(respuesta);
 });
 
 // Get Subsidiaries
 app.get("/api/subsidiary", async (req, res) => {
-  const respuesta = await fnSubsidiary.getSubsidiaries();
+  const respuesta = await fnEntity.getSubsidiaries();
   res.send(respuesta);
 });
 //Get Subsidiary by Id
 app.get("/api/subsidiary/:id", async (req, res) => {
   const idSubsidiary = req.params.id;
-  const respuesta = await fnSubsidiary.getSubsidiary(idSubsidiary);
+  const respuesta = await fnEntity.getSubsidiary(idSubsidiary);
   res.send(respuesta);
 });
 //Update Subsidiary
 app.put("/api/subsidiary/:id", async (req, res) => {
   const body = req.body;
   const idSubsidiary = req.params.id;
-  const respuesta = await fnSubsidiary.updateSubsidiary(idSubsidiary, body);
+  const respuesta = await fnEntity.updateSubsidiary(idSubsidiary, body);
   res.send(respuesta);
 });
 
 //Delete Subsidiary
 app.delete("/api/subsidiary/:id", async (req, res) => {
   const idSubsidiary = req.params.id;
-  const respuesta = await fnSubsidiary.deleteSubsidiary(idSubsidiary);
+  const respuesta = await fnEntity.deleteSubsidiary(idSubsidiary);
   res.send(respuesta);
 });
 
