@@ -408,8 +408,8 @@ async function getMermasProd(idProd){
  * @param 
 {
 	"Nombre" : "Chacha de carne",
-	"TipoUnidad:"Kg.",
-  "IdMenu":"bbihbihbvuhvu",
+	"TipoUnidad:"kg",
+  "ImgURL":,
 	"CantidadMinima":,
 	"ListaIngredientes":[
 		{
@@ -445,6 +445,7 @@ async function createProductFactory(body)
 
 	"Nombre" : "Chacha de carne",
 	"TipoUnidad:"Kg.",
+  "ImgURL":"",
   "IdMenu":"jbibohiboihbo",
 	"Precio": 5,
 	"CantidadMinima":5,
