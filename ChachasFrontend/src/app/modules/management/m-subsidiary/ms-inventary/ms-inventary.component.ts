@@ -93,6 +93,7 @@ export class MsInventaryComponent implements OnInit {
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
+  nameInsCButtons: string[] = ["Registrar Compra", "Registrar Consumo"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
   titlesProd:string [] = ['CantidadParaSucursal'];
@@ -260,6 +261,11 @@ export class MsInventaryComponent implements OnInit {
     else if (response[0] == "Registrar Compra")
     {
       this.modalService.abrir("modalStock-01");
+    }
+
+     else if (response[0] == "Registrar Consumo")
+    {
+      this.modalService.abrir("modalIns-01");
     }
     else if (response[0] == "Registrar Consumo Insumo")
     {
