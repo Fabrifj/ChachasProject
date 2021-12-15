@@ -249,6 +249,7 @@ Entidad //Pensamos en un nombre mejor despues
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
 	"Tipo":"Sucursal"//Puede ser Fabrica
 }
+
 Merma
 {
 	"Id":"BCHEBCOOQCBDOH",
@@ -267,7 +268,7 @@ Producto
 	"Origen": "ID-FABRICA",//o "ID-SUCURSAL", para todos los metodos tiene que irse a la "entidad" y revisar si es de tipo Sucursal o Fabrica
 	//PARA TODOS LOS PRODUCTOS EN GENERAL
 	"TipoOrigen":"Fabrica"//Tambien puede ser "Sucursal"
-	"Receta": 
+	"ListaIngredientes": 
 	[
 		{
 			"IdIngrediente":"jibdjwdibciw",
