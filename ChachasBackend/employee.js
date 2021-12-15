@@ -59,40 +59,11 @@ async function deleteEmployee(idEmp)
     return await fnHerramientas.deleteDoc(idEmp,"Empleado");
 }
 
-// Authenticate employee
-async function authenticateEmployee(username, pass){
-  var resp = null;
-
-  const snapshot = await employee
-    .where("NombreUsuario", '==', username)
-   .where("Password", "==", pass)
-    .get();
-  
-  const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-  if(list.length > 0){
-    resp = 
-      {
-        "Status": true,
-        "Cargo": list[0].Cargo,
-        "Dominio": list[0].Dominio
-      }
-  }else{
-    resp = 
-      {
-        "Status": false
-      }
-  }
-  console.log(resp);
-  return resp;
-}
-
 module.exports = {
     getEmployees,
     createEmployee,
     deleteEmployee,
     updateEmployee,
     getEmployee,
-    updatePassword,
-    authenticateEmployee
+    updatePassword
   };

@@ -21,11 +21,10 @@ const db = firebase.firestore();
 const menu = db.collection("Menu");
 const product = db.collection("Producto");
 const ingredient = db.collection("Ingrediente");
-const entity= db.collection("Entidad");
+const subsidiary = db.collection("Sucursal");
 const order = db.collection("Pedido");
 const employee = db.collection("Empleado");
 const purchase = db.collection("Compra");
-const merma = db.collection("Merma");
 
 
-module.exports = { firebase,product,order,ingredient,entity,menu,employee,purchase,merma};
+module.exports = { firebase,product,order,ingredient,subsidiary,menu,employee,purchase};
