@@ -85,7 +85,18 @@ export class MfInventaryComponent implements OnInit {
     
   ];
 
-  infoProd:any | undefined ; 
+
+  infoIngMini:any | undefined ; 
+  columnsIngMini = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'TipoUnidad',header:'Tipo de unidad'},
+    {field:'CantidadMedida',header:'Cantidad'},
+    {field:'Costo',header:'Costo'}
+    
+  ];
+
+  infoMenu:any ={} ; 
+  infoProd:any =[] ; 
   columnsProd = [
     {field:'Nombre',header:'Nombre'},
     {field:'TipoUnidad',header:'Tipo de unidad'},
@@ -117,7 +128,7 @@ export class MfInventaryComponent implements OnInit {
     
   ];
 
-  nameProdButtons :string[] = ["Modificar Producto","Producir Producto"];
+  nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
   nameSauceButtons :string[] = ["Modificar Salsa"];
   nameIngButtons :string[] = ["Modificar Ingrediente"];
   
@@ -140,8 +151,62 @@ export class MfInventaryComponent implements OnInit {
 
   getProducts(){
 
-    this.infoProd = this.experimetoProductoChacha;
+    this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
+
+      var infoProducts : any = [];
+      jsonFile.forEach((element:any) => {
+        if(element.Origen == "Fabrica"){
+
+          infoProducts.push(element);
+
+        }
+
+
+      });
+
+      this.getMenu(infoProducts);
+
+    },(error)=>{
+      console.log("hubo error con ingredientes")
+    }
+    );
    
+
+  }
+
+
+  getMenu(structure:any){
+
+
+    this.serviceHttp.getMenu().subscribe((jsonFile:any)=>{
+
+
+      structure.forEach((element2:any) => {
+            
+        jsonFile.forEach((element:any) => {
+
+
+        console.log("id",element.id);
+        console.log("id struc", element2.IdMenu);
+       
+          if(element.id == element2.IdMenu){
+
+            element2.Nombre = element.Nombre;
+            element2.ImgURL = element.ImgURL;
+  
+          }
+          
+
+        });
+        
+        
+      });
+      this.infoProd = structure;
+      console.log(this.infoProd);
+    },(error)=>{
+     console.log("hubo error con getMenu")
+    }
+    );
 
   }
   getSauce(){
@@ -219,6 +284,10 @@ export class MfInventaryComponent implements OnInit {
     else if( response[0] == "Comprar Ingrediente"){
 
       this.modalService.abrir('modalIng-02');
+    }
+    else if( response[0] == "Ver Ingredientes"){
+      this.infoIngMini = this.selectedObj.ListaIngredientes;
+      this.modalService.abrir('modalIng-03');
     }
 
   }

@@ -242,3 +242,23 @@
     </div>
 
 </jw-modal>
+
+<jw-modal id="modalIng-03" altura="70" ancho="70">
+    <div class="modal-header">
+        <h4 class="modal-title">Tabla de Ingredientes en producto: {{this.selectedObj.Nombre}}</h4>
+    </div>
+   
+
+    <app-reusable-table 
+    [datos]="infoIngMini" 
+    [columnas]="columnsIngMini" 
+    colorLetra="black"
+    altura=50>
+    </app-reusable-table>
+
+
+    <div class="botones">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalIng-03');">Cancelar</button>
+    </div>
+
+</jw-modal>

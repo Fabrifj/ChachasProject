@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import paths from '../core-modules/config.json';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../models/product.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -123,6 +124,25 @@ export class AppHttpService {
 
   }
 
+
+
+
+
+  
+
+
+  //producto Factory
+  createProductFactory(body:any){
+    return this.http.post(paths.CreateProductFactory , body);
+
+  }
+
+
+  //Menu
+  getMenu(){
+    return this.http.get(paths.GetMenus);
+
+  }
 
 
 }
