@@ -298,6 +298,13 @@ app.get("/api/menu/getMenuName", async (req, res) => {
   res.send(respuesta);
 });
 
+//Get Menu by Id
+app.get("/api/menu/:id", async (req, res) => {
+  var menid = req.params.id;
+  var respuesta = await fnMenu.getMenuId(menid);
+  res.send(respuesta);
+});
+
 //Update Menu
 app.put("/api/menu/:id", async (req, res) => {
   var menid = req.params.id;
