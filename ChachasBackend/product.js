@@ -63,10 +63,9 @@ async function getAllProducts() {
 
 //Create a new product of some type
 async function createProductType(body, type) {
-  res = null;
+  var res = null;
   body.Tipo = type;
   body.Costo = 0;
-  body.TipoOrigen = "Sucursal";
   await product.add(body).then((doc) => {
       console.log("Product added");
       res = body;
@@ -74,7 +73,6 @@ async function createProductType(body, type) {
     .catch((error) => {
       console.log("Product not created");
     });
-
   return res;
 }
 
