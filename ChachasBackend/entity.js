@@ -1,15 +1,15 @@
 const { subsidiary, firebase } = require('./config');
 const fnHerramientas = require("./herramientas");
 
-async function getSubsidiaries()
+async function getEntities()
 {
-    return await fnHerramientas.getDocs("Sucursal");
+    return await fnHerramientas.getDocs("Entidad");
 }
-async function getSubsidiary(idSubsidiary)
+async function getEntity(idEntity)
 {
-    return await fnHerramientas.getDoc(idSubsidiary,"Sucursal");
+    return await fnHerramientas.getDoc(idEntity,"Entidad");
 }
-//CrearCategoria
+//CrearEntidad
 /**
  * 
  * @param {} body tiene que tener la siguiente estructura:
@@ -19,42 +19,42 @@ async function getSubsidiary(idSubsidiary)
 	"Direccion":"",//
 	"Localizacion":
     {
-        "Latitud":"-68.1637419498145",
         "Longitud":"-16.505606488907098"
-        
+        "Latitud":"-68.1637419498145"
     },//Es el punto geografico con latitud y longitud
 	"Telefono":
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
+	"Tipo":"Sucursal"//Puede ser Fabrica
 }
  * 
  * 
  * @returns 
  */
-async function createSubsidiary(body){
+async function createEntity(body){
     
     body.Localizacion = new firebase.firestore.GeoPoint(body.Localizacion.Latitud, body.Localizacion.Longitud)
     await subsidiary.add(body);
     respuesta = {
-      "Message" : "Susidiary correctly added!",
+      "Message" : "Entity correctly added!",
       "Subsidiary": body
     }
     return respuesta;
   }
 
-async function updateSubsidiary(idSubsidiary, body)
+async function updateEntity(idEntity, body)
 {
-    return await fnHerramientas.updateDoc(idSubsidiary,body,"Sucursal");
+    return await fnHerramientas.updateDoc(idEntity,body,"Entidad");
 }
-async function deleteSubsidiary(idSubsidiary)
+async function deleteEntity(idEntity)
 {
-    return await fnHerramientas.deleteDoc(idSubsidiary,"Sucursal");
+    return await fnHerramientas.deleteDoc(idEntity,"Entidad");
 }
 
 
   module.exports = {
-    getSubsidiaries,
-    createSubsidiary,
-    deleteSubsidiary,
-    updateSubsidiary,
-    getSubsidiary
+    getEntities,
+    createEntity,
+    deleteEntity,
+    updateEntity,
+    getEntity
   };

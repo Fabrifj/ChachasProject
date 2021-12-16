@@ -231,39 +231,39 @@ app.delete("/api/order/:idOrder", async (req, res) => {
 
 
 /*================================
-          CRUD SUBSIDIARY
+          CRUD ENTITY
 ==================================*/
 
-// Create Subsidiary
-app.post("/api/subsidiary", async (req, res) => {
+// Create Entity
+app.post("/api/entity", async (req, res) => {
   var body = req.body;
-  const respuesta = await fnEntity.createSubsidiary(body);
+  const respuesta = await fnEntity.createEntity(body);
   res.send(respuesta);
 });
 
-// Get Subsidiaries
-app.get("/api/subsidiary", async (req, res) => {
-  const respuesta = await fnEntity.getSubsidiaries();
+// Get Entities
+app.get("/api/entity", async (req, res) => {
+  const respuesta = await fnEntity.getEntities();
   res.send(respuesta);
 });
-//Get Subsidiary by Id
-app.get("/api/subsidiary/:id", async (req, res) => {
-  const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.getSubsidiary(idSubsidiary);
+//Get Entity by Id
+app.get("/api/entity/:id", async (req, res) => {
+  const idEntity = req.params.id;
+  const respuesta = await fnEntity.getEntity(idEntity);
   res.send(respuesta);
 });
-//Update Subsidiary
-app.put("/api/subsidiary/:id", async (req, res) => {
+//Update Entity
+app.put("/api/entity/:id", async (req, res) => {
   const body = req.body;
-  const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.updateSubsidiary(idSubsidiary, body);
+  const idEntity = req.params.id;
+  const respuesta = await fnEntity.updateEntity(idEntity, body);
   res.send(respuesta);
 });
 
-//Delete Subsidiary
-app.delete("/api/subsidiary/:id", async (req, res) => {
-  const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.deleteSubsidiary(idSubsidiary);
+//Delete Entity
+app.delete("/api/entity/:id", async (req, res) => {
+  const idEntity = req.params.id;
+  const respuesta = await fnEntity.deleteEntity(idEntity);
   res.send(respuesta);
 });
 
