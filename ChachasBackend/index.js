@@ -354,7 +354,7 @@ app.put("/api/employee", async (req, res) => {
   res.send(respuesta);
 });
 //Delete Employee
-app.delete("/api/subsidiary/:id", async (req, res) => {
+app.delete("/api/employee/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
   res.send(respuesta);
