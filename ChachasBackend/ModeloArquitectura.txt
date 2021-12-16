@@ -15,7 +15,7 @@ Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
 	"Origen": "Fabrica",
-	"Receta": 
+	"ListaIngredientes": 
 	[
 		{
 			"IdIngrediente":"jibdjwdibciw",
@@ -36,6 +36,33 @@ Producto
 	"CantidadInventario":500,
   "CantidadMinima":,
   "IdMenu":,
+},
+{
+	"Origen":"ID-Fabrica",
+	"TipoOrigen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":900
 },
 
 {
@@ -343,4 +370,4 @@ Empleado:
     "Cargo":"Chef",
 	"Tipo":""//Fabrica, Sucursal, Admin ----ESTO ES LO QUE SE AUMENTA
 }
----TODO COMPRA CAMBIA GRACIAS A FACTURACION Y LAS DIFERENTES FABRICAS >>>>:(
+---TODO COMPRA CAMBIA GRACIAS A FACTURACION Y LAS DIFERENTES FABRICAS

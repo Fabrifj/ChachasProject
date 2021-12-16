@@ -14,13 +14,14 @@ async function getEmployee(idEmp)
  * 
  * @param 
  * {
-    "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
+    "CI":"6793482",
     "Password":"Pass123",
-    "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
+    "Dominio":"",//"ID-ENTIDAD" o "Admin"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
     "Cargo":"Chef",
+	  "Tipo":""//Fabrica, Sucursal, Admin
 } body 
  * @returns 
  */
