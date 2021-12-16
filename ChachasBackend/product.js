@@ -362,6 +362,8 @@ async function updateExpenseSupplySubsidiary(idProducto, body) {
     resp = await fnHerramientas.updateDoc(idProducto, upd, "Producto");
   } else return "No existe cantidad necesaria para ese gasto";
 }
+
+//Devolver UNA chacha de una sucursal, es un filtro.
 async function getProductTransaction(idMenu, IdOrigen) {
   var miDoc = null;
   console.log("entra a la funcion con: ", idMenu, IdOrigen);
@@ -385,6 +387,7 @@ async function getProductTransaction(idMenu, IdOrigen) {
   return resultado;
 }
 
+//Parte de los triggers
 product
   .where("Origen", "==", "mAlmWL1myFMGbZW8WHw3")
   .onSnapshot((snapshot) => {
@@ -397,7 +400,7 @@ product
   });
  
 
-
+//Obtiene las mermas de un determinado producto
 async function getMermasProd(idProd){
   var resp = null;
   await product
@@ -425,7 +428,7 @@ async function getMermasProd(idProd){
   return resp;
 }
 
-
+//Crear chachas de Fabrica
 /**
  * 
  * @param {*} idProd 
@@ -461,6 +464,7 @@ async function createProductFactory(body)
   return body;
   
 }
+//Update chachas de fabrica
 /**
  * 
  * @param 
@@ -497,6 +501,7 @@ async function updateProductFactory(idProd,body)
   body = await checkMenu(body,idProd);
   return await fnHerramientas.updateDoc(idProd,body,"Producto");
 }
+
 async function checkMenu(body,idProd)
 {
   if(body.hasOwnProperty('Nombre'))

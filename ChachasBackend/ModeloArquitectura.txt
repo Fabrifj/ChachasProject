@@ -15,7 +15,7 @@ Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
 	"Origen": "Fabrica",
-	"Receta": 
+	"ListaIngredientes": 
 	[
 		{
 			"IdIngrediente":"jibdjwdibciw",
@@ -36,6 +36,33 @@ Producto
 	"CantidadInventario":500,
   "CantidadMinima":,
   "IdMenu":,
+},
+{
+	"Origen":"ID-Fabrica",
+	"TipoOrigen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":900
 },
 
 {
@@ -249,6 +276,7 @@ Entidad //Pensamos en un nombre mejor despues
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
 	"Tipo":"Sucursal"//Puede ser Fabrica
 }
+
 Merma
 {
 	"Id":"BCHEBCOOQCBDOH",
@@ -267,7 +295,7 @@ Producto
 	"Origen": "ID-FABRICA",//o "ID-SUCURSAL", para todos los metodos tiene que irse a la "entidad" y revisar si es de tipo Sucursal o Fabrica
 	//PARA TODOS LOS PRODUCTOS EN GENERAL
 	"TipoOrigen":"Fabrica"//Tambien puede ser "Sucursal"
-	"Receta": 
+	"ListaIngredientes": 
 	[
 		{
 			"IdIngrediente":"jibdjwdibciw",
@@ -342,4 +370,4 @@ Empleado:
     "Cargo":"Chef",
 	"Tipo":""//Fabrica, Sucursal, Admin ----ESTO ES LO QUE SE AUMENTA
 }
----TODO COMPRA CAMBIA GRACIAS A FACTURACION Y LAS DIFERENTES FABRICAS >>>>:(
+---TODO COMPRA CAMBIA GRACIAS A FACTURACION Y LAS DIFERENTES FABRICAS
