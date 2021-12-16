@@ -274,6 +274,13 @@ app.get("/api/entity/mermas/:idEnt", async (req, res) => {
   res.send(response);
 });
 
+// Get Entity by employee id
+app.get("/api/subsidiary/employee", async (req, res) => {
+  const body = req.body;
+  const respuesta = await fnEntity.getEntityByEmployee(body);
+  res.send(respuesta);
+});
+
 /*===================================
           CRUD MENU
 ==================================*/
