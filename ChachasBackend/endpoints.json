@@ -37,7 +37,6 @@
   "GetMenuName":"/api/menu/getMenuName",
   "UpdateMenu":"/api/menu/:id",
   "DeleteMenuId":"/api/menu/:id",
-  "GetMenuId":"/api/menu/:id",
 
   "CreateEmployee":"/api/employee",
   "GetEmployees":"/api/employee",
