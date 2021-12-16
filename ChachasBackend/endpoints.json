@@ -26,11 +26,11 @@
   "CreateOrder":"/api/order",
   "DeleteOrder":"/api/order/:idOrder",
 
-  "CreateSubsidiary":"/api/subsidiary",
-  "GetSubsidiary":"/api/subsidiary",
-  "GetSubsidiaryId":"/api/subsidiary/:id",
-  "UpdateSubdidiaryId":"/api/subsidiary/:id",
-  "DeleteSubsidiary":"/api/subsidiary/:id",
+  "CreateEntity":"/api/entity",
+  "GetEntities":"/api/entity",
+  "GetEntityId":"/api/entity/:id",
+  "UpdateEntityId":"/api/entity/:id",
+  "DeleteEntity":"/api/entity/:id",
   "GetMermasEntity":"/api/entity/mermas/:idEnt",
 
   "CreateMenu":"/api/menu",
