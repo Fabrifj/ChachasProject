@@ -144,32 +144,31 @@ async function updateProductAfterSale(idproduct, quantity) {
 }
 
 //Get a list of products froma certain subsidiary and type
-async function getProductEntityType(idEnt, type) {
-  var res = null;
+async function getProductSubsidiaryType(idSub, type) {
   const snapshot = await product
-    .where("Origen", "==", idEnt)
+    .where("Origen", "==", idSub)
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  if(list.length > 0){
-     // Get more information of products of type chachas.
-    if (type == "Chacha") {
-      for await (const product of list) {
-        var idMenu = product.IdMenu;
-        var menu = await fnMenu.getMenuId(idMenu);
-        var image = menu.ImgURL;
-        var name = menu.Nombre;
+  // Get more information of products of type chachas.
+  if (type == "Chacha") {
+    for await (const product of list) {
+      var idMenu = product.IdMenu;
+      var menu = await fnMenu.getMenuId(idMenu);
+      var image = menu.ImgURL;
+      var name = menu.Nombre;
 
-        product["ImgURL"] = image;
-        product["Nombre"] = name;
-      }
+      product["ImgURL"] = image;
+      product["Nombre"] = name;
     }
-    res = list;
-  }else{
-    console.log("Empty list, products not founded");
   }
-  return res;
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
 }
 
 //Get a list of products with ingredients
@@ -194,8 +193,8 @@ async function getProducts() {
 }
 
 //Get a list of products froma certain subsidiary
-async function getProductEntity(idEnt) {
-  const snapshot = await product.where("Origen", "==", idEnt).get();
+async function getProductSubsidiary(idSub) {
+  const snapshot = await product.where("Origen", "==", idSub).get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
   for await (const product of list) {
@@ -211,7 +210,6 @@ async function getProductEntity(idEnt) {
   }
   return list;
 }
-
 /*
 Generar un metodo para actualizar el costo de un producto
 basandose en la media. (Tomar en cuenta cantidad y costo)
@@ -314,10 +312,10 @@ async function updateMermasProduct(idProd, body) {
   return respuesta;
 }
 
-async function getMermasEntity(idEnt) {
+async function getMermaSubsidiary(idSub) {
   var list = null;
   var result = [];
-  await product.where("Origen", "==", idEnt).get().then((snapshot) => {
+  await product.where("Origen", "==", idSub).get().then((snapshot) => {
     list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     for (i in list) {
       if (list[i].Mermas){
@@ -405,7 +403,7 @@ async function getMermasProd(idProd){
             "Mermas": prodData.Mermas,
             "Sucursal": prodData.Origen
           }
-          console.log("The product have mermas");
+          console.log("Tthe product have mermas");
         } else {
           console.log("The product does not have information of mermas");
         }
@@ -554,14 +552,14 @@ module.exports = {
   updateProduct,
   getProductById,
   updateProductAfterSale,
-  getProductEntityType,
-  getProductEntity,
+  getProductSubsidiaryType,
+  getProductSubsidiary,
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
   updateExpenseSupplySubsidiary,
   getProductTransaction,
-  getMermasEntity,
+  getMermaSubsidiary,
   getMermasProd,
   getProducts,
   createProductFactory,

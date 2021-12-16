@@ -42,17 +42,17 @@ app.get("/api/products", async (req, res) => {
 });
 
 // Endpoint to get all the products of one type of one specific subsidiary
-app.get("/api/product/entity/:idEnt/type/:type", async (req, res) => {
-  var idEnt = req.params.idEnt;
+app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
+  var idSub = req.params.idSub;
   var type = req.params.type;
-  const response = await fnProduct.getProductEntityType(idEnt, type);
+  const response = await fnProduct.getProductSubsidiaryType(idSub, type);
   res.send(response);
 });
 
-//Get all products in entity
-app.get("/api/product/entity/:idEnt", async (req, res) => {
-  var idEnt = req.params.idEnt;
-  const response = await fnProduct.getProductEntity(idEnt);
+//Get all products in subsidiary
+app.get("/api/product/subsidiary/:idSub", async (req, res) => {
+  var idSub = req.params.idSub;
+  const response = await fnProduct.getProductSubsidiary(idSub);
   res.send(response);
 });
 
@@ -267,11 +267,12 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-// Get the mermas of a entity
-app.get("/api/entity/mermas/:idEnt", async (req, res) => {
-  var idEnt = req.params.idEnt;
-  const response = await fnProduct.getMermasEntity(idEnt);
-  res.send(response);
+//get mermas from subsidiary
+app.get("/api/subsidiaryMermas/:id", async (req, res) => {
+  console.log('hi')
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnProduct.getMermaSubsidiary(idSubsidiary);
+  res.send(respuesta);
 });
 
 /*===================================
