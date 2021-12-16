@@ -63,10 +63,17 @@ async function getAllProducts() {
 
 //Create a new product of some type
 async function createProductType(body, type) {
+  var res = null;
   body.Tipo = type;
   body.Costo = 0;
-  await product.add(body);
-  return body;
+  await product.add(body).then((doc) => {
+      console.log("Product added");
+      res = body;
+    })
+    .catch((error) => {
+      console.log("Product not created");
+    });
+  return res;
 }
 
 //Create a generic product (Factory)
