@@ -2,6 +2,12 @@ import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+
+
+
+
+
+
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -93,6 +99,7 @@ export class MsInventaryComponent implements OnInit {
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
+  nameInsCButtons: string[] = ["Registrar Compra", "Registrar Consumo"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
   titlesProd:string [] = ['CantidadParaSucursal'];
@@ -105,6 +112,10 @@ export class MsInventaryComponent implements OnInit {
   latitude:any="";
   longitude:any="";
   zoom=16;
+
+
+
+
 
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
@@ -141,7 +152,7 @@ export class MsInventaryComponent implements OnInit {
  
   }
 
-  
+
 
   getProductsBySubsidiary(){
   
@@ -153,6 +164,9 @@ export class MsInventaryComponent implements OnInit {
 
   }
   getProdChachas(){
+
+
+   
 
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
@@ -260,6 +274,11 @@ export class MsInventaryComponent implements OnInit {
     else if (response[0] == "Registrar Compra")
     {
       this.modalService.abrir("modalStock-01");
+    }
+
+     else if (response[0] == "Registrar Consumo")
+    {
+      this.modalService.abrir("modalIns-01");
     }
     else if (response[0] == "Registrar Consumo Insumo")
     {

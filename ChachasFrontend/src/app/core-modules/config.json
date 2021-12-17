@@ -10,11 +10,27 @@
     "CreateProductRefresco": "/api/productRefresco",
     "CreateProductInsumoSucursal": "/api/productInsumoSucursal",
     "CreateProductInsumoFabrica": "/api/productInsumoFabrica",
-    "UpdateProduct": "/api/product/:idproduct",
+  
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
-    "UpdateMermasOfAProduct": "/api/product/mermas/",
+    
     "DeleteProduct": "/api/product/:idproduct",
     "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
+
+    
+    "GetProductsWithIngredients":"/api/products",
+    
+   
+   
+    
+    "GetProductTransaction":"/api/productTransaction",
+    "GetMermasofaProduct":"/api/product/mermas/:idProd",
+    "CreateProductFactory":"/api/productFactory",
+    "UpdateProduct":"/api/product/:idproduct",
+    "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
+    "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
+    "UpdateProductFactory":"/api/productFactory/:idproduct",
+    
+
 
 
     "crearCompra":"/api/purchase",
@@ -49,7 +65,18 @@
     "GetTransaction":"/api/transaction",
     "GetTransactionId":"/api/transaction/:id",
     "UpdateTransaction":"/api/transaction/:id",
-    "DeleteTransaction":"/api/transaction/:id"
+    "DeleteTransaction":"/api/transaction/:id",
+
+
+
+
+
+    "GetIngredients":"/api/ingredient",
+    "CreateIngInfo":"/api/ingredientInfo",
+    "GetIngredientId":"/api/ingredient/:id",
+    "UpdateIngredient":"/api/ingredient/",
+    "DeleteIngredient":"/api/ingredient/:id"
+
     
 
     

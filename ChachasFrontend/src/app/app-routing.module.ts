@@ -18,6 +18,8 @@ import { ProducInventoryComponent } from './shared-modules/produc-inventory/prod
 import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
 import { LoginComponent } from './modules/login/login.component';
 import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
+import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 
 
 
@@ -43,7 +45,7 @@ const routes: Routes = [
           {path: 'client-info', component: ClientInfoComponent},
         ]
       },
-      {path: 'managment', component: MsInventaryComponent},
+      {path: 'inventary', component: MsInventaryComponent},
     ]
   },
   {
@@ -61,7 +63,8 @@ const routes: Routes = [
     component: MFactoryComponent,
     children:[
 
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'inventary', component: MfInventaryComponent},
+      {path:'subsidiary',component: MfSubsidiaryComponent}
     ]
   },
   {
