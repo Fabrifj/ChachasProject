@@ -353,7 +353,7 @@ app.put("/api/employee", async (req, res) => {
   const respuesta = await fnEmployee.updatePassword(body);
   res.send(respuesta);
 });
-//Delete Employee
+//Delete Employees
 app.delete("/api/subsidiary/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
@@ -364,6 +364,7 @@ app.delete("/api/subsidiary/:id", async (req, res) => {
 app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   const username = req.params.username;
   const pass = req.params.pass;
+
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
 });

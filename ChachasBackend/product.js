@@ -133,17 +133,6 @@ async function getProductById(idproduct) {
     });
   return res;
 }
-<<<<<<< HEAD
-// update inventory after sale
-async function updateProductAfterSale(idproduct, quantity){
-    var res = null
-    var productToUpdate = await getProductById(idproduct)
-    productToUpdate.CantidadInventario = parseInt (productToUpdate.CantidadInventario, 10) - quantity
-    await product.doc(idproduct).update(productToUpdate).then(() => {
-        res = productToUpdate;
-    }).catch((error) => {
-        res = "Error updating product"
-=======
 //Update inventory after sale
 async function updateProductAfterSale(idproduct, quantity) {
   var res = null;
@@ -159,18 +148,10 @@ async function updateProductAfterSale(idproduct, quantity) {
     })
     .catch((error) => {
       res = "Error updating product";
->>>>>>> 7c5d20579695dde10187e8d33047eaa1a25f733d
     });
   return res;
 }
 
-<<<<<<< HEAD
-// Get a list of products froma certain subsidiary and type
-async function getProductSubsidiaryType(idSub, type){
-  const snapshot = await product.where('Origen', "==", idSub).where('Tipo', "==", type).get();
-  const list = snapshot.docs.map((doc) => ({id:doc.id, ...doc.data()}));
-  console.log(list);
-=======
 //Get a list of products froma certain subsidiary and type
 async function getProductEntityType(idEnt, type) {
   var res = null;
@@ -237,7 +218,6 @@ async function getProductEntity(idEnt) {
       product["Nombre"] = name;
     }
   }
->>>>>>> 7c5d20579695dde10187e8d33047eaa1a25f733d
   return list;
 }
 
@@ -588,9 +568,6 @@ module.exports = {
   updateProductPriceByMean,
   createProductType,
   updateMermasProduct,
-<<<<<<< HEAD
-  getProductTransaction
-=======
   updateExpenseSupplySubsidiary,
   getProductTransaction,
   getMermasEntity,
@@ -600,5 +577,4 @@ module.exports = {
   calculateCostChachaFactory,
   updateProductFactory
 
->>>>>>> 7c5d20579695dde10187e8d33047eaa1a25f733d
 };
