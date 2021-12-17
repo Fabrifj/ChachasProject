@@ -376,6 +376,14 @@ app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   res.send(resp);
 });
 
+// Get Entity by employee username and pass
+app.get("/api/employee/entity/username/:username/pass/:pass", async (req, res) => {
+  const username = req.params.username;
+  const pass = req.params.pass
+  const respuesta = await fnEmployee.getEntityByEmployeeUserAndPass(username, pass);
+  res.send(respuesta);
+});
+
 /*===================================
           CRUD PURCHASE
 ===================================*/
