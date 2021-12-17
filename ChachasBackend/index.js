@@ -35,12 +35,6 @@ app.get("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
-//Get products with ingredients
-app.get("/api/products", async (req, res) => {
-  const response = await fnProduct.getProducts();
-  res.send(response);
-});
-
 // Endpoint to get all the products of one type of one specific subsidiary
 app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
   var idSub = req.params.idSub;
@@ -205,6 +199,26 @@ app.put("/api/productFactory/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products fabrica with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProductsFabrica();
+  res.send(response);
+});
+
+//Get Salsas fabrica with ingredients
+app.get("/api/products/salsas", async (req, res) => {
+  const response = await fnProduct.getSalsasFabrica();
+  res.send(response);
+});
+
+//Get chachas fabrica with ingredients
+app.get("/api/products/chachas", async (req, res) => {
+  const response = await fnProduct.getChachasFabrica();
+  res.send(response);
+});
+
+
+
 /*=================================
           CRUD ORDER
 ==================================*/
@@ -361,6 +375,14 @@ app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
 
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
+});
+
+// Get Entity by employee username and pass
+app.get("/api/employee/entity/username/:username/pass/:pass", async (req, res) => {
+  const username = req.params.username;
+  const pass = req.params.pass
+  const respuesta = await fnEmployee.getEntityByEmployeeUserAndPass(username, pass);
+  res.send(respuesta);
 });
 
 /*===================================

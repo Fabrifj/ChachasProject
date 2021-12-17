@@ -1,5 +1,6 @@
-const { employee, firebase } = require('./config');
+const { employee, firebase, subsidiary } = require('./config');
 const fnHerramientas = require("./herramientas");
+const fnSubsidiary = require("./subsidiary");
 
 async function getEmployees()
 {
@@ -88,6 +89,34 @@ async function authenticateEmployee(username, pass){
   return resp;
 }
 
+// Get Entity by employee username and pass
+async function getEntityByEmployeeUserAndPass(username,pass)
+{
+  var resp = null;
+  const snapshot = await employee
+    .where("Nombre", '==', username)
+    .where("Password", "==", pass)
+    .get();
+  const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      if(list.length > 0){
+        if (list[0].Dominio == "Admin"){
+          resp = {
+            "Entidad": list[0].Dominio,
+            "idEntidad": list[0].id
+          }
+        }else{
+          resp ={
+            "Entidad": list[0].Tipo,
+            "idEntidad": list[0].Dominio
+          }
+        }
+      } else {
+        console.log("El empleado no existe");
+      }
+  console.log(resp);
+  return resp;
+}
+
 module.exports = {
     getEmployees,
     createEmployee,
@@ -95,5 +124,6 @@ module.exports = {
     updateEmployee,
     getEmployee,
     updatePassword,
-    authenticateEmployee
+    authenticateEmployee,
+    getEntityByEmployeeUserAndPass
   };
