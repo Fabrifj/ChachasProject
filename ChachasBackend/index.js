@@ -60,8 +60,8 @@ app.get("/api/product/entity/:idEnt", async (req, res) => {
 app.get("/api/product/ChachaRefresco/:idSub", async (req ,res) => {
   var idSub = req.params.idSub;
   var respuesta;
-  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
-  var refrescos = await fnProduct.getProductSubsidiaryType(idSub, "Refresco");
+  var chachas = await fnProduct.getProductEntityType(idSub, "Chacha");
+  var refrescos = await fnProduct.getProductEntityType(idSub, "Refresco");
   if (chachas == null || refrescos == null){
     respuesta = null;
   }else{

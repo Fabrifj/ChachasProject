@@ -74,7 +74,7 @@ async function authenticateEmployee(username, pass){
     resp = 
       {
         "Status": true,
-        "Cargo": list[0].Tipo,
+        "Tipo": list[0].Tipo,
         "Dominio": list[0].Dominio
       }
   }else{
