@@ -79,6 +79,7 @@ const routes: Routes = [
 
     ]
   },
+
   {
     path: 'mo-arqueo', 
     component: MoArqueoComponent,
@@ -100,7 +101,9 @@ const routes: Routes = [
   {
     path: 'details', 
     component: DisplayOrderInfoComponent
-  }
+  },
+ 
+
 ];
 
 @NgModule({

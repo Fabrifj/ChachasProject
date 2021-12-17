@@ -34,12 +34,12 @@ export class MoSucursalesComponent implements OnInit {
   
   ngOnInit(): void {
 
-    this.getEntity()
+    this.getSubsidiary()
   }
 
-  getEntity(){
+  getSubsidiary(){
 
-    this.serviceHttp.getEntity().subscribe((jsonFile:any)=>{
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
      
       
       this.infoSub =jsonFile;

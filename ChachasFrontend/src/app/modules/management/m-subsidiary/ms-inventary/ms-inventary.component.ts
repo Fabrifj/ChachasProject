@@ -143,7 +143,7 @@ export class MsInventaryComponent implements OnInit {
     this.getOtherInvSub();
     
     //get all productos
-    this.getProductsBySubsidiary();
+    this.getProductsByEntity();
     
     //get chachas
     this.getProdChachas();
@@ -154,9 +154,9 @@ export class MsInventaryComponent implements OnInit {
 
 
 
-  getProductsBySubsidiary(){
+  getProductsByEntity(){
   
-    this.serviceHttp.getProductsBySubsidiary(this.idSubsidiary).subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsByEntity(this.idSubsidiary).subscribe((jsonFile:any)=>{
       
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -168,7 +168,7 @@ export class MsInventaryComponent implements OnInit {
 
    
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsByEntityAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
       this.infoProd =jsonFile;
     } ,(error)=>{
@@ -178,7 +178,7 @@ export class MsInventaryComponent implements OnInit {
   }
   getSauce(){
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsByEntityAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{
      
      
       this.infoInsFab =jsonFile;
@@ -194,7 +194,7 @@ export class MsInventaryComponent implements OnInit {
 
   getDrink(){
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Refresco").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsByEntityAndType(this.idSubsidiary,"Refresco").subscribe((jsonFile:any)=>{
      
       this.infoDri = jsonFile;
     } ,(error)=>{
@@ -204,7 +204,7 @@ export class MsInventaryComponent implements OnInit {
 
   getOtherInvSub(){
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoSucursal").subscribe((jsonFile:any)=>{
+    this.serviceHttp.getProductsByEntityAndType(this.idSubsidiary,"InsumoSucursal").subscribe((jsonFile:any)=>{
       this.infoInsSub =jsonFile;
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -373,7 +373,7 @@ export class MsInventaryComponent implements OnInit {
 
         var chachas:any ="";
         var salsas: any = ""; 
-        this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
+        this.serviceHttp.getProductsByEntityAndType(element.id,"Chacha").subscribe((jsonFile:any)=>{
           
           if(jsonFile != null){
 
@@ -387,7 +387,7 @@ export class MsInventaryComponent implements OnInit {
             console.log("hubo error chachas de otros");
         } );
 
-        this.serviceHttp.getProductsBySubsidiaryAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
+        this.serviceHttp.getProductsByEntityAndType(element.id,"InsumoFabrica").subscribe((jsonFile:any)=>{
           if(jsonFile != null){
             jsonFile.forEach((salsa:any) => {
               salsas = salsas + "\n [ " + salsa.Nombre + " ] => [ " + salsa.CantidadInventario + " " +salsa.TipoUnidad+" ] \n";
@@ -516,7 +516,7 @@ export class MsInventaryComponent implements OnInit {
 
         this.getOtherInvSub();
         this.getProdChachas();
-        this.getProductsBySubsidiary();
+        this.getProductsByEntity();
         this.getDrink();
 
       } ,(error)=>{
@@ -526,7 +526,7 @@ export class MsInventaryComponent implements OnInit {
 
       this.getOtherInvSub();
       this.getProdChachas();
-      this.getProductsBySubsidiary();
+      this.getProductsByEntity();
       this.getDrink();
   }
   regInSuc(){
