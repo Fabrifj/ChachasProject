@@ -167,11 +167,12 @@ Empleado:
 {
     "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
     "Password":"Pass123",
-    "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL" o "Admin"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
     "Cargo":"Chef",
+	"Tipo":// puede ser "Admin" o "Sucursal" o "Fabrica"
 }
 =========================================================================
 Compra: //Todavia falta discutirlo, esta sujeto a cambios

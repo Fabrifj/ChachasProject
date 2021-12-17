@@ -362,7 +362,7 @@ app.put("/api/employee", async (req, res) => {
   res.send(respuesta);
 });
 //Delete Employee
-app.delete("/api/subsidiary/:id", async (req, res) => {
+app.delete("/api/employee/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
   res.send(respuesta);
@@ -521,18 +521,5 @@ app.delete("/api/ingredient/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-
-
-
-/*===================================
-          ENDPOINT PRUEBA
-===================================*/
-// Create Purchase
-app.post("/api/prueba", async (req, res) => {
-  var body = {"Prueba":"Prueba"}
-  const respuesta = await fnHerramientas.createDoc(body,"Menu");
-  console.log("MI ID ES ESTEEEEEE>>>>",respuesta.id);
-  res.send(respuesta);
-});
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
