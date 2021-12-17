@@ -19,6 +19,9 @@ import { ModalComponent } from './shared-modules/modal/modal.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
+import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
+import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
+import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 
 
 
@@ -52,7 +55,34 @@ const routes: Routes = [
     component: MOwnerComponent,
     children:[
 
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'empleados', component: MOwnerComponent},
+
+    ]
+  },
+  {
+    path: 'mo-empleados', 
+    component: MoEmpleadosComponent,
+    children:[
+
+      {path: 'empleados', component: MoEmpleadosComponent},
+
+    ]
+  },
+  {
+    path: 'mo-sucursal', 
+    component: MoSucursalesComponent,
+    children:[
+
+      {path: 'sucursal', component: MoSucursalesComponent},
+
+    ]
+  },
+  {
+    path: 'mo-arqueo', 
+    component: MoArqueoComponent,
+    children:[
+
+      {path: 'arqueo', component: MoArqueoComponent},
 
     ]
   },

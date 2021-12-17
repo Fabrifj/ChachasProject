@@ -81,6 +81,14 @@ export class AppHttpService {
 
   }
 
+  getEntity(){
+    return this.http.get(paths.GetEntities)
+  }
+  //Empleado 
+  getEmployees(){
+    return this.http.get(paths.GetEmployees)
+  }
+
 
   //Transaction
   postTransaction(body:any){
@@ -104,10 +112,6 @@ export class AppHttpService {
   }
 
 
-
-
-
-
   ///Ingredientes
   getIngredients(){
 
@@ -124,19 +128,11 @@ export class AppHttpService {
 
   }
 
-
-
-
-
-  
-
-
   //producto Factory
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
 
   }
-
 
   //Menu
   getMenu(){

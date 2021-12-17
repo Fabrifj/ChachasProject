@@ -10,41 +10,48 @@
     "CreateProductRefresco": "/api/productRefresco",
     "CreateProductInsumoSucursal": "/api/productInsumoSucursal",
     "CreateProductInsumoFabrica": "/api/productInsumoFabrica",
-  
+
     "UpdateProductAfterSales": "/api/product/afterSale/:idproduct",
-    
+
     "DeleteProduct": "/api/product/:idproduct",
-    "GetAllProductFromASubsidiary":"/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
+    "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
 
-    
-    "GetProductsWithIngredients":"/api/products",
-    
-   
-   
-    
-    "GetProductTransaction":"/api/productTransaction",
-    "GetMermasofaProduct":"/api/product/mermas/:idProd",
-    "CreateProductFactory":"/api/productFactory",
-    "UpdateProduct":"/api/product/:idproduct",
-    "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
-    "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
-    "UpdateProductFactory":"/api/productFactory/:idproduct",
-    
+
+    "GetProductsWithIngredients": "/api/products",
 
 
 
-    "crearCompra":"/api/purchase",
+
+    "GetProductTransaction": "/api/productTransaction",
+    "GetMermasofaProduct": "/api/product/mermas/:idProd",
+    "CreateProductFactory": "/api/productFactory",
+    "UpdateProduct": "/api/product/:idproduct",
+    "UpdateMermasOfAProduct": "/api/product/mermas/:idproduct",
+    "UpdateCostInventoryByMean": "/api/product/costInventoryByMean/:idproduct",
+    "UpdateProductFactory": "/api/productFactory/:idproduct",
+
+
+
+
+    "crearCompra": "/api/purchase",
 
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",
     "DeleteOrder": "/api/order/:idOrder",
-    "UpdateExpenseSupplySubsidiary":"/api/product/expense/",
+    "UpdateExpenseSupplySubsidiary": "/api/product/expense/",
 
     "CreateSubsidiary": "/api/subsidiary",
     "GetSubsidiary": "/api/subsidiary",
     "GetSubsidiaryId": "/api/subsidiary/:id",
     "UpdateSubdidiaryId": "/api/subsidiary/:id",
     "DeleteSubsidiary": "/api/subsidiary/:id",
+
+    "CreateEntity": "/api/entity",
+    "GetEntities": "/api/entity",
+    "GetEntityId": "/api/entity/:id",
+    "UpdateEntityId": "/api/entity/:id",
+    "DeleteEntity": "/api/entity/:id",
+    "GetMermasEntity": "/api/entity/mermas/:idEnt",
 
     "CreateMenu": "/api/menu",
     "GetMenus": "/api/menu",
@@ -60,23 +67,23 @@
     "UpdatePasswordEmployee": "/api/employee",
     "DeleteEmployee": "/api/subsidiary/:id",
 
-    "CreateTransaction":"/api/transaction",
-    "GetTransaction":"/api/transaction",
-    "GetTransactionId":"/api/transaction/:id",
-    "UpdateTransaction":"/api/transaction/:id",
-    "DeleteTransaction":"/api/transaction/:id",
+    "CreateTransaction": "/api/transaction",
+    "GetTransaction": "/api/transaction",
+    "GetTransactionId": "/api/transaction/:id",
+    "UpdateTransaction": "/api/transaction/:id",
+    "DeleteTransaction": "/api/transaction/:id",
 
 
 
 
 
-    "GetIngredients":"/api/ingredient",
-    "CreateIngInfo":"/api/ingredientInfo",
-    "GetIngredientId":"/api/ingredient/:id",
-    "UpdateIngredient":"/api/ingredient/",
-    "DeleteIngredient":"/api/ingredient/:id"
+    "GetIngredients": "/api/ingredient",
+    "CreateIngInfo": "/api/ingredientInfo",
+    "GetIngredientId": "/api/ingredient/:id",
+    "UpdateIngredient": "/api/ingredient/",
+    "DeleteIngredient": "/api/ingredient/:id"
 
-    
 
-    
+
+
 }

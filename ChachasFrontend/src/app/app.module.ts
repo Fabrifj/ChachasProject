@@ -50,6 +50,9 @@ import { MFactoryComponent } from './modules/management/m-factory/m-factory.comp
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
+import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
+import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 
 
 @NgModule({
@@ -75,7 +78,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
-    ClientInfoComponent
+    ClientInfoComponent,
+    MoArqueoComponent,
+    MoEmpleadosComponent,
+    MoSucursalesComponent
   ],
   imports: [
     FormsModule,

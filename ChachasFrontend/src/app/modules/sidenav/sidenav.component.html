@@ -31,18 +31,22 @@
     </div>
 
     <div *ngIf="isShownO" class="owner">
-        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
+        <a mat-list-item [routerLink]="['/mo-empleados']" routerLinkActive="list-item-active" class="upper" id="prueba">
             <mat-icon>person_pin</mat-icon> Agregar Empleados</a>
+        <a mat-list-item [routerLink]="['/mo-sucursal']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>person_pin</mat-icon> Agregar Sucursal</a>
+        <a mat-list-item [routerLink]="['/mo-arqueo']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>person_pin</mat-icon> Agregar Arqueos</a>
     </div>
 
-    <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">
+    <button class="btn" (click)="modalService.abrir('modalLogin-01');">
         Inciar Sesion
     </button>
 
-    <jw-modal id="modalSubsidiaries-01" altura="90" ancho="90">
+    <jw-modal id="modalLogin-01" altura="90" ancho="90">
         <h1>Subsidiaries:</h1>
         <input type="text" id="tipo">
-        <button class="btnSend" (click)="verificar();modalService.cerrar('modalSubsidiaries-01');">Submit</button>
+        <button class="btnSend" (click)="verificar();modalService.cerrar('modalLogin-01');">Submit</button>
 
     </jw-modal>
 

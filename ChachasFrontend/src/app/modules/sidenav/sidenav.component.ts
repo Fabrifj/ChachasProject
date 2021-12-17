@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as ver from '../home/home.component';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 @Component({
   selector: 'app-sidenav',
