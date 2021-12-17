@@ -66,6 +66,7 @@
     "UpdateEmployee": "/api/employee/:id",
     "UpdatePasswordEmployee": "/api/employee",
     "DeleteEmployee": "/api/subsidiary/:id",
+    "Authenticate":"/api/employee/",
 
     "CreateTransaction": "/api/transaction",
     "GetTransaction": "/api/transaction",

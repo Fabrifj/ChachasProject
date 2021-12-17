@@ -111,6 +111,13 @@ export class AppHttpService {
    return this.http.post(paths.crearCompra , body)
   }
 
+  login(idUP:any){
+    ///api/employee/username/:username/pass/:pass
+    return this.http.get(paths.Authenticate+idUP)
+  }  
+
+
+
 
   ///Ingredientes
   getIngredients(){
