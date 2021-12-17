@@ -461,6 +461,7 @@ async function createProductFactory(body) {
   body.Costo = calculo.Costo;
   body.CantidadInventario = 0;
   body.Origen = "Fabrica";
+  body.Tipo = "Chacha";
   //console.log("ChachaCompleta: ",body);
   fnHerramientas.createDoc(body, "Producto");
   return body;
