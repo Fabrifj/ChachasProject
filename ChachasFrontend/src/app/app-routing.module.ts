@@ -3,20 +3,21 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { HomeComponent } from './modules/home/home.component';
-import { LoginComponent } from './modules/login/login.component';
 
-import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
-import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
+
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 
 
 import { CatalogComponent } from './shared-modules/catalog/catalog.component';
-import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { DisplayOrderInfoComponent } from './shared-modules/sales/display-order-info/display-order-info.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
+import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
+import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
+import { LoginComponent } from './modules/login/login.component';
+import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
 
 
 
@@ -48,6 +49,7 @@ const routes: Routes = [
   {
     path: 'm-owner', 
     component: MOwnerComponent,
+
     children:[
 
       {path: 'managment', component: ProducInventoryComponent},

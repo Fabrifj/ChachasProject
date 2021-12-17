@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
+import { ResponseLogin } from 'src/app/models/responseLogin.model';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,8 @@ export class LoginComponent implements OnInit {
     private formBuilder:FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private appHttpService: AppHttpService
+    private appHttpService: AppHttpService,
+    private loginService: LoginService
     ) {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -48,11 +51,39 @@ export class LoginComponent implements OnInit {
 
       this.loading = true;
       console.log(this.f['username'].value+"  "+this.f['password'].value)
-      this.appHttpService.login({user:this.f['username'].value, pass:this.f['password'].value})
+      let idPath = "username/"+this.f['username'].value+"/pass/"+this.f['password'].value
+      this.appHttpService.login(idPath)
           .subscribe(
               data => {
-                console.log(data);
-                this.router.navigate([this.returnUrl]);
+                let dat2 = <ResponseLogin>data;
+                if(dat2.Status){
+                  switch(dat2.Tipo){
+                    case "Sucursal":{
+                      console.log(this.returnUrl+'m-subsidiary/'+dat2.Dominio);
+                      this.router.navigate([this.returnUrl+'m-subsidiary']);
+                      this.loginService.updatedUser(dat2);
+                      break;
+                    }
+                    case "Fabrica":{
+                      this.router.navigate([this.returnUrl+'m-factory']);
+                      this.loginService.updatedUser(dat2);
+                      break;
+                    }
+                    case "Admin":{
+                      this.router.navigate([this.returnUrl+'m-owner']);
+                      this.loginService.updatedUser(dat2);
+                      break;
+                    }
+                    default:{
+                      alert("Error");
+                      window.location.reload();
+                    }
+                  }
+                }else{
+                  alert("Error");
+                  window.location.reload();
+                }
+                // this.router.navigate([this.returnUrl]);
               });
   }
 
