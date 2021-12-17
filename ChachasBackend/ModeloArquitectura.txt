@@ -15,6 +15,7 @@ Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
 	"Origen": "Fabrica",
+	"Tipo":"Chacha",
 	"Receta": 
 	[
 		{
@@ -37,7 +38,34 @@ Producto
   "CantidadMinima":,
   "IdMenu":,
 },
+{
+	"Origen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"Tipo":"Salsa",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"ybibbijboijoij",
+			"Nombre":"Carne",
+			"CantidadMedida":0.25,
+			"TipoUnidad":"kg",
+			"Costo":5
+		},
+		{
+			"IdIngrediente":"rbibijberijfbid",
+			"Nombre":"Tomate",
+			"CantidadMedida":0.5,
+			"TipoUnidad":"kg",
+			"Costo":2
+		}
 
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":100
+},
 {
 	"Id":"BCHEBCOOkkkBDOH",
 	"Tipo":"Chacha"
@@ -233,3 +261,20 @@ Transaccion
 =========================================================================
 Pedido/Confirmacion para el siguiente modulo
 =========================================================================
+Caja
+{
+	"Fecha":"",
+	"Tipo":"Ingreso",//"Egreso"
+	"Saldo":,//Cantidad antes de sumar o restar monto 
+	"Monto":800,
+	"Origen":""
+},
+{
+	"Tipo":"Cuenta",
+	"Origen":,
+	"Ingresos":,//Lo que se gano
+	"Egresos":,//Lo que se gasto
+	"Saldo":,//(inicio_caja + ventas - compras),
+	"CuentaInicial":,
+	"Fecha":,
+}
