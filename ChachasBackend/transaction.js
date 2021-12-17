@@ -163,7 +163,6 @@ async function getTransaction(idTran)
                        enviar = {
                         "IdMenu":producto.IdMenu,
                         "IdSucursal":body.IdOrigen,
-                        "IdFabrica":body.IdDestino,
                         "Fecha":body.Fecha,
                         "Cantidad":suma,
                         "Estado": "Revision",
