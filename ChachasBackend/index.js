@@ -508,17 +508,4 @@ app.delete("/api/ingredient/:id", async (req, res) => {
 });
 
 
-
-
-/*===================================
-          ENDPOINT PRUEBA
-===================================*/
-// Create Purchase
-app.post("/api/prueba", async (req, res) => {
-  var body = {"Prueba":"Prueba"}
-  const respuesta = await fnHerramientas.createDoc(body,"Menu");
-  console.log("MI ID ES ESTEEEEEE>>>>",respuesta.id);
-  res.send(respuesta);
-});
-
 app.listen(4000, () => console.log("Up and Running on 4000"));
