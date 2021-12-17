@@ -13,7 +13,7 @@
     </div>
 
     <div *ngIf="isShownS" class="sucursal">
-        <a mat-list-item [routerLink]="['/m-subsidiary/managment']" routerLinkActive="list-item-active" class="upper">
+        <a mat-list-item [routerLink]="['/m-subsidiary/inventary']" routerLinkActive="list-item-active" class="upper">
             <mat-icon>store</mat-icon> Inventario
         </a>
 
@@ -35,14 +35,14 @@
             <mat-icon>person_pin</mat-icon> Agregar Empleados</a>
     </div>
 
-    <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">
+    <button class="btn" (click)="modalService.abrir('modalLog-01');">
         Inciar Sesion
     </button>
 
-    <jw-modal id="modalSubsidiaries-01" altura="90" ancho="90">
+    <jw-modal id="modalLog-01" altura="90" ancho="90">
         <h1>Subsidiaries:</h1>
         <input type="text" id="tipo">
-        <button class="btnSend" (click)="verificar();modalService.cerrar('modalSubsidiaries-01');">Submit</button>
+        <button class="btnSend" (click)="verificar();modalService.cerrar('modalLog-01');">Submit</button>
 
     </jw-modal>
 
