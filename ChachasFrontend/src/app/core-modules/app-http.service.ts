@@ -37,14 +37,14 @@ export class AppHttpService {
 
 
 
-  getProductsByEntityAndType(idSub:any , type:any ){
+  getProductsBySubsidiaryAndType(idSub:any , type:any ){
     //"GetProductsBySubsidiaryAndType":"/api/product/subsidiary/:idSub/type/:type",
-    var path = paths.GetProductsByEntityAndType + idSub + "/type/"+type;
+    var path = paths.GetProductsBySubsidiaryAndType + idSub + "/type/"+type;
     return this.http.get(path)
 
   }
-  getProductsByEntity(idSub:any){
-    var path = paths.GetProductsByEntity + idSub;
+  getProductsBySubsidiary(idSub:any){
+    var path = paths.GetProductsBySubsidiary + idSub;
     return this.http.get(path);
 
   }
@@ -81,8 +81,8 @@ export class AppHttpService {
 
   }
 
-  getEntity(){
-    return this.http.get(paths.GetEntities)
+  getSubsidiaries(){
+    return this.http.get(paths.GetSubsidiary)
   }
 
   //Empleado 
