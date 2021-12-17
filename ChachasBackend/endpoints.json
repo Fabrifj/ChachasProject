@@ -37,14 +37,13 @@
   "GetMenuName":"/api/menu/getMenuName",
   "UpdateMenu":"/api/menu/:id",
   "DeleteMenuId":"/api/menu/:id",
-  "GetMenuId":"/api/menu/:id",
 
   "CreateEmployee":"/api/employee",
   "GetEmployees":"/api/employee",
   "GetEmployeeId":"/api/employee/:id",
   "UpdateEmployee":"/api/employee/:id",
   "UpdatePasswordEmployee":"/api/employee",
-  "DeleteEmployee":"/api/subsidiary/:id",
+  "DeleteEmployee":"/api/employee/:id",
   "AuthenticateEmployee":"/api/employee/username/:username/pass/:pass",
 
   "CreatePurchase":"/api/purchase",

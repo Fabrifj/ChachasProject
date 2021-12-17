@@ -21,6 +21,7 @@ async function getEmployee(idEmp)
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
     "Cargo":"Chef",
+    "Tipo": ""// puede ser "Admin" o "Sucursal" o "Fabrica"
 } body 
  * @returns 
  */
