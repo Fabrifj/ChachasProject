@@ -25,7 +25,6 @@ import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursale
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 
 
-
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
@@ -102,7 +101,10 @@ const routes: Routes = [
     path: 'details', 
     component: DisplayOrderInfoComponent
   },
- 
+  {
+    path: 'mf-subsidiary',
+    component: MfSubsidiaryComponent
+  }
 
 ];
 
