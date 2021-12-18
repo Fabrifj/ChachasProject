@@ -585,8 +585,13 @@ app.delete("/api/register/:id", async (req, res) => {
 });
 
 
-
-
+/*===================================
+          CRUD REGISTER
+===================================*/
+app.get("/api/prueba", async (req, res) => {
+  const response = await fnHerramientas.getDoc("1GQcA1ELZufELjBGbgoo","Producto");
+  res.send(response);
+});
 
 
 
