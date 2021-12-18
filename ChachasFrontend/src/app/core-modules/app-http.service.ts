@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 
-import paths from '../core-modules/config.json';
+import paths from './config.json';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../models/product.model';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';

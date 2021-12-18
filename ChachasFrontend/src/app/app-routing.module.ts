@@ -19,6 +19,7 @@ import { ModalComponent } from './shared-modules/modal/modal.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
+import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
 
 
 
@@ -61,7 +62,9 @@ const routes: Routes = [
     component: MFactoryComponent,
     children:[
 
-      {path: 'inventary', component: MfInventaryComponent},
+      {path: 'inventary', component: MfInventaryComponent,
+        children:[{path:'mfi-sales',component: MfiSalesComponent}]
+      },
       {path:'subsidiary',component: MfSubsidiaryComponent}
     ]
   },

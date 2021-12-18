@@ -50,6 +50,9 @@ import { MFactoryComponent } from './modules/management/m-factory/m-factory.comp
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
+import { SalesListComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/sales-list/sales-list.component';
+import { ShowIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/show-ingredients.component';
 
 
 @NgModule({
@@ -75,7 +78,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
-    ClientInfoComponent
+    ClientInfoComponent,
+    MfiSalesComponent,
+    SalesListComponent,
+    ShowIngredientsComponent
   ],
   imports: [
     FormsModule,
