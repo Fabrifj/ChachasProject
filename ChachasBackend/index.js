@@ -17,6 +17,7 @@ const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
 const fnMerma = require("./merma");
 const fnIngredient = require('./ingredient');
+const fnRegister = require('./register');
 
 /*=================================
           CRUD PRODUCT
@@ -32,12 +33,6 @@ app.get("/api/product", async (req, res) => {
 app.get("/api/product/:idproduct", async (req, res) => {
   var productToGet = req.params.idproduct;
   const response = await fnProduct.getProductById(productToGet);
-  res.send(response);
-});
-
-//Get products with ingredients
-app.get("/api/products", async (req, res) => {
-  const response = await fnProduct.getProducts();
   res.send(response);
 });
 
@@ -205,6 +200,26 @@ app.put("/api/productFactory/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products fabrica with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProductsFabrica();
+  res.send(response);
+});
+
+//Get Salsas fabrica with ingredients
+app.get("/api/products/salsas", async (req, res) => {
+  const response = await fnProduct.getSalsasFabrica();
+  res.send(response);
+});
+
+//Get chachas fabrica with ingredients
+app.get("/api/products/chachas", async (req, res) => {
+  const response = await fnProduct.getChachasFabrica();
+  res.send(response);
+});
+
+
+
 /*=================================
           CRUD ORDER
 ==================================*/
@@ -348,7 +363,7 @@ app.put("/api/employee", async (req, res) => {
   res.send(respuesta);
 });
 //Delete Employee
-app.delete("/api/subsidiary/:id", async (req, res) => {
+app.delete("/api/employee/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
   res.send(respuesta);
@@ -360,6 +375,14 @@ app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   const pass = req.params.pass;
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
+});
+
+// Get Entity by employee username and pass
+app.get("/api/employee/entity/username/:username/pass/:pass", async (req, res) => {
+  const username = req.params.username;
+  const pass = req.params.pass
+  const respuesta = await fnEmployee.getEntityByEmployeeUserAndPass(username, pass);
+  res.send(respuesta);
 });
 
 /*===================================
@@ -508,17 +531,71 @@ app.delete("/api/ingredient/:id", async (req, res) => {
 });
 
 
+/*===================================
+          CRUD REGISTER
+===================================*/
+
+//Create register document of type cuenta
+app.post("/api/register/cuenta", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterCuentas(body);
+  res.send(response);
+});
+
+//Create register document of type ingreso or egreso
+app.post("/api/register/ingreso_egreso", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterIngresoEgreso(body);
+  res.send(response);
+});
+
+// Get all the registers of type cuenta
+app.get("/api/register/cuenta", async (req, res) => {
+  const response = await fnRegister.getRegisterCuentas();
+  res.send(response);
+});
+
+// Get Cuenta by Date
+app.get("/api/register/cuenta/:date", async (req, res) => {
+  const date = req.params.date;
+  const response = await fnRegister.getCuentaByDate(date);
+  res.send(response);
+});
+
+// Get a register by ID
+app.get("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const response = await fnRegister.getRegisterByID(id);
+  res.send(response);
+});
+
+//Update Cuenta
+app.put("/api/register/cuenta/:id", async (req, res) => {
+  const body = req.body;
+  const id = req.params.id;
+  const respuesta = await fnRegister.updateRegisterCuenta(id, body);
+  res.send(respuesta);
+});
+
+//Delete Register
+app.delete("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const respuesta = await fnRegister.deleteRegister(id);
+  res.send(respuesta);
+});
 
 
 /*===================================
-          ENDPOINT PRUEBA
+          CRUD REGISTER
 ===================================*/
-// Create Purchase
-app.post("/api/prueba", async (req, res) => {
-  var body = {"Prueba":"Prueba"}
-  const respuesta = await fnHerramientas.createDoc(body,"Menu");
-  console.log("MI ID ES ESTEEEEEE>>>>",respuesta.id);
-  res.send(respuesta);
+app.get("/api/prueba", async (req, res) => {
+  const response = await fnHerramientas.getDoc("1GQcA1ELZufELjBGbgoo","Producto");
+  res.send(response);
 });
+
+
+
+
+
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
