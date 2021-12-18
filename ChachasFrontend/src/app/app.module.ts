@@ -10,7 +10,6 @@ import { FooterComponent } from './modules/footer/footer.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
 import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-menu.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
-import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
 import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
@@ -46,13 +45,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
 import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { HeaderComponent } from './modules/header/header.component';
+import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
 
 
 
@@ -82,7 +81,8 @@ import { HeaderComponent } from './modules/header/header.component';
     ClientInfoComponent,
     MoArqueoComponent,
     MoEmpleadosComponent,
-    MoSucursalesComponent
+    MoSucursalesComponent,
+    
   ],
   imports: [
     FormsModule,
@@ -103,8 +103,8 @@ import { HeaderComponent } from './modules/header/header.component';
     AgmCoreModule.forRoot({
       apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
     }),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    // provideFirebaseApp(() => initializeApp(environment)),
+    // provideFirestore(() => getFirestore())
   ],
   
   exports:[CatalogCardComponent],
