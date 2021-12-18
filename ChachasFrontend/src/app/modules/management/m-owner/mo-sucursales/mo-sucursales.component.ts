@@ -66,6 +66,21 @@ export class MoSucursalesComponent implements OnInit {
     } )
   }
 
+  changeGender(e:any) {
+
+    console.log(e.target.value);
+    if(e.target.value == "sucursal"){
+      console.log("es sucursal")      
+    }
+    else if(e.target.value == "fabrica"){
+      console.log("es fabrica")   
+    }
+
+    else{
+      alert("Por favor, elija una opcion")
+  }
+
+}
 
 
   functionChooseObj(response:any){
@@ -84,5 +99,37 @@ export class MoSucursalesComponent implements OnInit {
     }
   }
 
+  crearSucursales(body:any){
+    this.serviceHttp.createSubsidiary(body)
+    .subscribe((jsonFile:any)=>{
 
+      alert('sucursal creada correctamente');
+      
+    } ,(error)=>{
+        console.log("hubo error al crear sucursal")
+
+    } )
+  }
+
+  sendSucursales(){
+    var idSubDestiny = "";
+    var Tipo = "Sucursal";
+    //Nombre
+    var Nombre = ((<HTMLInputElement>document.getElementById("nomSucursal")).value)
+    
+    //Apellido Paterno
+    var Direccion = ((<HTMLInputElement>document.getElementById("dirSucursal")).value)
+    
+    //Apellido materno
+    var Telefono = ((<HTMLInputElement>document.getElementById("telfSuc")).value)
+        
+   //Cargo
+    var Departamento = "La Paz"
+
+
+    //var Admin = "Admin"
+    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
+    this.crearSucursales(JSON.parse(sucursal))
+    
+  }
 }

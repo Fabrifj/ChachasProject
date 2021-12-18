@@ -86,6 +86,10 @@ export class AppHttpService {
     return this.http.get(paths.GetSubsidiary)
   }
 
+  createSubsidiary(body:any){
+    return this.http.get(paths.CreateSubsidiary, body)
+  }
+
   //Empleado 
   getEmployees(){
     return this.http.get(paths.GetEmployees)
@@ -172,4 +176,6 @@ export class AppHttpService {
   deleteEmployee(CI:any){
     return this.http.delete(paths.DeleteEmployee+CI);
   }
+
+  
 }

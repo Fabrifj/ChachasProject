@@ -10,7 +10,7 @@
     <button class="btn" (click)="modalService.abrir('modalRegSuc-01');">Agregar Sucursal</button>
 </div>
 
-<jw-modal id="modalRegSuc-01" altura="100" ancho="30">
+<jw-modal id="modalRegSuc-01" altura="100" ancho="50">
     <div class="modal-header">
         <h4 class="modal-title">Registrar Sucursal</h4>
     </div>
@@ -23,8 +23,14 @@
         <p>Direccion</p>
         <input type="text" id="dirSucursal" placeholder="Ingrese la direccion de la sucursal">
 
+        <p>Tipo</p>
+        <div>
+            <label> <input id="sucursal" type="radio" value="sucursal" name="gender" (change)="changeGender($event)" checked/> Sucursal </label>
+            <label> <input id="fabrica" type="radio" value="fabrica" name="gender" (change)="changeGender($event)" disabled="true"/> Fabrica </label>
+        </div>
+
         <p>Ubicacion</p>
-        <input type="text" id="Ubicacion" placeholder="Ingrese la Ubicacion">
+        <!-- <input type="text" id="Ubicacion" placeholder="Ingrese la Ubicacion"> -->
 
         <agm-map>
             <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
@@ -35,18 +41,29 @@
             </agm-marker>
         </agm-map>
 
+
+
         <p>Telefono</p>
-        <input type="text" id="telfEmpleado" placeholder="Ingrese el numero de telefono">
+        <input type="text" id="telfSuc" placeholder="Ingrese el numero de telefono">
 
         <p>Departamento</p>
-        <input type="text" id="cargo" name="cargo" placeholder="Ingrese el departamento">
-
+        <select class="options" aria-label="Default select example">
+            <!-- <option value="">Beni</option>
+            <option value="">Cochabamba</option>
+            <option value="">Chuquisica</option> -->
+            <option value="">La Paz</option>
+            <!-- <option value="">Oruro</option>
+            <option value="">Pando</option>
+            <option value="">Potosi</option>
+            <option value="">Santa Cruz</option>
+            <option value="">Tarija</option> -->
+        </select>
 
     </div>
     <div class="modal-footer">
 
         <div class="botones">
-            <button class="btn">Registrar</button>
+            <button class="btn" (click)="modalService.cerrar('modalRegSuc-01');sendSucursales();">Registrar</button>
         </div>
         <div class="botones">
             <button class="btnCerrar" (click)="modalService.cerrar('modalRegSuc-01');">Cancelar</button>
