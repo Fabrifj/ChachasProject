@@ -17,6 +17,7 @@ const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
 const fnMerma = require("./merma");
 const fnIngredient = require('./ingredient');
+const fnRegister = require('./register');
 
 /*=================================
           CRUD PRODUCT
@@ -528,6 +529,68 @@ app.delete("/api/ingredient/:id", async (req, res) => {
   const respuesta = await fnIngredient.deleteIngredient(idIn);
   res.send(respuesta);
 });
+
+
+/*===================================
+          CRUD REGISTER
+===================================*/
+
+//Create register document of type cuenta
+app.post("/api/register/cuenta", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterCuentas(body);
+  res.send(response);
+});
+
+//Create register document of type ingreso or egreso
+app.post("/api/register/ingreso_egreso", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterIngresoEgreso(body);
+  res.send(response);
+});
+
+// Get all the registers of type cuenta
+app.get("/api/register/cuenta", async (req, res) => {
+  const response = await fnRegister.getRegisterCuentas();
+  res.send(response);
+});
+
+// Get Cuenta by Date
+app.get("/api/register/cuenta/:date", async (req, res) => {
+  const date = req.params.date;
+  const response = await fnRegister.getCuentaByDate(date);
+  res.send(response);
+});
+
+// Get a register by ID
+app.get("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const response = await fnRegister.getRegisterByID(id);
+  res.send(response);
+});
+
+//Update Cuenta
+app.put("/api/register/cuenta/:id", async (req, res) => {
+  const body = req.body;
+  const id = req.params.id;
+  const respuesta = await fnRegister.updateRegisterCuenta(id, body);
+  res.send(respuesta);
+});
+
+//Delete Register
+app.delete("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const respuesta = await fnRegister.deleteRegister(id);
+  res.send(respuesta);
+});
+
+
+
+
+
+
+
+
 
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
