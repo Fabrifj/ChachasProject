@@ -215,7 +215,7 @@ async function updateProductPriceByMean(idproduct, body) {
   var costoFinal = 0;
   var costoEstandarizado = 0;
   var nuevaCantidadInventarioTotal = 0;
-  var productToUpdate = await getProductById(idproduct); //product.doc(idproduct).get().data;
+  var productToUpdate = await fnHerramientas.getDoc(idproduct,"Producto"); //product.doc(idproduct).get().data;
   console.log(productToUpdate);
   if (
     productToUpdate.Tipo == "InsumoSucursal" ||
@@ -250,7 +250,7 @@ async function updateProductPriceByMean(idproduct, body) {
     },
     { merge: true }
   );
-  res = await getProductById(idproduct);
+  res = await fnHerramientas.getDoc(idproduct,"Producto"); 
   return res;
 }
 
