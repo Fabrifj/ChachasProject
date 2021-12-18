@@ -1,1 +1,9 @@
-<p>show-ingredients works!</p>
+<h3>Listado Ingredientes</h3>
+<div class="list-group">
+    <app-list-ingredients
+                    *ngFor="let ingredientesEle of ingredientes; let i = index"
+                    [ingredient] = "ingredientesEle"
+                    [index] = "i"
+                    ></app-list-ingredients>
+</div>
+

@@ -53,6 +53,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
 import { SalesListComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/sales-list/sales-list.component';
 import { ShowIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/show-ingredients.component';
+import { ListIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/list-ingredients/list-ingredients.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { ShowIngredientsComponent } from './modules/management/m-factory/mf-inve
     ClientInfoComponent,
     MfiSalesComponent,
     SalesListComponent,
-    ShowIngredientsComponent
+    ShowIngredientsComponent,
+    ListIngredientsComponent
   ],
   imports: [
     FormsModule,
