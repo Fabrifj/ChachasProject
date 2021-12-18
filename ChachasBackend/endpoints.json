@@ -67,6 +67,14 @@
   "CreateIngInfo":"/api/ingredientInfo",
   "GetIngredientId":"/api/ingredient/:id",
   "UpdateIngredient":"/api/ingredient/",
-  "DeleteIngredient":"/api/ingredient/:id"
+  "DeleteIngredient":"/api/ingredient/:id",
+
+  "CreateRegisterCuenta":"/api/register/cuenta",
+  "CreateRegisterIngresoEgreso":"/api/register/ingreso_egreso",
+  "GetRegisterCuentas":"/api/register/cuenta",
+  "GetCuentaByDate":"/api/register/cuenta/:date",
+  "GetRegisterByID":"/api/register/:id",
+  "UpdateRegisterCuenta":"/api/register/cuenta/:id",
+  "DeleteRegister":"/api/register/:id"
 
 }
