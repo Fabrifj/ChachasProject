@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone  } from '@angular/core';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
 
 @Component({
   selector: 'app-mo-sucursales',
   templateUrl: './mo-sucursales.component.html',
-  styleUrls: ['./mo-sucursales.component.css']
+  styleUrls: ['./mo-sucursales.component.css'],
+  
 })
 export class MoSucursalesComponent implements OnInit {
 
-  constructor(public modalService:ModalService, private serviceHttp: AppHttpService) { }
+  constructor(public modalService:ModalService, 
+    private serviceHttp: AppHttpService,
+    ) { }
 
   selectedObject:any = {}
   selectedInfo:any ={}
 
   infoSub:any="";
   idSubsidiary:any="";
+
+  latitude:any="";
+  longitude:any="";
+  zoom=16;
   
   columnsSucursal = [
     {field:'id',header:'ID Sucursal'},
@@ -26,17 +34,24 @@ export class MoSucursalesComponent implements OnInit {
     {field:'Departamento',header:'Departamento'}
 
   ];
+
   
   sucursalButtons: string[] = ["Editar Informacion", "Eliminar Informacion"];
 
- 
 
-  
+
   ngOnInit(): void {
 
+    this.latitude = -16.489689;
+    this.longitude= -68.119293;
     this.getSubsidiary()
+    //load Places Autocomplete
+
+    
   }
 
+
+  
   getSubsidiary(){
 
     this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
@@ -68,5 +83,6 @@ export class MoSucursalesComponent implements OnInit {
         
     }
   }
+
 
 }

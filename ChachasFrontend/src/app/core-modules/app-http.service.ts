@@ -75,6 +75,7 @@ export class AppHttpService {
 
     return this.http.get(paths.GetSubsidiary)
   }
+  
   postSub(body:any){
     
     return this.http.get(paths.CreateSubsidiary,body);
@@ -97,6 +98,7 @@ export class AppHttpService {
 
     return this.http.post(paths.CreateTransaction,body)
   }
+
   //Registrar consumo
   updateConsumo(idProd:any , body:any ){
     
@@ -148,5 +150,26 @@ export class AppHttpService {
 
   }
 
+  //Empleados
 
+  postEmployee(body:any){
+
+
+    return this.http.post(paths.CreateEmployee,body)
+  }
+
+  updateEmployee(CI:any , body:any){
+    return this.http.put(paths.UpdateEmployee+CI,body);
+  }
+  
+
+  getSubsidiaryId(idSub:any){
+    var path = paths.GetSubsidiaryId + idSub;
+    var data = this.http.get(path);
+    return this.http.get(path)
+  }
+
+  deleteEmployee(CI:any){
+    return this.http.delete(paths.DeleteEmployee+CI);
+  }
 }

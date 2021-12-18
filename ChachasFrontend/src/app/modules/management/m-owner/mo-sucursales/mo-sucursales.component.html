@@ -18,14 +18,22 @@
 
 
         <p>Nombre</p>
-        <input type="text" id="apellidoEmpleado" placeholder="Ingrese el nombre de la sucursal">
+        <input type="text" id="nomSucursal" placeholder="Ingrese el nombre de la sucursal">
 
         <p>Direccion</p>
-        <input type="text" id="ciEmpleado" placeholder="Ingrese la direccion de la sucursal">
+        <input type="text" id="dirSucursal" placeholder="Ingrese la direccion de la sucursal">
 
         <p>Ubicacion</p>
-        <input type="text" id="telfEmpleado" placeholder="Ingrese la latitud">
+        <input type="text" id="Ubicacion" placeholder="Ingrese la Ubicacion">
 
+        <agm-map>
+            <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
+                <agm-info-window>
+
+                </agm-info-window>
+
+            </agm-marker>
+        </agm-map>
 
         <p>Telefono</p>
         <input type="text" id="telfEmpleado" placeholder="Ingrese el numero de telefono">
