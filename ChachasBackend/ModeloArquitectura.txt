@@ -1,0 +1,282 @@
+COLECCIONES:
+=========================================================================
+Merma
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"IdMenu":,
+	"IdSucursal":"",
+	"Fecha":"",
+	"Cantidad":,
+	"Estado": //Revision, Aprobado
+	"Observacion": //Ninguna
+	"CantidadRecibida":
+}
+Producto
+{
+	"Id":"BCHEBCOOQCBDOH",
+	"Origen": "Fabrica",
+	"Tipo":"Chacha",
+	"Receta": 
+	[
+		{
+			"IdIngrediente":"jibdjwdibciw",
+			"Nombre": Carne,
+			"CantidadMedida": 0.25,
+			"TipoUnidad":"kg",
+			"Costo": 5
+		},
+		{
+			"IdIngrediente":"cndcbiaksmp",
+			"Nombre": Tomate,
+			"CantidadMedida": 0.5,
+			"TipoUnidad":"kg",
+			"Costo": 2
+		}
+	],
+	"Costo":7,
+	"CantidadInventario":500,
+  "CantidadMinima":,
+  "IdMenu":,
+},
+{
+	"Origen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"Tipo":"Salsa",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"ybibbijboijoij",
+			"Nombre":"Carne",
+			"CantidadMedida":0.25,
+			"TipoUnidad":"kg",
+			"Costo":5
+		},
+		{
+			"IdIngrediente":"rbibijberijfbid",
+			"Nombre":"Tomate",
+			"CantidadMedida":0.5,
+			"TipoUnidad":"kg",
+			"Costo":2
+		}
+
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":100
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"Chacha"
+	"IdMenu":"rnfqubrvibvi" //Esto representa a la Chacha de Carne 
+	"Origen": "ID-SUCURSAL",
+	"Costo":7,
+	"Precio":10,
+	"CantidadInventario":16,
+	"Mermas":
+	[
+    {
+      "Fecha":"",
+      "Cantidad":""
+    }    
+	],
+  "CantidadMinima":
+},
+
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"Refresco" //Puede ser refresco o aceite
+	"Nombre":"Coca-Cola" 
+	"Origen": "ID-SUCURSAL",
+	"Costo":10,
+	"Precio":13,
+	"CantidadInventario":20,
+  "CantidadMinima":
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"InsumoSucursal" //Estos se compra la sucursal
+	"Nombre":"Aceite" 
+	"Origen": "ID-SUCURSAL",
+	"Costo":10,
+	"CantidadInventario":1600,
+	"CantidadMedida":900,
+	"TipoUnidad":"ml",
+  "CantidadMinima":
+},
+{
+	"Id":"BCHEBCOOkkkBDOH",
+	"Tipo":"InsumoFabrica"  //Estos se proveen de la fabrica
+	"Nombre":"Salsa Picante"
+	"Origen": "ID-SUCURSAL",
+	"Costo":7,
+	"CantidadInventario":1600,
+	"CantidadMedida":900,
+	"TipoUnidad":"ml",
+  "CantidadMinima":
+}
+=========================================================================
+
+Menu
+{
+	"Nombre": "Chacha de Carne",
+	"Id":"JIDBORBI",
+	"ImgURL":""
+}
+
+=========================================================================
+Sucursal
+{
+	"Id":"jhijborhibibo",
+	"Nombre":"",
+	"Direccion":"",//
+	"Localizacion":
+    {
+        "Longitud":"-16.505606488907098"
+        "Latitud":"-68.1637419498145"
+    },//Es el punto geografico con latitud y longitud
+	"Telefono":
+	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
+}
+=========================================================================
+Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
+[
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	},
+	{
+		"Id":"NDNDWCW283819",
+		"Nombre":"Cebolla",
+		"CantidadInventario":10,
+		"CantidadMedida":1,
+		"TipoUnidad":"kg",
+		"CostoMedio":3
+	}
+]
+
+=========================================================================
+Pedido:
+{
+	"Tipo":"Online" //Puede ser "Online" o Point Of Sales "POS"
+	"Dir"://SOLO SI ES ONLINE, validar que se escogio una sucursal en el mismo departamento
+	{
+		"FormaEntrega":
+		"DireccionGPS":
+		"DireccionEscrita":
+		"AclaracionDireccion":
+	}
+	"Detalle": 
+	[
+		{
+			"Cantidad": 2,
+			"Precio": 10,//Precio de cada chacha de carne
+			"IdProducto": "xHsRl949N5aptvF0M7vt",
+			"Nombre": "Chacha Carne"
+		},
+		
+    ],
+	DatosCliente:
+	{
+		"Correo":"",
+		"Numero":,
+		"Nit":,
+		"RazonSocial": //Este es el apellido del cliente
+	}
+	"IdSucursal":"",
+}
+=========================================================================
+Empleado:
+{
+    "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
+    "Password":"Pass123",
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL" o "Admin"
+    "Nombre":"Stephany",
+    "ApellidoP":"Duran",
+    "ApellidoM":"Borda",
+    "Cargo":"Chef",
+	"Tipo":// puede ser "Admin" o "Sucursal" o "Fabrica"
+}
+=========================================================================
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"//O puede ser "InsumoSucursal"
+	"Fecha":"2021-11-25",
+	"IdProducto":"",
+	"Costo":200,
+	"Cantidad":10,//Lo que se introduzca tiene que estar medido como su producto
+	"Origen":"ID-SUCURSAL",
+},
+
+=========================================================================
+Transaccion
+{
+	"Id":"",
+	"Fecha":"2020-03-23"
+	"IdOrigen":"",
+	"IdDestino":"",
+	"Tipo":"Sucursal",
+	"ListaProductos":
+	[
+		{
+			"IdProducto":"",
+			"Tipo":"Chacha" //O tipo Refresco, porque se miden unitariamente
+			"Cantidad":,
+			"NombreProducto":,
+		},
+		{
+			"IdProducto":"",
+			"Tipo":"InsumoFabrica"//O tipo InsumoSucursal, porque se miden NO unitariamente
+			"CantidadMedida":1000,
+			"TipoUnidad":"ml",
+			"NombreProducto":"Salsa Picante"
+		}
+	]
+},
+{
+	"Id":"",
+	"Tipo":"Fabrica",
+	"Fecha":"2020-03-23",
+	"IdOrigen":"Fabrica",//Cuando sea tipo fabrica, en la lista de productos el tipo siempre sera "Merma"
+	"IdDestino":"",//Alguna sucursal
+	"ListaProductos":
+	[
+		{
+			//FE solo provee IdProductoFabrica O IdProductoSucursal
+			"IdProductoFabrica":"",
+			"IdProductoSucursal":"ijoihbuibiu",
+			"Tipo":"Merma" //O tipo "Chachas" en caso de traspaso Sucursal -> Fabrica
+			"Cantidad":,
+			"NombreProducto":,
+		}
+	]
+}
+=========================================================================
+Pedido/Confirmacion para el siguiente modulo
+=========================================================================
+Caja
+{
+  "Descripcion":"",
+	"Fecha":(Timestamp),
+  "Monto":800 (Monto de la compra o venta),
+  "Origen":(IdSucursal),
+	"Saldo":,(Cantidad antes de sumar o restar monto), 
+	"Tipo":"Ingreso",//"Egreso"
+},
+{
+  "CuentaInicial":(Nos dan los de frontend),
+  "Egresos":(Lo que se gasto),
+  "Fecha":(Timestamp),
+  "Ingresos":(Lo que se gano),
+	"Origen":(IdSucursal),
+	"Saldo":(inicio_caja + ventas - compras),
+  "Tipo":"Cuenta",
+} 
+  Este ultimo documento se crea de manera manual

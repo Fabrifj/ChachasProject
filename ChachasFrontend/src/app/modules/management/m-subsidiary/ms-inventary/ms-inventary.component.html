@@ -1,0 +1,328 @@
+<div class="inventarySection">
+
+
+    <div class="drinkSection">
+        <h1>Tabla de los Refrescos</h1>
+        <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+
+    </div>
+
+
+    <div class="insumoSucSection">
+        <h1>Tabla de los insumos de sucursal</h1>
+        <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+
+    </div>
+    <div class="sauceSection">
+        <h1>Tabla de las Salsas</h1>
+        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
+
+        </app-reusable-table>
+
+
+    </div>
+
+    <div class="productSection">
+        <h1>Tabla de las Chachas</h1>
+        <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+
+    </div>
+
+
+
+    <div class="buttonsSection">
+        <hr />
+        <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
+        <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+        <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
+        <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
+        <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
+
+    </div>
+
+</div>
+
+<!--   boton realizar transaccion -->
+<jw-modal id="modalTransaction-01" altura="80" ancho="90">
+
+    <div class="modal-header">
+
+        <h2>Seleccione a quien desea mandar:</h2>
+
+        <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue">
+        <option selected>None</option>
+        <option *ngFor="let sucursal of infoSubs;" >{{sucursal.Nombre}}</option>
+        
+    </select>
+
+
+
+        <h2>Fecha de hoy:</h2>
+        <h3>{{todayDate}}</h3>
+
+
+    </div>
+
+    <div class="modal-body">
+
+
+
+
+        <app-reusable-table [datos]="infoProd" [columnas]="columnsProdMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="5" nombreDistintivo="textoCantidadN">
+        </app-reusable-table>
+
+
+        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFabMini" (parentMethod)="functionChooseObj($event)" colorLetra="black" [titulosTextos]="titlesProd" botonGuardarDatos='si' indice="6" nombreDistintivo="textoCantidadC">
+        </app-reusable-table>
+
+    </div>
+    <div class="botones">
+
+        <div class="botones">
+            <button class="btnSend" (click)="modalService.abrir('modalConfirmation');">Mandar</button>
+            <button class="btnCerrar" (click)="modalService.cerrar('modalTransaction-01');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>
+
+
+<!--   boton reagistrar merma -->
+<jw-modal id="modalMerma-01" altura="85" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Merma</h4>
+    </div>
+    <div class="modal-body">
+        <p>Nombre del producto</p>
+        <!-- <input type="text" placeholder="Ingrese el nombre"> -->
+        <input type="text" [(ngModel)]="this.selectedObject.IdMenu" disabled>
+        <p>Cantidad merma</p>
+        <input type="text" id="proMerma" placeholder="Ingrese la cantidad">
+        <p>Fecha</p>
+        <input type="text" id="fechaM" value={{todayDate}} disabled>
+
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btnSend" (click)="regMerma();modalService.cerrar('modalMerma-01');">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalMerma-01');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>
+
+
+<!--   boton realizar compra -->
+<jw-modal id="modalStock-01" altura="85" ancho="30">
+
+    <div class="modal-header">
+        <h4 class="modal-title">Comprar Producto</h4>
+    </div>
+    <div class="modal-body">
+        <p>Nombre del producto</p>
+        <!-- <input type="text" placeholder="Ingrese el nombre"> -->
+        <input type="text" [(ngModel)]="this.selectedObject.Nombre" disabled>
+
+        <p>Costo</p>
+        <input type="text" id="proCosto" placeholder="Ingrese el costo del producto">
+
+        <p>Cantidad</p>
+        <input type="text" id="proCantidad" placeholder="Ingrese la cantidad">
+
+        <p>Fecha</p>
+        <input type="text" id="fechaC" value={{todayDate}} disabled>
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btnSend" (click)="regCompra();modalService.cerrar('modalStock-01');">registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalStock-01');">Cancelar</button>
+        </div>
+    </div>
+</jw-modal>
+
+<!--   boton registrar uso salsas  -->
+<jw-modal id="modalIns-01" altura="85" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Insumos</h4>
+    </div>
+    <div class="modal-body">
+        <input type="text" [(ngModel)]="this.selectedObject.Nombre" disabled>
+
+        <p>Cantidad Inventario</p>
+        <input type="text" [(ngModel)]="this.selectedObject.CantidadInventario" disabled>
+
+        <p>Tipo Unidad</p>
+        <input type="text" [(ngModel)]="this.selectedObject.TipoUnidad" disabled>
+
+        <p>Gasto</p>
+        <input type="text" id="proGasto" placeholder="Ingrese la cantidad gastada">
+
+        <input type="text" id="fechaPro" value={{todayDate}} disabled>
+
+    </div>
+    <div class="modal-footer">
+        <div class="botones">
+            <button class="btnSend" (click)="regConsumo();modalService.cerrar('modalIns-01');">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalIns-01');">Cancelar</button>
+        </div>
+    </div>
+</jw-modal>
+
+<!--   boton registrar producto -->
+<jw-modal id="modalProducto-01" altura="85" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Producto</h4>
+    </div>
+    <div class="modal-body">
+
+        <p>Nombre del producto</p>
+        <input type="text" id="proName" placeholder="Ingrese el nombre del producto">
+
+        <p>Precio</p>
+        <input type="text" id="proPrecio" placeholder="Ingrese el precio">
+
+        <p>Cantidad</p>
+        <input type="text" id="proCantidadInv" placeholder="Ingrese la cantidad">
+
+        <p>Cantidad minima</p>
+        <input type="text" id="proCantidadMin" placeholder="Ingrese la cantidad mínima">
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btnSend" (click)="regProducto();modalService.cerrar('modalProducto-01');">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalProducto-01');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>
+
+<!--   boton registrar insumo sucursal -->
+<jw-modal id="modalProducto-02" altura="85" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Producto</h4>
+    </div>
+    <div class="modal-body">
+
+        <p>Nombre del producto</p>
+        <input type="text" id="insName" placeholder="Ingrese el nombre del producto">
+
+        <p>Tipo de unidad</p>
+        <input type="text" id="insUS" placeholder="Ingrese el tipo de unidad">
+
+        <p>Cantidad</p>
+        <input type="text" id="insCantidad" placeholder="Ingrese la cantidad">
+
+        <p>Cantidad Medida</p>
+        <input type="text" id="insCantidadSMed" placeholder="Ingrese la cantidad medida">
+
+        <p>Cantidad minima</p>
+        <input type="text" id="insCantidadMin" placeholder="Ingrese la cantidad mínima">
+
+
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btnSend" (click)="regInSuc();modalService.cerrar('modalProducto-02');">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalProducto-02');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>
+<!--   boton registrar insumo fabrica -->
+<jw-modal id="modalProducto-03" altura="85" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Producto</h4>
+    </div>
+    <div class="modal-body">
+
+        <p>Nombre del producto</p>
+        <input type="text" id="insNameF" placeholder="Ingrese el nombre del producto">
+
+        <p>Tipo de unidad</p>
+        <input type="text" id="insUF" placeholder="Ingrese el precio">
+
+        <p>Cantidad</p>
+        <input type="text" id="insCantidadF" placeholder="Ingrese la cantidad">
+
+        <p>Cantidad Medida</p>
+        <input type="text" id="insCantidadFMed" placeholder="Ingrese la cantidad medida">
+
+        <p>Cantidad minima</p>
+        <input type="text" id="insCantidadMinF" placeholder="Ingrese la cantidad mínima">
+
+
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btnSend" (click)="regInFab();modalService.cerrar('modalProducto-03');">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalProducto-03');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>
+
+<!--   boton ver sucursales -->
+<jw-modal id="modalSubsidiaries-01" altura="90" ancho="90">
+    <h1>Subsidiaries:</h1>
+
+    <div class="miniTable">
+        <app-reusable-table [datos]="infoSubs" [columnas]="columnsSubs" colorLetra="black" altura="50" indice="7">
+        </app-reusable-table>
+    </div>
+
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true">
+
+        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
+            <agm-info-window>
+                <h2>
+                    {{sub.Nombre}}
+                </h2>
+
+            </agm-info-window>
+
+        </agm-marker>
+    </agm-map>
+
+
+    <div class="botones">
+
+        <button class="btnCerrar" (click)="modalService.cerrar('modalSubsidiaries-01');">Cerrar</button>
+    </div>
+</jw-modal>
+
+
+<!--   boton confirmar accion  -->
+<jw-modal id="modalConfirmation" altura="50" ancho="70">
+
+    <h3>Esta seguro que desea realizar la transaccion?</h3>
+
+    <div class="botones">
+        <button class="btnSend" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');sendTransaction();">OK</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');">Cancelar</button>
+    </div>
+</jw-modal>
