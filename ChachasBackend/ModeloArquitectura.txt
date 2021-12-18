@@ -280,3 +280,30 @@ Caja
   "Tipo":"Cuenta",
 } 
   Este ultimo documento se crea de manera manual
+===========================================================
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"//O puede ser "InsumoSucursal" --- En compra fabrica no existe tipo
+	"Fecha":"2021-11-25",
+	"ListaObjetos":
+	[
+		{
+			"IdObjeto":"",//Puede ser "ID-PRODUCTO "(para sucursal) o "ID-INGREDIENTE" para fabrica
+			"Costo":200,
+			"Cantidad":10,//Lo que se introduzca tiene que estar medido como su producto
+		}
+	]
+	"Origen":"ID-SUCURSAL", //"Fabrica"
+	"Factura":
+	{
+		"NITProveedor":"",
+		"NombreProveedor":"",
+		"NumeroFactura":"",
+		"NITFactura":"",
+		"NumeroAutorizacion":"",
+		"FechaLimiteEmision":""
+	}
+}
+
