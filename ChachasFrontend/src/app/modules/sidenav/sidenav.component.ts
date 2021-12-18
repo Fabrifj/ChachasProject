@@ -36,73 +36,112 @@ export class SidenavComponent implements OnInit {
   isShownS:boolean=false;
   isShownO:boolean=false;
   isShownF:boolean=false; 
+  isLogin:string="Logout";
 
   
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    
+    this.isLogin=this.loginService.getStatus();
+    this.loginService.StatusChanged.subscribe((status:string)=>{
+      this.isLogin = status;
+      console.log(this.isLogin)
+      this.getTypeCount();
+    })
   }
 
   get f() { return this.form.controls; }
 
-  
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-        return;
+  login(){
+    this.router.navigate(['/login']);
+  }
+  logout(){
+    this.loginService.logOut();
+  }
+  getTypeCount(){
+    let type = this.loginService.getAccountType();
+    switch(type){
+      case "Sucursal":{
+        this.isShownS=true
+        this.isShownO=false
+        this.isShownF=false
+        break;
+      }
+      case "Fabrica":{
+        this.isShownF=true
+        this.isShownS=false
+        this.isShownO=false
+        break;
+      }
+      case "Admin":{
+        this.isShownO=true
+        this.isShownS=false
+        this.isShownF=false
+        break;
+      }
+      default:{
+        alert("Error");
+        window.location.reload();
+      }                            
     }
+  }
 
-    this.loading = true;
-    console.log(this.f['username'].value+"  "+this.f['password'].value)
-    let idPath = "username/"+this.f['username'].value+"/pass/"+this.f['password'].value
-    this.appHttpService.login(idPath)
-        .subscribe(
+//   onSubmit() {
+//     this.submitted = true;
 
-            data => {
-              let dat2 = <ResponseLogin>data;
-              if(dat2.Status){
-                switch(dat2.Tipo){
-                  case "Sucursal":{
-                    console.log("Este es el tipo desde sidenav" + dat2.Tipo)
-                    console.log(this.returnUrl+'m-subsidiary/'+dat2.Dominio);
-                    this.router.navigate([this.returnUrl+'m-subsidiary']);
-                    this.loginService.updatedUser(dat2);
-                    this.isShownS=true
-                    this.isShownO=false
-                    this.isShownF=false
-                    break;
-                  }
-                  case "Fabrica":{
-                    this.router.navigate([this.returnUrl+'m-factory']);
-                    this.loginService.updatedUser(dat2);
-                    this.isShownF=true
-                    this.isShownS=false
-                    this.isShownO=false
-                    break;
-                  }
-                  case "Admin":{
-                    this.router.navigate([this.returnUrl+'m-owner']);
-                    this.loginService.updatedUser(dat2);
-                    this.isShownO=true
-                    this.isShownS=false
-                    this.isShownF=false
-                    break;
-                  }
-                  default:{
-                    alert("Error");
-                    window.location.reload();
-                  }
-                }
-              }else{
-                alert("Error");
-                window.location.reload();
-              }
-              // this.router.navigate([this.returnUrl]);
-            });
-}
+//     // stop here if form is invalid
+//     if (this.form.invalid) {
+//         return;
+//     }
+
+//     this.loading = true;
+//     console.log(this.f['username'].value+"  "+this.f['password'].value)
+//     let idPath = "username/"+this.f['username'].value+"/pass/"+this.f['password'].value
+//     this.appHttpService.login(idPath)
+//         .subscribe(
+
+//             data => {
+//               let dat2 = <ResponseLogin>data;
+//               if(dat2.Status){
+//                 switch(dat2.Tipo){
+//                   case "Sucursal":{
+//                     console.log("Este es el tipo desde sidenav" + dat2.Tipo)
+//                     console.log(this.returnUrl+'m-subsidiary/'+dat2.Dominio);
+//                     this.router.navigate([this.returnUrl+'m-subsidiary']);
+//                     this.loginService.updatedUser(dat2);
+//                     this.isShownS=true
+//                     this.isShownO=false
+//                     this.isShownF=false
+//                     break;
+//                   }
+//                   case "Fabrica":{
+//                     this.router.navigate([this.returnUrl+'m-factory']);
+//                     this.loginService.updatedUser(dat2);
+//                     this.isShownF=true
+//                     this.isShownS=false
+//                     this.isShownO=false
+//                     break;
+//                   }
+//                   case "Admin":{
+//                     this.router.navigate([this.returnUrl+'m-owner']);
+//                     this.loginService.updatedUser(dat2);
+//                     this.isShownO=true
+//                     this.isShownS=false
+//                     this.isShownF=false
+//                     break;
+//                   }
+//                   default:{
+//                     alert("Error");
+//                     window.location.reload();
+//                   }
+//                 }
+//               }else{
+//                 alert("Error");
+//                 window.location.reload();
+//               }
+//               // this.router.navigate([this.returnUrl]);
+//             });
+// }
 
   verificar(){
     /* 
