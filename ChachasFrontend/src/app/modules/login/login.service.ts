@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResponseLogin } from 'src/app/models/responseLogin.model';
 
@@ -8,6 +8,7 @@ import { ResponseLogin } from 'src/app/models/responseLogin.model';
 export class LoginService {
 
   constructor(private router: Router,) { }
+  StatusChanged = new  EventEmitter<string>();
 
   user:string ="";
   state:string="Logout";
@@ -17,6 +18,8 @@ export class LoginService {
     this.user = response.Dominio;
     this.accountType =response.Tipo;
     this.state = "Login";
+    this.StatusChanged.emit(this.getStatus());
+
   }
 
   getUser(){
@@ -33,7 +36,9 @@ export class LoginService {
     this.user = "";
     this.accountType = "";
     this.state = "Logout"
-    this.router.navigate(['/']);
+    this.router.navigate(['/home/catalog']);
+
+    this.StatusChanged.emit(this.getStatus());
 
   }
 }

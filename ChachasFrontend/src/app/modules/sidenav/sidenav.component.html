@@ -44,11 +44,22 @@
             <mat-icon>account_circle</mat-icon>Login</a>
     </div> -->
 
-    <button class="btn" (click)="modalService.abrir('modalLogin-01');">
+    <button class="btn" *ngIf="isLogin=='Logout'" (click)="login();">
         Inciar Sesion
     </button>
+    <button class="btn" *ngIf="isLogin=='Login'" (click)="modalService.abrir('modalConfirmationLogout');">
+        Cerar Sesion
+    </button>
+    <jw-modal id="modalConfirmationLogout" altura="50" ancho="70">
 
-    <jw-modal id="modalLogin-01" altura="90" ancho="90">
+        <h3>Esta seguro que desea realizar la transaccion?</h3>
+    
+        <div class="botones">
+            <button class="btnSend" (click)="modalService.cerrar('modalConfirmationLogout');logout();">OK</button>
+            <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmationLogout');">Cancelar</button>
+        </div>
+    </jw-modal>
+    <!-- <jw-modal id="modalLogin-01" altura="90" ancho="90">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -96,8 +107,7 @@
                 </div>
             </div>
         </div>
-
-    </jw-modal>
+    </jw-modal> -->
 
 
 
