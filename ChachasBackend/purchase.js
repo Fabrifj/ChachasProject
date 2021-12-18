@@ -14,7 +14,7 @@ async function getPurchases()
     return await fnHerramientas.getDocs("Compra");
 }
 
-
+/*
 //ESTRUCTURA EN LA BASE DE DATOS
 {
 	
