@@ -46,8 +46,9 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
+import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
 
-
+import {  MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,8 @@ import { AppHttpService } from './core-modules/app-http.service';
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
-    ClientInfoComponent
+    ClientInfoComponent,
+    LocationsComponent
   ],
   imports: [
     FormsModule,
@@ -87,6 +89,7 @@ import { AppHttpService } from './core-modules/app-http.service';
     NgbModule,
     CommonModule,
     HttpClientModule,
+    MatRadioModule,
     AgmCoreModule.forRoot({
       apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
     })

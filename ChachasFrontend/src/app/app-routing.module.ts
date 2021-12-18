@@ -18,12 +18,22 @@ import { ProducInventoryComponent } from './shared-modules/produc-inventory/prod
 import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
 import { LoginComponent } from './modules/login/login.component';
 import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
+import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
 
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  { path: 'home',
+    component: HomeComponent,
+    children:[
+      {path: '', redirectTo: 'catalog', pathMatch: 'full'},
+      {path: 'catalog', component: CatalogComponent},
+      {path: 'display-order', component: DisplayOrderInfoComponent},
+      {path: 'location', component: LocationsComponent},
+      {path: 'client-info', component: ClientInfoComponent},
+    ] 
+  },
   {path: 'login', component: LoginComponent},
   {path: 'modal', component: ModalComponent},
  // {path: '**', pathMatch: 'full', redirectTo: 'modal'},
@@ -31,7 +41,6 @@ const routes: Routes = [
     path: 'm-subsidiary', 
     component: MSubsidiaryComponent,
     children:[
-
       {path: '', redirectTo: 'sales', pathMatch: 'full'},
       { 
         path: 'sales', 

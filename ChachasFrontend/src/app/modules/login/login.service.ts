@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private router: Router,) { }
 
   user:string ="";
-  state:string="";
+  state:string="Logout";
   accountType:string="";
 
   updatedUser(response:ResponseLogin){
