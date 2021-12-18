@@ -122,15 +122,40 @@ export class MsInventaryComponent implements OnInit {
   isAlert= false;
 
 
+
+  prLat = "he4"
+  prLon = ""
+
   msgAlert : string = "";
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { 
 
     
 
   }
+  clickReadyMap(map: google.maps.Map){
+    map.addListener('click',(e: google.maps.MouseEvent)=>{
+
+      this.check(e.latLng,map);
+
+    })
+    
 
 
+  }
 
+  check(latLng: google.maps.LatLng , map: google.maps.Map){
+    const mark = new google.maps.Marker({
+      
+      position: latLng,
+      map:map,
+
+
+    });
+    console.log(mark.getPosition());
+    console.log(latLng.lat)
+    console.log(latLng.lng)
+    map.panTo(latLng);
+  }
  
 
   ngOnInit(): void {
