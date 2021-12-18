@@ -5,6 +5,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CatalogComponent } from './shared-modules/catalog/catalog.component';
 import { SalesComponent } from './shared-modules/sales/sales.component';
 import { LoginComponent } from './modules/login/login.component';
+import { NavbarComponent } from './modules/navbar/navbar.component';
+import { FooterComponent } from './modules/footer/footer.component';
+import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
+import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-menu.component';
+import { ModalComponent } from './shared-modules/modal/modal.component';
+import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
+import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
+import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
+import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
+import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -32,18 +44,16 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
-import { HeaderComponent } from './modules/header/header.component';
-import { NavbarComponent } from './modules/navbar/navbar.component';
-import { FooterComponent } from './modules/footer/footer.component';
-import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
-import { ListSubMenuComponent } from './shared-modules/list-sub-menu/list-sub-menu.component';
-import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu/com-sub-menu.component';
-import { ModalComponent } from './shared-modules/modal/modal.component';
-import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
-import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
-import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
-import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
+import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
+import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
+import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
+import { HeaderComponent } from './modules/header/header.component';
+
 
 
 @NgModule({
@@ -64,10 +74,15 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
+    MfInventaryComponent,
+    MFactoryComponent,
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
-    ClientInfoComponent
+    ClientInfoComponent,
+    MoArqueoComponent,
+    MoEmpleadosComponent,
+    MoSucursalesComponent
   ],
   imports: [
     FormsModule,
@@ -87,7 +102,9 @@ import { ClientInfoComponent } from './shared-modules/sales/client-info/client-i
     HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
-    })
+    }),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore())
   ],
   
   exports:[CatalogCardComponent],

@@ -12,7 +12,12 @@ export class CatalogComponent implements OnInit {
   constructor( private salesService: SalesService) { }
   products: ProductModel[]=[]
   ngOnInit(): void {
-    this.products = this.salesService.getProductList()
+    this.salesService.ProductsChanged.subscribe(
+      (newProducts : ProductModel[] )=>{
+        this.products = newProducts;
+      }
+      
+    )
   }
 
 }

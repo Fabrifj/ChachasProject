@@ -1,0 +1,51 @@
+<div class="sucuralesSection">
+    <div class="getSucursal">
+        <h1>Lista de empleados</h1>
+        <app-reusable-table [datos]="infoEmployee" [columnas]="columnsEmployee" colorLetra="black" [nombreBotones]="employeeButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+    </div>
+</div>
+
+<div><button class="btn" (click)="modalService.abrir('modalEmpleado-01');">Agregar Empleado</button></div>
+
+<jw-modal id="modalEmpleado-01" altura="100" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Empleado</h4>
+    </div>
+    <div class="modal-body">
+
+        <p>Nombre</p>
+        <input type="text" id="nomEmpleado" placeholder="Ingrese el nombre del empleado">
+
+        <p>Apellido</p>
+        <input type="text" id="apellidoEmpleado" placeholder="Ingrese el apellido del empleado">
+
+        <p>CI</p>
+        <input type="text" id="ciEmpleado" placeholder="Ingrese el carnet del empleado">
+
+        <p>Telefono</p>
+        <input type="text" id="telfEmpleado" placeholder="Ingrese el numero de telefono">
+
+        <p>Direccion</p>
+        <input type="text" id="telfEmpleado" placeholder="Ingrese la direccion del empleado">
+
+        <p>Cargo</p>
+        <input type="text" id="cargo" name="cargo" placeholder="Ingrese el cargo del empleado">
+
+        <div *ngIf="isShownSH" class="sucursalHidden">
+            <p>Direccion sucursal</p>
+            <input type="text" id="dirSucursal" placeholder="Ingrese la direccion de la sucursal">
+        </div>
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btn">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalEmpleado-01');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>

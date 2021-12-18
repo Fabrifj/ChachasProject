@@ -1,0 +1,48 @@
+<div class="sucuralesSection">
+    <div class="getSucursal">
+        <h1>Lista de sucursales</h1>
+        <app-reusable-table [datos]="infoSub" [columnas]="columnsSucursal" colorLetra="black" [nombreBotones]="sucursalButtons" (parentMethod)="functionChooseObj($event)">
+        </app-reusable-table>
+    </div>
+</div>
+
+<div>
+    <button class="btn" (click)="modalService.abrir('modalRegSuc-01');">Agregar Sucursal</button>
+</div>
+
+<jw-modal id="modalRegSuc-01" altura="100" ancho="30">
+    <div class="modal-header">
+        <h4 class="modal-title">Registrar Sucursal</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <p>Nombre</p>
+        <input type="text" id="apellidoEmpleado" placeholder="Ingrese el nombre de la sucursal">
+
+        <p>Direccion</p>
+        <input type="text" id="ciEmpleado" placeholder="Ingrese la direccion de la sucursal">
+
+        <p>Ubicacion</p>
+        <input type="text" id="telfEmpleado" placeholder="Ingrese la latitud">
+
+
+        <p>Telefono</p>
+        <input type="text" id="telfEmpleado" placeholder="Ingrese el numero de telefono">
+
+        <p>Departamento</p>
+        <input type="text" id="cargo" name="cargo" placeholder="Ingrese el departamento">
+
+
+    </div>
+    <div class="modal-footer">
+
+        <div class="botones">
+            <button class="btn">Registrar</button>
+        </div>
+        <div class="botones">
+            <button class="btnCerrar" (click)="modalService.cerrar('modalRegSuc-01');">Cancelar</button>
+        </div>
+    </div>
+
+</jw-modal>

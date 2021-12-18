@@ -6,12 +6,14 @@ Merma
 	"IdMenu":,
 	"IdSucursal":"",
 	"Fecha":"",
-	"Cantidad":
+	"Cantidad":,
+	"Estado": //Revision, Aprobado
+	"Observacion": //Ninguna
+	"CantidadRecibida":
 }
 Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
-	"Nombre":"Chacha Prehecha de Carne"
 	"Origen": "Fabrica",
 	"Receta": 
 	[
@@ -48,7 +50,7 @@ Producto
 	[
     {
       "Fecha":"",
-      "Cantidad":"""
+      "Cantidad":""
     }    
 	],
   "CantidadMinima":
@@ -165,11 +167,12 @@ Empleado:
 {
     "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
     "Password":"Pass123",
-    "Dominio":"",//"Fabrica" o "ID-SUCURSAL"
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL" o "Admin"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
     "Cargo":"Chef",
+	"Tipo":// puede ser "Admin" o "Sucursal" o "Fabrica"
 }
 =========================================================================
 Compra: //Todavia falta discutirlo, esta sujeto a cambios

@@ -1,14 +1,33 @@
 * {
-    
-    
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: 'roboto', sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
 
 .inventarySection {
-    width: 90%;
+    width: 99%;
 }
 
-
+div {
+    margin: 5px;
+}
 
 .text {
     text-transform: capitalize;
@@ -27,7 +46,7 @@
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-   
+    margin-right: -4px;
     /* Adjusts for spacing */
 }
 
@@ -83,56 +102,9 @@ textarea {
     text-transform: capitalize;
 }
 
-.btnSend {
-    width: 200px;
-    height: 50px;
-    padding: 10px 30px;
-    background-color: #969226;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    margin-right: 10px;
-    cursor: pointer;
-    text-transform: capitalize;
-}
-
 agm-map {
-
     height: 400px;
     /* The height is 400 pixels */
     width: 80%;
     /* The width is the width of the web page */
-  }
-
-
-  div{
-
-    
-  }
-  #myAlert{
-    margin-left: 10px;
-    padding-top: 10px;
-    background-color: #ead9a9;
-    width: 100%;
-    color: rgb(92, 64, 44);
-    border-radius: 7px;
-    word-wrap: break-word;
-
-   
-
-  }
-
-  .btnCloseA{
-    background-color: #ead9a9;
-    float: right;
-    color: #a39e91;
-    font-size: 25px;
-    
-    
-  }
-  .btnCloseA:hover{
-    cursor: pointer;
-    color: black;
-    
-  }
+}
