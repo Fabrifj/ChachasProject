@@ -5,7 +5,7 @@ const fnHerramientas = require("./herramientas");
 /*  Body Structure
   {
     "CuentaInicial":(Number),
-    "Fecha":(Timestamp),
+    "Fecha":"YYYY-MM-DD" o "YYYY-MM-DDTHH-MM-SS",
     "Origen":(IdSucursal)
   }
 */
@@ -34,7 +34,7 @@ async function createRegisterCuenta(body)
 /*  Body Structure
   {
     "Descripcion":"",
-    "Fecha":(Timestamp),
+    "Fecha":"YYYY-MM-DD" o "YYYY-MM-DDTHH-MM-SS",
     "Monto":(Number),
     "Origen":(IdSucursal),
     "Tipo":(Ingreso or Egreso)
