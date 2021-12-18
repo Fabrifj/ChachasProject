@@ -18,6 +18,7 @@ export class LoginService {
     this.accountType =response.Tipo;
     this.state = "Login";
   }
+
   getUser(){
     return this.user;
   }

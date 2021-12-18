@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private appHttpService: AppHttpService,
-    private loginService: LoginService
+    private loginService: LoginService,
     ) {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
+  
   onSubmit() {
       this.submitted = true;
-
 
       // stop here if form is invalid
       if (this.form.invalid) {
@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
                 if(dat2.Status){
                   switch(dat2.Tipo){
                     case "Sucursal":{
+                      console.log("Este es el tipo " + dat2.Tipo)
                       console.log(this.returnUrl+'m-subsidiary/'+dat2.Dominio);
                       this.router.navigate([this.returnUrl+'m-subsidiary']);
                       this.loginService.updatedUser(dat2);

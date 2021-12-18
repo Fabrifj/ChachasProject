@@ -19,6 +19,11 @@ import { MFactoryComponent } from './modules/management/m-factory/m-factory.comp
 import { LoginComponent } from './modules/login/login.component';
 import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
 import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
+import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
+import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
+import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
+import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
+import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 
 
 
@@ -52,7 +57,7 @@ const routes: Routes = [
           {path: 'client-info', component: ClientInfoComponent},
         ]
       },
-      {path: 'managment', component: MsInventaryComponent},
+      {path: 'inventary', component: MsInventaryComponent},
     ]
   },
   {
@@ -61,7 +66,35 @@ const routes: Routes = [
 
     children:[
 
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'empleados', component: MOwnerComponent},
+
+    ]
+  },
+  {
+    path: 'mo-empleados', 
+    component: MoEmpleadosComponent,
+    children:[
+
+      {path: 'empleados', component: MoEmpleadosComponent},
+
+    ]
+  },
+  {
+    path: 'mo-sucursal', 
+    component: MoSucursalesComponent,
+    children:[
+
+      {path: 'sucursal', component: MoSucursalesComponent},
+
+    ]
+  },
+
+  {
+    path: 'mo-arqueo', 
+    component: MoArqueoComponent,
+    children:[
+
+      {path: 'arqueo', component: MoArqueoComponent},
 
     ]
   },
@@ -70,13 +103,16 @@ const routes: Routes = [
     component: MFactoryComponent,
     children:[
 
-      {path: 'managment', component: ProducInventoryComponent},
+      {path: 'inventary', component: MfInventaryComponent},
+      {path:'subsidiary',component: MfSubsidiaryComponent}
     ]
   },
   {
     path: 'details', 
     component: DisplayOrderInfoComponent
-  }
+  },
+ 
+
 ];
 
 @NgModule({

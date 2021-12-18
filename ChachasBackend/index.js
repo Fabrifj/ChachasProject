@@ -9,7 +9,7 @@ app.use(cors());
 
 const fnOrder = require("./order");
 const fnProduct = require("./product");
-const fnEntity = require("./entity");
+const fnSubsidiary = require("./subsidiary");
 const fnMenu = require("./menu");
 const fnEmployee = require("./employee");
 const fnPurchase = require("./purchase");
@@ -35,24 +35,18 @@ app.get("/api/product/:idproduct", async (req, res) => {
   res.send(response);
 });
 
-//Get products with ingredients
-app.get("/api/products", async (req, res) => {
-  const response = await fnProduct.getProducts();
-  res.send(response);
-});
-
 // Endpoint to get all the products of one type of one specific subsidiary
-app.get("/api/product/entity/:idEnt/type/:type", async (req, res) => {
-  var idEnt = req.params.idEnt;
+app.get("/api/product/subsidiary/:idSub/type/:type", async (req, res) => {
+  var idSub = req.params.idSub;
   var type = req.params.type;
-  const response = await fnProduct.getProductEntityType(idEnt, type);
+  const response = await fnProduct.getProductSubsidiaryType(idSub, type);
   res.send(response);
 });
 
-//Get all products in entity
-app.get("/api/product/entity/:idEnt", async (req, res) => {
-  var idEnt = req.params.idEnt;
-  const response = await fnProduct.getProductEntity(idEnt);
+//Get all products in subsidiary
+app.get("/api/product/subsidiary/:idSub", async (req, res) => {
+  var idSub = req.params.idSub;
+  const response = await fnProduct.getProductSubsidiary(idSub);
   res.send(response);
 });
 
@@ -76,7 +70,7 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   var respuesta;
   var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
   var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
-  var sucursalInfo = await fnEntity.getSubsidiary(idSub);
+  var sucursalInfo = await fnSubsidiary.getSubsidiary(idSub);
   if (chachas == null || insumos == null || sucursalInfo == null){
     respuesta = null;
   }else{
@@ -205,6 +199,26 @@ app.put("/api/productFactory/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+//Get products fabrica with ingredients
+app.get("/api/products", async (req, res) => {
+  const response = await fnProduct.getProductsFabrica();
+  res.send(response);
+});
+
+//Get Salsas fabrica with ingredients
+app.get("/api/products/salsas", async (req, res) => {
+  const response = await fnProduct.getSalsasFabrica();
+  res.send(response);
+});
+
+//Get chachas fabrica with ingredients
+app.get("/api/products/chachas", async (req, res) => {
+  const response = await fnProduct.getChachasFabrica();
+  res.send(response);
+});
+
+
+
 /*=================================
           CRUD ORDER
 ==================================*/
@@ -237,41 +251,42 @@ app.delete("/api/order/:idOrder", async (req, res) => {
 // Create Subsidiary
 app.post("/api/subsidiary", async (req, res) => {
   var body = req.body;
-  const respuesta = await fnEntity.createSubsidiary(body);
+  const respuesta = await fnSubsidiary.createSubsidiary(body);
   res.send(respuesta);
 });
 
 // Get Subsidiaries
 app.get("/api/subsidiary", async (req, res) => {
-  const respuesta = await fnEntity.getSubsidiaries();
+  const respuesta = await fnSubsidiary.getSubsidiaries();
   res.send(respuesta);
 });
 //Get Subsidiary by Id
 app.get("/api/subsidiary/:id", async (req, res) => {
   const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.getSubsidiary(idSubsidiary);
+  const respuesta = await fnSubsidiary.getSubsidiary(idSubsidiary);
   res.send(respuesta);
 });
 //Update Subsidiary
 app.put("/api/subsidiary/:id", async (req, res) => {
   const body = req.body;
   const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.updateSubsidiary(idSubsidiary, body);
+  const respuesta = await fnSubsidiary.updateSubsidiary(idSubsidiary, body);
   res.send(respuesta);
 });
 
 //Delete Subsidiary
 app.delete("/api/subsidiary/:id", async (req, res) => {
   const idSubsidiary = req.params.id;
-  const respuesta = await fnEntity.deleteSubsidiary(idSubsidiary);
+  const respuesta = await fnSubsidiary.deleteSubsidiary(idSubsidiary);
   res.send(respuesta);
 });
 
-// Get the mermas of a entity
-app.get("/api/entity/mermas/:idEnt", async (req, res) => {
-  var idEnt = req.params.idEnt;
-  const response = await fnProduct.getMermasEntity(idEnt);
-  res.send(response);
+//get mermas from subsidiary
+app.get("/api/subsidiaryMermas/:id", async (req, res) => {
+  console.log('hi')
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnProduct.getMermaSubsidiary(idSubsidiary);
+  res.send(respuesta);
 });
 
 /*===================================
@@ -294,13 +309,6 @@ app.get("/api/menu", async (req, res) => {
 app.get("/api/menu/getMenuName", async (req, res) => {
   var body = req.body;
   var respuesta = await fnMenu.getMenuName(body);
-  res.send(respuesta);
-});
-
-//Get Menu by Id
-app.get("/api/menu/:id", async (req, res) => {
-  var menid = req.params.id;
-  var respuesta = await fnMenu.getMenuId(menid);
   res.send(respuesta);
 });
 
@@ -353,8 +361,8 @@ app.put("/api/employee", async (req, res) => {
   const respuesta = await fnEmployee.updatePassword(body);
   res.send(respuesta);
 });
-//Delete Employees
-app.delete("/api/subsidiary/:id", async (req, res) => {
+//Delete Employee
+app.delete("/api/employee/:id", async (req, res) => {
   const idEmp = req.params.id;
   const respuesta = await fnEmployee.deleteEmployee(idEmp);
   res.send(respuesta);
@@ -367,6 +375,14 @@ app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
 
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
+});
+
+// Get Entity by employee username and pass
+app.get("/api/employee/entity/username/:username/pass/:pass", async (req, res) => {
+  const username = req.params.username;
+  const pass = req.params.pass
+  const respuesta = await fnEmployee.getEntityByEmployeeUserAndPass(username, pass);
+  res.send(respuesta);
 });
 
 /*===================================
@@ -514,18 +530,5 @@ app.delete("/api/ingredient/:id", async (req, res) => {
   res.send(respuesta);
 });
 
-
-
-
-/*===================================
-          ENDPOINT PRUEBA
-===================================*/
-// Create Purchase
-app.post("/api/prueba", async (req, res) => {
-  var body = {"Prueba":"Prueba"}
-  const respuesta = await fnHerramientas.createDoc(body,"Menu");
-  console.log("MI ID ES ESTEEEEEE>>>>",respuesta.id);
-  res.send(respuesta);
-});
 
 app.listen(4000, () => console.log("Up and Running on 4000"));

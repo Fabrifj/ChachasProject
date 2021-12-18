@@ -167,11 +167,12 @@ Empleado:
 {
     "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
     "Password":"Pass123",
-    "Dominio":"",//"Fabrica" o "ID-SUCURSAL" o "Dueno"
+    "Dominio":"",//"Fabrica" o "ID-SUCURSAL" o "Admin"
     "Nombre":"Stephany",
     "ApellidoP":"Duran",
     "ApellidoM":"Borda",
     "Cargo":"Chef",
+	"Tipo":// puede ser "Admin" o "Sucursal" o "Fabrica"
 }
 =========================================================================
 Compra: //Todavia falta discutirlo, esta sujeto a cambios
@@ -232,114 +233,3 @@ Transaccion
 =========================================================================
 Pedido/Confirmacion para el siguiente modulo
 =========================================================================
-=========================================================================
-=========================================================================
-CAMBIOS PARA MUCHAS FABRICAS
-Entidad //Pensamos en un nombre mejor despues
-{
-	"Id":"jhijborhibibo",
-	"Nombre":"",
-	"Direccion":"",//
-	"Localizacion":
-    {
-        "Longitud":"-16.505606488907098"
-        "Latitud":"-68.1637419498145"
-    },//Es el punto geografico con latitud y longitud
-	"Telefono":
-	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
-	"Tipo":"Sucursal"//Puede ser Fabrica
-}
-Merma
-{
-	"Id":"BCHEBCOOQCBDOH",
-	"IdMenu":,
-	"IdSucursal":"",//Este es el idEntidad de tipo Sucursal
-	"IdFabrica":"",//Este es el idEntidad de tipo Fabrica
-	"Fecha":"",
-	"Cantidad":,
-	"Estado": //Revision, Aprobado
-	"Observacion": //Ninguna
-	"CantidadRecibida":
-}
-Producto
-{
-	"Id":"BCHEBCOOQCBDOH",
-	"Origen": "ID-FABRICA",//o "ID-SUCURSAL", para todos los metodos tiene que irse a la "entidad" y revisar si es de tipo Sucursal o Fabrica
-	//PARA TODOS LOS PRODUCTOS EN GENERAL
-	"TipoOrigen":"Fabrica"//Tambien puede ser "Sucursal"
-	"Receta": 
-	[
-		{
-			"IdIngrediente":"jibdjwdibciw",
-			"Nombre": Carne,
-			"CantidadMedida": 0.25,
-			"TipoUnidad":"kg",
-			"Costo": 5
-		},
-		{
-			"IdIngrediente":"cndcbiaksmp",
-			"Nombre": Tomate,
-			"CantidadMedida": 0.5,
-			"TipoUnidad":"kg",
-			"Costo": 2
-		}
-	],
-	"Costo":7,
-	"CantidadInventario":500,
-  "CantidadMinima":,
-  "IdMenu":,
-}
-Ingrediente //PARA TODOS LOS METODOS CAMBIAR A QUE SEAN POR FABRICA, QUE CUANDO SE HAGAN CHACHAS SE DESCUENTE A LA FABRICA CORRESPONDIENTE
-[
-	{
-		"Id":"NDNDWCW283819",
-		"Nombre":"Cebolla",
-		"CantidadInventario":10,
-		"CantidadMedida":1,
-		"TipoUnidad":"kg",
-		"CostoMedio":3
-		"IdFabrica":"NIBIHBIBIBIJBP"
-	},
-	{
-		"Id":"NDNDWCW283819",
-		"Nombre":"Cebolla",
-		"CantidadInventario":10,
-		"CantidadMedida":1,
-		"TipoUnidad":"kg",
-		"CostoMedio":3,
-		"IdFabrica":"NIBIHBIBIBIJBP"
-	}
-]
---- La creacion de ID menus debe ser en dueno y cuando se crean los productos en las fabricas 
-Transaccion
-{
-	"Id":"",
-	"Tipo":"Fabrica",
-	"Fecha":"2020-03-23",
-	"IdOrigen":"ID-FABRICA",//Cuando sea tipo fabrica, en la lista de productos el tipo siempre sera "Merma"
-	"IdDestino":"",//Alguna sucursal
-	"ListaProductos":
-	[
-		{
-			//FE solo provee IdProductoFabrica O IdProductoSucursal
-			"IdProductoFabrica":"",
-			"IdProductoSucursal":"ijoihbuibiu",
-			"Tipo":"Merma" //O tipo "Chachas" en caso de traspaso Sucursal -> Fabrica
-			"Cantidad":,
-			"NombreProducto":,
-		}
-	]
-}
----Creacion de merma segun fabrica
-Empleado:
-{
-    "CI":"6793482",//Funciona nombre de cuenta, y tambien es el ID de empleado //Preguntarle al Inge
-    "Password":"Pass123",
-    "Dominio":"",//"ID-ENTIDAD" o "Admin"
-    "Nombre":"Stephany",
-    "ApellidoP":"Duran",
-    "ApellidoM":"Borda",
-    "Cargo":"Chef",
-	"Tipo":""//Fabrica, Sucursal, Admin ----ESTO ES LO QUE SE AUMENTA
-}
----TODO COMPRA CAMBIA GRACIAS A FACTURACION Y LAS DIFERENTES FABRICAS >>>>:(
