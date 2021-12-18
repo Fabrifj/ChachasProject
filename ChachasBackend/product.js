@@ -181,30 +181,6 @@ async function getProductSubsidiaryType(idSub, type) {
   }
 }
 
-//Get a list of products with ingredients
-async function getProducts() {
-  const snapshot = await product.orderBy("Receta").get();
-  const list = snapshot.docs.map((doc) => ({
-    ListaIngredientes: doc.Receta,
-    ...doc.data(),
-  }));
-  for (i in list) {
-    menuName = await fnMenu.getMenuId(list[i].IdMenu);
-    list[i].Nombre = menuName.Nombre;
-    delete list[i].Origen;
-    delete list[i].id;
-    delete list[i].IdMenu;
-    list[i].Receta = list[i].Receta.map(({ IdIngrediente, ...rest }) => rest);
-    list[i].Receta = list[i].Receta.map(({ Costo, ...rest }) => rest);
-  }
-
-  if (list.length == 0) {
-    return null;
-  } else {
-    return list;
-  }
-}
-
 //Get a list of products froma certain subsidiary
 async function getProductSubsidiary(idSub) {
   const snapshot = await product.where("Origen", "==", idSub).get();
@@ -466,6 +442,67 @@ async function createProductFactory(body) {
   fnHerramientas.createDoc(body, "Producto");
   return body;
 }
+
+//Get a list of products with ingredients
+async function getProductsFabrica() {
+  const snapshot = await product.orderBy("ListaIngredientes").get();
+  const list = snapshot.docs.map((doc) => ({
+    ListaIngredientes: doc.Receta,
+    ...doc.data(),
+  }));
+  for (i in list) {
+    if (list[i].IdMenu) {
+      menuName = await fnMenu.getMenuId(list[i].IdMenu);
+      list[i].Nombre = menuName.Nombre;
+      delete list[i].IdMenu;
+    }
+    delete list[i].Origen;
+    delete list[i].id;
+    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ IdIngrediente, ...rest }) => rest);
+    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ Costo, ...rest }) => rest);
+  }
+
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
+//Get a list of Salsas with ingredients
+async function getSalsasFabrica() {
+  var list = await getProductsFabrica(); 
+  list = list.filter(filterByName)
+  function filterByName(item){
+    if (item.Nombre.includes("Salsa")){
+      return true;
+    }
+  } 
+  
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
+//Get a list of Chachas with ingredients
+async function getChachasFabrica() {
+  var list = await getProductsFabrica();
+  list = list.filter(filterByName)
+  function filterByName(item){
+    if (item.Nombre.includes("Chacha")){
+      return true;
+    }
+  } 
+  
+  if (list.length == 0) {
+    return null;
+  } else {
+    return list;
+  }
+}
+
 /**
  * 
  * @param 
@@ -561,8 +598,10 @@ module.exports = {
   getProductTransaction,
   getMermaSubsidiary,
   getMermasProd,
-  getProducts,
+  getProductsFabrica,
   createProductFactory,
   calculateCostChachaFactory,
   updateProductFactory,
+  getChachasFabrica,
+  getSalsasFabrica
 };

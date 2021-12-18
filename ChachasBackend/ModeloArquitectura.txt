@@ -263,21 +263,23 @@ Pedido/Confirmacion para el siguiente modulo
 =========================================================================
 Caja
 {
-	"Fecha":"",
+  "Descripcion":"",
+	"Fecha":(Timestamp),
+  "Monto":800 (Monto de la compra o venta),
+  "Origen":(IdSucursal),
+	"Saldo":,(Cantidad antes de sumar o restar monto), 
 	"Tipo":"Ingreso",//"Egreso"
-	"Saldo":,//Cantidad antes de sumar o restar monto 
-	"Monto":800,
-	"Origen":""
 },
 {
-	"Tipo":"Cuenta",
-	"Origen":,
-	"Ingresos":,//Lo que se gano
-	"Egresos":,//Lo que se gasto
-	"Saldo":,//(inicio_caja + ventas - compras),
-	"CuentaInicial":,
-	"Fecha":,
-}
+  "CuentaInicial":(Nos dan los de frontend),
+  "Egresos":(Lo que se gasto),
+  "Fecha":(Timestamp),
+  "Ingresos":(Lo que se gano),
+	"Origen":(IdSucursal),
+	"Saldo":(inicio_caja + ventas - compras),
+  "Tipo":"Cuenta",
+} 
+  Este ultimo documento se crea de manera manual
 ===========================================================
 Compra: //Todavia falta discutirlo, esta sujeto a cambios
 //Esta solo es para el tipo refrescos
@@ -304,3 +306,4 @@ Compra: //Todavia falta discutirlo, esta sujeto a cambios
 		"FechaLimiteEmision":""
 	}
 }
+
