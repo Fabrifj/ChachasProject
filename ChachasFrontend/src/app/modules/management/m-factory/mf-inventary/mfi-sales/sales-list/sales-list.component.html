@@ -14,7 +14,7 @@
 
         <td>{{ingredientesEle.Nombre}}</td>
         <td>{{ingredientesEle.TipoUnidad}}</td>
-        <td>{{ingredientesEle.Cantidad}}</td>
+        <td><input class="quantity" id="amount" min="1" name="cantidad" value={{ingredientesEle.Cantidad}} type="number" (click)="cambioCantidad(i)" #amountInput></td>
         <td>{{ingredientesEle.Costo}}</td>
   
   

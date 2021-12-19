@@ -31,6 +31,7 @@ export class SalesListComponent implements OnInit {
     for (let index = 0; index < this.catidadIngredientes; index++) {
       this.totalCompra += this.hacerCompraServicio.ingredientes[index].Costo;  
     }
+    console.log("Lista compras",this.hacerCompraServicio.ingredientes)
   }
 
 
@@ -38,6 +39,12 @@ export class SalesListComponent implements OnInit {
     let foo_object  = this.hacerCompraServicio.ingredientes[i]// Item to remove
     this.hacerCompraServicio.ingredientes = this.hacerCompraServicio.ingredientes.filter(obj => obj !== foo_object);
     alert('Elimino un elemento');
+    this.calcularActualizacion();
+  }
+
+  cambioCantidad(i:number ){
+    this.hacerCompraServicio.ingredientes[i].Cantidad = +this.amount.nativeElement.value;
+    this.hacerCompraServicio.ingredientes[i].Costo = this.hacerCompraServicio.ingredientes[i].Cantidad * this.hacerCompraServicio.ingredientes[i].Precio; 
     this.calcularActualizacion();
   }
 
