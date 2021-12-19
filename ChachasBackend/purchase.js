@@ -89,7 +89,11 @@ async function createPurchase(body)
             var miTot = 0;
             for await (const ing of body.ListaObjetos) 
             {
-                //const miIng = await fnHerramientas.getDoc(ing.IdObjeto,"Ingrediente");
+                const miIng = await fnHerramientas.getDoc(ing.IdObjeto,"Ingrediente");
+                if(miIng.hasOwnProperty('CantidadMedida') == false)
+                {
+                    await fnHerramientas.updateDoc(ing.IdObjeto, {"CantidadMedida": parseFloat(ing.Cantidad)}, "Ingrediente");
+                }
                 miTot += parseFloat(ing.Costo);
                 var updCosto = 
                 {

@@ -25,6 +25,15 @@ Ingrediente //SOLO PARA FABRICA, SUCURSAL NO TIENE INGREDIENTE
 */
 
 //create ingredient
+/*
+	{
+		"Nombre":"Cebolla",
+		"CantidadInventario":0,
+		"TipoUnidad":"kg",
+		"CostoMedio":0,
+		"CantidadMinima":10
+	}
+*/
 async function createIngredientInfo(body)
 {
     return fnHerramientas.createDoc(body,"Ingrediente");
