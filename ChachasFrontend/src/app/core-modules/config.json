@@ -12,6 +12,7 @@
   "GetProductsBySubsidiary":"/api/product/subsidiary/:idSub",
   "GetProductBySubisidiary_Chacha_Refresco":"/api/product/ChachaRefresco/:idSub",
   "GetProductBySubsidiary_Chacha_InsumoFabrica_InfoSubsidiary":"/api/product/ChachaInsumo/:idSub",
+  "GetProductBySubsidiary_Just_Product":"/api/product/inventory/",
   "GetProductTransaction":"/api/productTransaction",
   "GetMermasofaProduct":"/api/product/mermas/:idProd",
   "CreateProductChacha":"/api/productChacha",

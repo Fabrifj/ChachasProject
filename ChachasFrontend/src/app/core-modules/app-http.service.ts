@@ -148,5 +148,8 @@ export class AppHttpService {
 
   }
 
-
+  // Subsidiary-Fabric administration
+  getSubsidiaryInventary(idSubsidiary: string) {
+    return this.http.get(paths.GetProductBySubsidiary_Just_Product+idSubsidiary)
+  }
 }

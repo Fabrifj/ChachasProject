@@ -1,4 +1,6 @@
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import { Component, OnInit } from '@angular/core';
+import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 @Component({
   selector: 'app-mf-subsidiary',
@@ -6,167 +8,89 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mf-subsidiary.component.css']
 })
 export class MfSubsidiaryComponent implements OnInit {
-  factory = {
-    chachas: 
-    [
-      {
-      nombre: "Chacha de carne",
-      idMenu: "jjdadad",
-      cantidadInventario: 100
-      },
-      {
-      nombre: "Chacha de queso",
-      idMenu: "fsdjhfsdf",
-      cantidadInventario: 120
-      },
-      {
-      nombre: "Chacha de charque",
-      idMenu: "jiureasdas",
-      cantidadInventario: 90
-      }
-    ]
+  subsInfo: subsidiaryInfo[] = [];
+  components: editionComponent[] = [];
+  fabric: editionComponent | any;
+
+  constructor(private appHttpService : AppHttpService) {
+    appHttpService.getSubsidiary().subscribe(
+      (jsonSubsidiaryFile) => {
+        this.subsInfo = <subsidiaryInfo[]> jsonSubsidiaryFile;
+        // console.log(this.subsInfo);
+
+        for (let index = 0; index < this.subsInfo.length; index++) {
+          const subsidiaryEl = this.subsInfo[index];
+            
+          var tempComponent: editionComponent ={
+            subsidiaryElement: subsidiaryEl,
+            productElements: []
+          };
+    
+          appHttpService.getSubsidiaryInventary(subsidiaryEl.id).subscribe(
+            (jsonProductsFile) => {
+              tempComponent.productElements = <productInfo[]> jsonProductsFile;
+            });
+
+          if (subsidiaryEl.Tipo == "Fabrica") {
+            this.fabric = tempComponent;
+          } else {
+            this.components.push(tempComponent);
+          }
+        }
+
+        console.log(this.components);
+        console.log(this.fabric)
+      });
   }
-
-  subsInfo: infoSucursal[] = [
-    {
-      subsidiary_id: "id_sucursal_1",
-      nombre: "Sucursal_1",
-      chachas: 
-      [
-        {
-        nombre: "Chacha de carne",
-        idMenu: "jjdadad",
-        cantidadInventario: 8
-        },
-        {
-        nombre: "Chacha de queso",
-        idMenu: "fsdjhfsdf",
-        cantidadInventario: 67
-        },
-        {
-        nombre: "Chacha de charque",
-        idMenu: "jiureasdas",
-        cantidadInventario: 45
-        }
-      ]
-    },
-    {
-      subsidiary_id: "id_sucursal_2",
-      nombre: "Sucursal_2",
-      chachas: 
-      [
-        {
-        nombre: "Chacha de carne",
-        idMenu: "jjdadad",
-        cantidadInventario: 23
-        },
-        {
-        nombre: "Chacha de queso",
-        idMenu: "fsdjhfsdf",
-        cantidadInventario: 21
-        },
-        {
-        nombre: "Chacha de charque",
-        idMenu: "jiureasdas",
-        cantidadInventario: 32
-        }
-      ]
-    },
-    {
-      subsidiary_id: "id_sucursal_3",
-      nombre: "Sucursal_3",
-      chachas: 
-      [
-        {
-        nombre: "Chacha de carne",
-        idMenu: "jjdadad",
-        cantidadInventario: 40
-        },
-        {
-        nombre: "Chacha de queso",
-        idMenu: "fsdjhfsdf",
-        cantidadInventario: 17
-        },
-        {
-        nombre: "Chacha de charque",
-        idMenu: "jiureasdas",
-        cantidadInventario: 10
-        }
-      ]
-    }
-  ]
-
-  constructor() { }
 
   ngOnInit(): void {
   }
 
-  baseSubsidiary: infoSucursal = {
-    subsidiary_id: "",
-    nombre: "",
-    chachas: []
-  }
-
-  baseChacha: infoChacha = {
-    nombre: "",
-    idMenu: "",
-    cantidadInventario: 0
-  }
-
   editAmount = false;
-  chachaOnEdit = this.baseChacha
-  subsidiaryOnEdit = ""
 
-  editSubsidiary(subNombre: string, chacha: infoChacha) {
+  editSubsidiary() {
     // Saving crucial info for the transfer of products
-    this.subsidiaryOnEdit = subNombre;
-    this.chachaOnEdit = chacha;
     this.editAmount = true;
   }
 
   acceptEdition(newQuantity: string) {
-    // Extra parsing, just to be sure
-    let aux = Number(newQuantity)
-
-    // Getting the pointer of the same product belonging to the factory
-    var chachaInFactory = <infoChacha> this.factory.chachas.find(e => e.idMenu == this.chachaOnEdit.idMenu)
-
-    // Valdiations
-    if (aux <= chachaInFactory.cantidadInventario) {
-      // Updating values in pointers
-      this.chachaOnEdit.cantidadInventario += aux;
-      chachaInFactory.cantidadInventario -= aux;
-
-      // Updating transaction
-    }
-    else
-    {
-      alert("Cantidad en fabrica insuficiente");
-    }
-
-    // console.log(this.chachaOnEdit)
-    // console.log(this.subsInfo)
-    // console.log(this.factory)
-
-    // Reseting saved info
-    this.editAmount = false;
-    this.chachaOnEdit = this.baseChacha
-    this.subsidiaryOnEdit = ""
   }
 
-  createCopy(objectToCopy: infoChacha): infoChacha{
-    return (JSON.parse(JSON.stringify(objectToCopy)));
-  }
+  // createCopy(objectToCopy: infoChacha): infoChacha{
+  //   return (JSON.parse(JSON.stringify(objectToCopy)));
+  // }
 }
 
-interface infoSucursal {
-  subsidiary_id: string,
-  nombre: string,
-  chachas: infoChacha[]
+interface subsidiaryInfo {
+  id: string,
+  Departamento: string,
+  Nombre: String,
+  Tipo: string,
+  Localizacion: {
+      latitude: number,
+      longitude: number
+  },
+  Direccion: string,
+  Telefono: number
 }
 
-interface infoChacha {
-  nombre: string,
-  idMenu: string,
-  cantidadInventario: number
+interface productInfo {
+  id: string, // both
+  CantidadMinima: number, // both
+  CantidadInventario: number, // both
+  TipoUnidad: string, // Salsa
+  TipoOrigen: string, // Salsa
+  Origen: string, // both
+  CantidadMedida: number, // Salsa
+  ImgURL: string, // both
+  Tipo: string, // both
+  Nombre: string, // both
+  Costo: number, // both
+  Precio: number, // Chacha
+  IdMenu: string, // Chacha
+}
+
+interface editionComponent {
+  subsidiaryElement: subsidiaryInfo,
+  productElements: productInfo[]
 }
