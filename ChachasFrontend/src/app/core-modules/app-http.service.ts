@@ -187,4 +187,8 @@ export class AppHttpService {
   getEmployeesByDomain(idDom:any){
     return this.http.get(paths.GetEmployeesbyDomain+idDom)
   }
+
+  getRegisterCuenta(){
+    return this.http.get(paths.GetRegisterCuentas);
+  }
 }

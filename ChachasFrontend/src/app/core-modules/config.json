@@ -1,7 +1,4 @@
 {
-
-
-
     "GetAllProducts": "/api/product",
     "GetProductById": "/api/product/:idproduct",
     "CreateProduct(Generic)": "/api/product",
@@ -70,11 +67,16 @@
     "UpdateIngredient": "/api/ingredient/",
     "DeleteIngredient": "/api/ingredient/:id",
 
+    "CreateRegisterCuenta": "/api/register/cuenta",
+    "CreateRegisterIngresoEgreso": "/api/register/ingreso_egreso",
+    "GetRegisterCuentas": "/api/register/cuenta",
+    "GetCuentaByDate": "/api/register/cuenta/:date",
+    "GetRegisterByID": "/api/register/:id",
+    "GetRegisterCuentaBySubsidiary": "/api/register/cuenta/subsidiary/:idSub",
+    "UpdateRegisterCuenta": "/api/register/cuenta/:id",
+    "DeleteRegister": "/api/register/:id",
+
     "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
-
-
-
-
 
     "crearCompra": "/api/purchase",
 

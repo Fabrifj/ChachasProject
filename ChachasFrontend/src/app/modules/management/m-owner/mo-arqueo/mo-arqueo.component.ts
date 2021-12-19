@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 @Component({
@@ -10,64 +11,38 @@ export class MoArqueoComponent implements OnInit {
 
   constructor(private serviceHttp: AppHttpService) { }
 
+  infoArqueo:any="";
+  todayDate:any = undefined;
+
+
   columnsArqueo = [
-    {fiel:'', header:'Sucursal'},
-    {fiel:'', header:'Fecha'},
-    {fiel:'', header:'Caja Inicial'},
-    {fiel:'', header:'Ingresos'},
-    {fiel:'', header:'Egresos'},
-    {fiel:'', header:'Saldo'},
-  ]
-
-  infoArqueo=[
-    'Sucursal',
-    'Fecha',
-    'Caja Inicial',
-    'Ingresos',
-    'Egresos',
-    'Saldo',
-  ]
-
-  selectedObject:any = {}
-  selectedInfo:any ={}
-  selectedValue:any;
-
-  infoSub: any | undefined;
-
-  columnsSub = [
-    {field:'Nombre',header:'Nombre'},
-    {field:'Direccion',header:'Direccion'},
-    {field:'Departamento',header:'Departamento'},
-    {field:'Telefono',header:'Telefono'},
-    {field:'Tipo',header:'Tipo'},
-
-
-   // {field:'Imagen',header:'Imagen'}
-
+    {field:'Origen',header:'Origen'},
+    {field:'CuentaInicial',header:'CuentaInicial'},
+    {field:'Egresos',header:'Egresos'},
+    {field:'Ingresos',header:'Ingresos'},
+    {field: 'Fecha' ,header:'Fecha'},
+    {field:'Saldo',header:'Saldo'}, 
+   
+    
   ];
+
   ngOnInit(): void {
-    this.getArqueos()
-    this.getSubsidiary()
+      this.getArqueo()
+      this.todayDate=new Date().toISOString().slice(0, 10);
   }
 
-  getArqueos(){
+  getArqueo(){
 
-  }
-
-  getSubsidiary(){
-
-    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
-    /* const x = this.getSubsidiary(Nombre); 
-    x.snapshotChanges().getSubsidiary() */
-
-      this.infoSub = jsonFile;
-      console.log(this.infoSub)
+    this.serviceHttp.getRegisterCuenta().subscribe((jsonFile:any)=>{
+     
+      
+      this.infoArqueo =jsonFile;
+      
 
     } ,(error)=>{
-        console.log("hubo error con productos")
+        console.log("hubo error con empleados")
 
     } )
   }
-
 
 }

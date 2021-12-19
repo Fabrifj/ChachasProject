@@ -10,9 +10,6 @@ import { AppHttpService } from 'src/app/core-modules/app-http.service';
 })
 export class MoEmpleadosComponent implements OnInit {
   
-
-  
-
   constructor(public modalService:ModalService, private serviceHttp: AppHttpService) { }
 
   isShownES:boolean=false;
