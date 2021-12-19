@@ -559,7 +559,7 @@ app.delete("/api/ingredient/:id", async (req, res) => {
 //Create register document of type cuenta
 app.post("/api/register/cuenta", async (req, res) => {
   var body = req.body;
-  const response = await fnRegister.createRegisterCuentas(body);
+  const response = await fnRegister.createRegisterCuenta(body);
   res.send(response);
 });
 
