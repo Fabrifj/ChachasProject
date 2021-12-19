@@ -81,6 +81,15 @@ export class AppHttpService {
 
   }
 
+  getSubsidiaries(){
+    return this.http.get(paths.GetSubsidiary)
+  }
+
+  //Empleado 
+  getEmployees(){
+    return this.http.get(paths.GetEmployees)
+  }
+
 
   //Transaction
   postTransaction(body:any){
@@ -103,7 +112,10 @@ export class AppHttpService {
    return this.http.post(paths.crearCompra , body)
   }
 
-
+  login(idUP:any){
+    ///api/employee/username/:username/pass/:pass
+    return this.http.get(paths.Authenticate+idUP)
+  }  
 
 
 
@@ -124,19 +136,11 @@ export class AppHttpService {
 
   }
 
-
-
-
-
-  
-
-
   //producto Factory
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
 
   }
-
 
   //Menu
   getMenu(){

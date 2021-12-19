@@ -1,4 +1,5 @@
 import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { documentId } from '@angular/fire/firestore';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
@@ -44,6 +45,7 @@ export class MsInventaryComponent implements OnInit {
   columnsInsFab = [
     {field:'Nombre',header:'Nombre'},
     {field:'CantidadInventario',header:'Stock en Inventario'},
+    {field:'CantidadMinima',header:'Stock Minimo'},
     {field:'CantidadMedida',header:'Cantidad Medida'},
     {field:'TipoUnidad',header:'Tipo Unidad'},
     {field:'Costo',header:'Costo'}
@@ -117,8 +119,44 @@ export class MsInventaryComponent implements OnInit {
 
 
 
+  isAlert= false;
 
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
+
+
+  prLat = "he4"
+  prLon = ""
+
+  msgAlert : string = "";
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { 
+
+    
+
+  }
+  clickReadyMap(map: google.maps.Map){
+    map.addListener('click',(e: google.maps.MouseEvent)=>{
+
+      this.check(e.latLng,map);
+
+    })
+    
+
+
+  }
+
+  check(latLng: google.maps.LatLng , map: google.maps.Map){
+    const mark = new google.maps.Marker({
+      
+      position: latLng,
+      map:map,
+
+
+    });
+    console.log(mark.getPosition());
+    console.log(latLng.lat)
+    console.log(latLng.lng)
+    map.panTo(latLng);
+  }
+ 
 
   ngOnInit(): void {
 
@@ -150,9 +188,20 @@ export class MsInventaryComponent implements OnInit {
 
 
  
+    
   }
 
 
+
+
+  giveAlert(){
+    this.isAlert = true;
+   
+  }
+  closeAlert(){
+    this.isAlert = false;
+    
+  }
 
   getProductsBySubsidiary(){
   
@@ -163,14 +212,36 @@ export class MsInventaryComponent implements OnInit {
     } )
 
   }
+
+  miniumVerification(objs:any){
+
+      var mustAlert = false;
+      objs.forEach((element:any) => {
+
+        if(element.CantidadInventario <= element.CantidadMinima){
+            console.log("entro a if");
+            this.msgAlert = this.msgAlert + element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadMinima +" " + element.TipoUnidad + "\n";
+            mustAlert = true;
+        }
+      });
+
+      if(mustAlert){
+        this.giveAlert();
+
+      }
+
+
+  }
+
+
   getProdChachas(){
-
-
-   
 
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
       this.infoProd =jsonFile;
+
+
+
     } ,(error)=>{
         console.log("hubo error con productos");
     } )
@@ -182,7 +253,7 @@ export class MsInventaryComponent implements OnInit {
      
      
       this.infoInsFab =jsonFile;
-      
+      this.miniumVerification(this.infoInsFab);
 
     } ,(error)=>{
         console.log("hubo error con productos")

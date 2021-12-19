@@ -392,6 +392,7 @@ app.delete("/api/employee/:id", async (req, res) => {
 app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   const username = req.params.username;
   const pass = req.params.pass;
+
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
 });
