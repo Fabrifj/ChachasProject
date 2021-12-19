@@ -60,9 +60,6 @@ import { ListIngredientsComponent } from './modules/management/m-factory/mf-inve
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
-import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
-import { HeaderComponent } from './modules/header/header.component';
-import { ReusableTableComponent } from './shared-modules/reusable-table/reusable-table.component';
 
 
 
@@ -95,7 +92,7 @@ import {  MatRadioModule} from '@angular/material/radio';
     MfiSalesComponent,
     SalesListComponent,
     ShowIngredientsComponent,
-    ListIngredientsComponent
+    ListIngredientsComponent,
 
     LocationsComponent,
     MoArqueoComponent,
