@@ -15,14 +15,14 @@
         </li>
     </div>
     <div class="factory-admi">
-        <h1>Factory</h1>
-        <li *ngFor="let chacha of fabric.productElements" class="list-group-item d-flex justify-content-between align-items-center">
+        <h1>Fabrica</h1>
+        <li *ngFor="let chacha of factory.productElements" class="list-group-item d-flex justify-content-between align-items-center">
             {{ chacha.Nombre }}
             <span class="badge bg-primary rounded-pill">{{ chacha.CantidadInventario }}</span>
         </li>
         <ng-container *ngIf="editAmount">
             <div class="edit-amount">
-                <h1>Agregar Chachas a Sucursal {{ subsidiaryInfo.Nombre }}</h1>
+                <h1>Agregar Chachas a {{ subsidiaryInfo.Nombre }}</h1>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ productInfo.Nombre }}
                     <input type="number" placeholder="0" #chachaQuantity class="quantity-input">
@@ -35,4 +35,11 @@
             </div>
         </ng-container>
     </div>
+</div>
+<div>
+    <button type="button"
+        class="btn btn-info btn-sm" 
+        (click)="saveTransactions()">
+        Guardar Cambios
+    </button>
 </div>
