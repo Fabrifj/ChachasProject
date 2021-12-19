@@ -9,6 +9,7 @@ import { HacerCompraService } from '../mfi-sales.service';
 })
 export class SalesListComponent implements OnInit {
   @ViewChild('amountInput', { static: false }) amount: ElementRef ;
+  @ViewChild('costInput', { static: false }) cost: ElementRef ;
 
   ingredientes:ingredientModel[]=[];
   catidadIngredientes:number=0;
@@ -44,7 +45,11 @@ export class SalesListComponent implements OnInit {
 
   cambioCantidad(i:number ){
     this.hacerCompraServicio.ingredientes[i].Cantidad = +this.amount.nativeElement.value;
-    this.hacerCompraServicio.ingredientes[i].Costo = this.hacerCompraServicio.ingredientes[i].Cantidad * this.hacerCompraServicio.ingredientes[i].Precio; 
+    this.calcularActualizacion();
+  }
+
+  cambioCosto(i:number ){
+    this.hacerCompraServicio.ingredientes[i].Costo = this.cost.nativeElement.value; 
     this.calcularActualizacion();
   }
 
