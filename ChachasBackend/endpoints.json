@@ -20,6 +20,7 @@
   "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
   "UpdateExpenseSupplySubsidiary":"/api/product/expense/:idproduct",
   "get mermas from subsidiary":"/api/subsidiaryMermas/:id",
+  "GetInventoryOfProductsofSubsidiary":"/api/product/inventory/:idSub",
 
   "GetProductsWithIngredients":"/api/products",
   "CreateProductFactory":"/api/productFactory",

@@ -80,6 +80,18 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
   res.send(respuesta);
 });
 
+// Endpoints to get the inventory of a Sucursal (Chachas and Salsas)
+app.get("/api/product/inventory/:idSub", async (req ,res) => {
+  var idSub = req.params.idSub;
+  var respuesta = null;
+  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+  var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+  if (chachas != null && insumos != null){
+    respuesta = chachas.concat(insumos);
+  }
+  res.send(respuesta);
+});
+
 // Get the transation of a product
 app.get("/api/productTransaction", async (req, res) => {
   var body = req.body;

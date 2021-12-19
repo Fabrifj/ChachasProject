@@ -452,8 +452,9 @@ async function getProductsFabrica() {
   }));
   for (i in list) {
     if (list[i].IdMenu) {
-      menuName = await fnMenu.getMenuId(list[i].IdMenu);
-      list[i].Nombre = menuName.Nombre;
+      menuItem = await fnMenu.getMenuId(list[i].IdMenu);
+      list[i].Nombre = menuItem.Nombre;
+      list[i].ImgURL = menuItem.ImgURL
       //delete list[i].IdMenu;
     }/*
     delete list[i].Origen;
