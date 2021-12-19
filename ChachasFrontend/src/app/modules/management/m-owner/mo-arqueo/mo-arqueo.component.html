@@ -1,1 +1,37 @@
-<p>mo-arqueo works!</p>
+<div class="elegirSucursal">
+    <h1> Filtrar:</h1>
+    <select id="" class="options" aria-label="Default select example" [(ngModel)]="selectedValue">
+    <!-- <option selected>None</option> -->
+    
+    <option *ngFor="let sucursal of infoSub;" >
+        
+        <!-- <div *ngIf="sucursal.Tipo != 'Fabrica' ">
+            {{sucursal.Nombre}}
+        </div> -->
+        <ng-template [ngIf]="sucursal.Tipo != 'Fabrica' " [ngIfElse]="dontSave">
+            <div>
+                {{sucursal.Nombre}}
+            </div> 
+          </ng-template>
+          
+          <ng-template #dontSave>
+            <div>
+                None
+            </div>          
+          </ng-template>
+        
+    </option>
+    <option >Administrador</option>
+    
+    
+
+</select>
+</div>
+
+<div class="arqueoSection">
+    <div class="getSection">
+        <h1>Tabla de Arqueos</h1>
+        <app-reusable-table [datos]="infoArqueo" [columnas]="columnsArqueo" colorLetra="black">
+        </app-reusable-table>
+    </div>
+</div>

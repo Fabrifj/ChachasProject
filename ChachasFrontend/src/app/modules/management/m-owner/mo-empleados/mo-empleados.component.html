@@ -1,3 +1,19 @@
+<div class="elegirSucursal">
+    <h1> Filtrar:</h1>
+    <select id="" class="options" aria-label="Default select example" [(ngModel)]="selectedValueFilter">
+    <option selected>None</option>
+    <option >Administrador</option>
+    <option *ngFor="let sucursal of infoSub;" >
+        {{sucursal.Nombre}}   
+    </option>
+
+    
+    
+    
+
+</select>
+    <button class="btn_filter m-3" (click)="filter()"> Filtrar</button>
+</div>
 <div class="sucuralesSection">
     <div class="getSucursal">
         <h1>Lista de empleados</h1>
@@ -8,7 +24,7 @@
 
 <div><button class="btn" (click)="modalService.abrir('modalEmpleado-01');">Agregar Empleado</button></div>
 
-<jw-modal id="modalEmpleado-01" altura="200" ancho="50">
+<jw-modal id="modalEmpleado-01" altura="100" ancho="50">
     <div class="modal-header">
         <h4 class="modal-title">Registrar Empleado</h4>
     </div>
@@ -68,7 +84,7 @@
 
 </jw-modal>
 
-<jw-modal id="modalEmpleado-02" altura="200" ancho="50">
+<jw-modal id="modalEmpleado-02" altura="100" ancho="50">
     <div class="modal-header">
         <h4 class="modal-title">Actualizar Empleado</h4>
     </div>

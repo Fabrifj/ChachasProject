@@ -33,9 +33,9 @@
 
     "CreateSubsidiary": "/api/subsidiary",
     "GetSubsidiary": "/api/subsidiary",
-    "GetSubsidiaryId": "/api/subsidiary/:id",
-    "UpdateSubdidiaryId": "/api/subsidiary/:id",
-    "DeleteSubsidiary": "/api/subsidiary/:id",
+    "GetSubsidiaryId": "/api/subsidiary/",
+    "UpdateSubdidiaryId": "/api/subsidiary/",
+    "DeleteSubsidiary": "/api/subsidiary/",
 
     "CreateMenu": "/api/menu",
     "GetMenus": "/api/menu",
@@ -46,6 +46,7 @@
     "CreateEmployee": "/api/employee",
     "GetEmployees": "/api/employee",
     "GetEmployeeId": "/api/employee/:id",
+    "GetEmployeesbyDomain": "/api/employee/domain/",
     "UpdateEmployee": "/api/employee/",
     "UpdatePasswordEmployee": "/api/employee",
     "DeleteEmployee": "/api/employee/",

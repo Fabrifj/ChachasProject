@@ -172,4 +172,19 @@ export class AppHttpService {
   deleteEmployee(CI:any){
     return this.http.delete(paths.DeleteEmployee+CI);
   }
+
+  createSubsidiary(body:any){
+    
+    return this.http.post(paths.CreateSubsidiary, body)
+  }
+  updateSubsidiary(idSub:any , body:any){
+    
+    return this.http.put(paths.UpdateSubdidiaryId+idSub, body)
+  }
+  deleteSucursal(id:any){
+    return this.http.delete(paths.DeleteSubsidiary+id);
+  }
+  getEmployeesByDomain(idDom:any){
+    return this.http.get(paths.GetEmployeesbyDomain+idDom)
+  }
 }

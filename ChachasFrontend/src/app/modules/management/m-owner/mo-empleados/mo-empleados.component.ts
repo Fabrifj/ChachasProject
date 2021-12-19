@@ -16,15 +16,18 @@ export class MoEmpleadosComponent implements OnInit {
   constructor(public modalService:ModalService, private serviceHttp: AppHttpService) { }
 
   isShownES:boolean=false;
+  isShown:boolean=false;
   type:any="";
   domain:any="";
 
   selectedObject:any = {}
   selectedInfo:any ={}
   selectedValue:any;
+  selectedValueFilter:any;
   
 
   infoEmployee:any="";
+  infoEmployeeF:any="";
   idEmp:any="";
 
   todayDate:any = undefined;
@@ -70,9 +73,24 @@ export class MoEmpleadosComponent implements OnInit {
       
 
     } ,(error)=>{
-        console.log("hubo error con productos")
+        console.log("hubo error con empleados")
 
     } )
+  }
+  getEmployeesByDomain(idDom:any){
+    //this.infoEmployee ="";
+    this.serviceHttp.getEmployeesByDomain(idDom).subscribe((jsonFile:any)=>{
+     
+      
+      this.infoEmployee =jsonFile;
+      
+
+    } ,(error)=>{
+        console.log("hubo error con mpleados por dominio")
+
+    } )
+    console.log("Entro a getEmployeeBy...")
+    console.log(this.infoEmployee)
   }
 
   getSubsidiary(){
@@ -344,6 +362,34 @@ export class MoEmpleadosComponent implements OnInit {
 
     this.getEmployees();
     //this.updateEmployees()
+  }
+  filter(){
+    var idDominio = "";
+    var Tipo = "";
+    /* console.log("porque")
+    console.log(this.selectedValueFilter) */
+    this.infoSub.forEach((element:any) => {
+      if (element.Nombre == this.selectedValueFilter && this.selectedValueFilter!='Administrador' && this.selectedValueFilter!='None'){
+        idDominio = element.id;
+      }
+    });
+    if (this.selectedValueFilter!='None' && this.selectedValueFilter!='Administrador'){
+      
+      /* console.log("NOMBRE");
+      console.log(this.selectedValueFilter);
+      console.log("DOMINIO")
+      console.log(idDominio) */
+      return this.getEmployeesByDomain(idDominio);
+      
+    }
+    else if(this.selectedValueFilter=='Administrador'){
+      return this.getEmployeesByDomain(this.selectedValueFilter);
+    }
+    else {
+      //es la sucursal que quiero
+      // console.log("es None")
+      return this.getEmployees();
+    }
   }    
 }
    
