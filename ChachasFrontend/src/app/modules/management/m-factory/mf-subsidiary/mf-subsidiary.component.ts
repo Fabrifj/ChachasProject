@@ -8,18 +8,20 @@ import { AppHttpService } from 'src/app/core-modules/app-http.service';
   styleUrls: ['./mf-subsidiary.component.css']
 })
 export class MfSubsidiaryComponent implements OnInit {
-  subsInfo: subsidiaryInfo[] = [];
+  //subsInfo: subsidiaryInfo[] = [];
   components: editionComponent[] = [];
   fabric: editionComponent | any;
+  productInfo: productInfo | any;
+  subsidiaryInfo: subsidiaryInfo | any;
 
   constructor(private appHttpService : AppHttpService) {
     appHttpService.getSubsidiary().subscribe(
       (jsonSubsidiaryFile) => {
-        this.subsInfo = <subsidiaryInfo[]> jsonSubsidiaryFile;
+        var subsInfo = <subsidiaryInfo[]> jsonSubsidiaryFile;
         // console.log(this.subsInfo);
 
-        for (let index = 0; index < this.subsInfo.length; index++) {
-          const subsidiaryEl = this.subsInfo[index];
+        for (let index = 0; index < subsInfo.length; index++) {
+          const subsidiaryEl = subsInfo[index];
             
           var tempComponent: editionComponent ={
             subsidiaryElement: subsidiaryEl,
@@ -48,9 +50,11 @@ export class MfSubsidiaryComponent implements OnInit {
 
   editAmount = false;
 
-  editSubsidiary() {
+  editSubsidiary(subInfo: subsidiaryInfo, prodInfo: productInfo) {
     // Saving crucial info for the transfer of products
     this.editAmount = true;
+    this.productInfo = prodInfo;
+    this.subsidiaryInfo = subInfo;
   }
 
   acceptEdition(newQuantity: string) {
