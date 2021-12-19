@@ -590,6 +590,14 @@ app.get("/api/register/:id", async (req, res) => {
   res.send(response);
 });
 
+// Get a register Cuenta by Subsidiary
+app.get("/api/register/cuenta/subsidiary/:idSub", async (req, res) => {
+  const idSub = req.params.idSub;
+  const response = await fnRegister.getRegisterCuentaBySubsidiary(idSub);
+  res.send(response);
+});
+
+
 //Update Cuenta
 app.put("/api/register/cuenta/:id", async (req, res) => {
   const body = req.body;
