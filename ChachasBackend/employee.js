@@ -11,6 +11,20 @@ async function getEmployee(idEmp)
     return await fnHerramientas.getDoc(idEmp,"Empleado");
 }
 
+
+// Get employee by domain
+async function getEmployeesByDomain(idDom){
+  var resp = null;
+  var snapshot = await employee.where("Dominio", "==", idDom).get();
+  var employees = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+
+  if(employees.length > 0){
+    resp = employees;
+  }
+
+  return resp;
+}
+
 /**
  * 
  * @param 
@@ -119,6 +133,7 @@ async function getEntityByEmployeeUserAndPass(username,pass)
 
 module.exports = {
     getEmployees,
+    getEmployeesByDomain,
     createEmployee,
     deleteEmployee,
     updateEmployee,
