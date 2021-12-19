@@ -15,6 +15,7 @@ Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
 	"Origen": "Fabrica",
+	"Tipo":"Chacha",
 	"Receta": 
 	[
 		{
@@ -37,7 +38,34 @@ Producto
   "CantidadMinima":,
   "IdMenu":,
 },
+{
+	"Origen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"Tipo":"Salsa",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"ybibbijboijoij",
+			"Nombre":"Carne",
+			"CantidadMedida":0.25,
+			"TipoUnidad":"kg",
+			"Costo":5
+		},
+		{
+			"IdIngrediente":"rbibijberijfbid",
+			"Nombre":"Tomate",
+			"CantidadMedida":0.5,
+			"TipoUnidad":"kg",
+			"Costo":2
+		}
 
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":100
+},
 {
 	"Id":"BCHEBCOOkkkBDOH",
 	"Tipo":"Chacha"
@@ -233,3 +261,22 @@ Transaccion
 =========================================================================
 Pedido/Confirmacion para el siguiente modulo
 =========================================================================
+Caja
+{
+  "Descripcion":"",
+	"Fecha":(Timestamp),
+  "Monto":800 (Monto de la compra o venta),
+  "Origen":(IdSucursal),
+	"Saldo":,(Cantidad antes de sumar o restar monto), 
+	"Tipo":"Ingreso",//"Egreso"
+},
+{
+  "CuentaInicial":(Nos dan los de frontend),
+  "Egresos":(Lo que se gasto),
+  "Fecha":(Timestamp),
+  "Ingresos":(Lo que se gano),
+	"Origen":(IdSucursal),
+	"Saldo":(inicio_caja + ventas - compras),
+  "Tipo":"Cuenta",
+} 
+  Este ultimo documento se crea de manera manual

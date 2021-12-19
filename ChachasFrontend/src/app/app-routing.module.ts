@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { HomeComponent } from './modules/home/home.component';
+import { LoginComponent } from './modules/login/login.component';
 
-
+import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
+import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 
 
@@ -15,16 +17,13 @@ import { SalesComponent } from './shared-modules/sales/sales.component';
 import { ModalComponent } from './shared-modules/modal/modal.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { ProducInventoryComponent } from './shared-modules/produc-inventory/produc-inventory.component';
-import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
-import { LoginComponent } from './modules/login/login.component';
-import { MOwnerComponent } from './modules/management/m-owner/m-owner.component';
 import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
 import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
-
+import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
 
 
 const routes: Routes = [
@@ -103,7 +102,9 @@ const routes: Routes = [
     component: MFactoryComponent,
     children:[
 
-      {path: 'inventary', component: MfInventaryComponent},
+      {path: 'inventary', component: MfInventaryComponent,
+        children:[{path:'mfi-sales',component: MfiSalesComponent}]
+      },
       {path:'subsidiary',component: MfSubsidiaryComponent}
     ]
   },
