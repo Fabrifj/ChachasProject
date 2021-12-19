@@ -361,6 +361,15 @@ app.get("/api/employee/:id", async (req, res) => {
   const respuesta = await fnEmployee.getEmployee(idEmp);
   res.send(respuesta);
 });
+
+//Get Employees by Domain
+app.get("/api/employee/domain/:id", async (req, res) => {
+  const id = req.params.id;
+  const respuesta = await fnEmployee.getEmployeesByDomain(id);
+  res.send(respuesta);
+});
+
+
 //Update Employee
 app.put("/api/employee/:id", async (req, res) => {
   const body = req.body;

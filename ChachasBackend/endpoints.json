@@ -47,6 +47,7 @@
   "CreateEmployee":"/api/employee",
   "GetEmployees":"/api/employee",
   "GetEmployeeId":"/api/employee/:id",
+  "GetEmployeesbyDomain":"/api/employee/domain/:idDomain",
   "UpdateEmployee":"/api/employee/:id",
   "UpdatePasswordEmployee":"/api/employee",
   "DeleteEmployee":"/api/employee/:id",
