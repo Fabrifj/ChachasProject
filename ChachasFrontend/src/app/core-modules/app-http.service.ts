@@ -137,15 +137,37 @@ export class AppHttpService {
   }
 
   //producto Factory
+  getSalsasFabrica(){
+
+    return this.http.get(paths.GetSalsasFabrica);
+
+  }
+  getChachasFabrica(){
+
+    return this.http.get(paths.GetChachasFabrica);
+
+  }
+
+
+
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
 
+  }
+
+  updateProductFactory(id:any,body:any){
+    var path = paths.UpdateProductFactory + id;
+    return this.http.put(path,body);
   }
 
   //Menu
   getMenu(){
     return this.http.get(paths.GetMenus);
 
+  }
+  updateMenu(id:any,body:any){
+    var path = paths.UpdateMenu + id;
+    return this.http.put(path,body);
   }
 
 

@@ -229,12 +229,14 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/products/salsas", async (req, res) => {
   const response = await fnProduct.getSalsasFabrica();
   res.send(response);
+  console.log("en salsas");
 });
 
 //Get chachas fabrica with ingredients
 app.get("/api/products/chachas", async (req, res) => {
   const response = await fnProduct.getChachasFabrica();
   res.send(response);
+  console.log("en chachas");
 });
 
 

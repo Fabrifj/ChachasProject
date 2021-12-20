@@ -22,7 +22,9 @@
 
   "GetProductsWithIngredients":"/api/products",
   "CreateProductFactory":"/api/productFactory",
-  "UpdateProductFactory":"/api/productFactory/:idproduct",
+  "UpdateProductFactory":"/api/productFactory/",
+  "GetSalsasFabrica":"/api/products/salsas",
+  "GetChachasFabrica":"/api/products/chachas",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",
@@ -37,7 +39,7 @@
   "CreateMenu":"/api/menu",
   "GetMenus":"/api/menu",
   "GetMenuName":"/api/menu/getMenuName",
-  "UpdateMenu":"/api/menu/:id",
+  "UpdateMenu":"/api/menu/",
   "DeleteMenuId":"/api/menu/:id",
 
   "CreateEmployee":"/api/employee",
