@@ -16,6 +16,6 @@ export class ListIngredientsComponent implements OnInit {
   }
   anhadirIngrediente(){
     this.hacerCompraServicio.addIngrediente(
-      this.ingredient.Id,this.ingredient.Nombre,this.ingredient.TipoUnidad,1,this.ingredient.CostoMedio);
+      this.ingredient.id,this.ingredient.Nombre,this.ingredient.TipoUnidad,1,this.ingredient.CostoMedio);
   }
 }

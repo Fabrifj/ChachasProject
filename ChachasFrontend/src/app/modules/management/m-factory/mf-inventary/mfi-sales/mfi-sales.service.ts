@@ -48,8 +48,12 @@ export class HacerCompraService implements OnInit{
       'Costo':elem.Costo,
       'Cantidad':elem.Cantidad
     }))
+
+    let today=new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
     let body = {
-      "Fecha": Date.now(),
+      "Fecha": date,
       "ListaObjetos":ingList,
       "Origen":"Fabrica",
       "Factura":{
@@ -61,10 +65,11 @@ export class HacerCompraService implements OnInit{
         "FechaLimiteEmision":limitDate
       }
     }
-    // this.httpService.crearPedido(JSON.parse(JSON.stringify(body))).subscribe((response) => {
-    //   console.log('Response from API', response);
-    // }, (error)=>{
-    //   console.log('Error',error);
-    // })
+    console.log("Factura estructura",JSON.parse(JSON.stringify(body)))
+    this.httpService.postPurchase2(JSON.parse(JSON.stringify(body))).subscribe((response) => {
+      console.log('Response from API', response);
+    }, (error)=>{
+      console.log('Error',error);
+    })
   }
 }
