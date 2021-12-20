@@ -215,7 +215,7 @@ async function updateProductPriceByMean(idproduct, body) {
   var costoFinal = 0;
   var costoEstandarizado = 0;
   var nuevaCantidadInventarioTotal = 0;
-  var productToUpdate = await getProductById(idproduct); //product.doc(idproduct).get().data;
+  var productToUpdate = await fnHerramientas.getDoc(idproduct,"Producto"); //product.doc(idproduct).get().data;
   console.log(productToUpdate);
   if (
     productToUpdate.Tipo == "InsumoSucursal" ||
@@ -250,7 +250,7 @@ async function updateProductPriceByMean(idproduct, body) {
     },
     { merge: true }
   );
-  res = await getProductById(idproduct);
+  res = await fnHerramientas.getDoc(idproduct,"Producto"); 
   return res;
 }
 
@@ -452,14 +452,15 @@ async function getProductsFabrica() {
   }));
   for (i in list) {
     if (list[i].IdMenu) {
-      menuName = await fnMenu.getMenuId(list[i].IdMenu);
-      list[i].Nombre = menuName.Nombre;
-      delete list[i].IdMenu;
-    }
+      menuItem = await fnMenu.getMenuId(list[i].IdMenu);
+      list[i].Nombre = menuItem.Nombre;
+      list[i].ImgURL = menuItem.ImgURL
+      //delete list[i].IdMenu;
+    }/*
     delete list[i].Origen;
     delete list[i].id;
     list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ IdIngrediente, ...rest }) => rest);
-    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ Costo, ...rest }) => rest);
+    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ Costo, ...rest }) => rest);*/
   }
 
   if (list.length == 0) {
