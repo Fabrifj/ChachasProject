@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 
-import paths from '../core-modules/config.json';
+import paths from './config.json';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../models/product.model';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -139,15 +139,37 @@ export class AppHttpService {
   }
 
   //producto Factory
+  getSalsasFabrica(){
+
+    return this.http.get(paths.GetSalsasFabrica);
+
+  }
+  getChachasFabrica(){
+
+    return this.http.get(paths.GetChachasFabrica);
+
+  }
+
+
+
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
 
+  }
+
+  updateProductFactory(id:any,body:any){
+    var path = paths.UpdateProductFactory + id;
+    return this.http.put(path,body);
   }
 
   //Menu
   getMenu(){
     return this.http.get(paths.GetMenus);
 
+  }
+  updateMenu(id:any,body:any){
+    var path = paths.UpdateMenu + id;
+    return this.http.put(path,body);
   }
 
   //Empleados
