@@ -22,7 +22,7 @@
         </li>
         <ng-container *ngIf="editAmount">
             <div class="edit-amount">
-                <h1>Agregar Chachas a {{ subsidiaryInfo.Nombre }}</h1>
+                <h1>Agregar {{ productInfo.Nombre }} a {{ subsidiaryInfo.Nombre }}</h1>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ productInfo.Nombre }}
                     <input type="number" placeholder="0" #chachaQuantity class="quantity-input">

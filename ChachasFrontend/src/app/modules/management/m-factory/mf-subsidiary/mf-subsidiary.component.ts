@@ -56,30 +56,26 @@ export class MfSubsidiaryComponent implements OnInit {
     appHttpService.getSubsidiary().subscribe(
       (jsonSubsidiaryFile) => {
         var subsInfo = <subsidiaryInfo[]> jsonSubsidiaryFile;
-        // console.log(this.subsInfo);
 
         for (let index = 0; index < subsInfo.length; index++) {
-          const subsidiaryEl = subsInfo[index];
-            
-          var tempComponent: editionComponent ={
-            subsidiaryElement: subsidiaryEl,
-            productElements: []
-          };
-    
-          appHttpService.getSubsidiaryInventary(subsidiaryEl.id).subscribe(
+          appHttpService.getSubsidiaryInventary(subsInfo[index].id).subscribe(
             (jsonProductsFile) => {
-              tempComponent.productElements = <productInfo[]> jsonProductsFile;
+              var tempComponent: editionComponent = {
+                subsidiaryElement: subsInfo[index],
+                productElements: []
+              };
+
+              if (jsonProductsFile != null) {
+                tempComponent.productElements = <productInfo[]> jsonProductsFile;
+              }
+
+              if (subsInfo[index].Tipo == "Fabrica") {
+                this.factory = tempComponent;
+              } else {
+                this.components.push(tempComponent);
+              }
             });
-
-          if (subsidiaryEl.Tipo == "Fabrica") {
-            this.factory = tempComponent;
-          } else {
-            this.components.push(tempComponent);
-          }
         }
-
-        console.log(this.components);
-        console.log(this.factory)
       });
   }
 
@@ -94,6 +90,8 @@ export class MfSubsidiaryComponent implements OnInit {
     this.productInfo = prodInfo;
     this.subsidiaryInfo = subInfo;
 
+    console.log(this.productInfo);
+
     if (this.transactions.find(e => e.IdDestino == subInfo.id) == undefined) {
       this.transactions.push({
         Tipo: "Fabrica",
@@ -104,7 +102,7 @@ export class MfSubsidiaryComponent implements OnInit {
       })
     }
 
-    console.log(JSON.stringify(this.transactions));
+    console.log(this.transactions);
   }
 
   acceptEdition(newQuantity: string) {
