@@ -476,7 +476,7 @@ async function getSalsasFabrica() {
   var list = await getProductsFabrica(); 
   list = list.filter(filterByName)
   function filterByName(item){
-    if (item.Nombre.includes("Salsa")){
+    if (item.Nombre && item.Nombre.includes("Salsa")){
       return true;
     }
   } 
@@ -493,7 +493,7 @@ async function getChachasFabrica() {
   var list = await getProductsFabrica();
   list = list.filter(filterByName)
   function filterByName(item){
-    if (item.Nombre.includes("Chacha")){
+    if (item.Nombre && item.Nombre.includes("Chacha")){
       return true;
     }
   } 

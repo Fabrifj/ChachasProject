@@ -81,7 +81,7 @@
   "DeleteRegister":"/api/register/:id",
 
   "CreateMerma":"/api/merma",
-  "GetMermabySubsidiary":"/api/merma/bySubsidiary/:id",
+  "getMermasWithNameMen":"/api/merma/withNameMenu",
   "GetMerma":"/api/merma/:id",
   "UpdateMerma":"/api/merma/:id",
   "DeleteMerma":"/api/merma/:id"
