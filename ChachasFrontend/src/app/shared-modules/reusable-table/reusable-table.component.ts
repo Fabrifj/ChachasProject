@@ -1,12 +1,12 @@
-import { Component, OnInit,OnChanges,Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-
+import { Component, OnInit,OnChanges,Input, Output, EventEmitter } from '@angular/core';
+import { ReusableTableService } from './reusable-table-service';
 
 @Component({
   selector: 'app-reusable-table',
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.css']
 })
-export class ReusableTableComponent implements OnInit,OnChanges {
+export class ReusableTableComponent implements OnInit {
 
   
   @Input() datos : any ;
@@ -23,9 +23,7 @@ export class ReusableTableComponent implements OnInit,OnChanges {
   @Input() botonGuardarDatos : string="no";
 
 
-  @Input() nombreDistintivo : string = "textoCantidad";
-
-
+  @Input() nombreDistintivo : string = "textoCantidad"
   @Output() parentMethod = new EventEmitter<any>();
 
   espacioCantidadI :any ;
@@ -35,11 +33,7 @@ export class ReusableTableComponent implements OnInit,OnChanges {
 
 
   misDatos :any;
-  constructor( ) { }
-  ngOnChanges(): void {
-      
-
-  }
+  constructor( private servicioTabla : ReusableTableService ) { }
   ngOnInit()  {
     
     this.espacioCantidadI = parseInt(this.espacioTexto);
@@ -52,7 +46,11 @@ export class ReusableTableComponent implements OnInit,OnChanges {
    }
 
 
-  
+   this.servicioTabla.cambioTabla.subscribe(
+      (nuevosDatos:any)=>{
+
+
+   });
 
     /*for (let i =0 ; i< elem.length ; i++){
         console.log(i);
@@ -85,10 +83,10 @@ export class ReusableTableComponent implements OnInit,OnChanges {
       this.titulosTextos.forEach((titulo:any) => {
 
         var nombreCC  = this.nombreDistintivo + indice1 + indice2 ; 
-        
+        console.log(nombreCC)
         var valor = (<HTMLInputElement>document.getElementById(nombreCC)).value ;
 
-        element[titulo] = parseInt(valor)
+        element[titulo] = valor
         indice2 = indice2 +1;
       });
       

@@ -66,8 +66,8 @@ async function authenticateEmployee(username, pass){
   var resp = null;
 
   const snapshot = await employee
-    .where( firebase.firestore.FieldPath.documentId(), "==",username)
-    .where("Password", "==", pass)
+    .where("Nombre", '==', username)
+   .where("Password", "==", pass)
     .get();
   
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -76,7 +76,7 @@ async function authenticateEmployee(username, pass){
     resp = 
       {
         "Status": true,
-        "Tipo": list[0].Tipo,
+        "Cargo": list[0].Cargo,
         "Dominio": list[0].Dominio
       }
   }else{

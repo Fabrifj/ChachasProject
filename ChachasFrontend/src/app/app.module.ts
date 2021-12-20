@@ -15,8 +15,7 @@ import { ComSubMenuComponent } from './shared-modules/list-sub-menu/com-sub-menu
 import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsidiary.component';
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
-import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
-import {MatRadioModule} from '@angular/material/radio';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,24 +46,8 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
-import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
-import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-
-import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
-import { SalesListComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/sales-list/sales-list.component';
-import { ShowIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/show-ingredients.component';
-import { ListIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/list-ingredients/list-ingredients.component';
-
-import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
-import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
-import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 
 
-
-import {  MatRadioModule} from '@angular/material/radio';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,22 +66,10 @@ import {  MatRadioModule} from '@angular/material/radio';
     MSubsidiaryComponent,
     MsInventaryComponent,
     MfSubsidiaryComponent,
-    MfInventaryComponent,
-    MFactoryComponent,
     ReusableTableComponent,
     DisplayOrderInfoComponent,
     CatalogCardComponent,
-    ClientInfoComponent,
-
-    MfiSalesComponent,
-    SalesListComponent,
-    ShowIngredientsComponent,
-    ListIngredientsComponent,
-
-    LocationsComponent,
-    MoArqueoComponent,
-    MoEmpleadosComponent,
-    MoSucursalesComponent,
+    ClientInfoComponent
   ],
   imports: [
     FormsModule,
@@ -116,13 +87,9 @@ import {  MatRadioModule} from '@angular/material/radio';
     NgbModule,
     CommonModule,
     HttpClientModule,
-    MatRadioModule,
     AgmCoreModule.forRoot({
-      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I",
-      libraries: ['places']
-    }),
-    // provideFirebaseApp(() => initializeApp(environment)),
-    // provideFirestore(() => getFirestore())
+      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
+    })
   ],
   
   exports:[CatalogCardComponent],
