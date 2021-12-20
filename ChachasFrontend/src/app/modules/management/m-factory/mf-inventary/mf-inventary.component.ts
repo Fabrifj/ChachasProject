@@ -102,7 +102,7 @@ export class MfInventaryComponent implements OnInit {
 
   datosIngrendientesCCantidad :any;
   imgUrl:any= "";
-
+  msgAlert:string="";
   siChacha = true;
 
 
@@ -168,6 +168,8 @@ export class MfInventaryComponent implements OnInit {
     this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
       console.log("productos",jsonFile);
       var infoProducts : any = [];
+      this.miniumVerification(jsonFile);
+
       jsonFile.forEach((element:any) => {
         if(element.TipoOrigen == "Fabrica"){
 
@@ -661,6 +663,30 @@ export class MfInventaryComponent implements OnInit {
 
 
 
+  }
+  miniumVerification(objs:any){
+
+    var mustAlert = false;
+    objs.forEach((element:any) => {
+
+      if(element.CantidadInventario <= element.CantidadMinima){
+      // if(element.CantidadInventario <= 100){
+          console.log("entro a if");
+          this.msgAlert = this.msgAlert +"--"+ element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadInventario +" "+ "\n";
+          mustAlert = true;
+      }
+    });
+    if(mustAlert){
+      this.giveAlert();
+    }
+  }
+  giveAlert(){
+    this.isAlert = true;
+   
+  }
+  closeAlert(){
+    this.isAlert = false;
+    
   }
 
 

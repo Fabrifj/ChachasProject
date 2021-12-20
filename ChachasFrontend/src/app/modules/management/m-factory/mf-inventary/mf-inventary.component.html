@@ -1,4 +1,15 @@
 <div class="container-fluid">
+    <div class="row" >
+        <div *ngIf="isAlert" id="myAlert">
+            <div class="col-md-11">
+                <p>{{msgAlert}}</p>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button> 
+            </div>
+        </div>
+
+    </div>
     <div class="row">
 
          

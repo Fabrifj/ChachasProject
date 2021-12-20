@@ -227,18 +227,15 @@ export class MsInventaryComponent implements OnInit {
       objs.forEach((element:any) => {
 
         if(element.CantidadInventario <= element.CantidadMinima){
+        // if(element.CantidadInventario <= 100){
             console.log("entro a if");
-            this.msgAlert = this.msgAlert + element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadMinima +" " + element.TipoUnidad + "\n";
+            this.msgAlert = this.msgAlert + element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadInventario +" "+ "\n";
             mustAlert = true;
         }
       });
-
       if(mustAlert){
         this.giveAlert();
-
       }
-
-
   }
 
 
@@ -247,9 +244,7 @@ export class MsInventaryComponent implements OnInit {
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
       this.infoProd =jsonFile;
-
-
-
+      this.miniumVerification(this.infoProd);
     } ,(error)=>{
         console.log("hubo error con productos");
     } )
@@ -257,9 +252,7 @@ export class MsInventaryComponent implements OnInit {
   }
   getSauce(){
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{
-     
-     
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{    
       this.infoInsFab =jsonFile;
       this.miniumVerification(this.infoInsFab);
 
@@ -276,6 +269,8 @@ export class MsInventaryComponent implements OnInit {
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Refresco").subscribe((jsonFile:any)=>{
      
       this.infoDri = jsonFile;
+      this.miniumVerification(this.infoDri);
+
     } ,(error)=>{
         console.log("hubo error con productos")
     } )
@@ -319,13 +314,7 @@ export class MsInventaryComponent implements OnInit {
     } )
 
   }
-
-  
-
-
   createTransaction(body:any){
-
-    
     this.serviceHttp.postTransaction(body)
     .subscribe((jsonFile:any)=>{
 
@@ -367,15 +356,9 @@ export class MsInventaryComponent implements OnInit {
       this.selectedObject = [];
       let indice = response[2];
       this.selectedInfo[indice] = response[1]
-      
-
-      
     }
 
   }
-  
-
-
   sendTransaction(){
     var date = this.todayDate;
     
@@ -403,9 +386,7 @@ export class MsInventaryComponent implements OnInit {
           Cantidad: cantidadPSucursal,
           Nombre :producto.IdMenu
   
-        });
-        
-        }
+        }); }
 
       });
 
