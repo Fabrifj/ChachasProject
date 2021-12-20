@@ -1,0 +1,34 @@
+<div class="elegirSucursal">
+    <h1> Filtrar:</h1>
+    <select id="" class="options" aria-label="Default select example" [(ngModel)]="selectedValueFilter">
+   
+    
+    <option *ngFor="let sucursal of infoSub;" >
+        
+        <ng-template [ngIf]="sucursal.Tipo != 'Fabrica' " [ngIfElse]="dontSave">
+            <div>
+                {{sucursal.Nombre}}
+            </div> 
+          </ng-template>
+          
+          <ng-template #dontSave>
+            <div>
+                None
+            </div>          
+          </ng-template>
+        
+    </option>
+    
+    
+</select>
+    <button class="btn_filter m-3" (click)="filterA()"> Filtrar</button>
+</div>
+
+
+<div class="arqueoSection">
+    <div class="getSection">
+        <h1>Tabla de Arqueos</h1>
+        <app-reusable-table [datos]="infoArqueo" [columnas]="columnsArqueo" colorLetra="black">
+        </app-reusable-table>
+    </div>
+</div>

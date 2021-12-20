@@ -29,6 +29,25 @@ app.get("/api/product", async (req, res) => {
   res.send(products);
 });
 
+app.post("/api/product/refresco", async (req, res) => {
+  var newproduct = req.body;
+  const response = await fnProduct.createProduct(newproduct);
+  res.send(response);
+});
+
+app.delete("/api/product/:idproduct", async (req, res) => {
+  var productToDelete = req.params.idproduct;
+  const response = await fnProduct.deleteProduct(productToDelete);
+  res.send(response);
+});
+
+app.put("/api/product/:idproduct", async (req, res) => {
+  var productToUpdate = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateProduct(productToUpdate, body);
+  res.send(response);
+});
+
 //Get a product by its ID
 app.get("/api/product/:idproduct", async (req, res) => {
   var productToGet = req.params.idproduct;
@@ -210,12 +229,14 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/products/salsas", async (req, res) => {
   const response = await fnProduct.getSalsasFabrica();
   res.send(response);
+  console.log("en salsas");
 });
 
 //Get chachas fabrica with ingredients
 app.get("/api/products/chachas", async (req, res) => {
   const response = await fnProduct.getChachasFabrica();
   res.send(response);
+  console.log("en chachas");
 });
 
 
@@ -373,6 +394,7 @@ app.delete("/api/employee/:id", async (req, res) => {
 app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   const username = req.params.username;
   const pass = req.params.pass;
+
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
 });
