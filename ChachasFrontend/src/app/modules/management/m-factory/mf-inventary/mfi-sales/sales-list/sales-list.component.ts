@@ -49,7 +49,7 @@ export class SalesListComponent implements OnInit {
   }
 
   cambioCosto(i:number ){
-    this.hacerCompraServicio.ingredientes[i].Costo = this.cost.nativeElement.value; 
+    this.hacerCompraServicio.ingredientes[i].Costo = +this.cost.nativeElement.value; 
     this.calcularActualizacion();
   }
 

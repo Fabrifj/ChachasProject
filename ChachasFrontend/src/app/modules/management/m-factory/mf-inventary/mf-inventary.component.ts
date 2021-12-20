@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+import { HacerCompraService } from 'src/app/modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.service';
 
 
 @Component({
@@ -128,6 +129,7 @@ export class MfInventaryComponent implements OnInit {
     
   ];
 
+
   nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
   nameSauceButtons :string[] = ["Modificar Salsa"];
   nameIngButtons :string[] = ["Modificar Ingrediente"];
@@ -137,10 +139,17 @@ export class MfInventaryComponent implements OnInit {
 
   siModificoIng: boolean = false;
   siModificoProd: boolean = false;
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
+
+  nameProv: string="";
+  nitProv: string="";
+  numBill:string="";
+  nitBill:string="";
+  numAut:string="";
+  limitDate:any;
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService, public hacerCompraService:HacerCompraService) { }
   ngOnInit(): void {
 
-
+    
 
     this.getIngredients();
     this.getMermas();
@@ -333,15 +342,18 @@ export class MfInventaryComponent implements OnInit {
     
     this.selectedObj = {}
     this.getIngredients();
-
-
-
-
-
   }
-
-
-
-
+  
+  realizarCompra(){
+    this.hacerCompraService.registrarCompra(this.nitProv,this.nameProv,this.numBill,this.nitBill,this.numAut,this.limitDate);
+    this.modalService.cerrar('modalFactura');
+    this.hacerCompraService.ingredientes=[];
+    this.nitProv='';
+    this.nameProv='';
+    this.numBill='';
+    this.nitBill='';
+    this.numAut='';
+    this.limitDate=undefined;
+  }
 
 }

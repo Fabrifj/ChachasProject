@@ -42,7 +42,29 @@ export class HacerCompraService implements OnInit{
     if(ele==""){return this.ingredientes}
     return this.ingredientes.find( (element)=> element.Nombre == ele); 
   }
-  registrarCompra(){
-    
+  registrarCompra(nitProv:string,nameProv:string,numBill:string,nitBill:string,numAut:string,limitDate:any){
+    var ingList = this.ingredientes.map((elem)=>({
+      'IdObjeto':elem.Id,
+      'Costo':elem.Costo,
+      'Cantidad':elem.Cantidad
+    }))
+    let body = {
+      "Fecha": Date.now(),
+      "ListaObjetos":ingList,
+      "Origen":"Fabrica",
+      "Factura":{
+        "NITProveedor":nitProv,
+        "NombreProveedor":nameProv,
+        "NumeroFactura":numBill,
+        "NITFactura":nitBill,
+        "NumeroAutorizacion":numAut,
+        "FechaLimiteEmision":limitDate
+      }
+    }
+    // this.httpService.crearPedido(JSON.parse(JSON.stringify(body))).subscribe((response) => {
+    //   console.log('Response from API', response);
+    // }, (error)=>{
+    //   console.log('Error',error);
+    // })
   }
 }
