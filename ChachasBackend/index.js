@@ -230,7 +230,13 @@ app.get("/api/products/chachas", async (req, res) => {
   res.send(response);
 });
 
-
+// Create Product-Salsa with ingredients (id's) and cantidadMedida
+app.post("/api/product/salsa/:idfabrica", async (req, res) => {
+  var newSalsa = req.body;
+  var idFabrica = req.params.idfabrica;
+  const response = await fnProduct.createProductSalsaRecetaInformacion(idFabrica, newSalsa);
+  res.send(response);
+});
 
 /*=================================
           CRUD ORDER
