@@ -9,6 +9,20 @@ async function getMerma(idMerma)
 {
     return await fnHerramientas.getDoc(idMerma,"Merma");
 }
+async function getMermabySubsidiary(idSubsidiary){
+  var mermas = await fnHerramientas.getDocs("Merma");
+  var respuesta = [];
+  mermas.forEach(element => {
+    console.log(element);
+    if(element.IdSucursal == idSubsidiary)
+      {
+        respuesta.push(element);
+        console.log("entra",element);
+      }
+  });
+  return respuesta;
+}
+
 //CrearMerma
 /**
  * 
@@ -50,6 +64,7 @@ async function deleteMerma(idMerma)
 
   module.exports = {
     getMermas,
+    getMermabySubsidiary,
     createMerma,
     deleteMerma,
     updateMerma,

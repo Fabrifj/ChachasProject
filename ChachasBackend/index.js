@@ -494,6 +494,14 @@ app.get("/api/merma", async (req, res) => {
   const respuesta = await fnMerma.getMermas();
   res.send(respuesta);
 });
+
+//Get all mermas by id Subsidiary
+app.get("/api/merma/bySubsidiary/:id", async (req, res) => {
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnMerma.getMermabySubsidiary(idSubsidiary);
+  res.send(respuesta);
+});
+
 //Get Merma by Id
 app.get("/api/merma/:id", async (req, res) => {
   const idMerma = req.params.id;
