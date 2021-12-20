@@ -1,6 +1,7 @@
 const { firebase, product, menu } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
+const fnSubsidiary = require("./subsidiary");
 const db = firebase.firestore();
 
 //GetAllProducts or the collection
@@ -574,15 +575,83 @@ async function calculateCostChachaFactory(listaIngredientes) {
     const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
     ing.Nombre = myIng.Nombre;
     ing.CantidadMedida = ing.Cantidad;
+    console.log("Cantidad", ing.Cantidad, ing.CantidadMedida);
     delete ing.Cantidad;
+    console.log("Cantidad Medida", ing.CantidadMedida);
+    
     ing.Costo =
       parseFloat(ing.CantidadMedida) *
       (parseFloat(myIng.CostoMedio) / parseFloat(myIng.CantidadMedida));
     costoTot += ing.Costo;
   }
-  //console.log("ListaIngredientes: ",listaIngredientes);
+  console.log("ListaIngredientes: ",listaIngredientes);
   return { Costo: costoTot, ListaIngredientes: listaIngredientes };
 }
+
+async function calculateCostSalsaFactory(listaIngredientes) {
+  var costoTot = 0;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    ing.Nombre = myIng.Nombre;
+    delete ing.Cantidad;
+    ing.Costo =
+      parseFloat(ing.CantidadMedida) *
+      parseFloat(myIng.CostoMedio);
+    costoTot += ing.Costo;
+    console.log("Costo", ing.Costo);
+  }
+  return { Costo: costoTot, ListaIngredientes: listaIngredientes };
+}
+
+// Create product salsa receta informacion
+async function createProductSalsaRecetaInformacion(idFabrica, body) {
+  var res = null;
+  const calculo = await calculateCostSalsaFactory(body.ListaIngredientes);
+  res = { Origen: idFabrica, TipoOrigen: "Fabrica", Nombre: body.Nombre, 
+    ListaIngredientes: calculo.ListaIngredientes, CantidadMedida: body.CantidadMedida, 
+    Costo: calculo.Costo, TipoUnidad: body.TipoUnidad};
+  await product.add(res);
+  return res;
+}
+/* 11.- modificar producto salsa receta informacion
+{
+	"Origen": "Lbh5237VEKHWHzRlhnwB",
+	"TipoOrigen": "Fabrica",
+	"Nombre": "Salsa test",
+	"ListaIngredientes": [
+		{
+			"IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+			"Nombre": "Cebolla",
+			"CantidadMedida": 0.25,
+			"TipoUnidad": "kg",
+			"Costo": 0.7916666666666666
+		},
+		{
+			"IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+			"Nombre": "Carne de Res",
+			"CantidadMedida": 0.5,
+			"TipoUnidad": "kg",
+			"Costo": 10
+		}
+	],
+	"Costo": 10.791666666666666,
+  "TipoUnidad": "ml"
+} */
+// Update product salsa receta informacion
+async function updateProductSalsaRecetaInforacion(idproduct, body) {
+  var res = null;
+  await product
+    .doc(idproduct)
+    .update(body)
+    .then(() => {
+      res = body;
+    })
+    .catch((error) => {
+      res = "Error updating product";
+    });
+  return res;
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -602,7 +671,9 @@ module.exports = {
   getProductsFabrica,
   createProductFactory,
   calculateCostChachaFactory,
+  calculateCostSalsaFactory,
   updateProductFactory,
   getChachasFabrica,
-  getSalsasFabrica
+  getSalsasFabrica,
+  createProductSalsaRecetaInformacion
 };
