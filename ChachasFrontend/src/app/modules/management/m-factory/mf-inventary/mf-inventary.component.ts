@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { delay } from 'rxjs';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+import { ReusableTableComponent } from 'src/app/shared-modules/reusable-table/reusable-table.component';
 
 
 @Component({
@@ -10,71 +12,11 @@ import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 })
 export class MfInventaryComponent implements OnInit {
 
-  experimetoIngrediente =
-  [{
-
-    "Nombre" : "Carne de res molida",
-    "TipoUnidad":"Kg.",
-    "CantidadInventario":50,
-    "CantidadMinima":10,
-    "Costo": 4,
-    "CantidadCosto":2
-  
-  }]
-  
-  experimetoProductoChacha =
-  [{
-
-    "Nombre" : "Chacha de carne",
-	  "TipoUnidad": "Kg",
-	  "CantidadInventario":5,
-	  "Costo": 4,
-	  "Precio": 5,
-    "CantidadMinima":2,
-	  "LiistaIngredientes":[
-		  {
-			  "Nombre":"Zanahoria",
-			  "Cantidad": 3, 
-			  "TipoUnidad" : "Unidades"  
-		  }
-		
-	  ]
-  
-  }]
-  experimetoProductoSalsa =
-  [{
-
-    "Nombre" : "Salsa de mani",
-	  "TipoUnidad": "ml",
-    "CantidadInventario":2000,
-    "CantidadResultante":500,
-    "CantidadMinima":100,
-	  "LiistaIngredientes":[
-		  {
-			  "Nombre":"Zanahoria",
-			  "Cantidad": 3, 
-			  "TipoUnidad" : "Unidades"  
-		  }
-		
-	  ]
-  
-  }]
-
-  experimentoMerma=
-  [{
-
-    "Nombre": "chacha de carne",
-    "Cantidad" : 2,
-    "Fecha" : "2021-12-12",
-    "Sucursal":"Sucursal 2"
-  
-  }]
+ 
 
 
 
-
-
-  infoIng:any | undefined ; 
+  infoIng:any =[] ; 
   columnsIng = [
     {field:'Nombre',header:'Nombre'},
     {field:'TipoUnidad',header:'Tipo de unidad'},
@@ -84,14 +26,23 @@ export class MfInventaryComponent implements OnInit {
     {field:'CantidadMinima',header:'Cantidad minima'},
     
   ];
+  datosIngBackUp:any | undefined;
 
-
-  infoIngMini:any | undefined ; 
+  infoIngMini:any =[] ; 
   columnsIngMini = [
     {field:'Nombre',header:'Nombre'},
+    {field:'TipoUnidad',header:'Tipo de unidad'}
+ 
+    
+  ];
+
+
+  infoIngMini2:any =[] ; 
+  columnsIngMini2 = [
+    {field:'Nombre',header:'Nombre'},
     {field:'TipoUnidad',header:'Tipo de unidad'},
-    {field:'CantidadMedida',header:'Cantidad'},
-    {field:'Costo',header:'Costo'}
+    {field:'CantidadMedida',header:'Cantidad'}
+ 
     
   ];
 
@@ -99,8 +50,8 @@ export class MfInventaryComponent implements OnInit {
   infoProd:any =[] ; 
   columnsProd = [
     {field:'Nombre',header:'Nombre'},
-    {field:'TipoUnidad',header:'Tipo de unidad'},
     {field:'CantidadInventario',header:'Cantidad en Inventario'},
+    {field:'CantidadMinima',header:'Cantidad Minima'},
     {field:'Costo',header:'Costo'},
     {field:'Precio',header:'Precio'},
     
@@ -111,7 +62,8 @@ export class MfInventaryComponent implements OnInit {
     {field:'Nombre',header:'Nombre'},
     {field:'TipoUnidad',header:'Tipo de unidad'},
     {field:'CantidadInventario',header:'Cantidad en Inventario'},
-    {field:'CantidadResultante',header:'Cantidad resultante receta'}
+    {field:'CantidadMedida',header:'Cantidad Medida'},
+    {field:'CantidadMinima',header:'Cantidad Minima'}
     
     
     
@@ -129,48 +81,100 @@ export class MfInventaryComponent implements OnInit {
   ];
 
   nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
-  nameSauceButtons :string[] = ["Modificar Salsa"];
+  nameSauceButtons :string[] = ["Ver Ingredientes","Modificar Salsa","Reservar Salsa"];
   nameIngButtons :string[] = ["Modificar Ingrediente"];
   
   nameButtonIng:string = "";
+  nameButtonProd:string = "";
   selectedObj:any = {};
 
   siModificoIng: boolean = false;
   siModificoProd: boolean = false;
 
-  isAlert:boolean=false;
-  msgAlert : string = "";
+  titulosIng = ['Cantidad']
+
+  nombreBotonesIng1: string[] = ['Agregar'];
+  nombreBotonesIng2: string[] = ['Quitar'];
+
+  datosIngrendientesCCantidad :any;
+  imgUrl:any= "";
+  msgAlert:string="";
+  siChacha = true;
+
+
+
+  cantidadRSalsa=0;
+  cantidadPChacha=0;
+
+  @ViewChild(ReusableTableComponent) hijoTabla:ReusableTableComponent | undefined ;
+  
+
+  //contador de click en modificar producto
+  cont = 1;
 
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
-
-
-    this.getIngredients();
-    this.getMermas();
-    this.getProducts();
-    this.getSauce();
     
+    this.getChachasFabrica();
+    this.getIngredients();
+    //this.getMermas();
+    
+    //this.getProducts();
+    
+
+    
+    
+  
   }
 
   getProducts(){
 
     this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
-
+      console.log("productos",jsonFile);
       var infoProducts : any = [];
       this.miniumVerification(jsonFile);
 
       jsonFile.forEach((element:any) => {
-        if(element.Origen == "Fabrica"){
+        if(element.TipoOrigen == "Fabrica"){
 
           infoProducts.push(element);
-
         }
-
 
       });
 
       this.getMenu(infoProducts);
+
+    },(error)=>{
+      console.log("hubo error con productos")
+    }
+    );
+   
+
+  }
+
+
+  getSalsasFabrica(){
+
+    this.serviceHttp.getSalsasFabrica().subscribe((jsonFile:any)=>{
+      console.log("Salsas",jsonFile);
+      this.infoSauce = jsonFile;
+     
+
+    },(error)=>{
+      console.log("hubo error con ingredientes")
+    }
+    );
+   
+
+  }
+  getChachasFabrica(){
+
+    this.serviceHttp.getChachasFabrica().subscribe((jsonFile:any)=>{
+      console.log("chachas",jsonFile);
+      this.infoProd = jsonFile;
+    
+      this.getSalsasFabrica();
 
     },(error)=>{
       console.log("hubo error con ingredientes")
@@ -180,20 +184,18 @@ export class MfInventaryComponent implements OnInit {
 
   }
 
-
   getMenu(structure:any){
 
-
+    
     this.serviceHttp.getMenu().subscribe((jsonFile:any)=>{
-
+      console.log("menu",jsonFile);
 
       structure.forEach((element2:any) => {
             
         jsonFile.forEach((element:any) => {
 
 
-        console.log("id",element.id);
-        console.log("id struc", element2.IdMenu);
+        
        
           if(element.id == element2.IdMenu){
 
@@ -215,19 +217,13 @@ export class MfInventaryComponent implements OnInit {
     );
 
   }
-  getSauce(){
-
-    this.infoSauce = this.experimetoProductoSalsa;
-   
-
-  }
+ 
   getIngredients(){
 
     this.serviceHttp.getIngredients().subscribe((jsonFile:any)=>{
-
+      console.log("ingredientes",jsonFile);
       this.infoIng = jsonFile;
-      this.miniumVerification(this.infoIng);
-
+      this.datosIngBackUp = jsonFile;
     },(error)=>{
       console.log("hubo error con ingredientes")
     }
@@ -248,6 +244,17 @@ export class MfInventaryComponent implements OnInit {
     );
    
   }
+  createProductFactory(body:any){
+    this.serviceHttp.createProductFactory(body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la creacion de product");
+    },(error)=>{
+      console.log("hubo error con product")
+    }
+    );
+
+  }
+
   updateIngredient(id:any,body:any){
 
     this.serviceHttp.updateIngredient(id,body).subscribe((jsonFile:any)=>{
@@ -259,50 +266,271 @@ export class MfInventaryComponent implements OnInit {
     );
    
   }
-  getMermas(){
 
-    this.infoMerm = this.experimentoMerma;
+  updateProduct(id:any,body:any){
 
+    this.serviceHttp.updateProductFactory(id,body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la modificacion de product");
+    },(error)=>{
+      console.log("hubo error con product")
+    }
+    );
+   
   }
+  updateMenu(id:any,body:any){
+
+    this.serviceHttp.updateMenu(id,body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la modificacion de menu");
+    },(error)=>{
+      console.log("hubo error con menu")
+    }
+    );
+   
+  }
+
+
 
   functionSelectObj(response :any){
     this.selectedObj = response[1];
-    if( response[0] == "Modificar Producto"){
-
-
-      this.openProductC('Modificar');
-
-    }
-    else if( response[0] == "Producir Producto"){
-
-      this.modalService.abrir('modalProd-02');
-
-    }
-    else if( response[0] == "Modificar Salsa"){
-
-      this.modalService.abrir('modalSauce-01');
-
-    }
-    else if( response[0] == "Modificar Ingrediente"){
+    
+    
+    if( response[0] == "Modificar Ingrediente"){
      
      this.siModificoIng = true;
       this.openIngC('Modificar');
 
     }
-    else if( response[0] == "Comprar Ingrediente"){
+    
+    
+    
 
-      this.modalService.abrir('modalIng-02');
+  }
+
+  functionAddModProd(response:any){
+
+
+    if(response[0] == "Agregar"){
+
+      
+      var elemAgregar = response[1];
+      
+      //quitar de lista grande
+      this.infoIng = this.infoIng.filter((obj:any) => obj.id !== elemAgregar.id);
+      //agregar a lista pequna
+      var elemNuevo = JSON.stringify({IdIngrediente: elemAgregar.id , Nombre: elemAgregar.Nombre , Costo: elemAgregar.CostoMedio , TipoUnidad:elemAgregar.TipoUnidad });
+      this.infoIngMini.push(JSON.parse(elemNuevo));
+      
+
+
+      var costo = 0 ;
+      this.infoIngMini.forEach((element:any) => {
+        
+         costo = costo + parseInt(element.Costo);
+      });
+
+      (<HTMLInputElement>document.getElementById("prodCost")).value = String(costo);
+
+      
+    }
+    else if(response[0]=="Quitar"){
+        //quitar
+        
+      
+      
+        var elemQuitar = response[1];
+        var ingSeleccionado :any = {};
+        this.datosIngBackUp.forEach((element:any) => {
+          if(element.id == elemQuitar.IdIngrediente){
+            ingSeleccionado = element;
+          }
+        });
+        
+        //qutiar mini lista
+        this.infoIngMini = this.infoIngMini.filter((obj:any) => obj.IdIngrediente !== elemQuitar.IdIngrediente);
+        
+       // var elemNuevo = JSON.stringify({ id: elemQuitar.IdProducto , Nombre: elemQuitar.NombreProducto , ImgURL: elemQuitar.ImgURL});
+       var costo = 0 ;
+       this.infoIngMini.forEach((element:any) => {
+          costo = costo + parseInt(element.Costo);
+       });
+ 
+       (<HTMLInputElement>document.getElementById("prodCost")).value = String(costo);
+        this.infoIng.push( ingSeleccionado);
+
+
+
+    }
+    else if(response[0]=="GuardarTodo"){
+
+      if(response[2] == "10") {
+
+
+        
+
+        this.datosIngrendientesCCantidad = response[1];
+        var costo = 0 ;
+        this.datosIngrendientesCCantidad.forEach((element:any) => {
+           costo = costo + parseInt(element.Costo);
+        });
+  
+        (<HTMLInputElement>document.getElementById("prodCost")).value = String(costo);
+
+
+      }
+      
+
+    }
+    else if( response[0] == "Producir Producto"){
+      this.selectedObj = response[1] ;
+      this.modalService.abrir('modalProd-02');
+
+    }
+    else if(response[0]=="Modificar Producto"){
+      
+      this.siModificoProd = true;
+
+        this.selectedObj = response[1] ;
+        this.infoIngMini = this.selectedObj.ListaIngredientes;
+  
+        this.probarImg();
+       
+        this.infoIngMini.forEach((element:any) => {
+            //quitar de lista grande
+            this.infoIng = this.infoIng.filter((obj:any) => obj.id !== element.IdIngrediente);
+        });
+
+
+        
+      if(this.cont ==2 ){
+
+  
+        
+        this.openProductC('Modificar Chacha');
+        
+        	this.cont = 1;
+      }
+      else{
+
+        this.cont ++;  
+
+      }
+     
+      //rellenamos los valores
+
+
+
+    }
+    else if(response[0]=="Modificar Salsa"){
+      
+      this.siModificoProd = true;
+
+        this.selectedObj = response[1] ;
+        this.infoIngMini = this.selectedObj.ListaIngredientes;
+  
+        this.probarImg();
+       
+        this.infoIngMini.forEach((element:any) => {
+            //quitar de lista grande
+            this.infoIng = this.infoIng.filter((obj:any) => obj.id !== element.IdIngrediente);
+        });
+
+
+        
+      if(this.cont ==2 ){
+
+  
+        
+        this.openProductS('Modificar Salsa');
+        
+        	this.cont = 1;
+      }
+      else{
+
+        this.cont ++;  
+
+      }
+     
+      //rellenamos los valores
+
+
+
+    }
+    else if(response[0]== "Reservar Salsa"){
+      this.selectedObj = response[1];
+      this.modalService.abrir('modalSauce-01');
+
     }
     else if( response[0] == "Ver Ingredientes"){
-      this.infoIngMini = this.selectedObj.ListaIngredientes;
+      this.selectedObj = response[1];
+      this.infoIngMini2 = this.selectedObj.ListaIngredientes;
       this.modalService.abrir('modalIng-03');
     }
 
   }
+
+  
+
+  
+
   openProductC(action:any){
 
-    
+    this.siChacha = true;
+    this.nameButtonProd = action;
     this.modalService.abrir('modalProd-01');
+
+
+    var indice1 = 0 ;
+   
+    this.infoIngMini.forEach((element:any) => {
+      var indice2 = 0 ;
+      this.titulosIng.forEach((titulo:any) => {
+
+        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ; 
+
+      
+        
+        (<HTMLInputElement>document.getElementById(nombreCC)).value = element.CantidadMedida ;
+
+        
+        indice2 = indice2 +1;
+      });
+      
+
+      indice1= indice1+1;
+    });
+
+
+  }
+  openProductS(action:any){
+
+    this.siChacha = false;
+    this.nameButtonProd = action;
+    this.modalService.abrir('modalProd-01');
+
+
+    var indice1 = 0 ;
+   
+    this.infoIngMini.forEach((element:any) => {
+      var indice2 = 0 ;
+      this.titulosIng.forEach((titulo:any) => {
+
+        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ; 
+
+      
+        
+        (<HTMLInputElement>document.getElementById(nombreCC)).value = element.CantidadMedida ;
+
+        
+        indice2 = indice2 +1;
+      });
+      
+
+      indice1= indice1+1;
+    });
+
+
   }
   openIngC(action:any){
     this.nameButtonIng = action;
@@ -318,10 +546,61 @@ export class MfInventaryComponent implements OnInit {
 
   createProduct(){
 
+  
+    this.hijoTabla?.guardarDT();
+    
+    this.modalService.cerrar('modalProd-01');
+    this.selectedObj.ListaIngredientes = this.datosIngrendientesCCantidad;
+    if(this.nameButtonProd == 'Modificar Chacha'){
+
+      var newMenu = JSON.stringify({ Nombre:this.selectedObj.Nombre , ImgURL: this.selectedObj.ImgURL });
+      this.updateMenu(this.selectedObj.IdMenu , JSON.parse(newMenu));
+      console.log("this.selectedObj:",this.selectedObj);
+
+      var newProd = JSON.stringify({ IdMenu:this.selectedObj.IdMenu ,CantidadMinima: this.selectedObj.CantidadMinima, Precio:this.selectedObj.Precio ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad });
+      console.log(newProd);
+      this.updateProduct(this.selectedObj.id , JSON.parse(newProd));
+
+    }
+    else if(this.nameButtonProd=='Crear Chacha'){
+      //se crea el ingrediente
+      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes });
+    
+     
+      console.log("this.selectedObj:",this.selectedObj);
+
+
+      this.createProductFactory(JSON.parse(newProd));
+    }
+    
+    else if(this.nameButtonProd == 'Modificar Salsa'){
+
+    
+      console.log("this.selectedObj:",this.selectedObj);
+
+      var newProd = JSON.stringify({ CantidadMinima: this.selectedObj.CantidadMinima,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre});
+      console.log(newProd);
+      //this.updateProduct(this.selectedObj.id , JSON.parse(newProd));
+
+    }
+    else{
+      //se crea salsa
+      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre});
+    
+     
+      console.log("this.selectedObj:",this.selectedObj);
+
+
+      //this.createProductFactory(JSON.parse(newProd));
+    }
 
 
 
-
+    this.selectedObj = {};
+    this.infoIngMini = []
+    this.siModificoProd = false;
+    this.getChachasFabrica();
+    
 
   }
   createIng(){
@@ -336,10 +615,13 @@ export class MfInventaryComponent implements OnInit {
     }
     else{
       //se crea el ingrediente
+      this.selectedObj.CantidadInventario = 0;
+      this.selectedObj.CostoMedio = 0;
       this.createIngredient(this.selectedObj);
     }
     
     this.selectedObj = {}
+    this.siModificoIng = false;
     this.getIngredients();
 
 
@@ -373,7 +655,26 @@ export class MfInventaryComponent implements OnInit {
   }
 
 
+  probarImg(){
+
+    this.imgUrl = this.selectedObj.ImgURL;
+  }
 
 
+  reservarSalsa(){
+    var id = this.selectedObj.id;
+    var cantidad = this.cantidadRSalsa;
+
+    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+
+  }
+
+  producirChacha(){
+    var id = this.selectedObj.id;
+    var cantidad = this.cantidadPChacha;
+
+    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+
+  }
 
 }

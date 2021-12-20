@@ -18,6 +18,10 @@ export class SidenavComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string ="";
+  todayDate:any = undefined;
+  user:any=undefined;
+
+  selectedObject:any = {}
   
   constructor(public modalService:ModalService, 
     private formBuilder:FormBuilder,
@@ -25,6 +29,7 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private appHttpService: AppHttpService,
     private loginService: LoginService,
+    private serviceHttp: AppHttpService,
     ) {
       this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -39,9 +44,13 @@ export class SidenavComponent implements OnInit {
   isLogin:string="Logout";
 
   
+
+  
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.todayDate=new Date().toISOString().slice(0, 10);
+    
     this.isLogin=this.loginService.getStatus();
     this.loginService.StatusChanged.subscribe((status:string)=>{
       this.isLogin = status;
@@ -143,32 +152,36 @@ export class SidenavComponent implements OnInit {
 //             });
 // }
 
-  verificar(){
-    /* 
-    var myInput:any = this.loginService.getAccountType;
-    console.log("Desde sidenav: " + this.loginService.accountType)
+  datoUsuario(){
+    this.user =  this.loginService.getUser();
+    console.log(this.user)
+    
+  }
 
-    if (myInput.value == "Sucursal") {
-         this.isShownS=true
-         this.isShownO=false
-         this.isShownF=false
-    }
-    else if (myInput.value == "Admin") {
-      this.isShownO=true
-      this.isShownS=false
-      this.isShownF=false
-    }
-    else if (myInput.value == "Fabrica") {
-      this.isShownF=true
-      this.isShownS=false
-      this.isShownO=false
-    }
+   mandarMonto(){
+    var monto = ((<HTMLInputElement>document.getElementById("montoCaja")).value)
+    var fecha = this.todayDate
+    
+    var origen = this.loginService.getUser();
 
-    else{
-      this.isShownF=false
-      this.isShownS=false
-      this.isShownO=false
-    }*/
-  }  
+    //var origen = "fQUIYmDtANPICSeObads"
+    var montoInicio = JSON.stringify({ CuentaInicial:monto, Fecha:fecha, Origen:origen})
+    //console.log(montoInicio)
+    this.createArqueo(JSON.parse(montoInicio))
+  }
+
+  createArqueo(body:any){
+    this.serviceHttp.postArqueo(body)
+    .subscribe((jsonFile:any)=>{
+
+      alert('arqueo creado correctamente');
+
+
+    } ,(error)=>{
+        console.log("hubo error al crear el arqueo")
+
+    } ) 
+
+  } 
 
 }

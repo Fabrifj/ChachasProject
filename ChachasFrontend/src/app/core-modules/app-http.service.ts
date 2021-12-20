@@ -75,6 +75,7 @@ export class AppHttpService {
 
     return this.http.get(paths.GetSubsidiary)
   }
+  
   postSub(body:any){
     
     return this.http.get(paths.CreateSubsidiary,body);
@@ -97,6 +98,7 @@ export class AppHttpService {
 
     return this.http.post(paths.CreateTransaction,body)
   }
+
   //Registrar consumo
   updateConsumo(idProd:any , body:any ){
     
@@ -137,9 +139,27 @@ export class AppHttpService {
   }
 
   //producto Factory
+  getSalsasFabrica(){
+
+    return this.http.get(paths.GetSalsasFabrica);
+
+  }
+  getChachasFabrica(){
+
+    return this.http.get(paths.GetChachasFabrica);
+
+  }
+
+
+
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
 
+  }
+
+  updateProductFactory(id:any,body:any){
+    var path = paths.UpdateProductFactory + id;
+    return this.http.put(path,body);
   }
 
   //Menu
@@ -147,6 +167,60 @@ export class AppHttpService {
     return this.http.get(paths.GetMenus);
 
   }
+  updateMenu(id:any,body:any){
+    var path = paths.UpdateMenu + id;
+    return this.http.put(path,body);
+  }
 
+  //Empleados
+
+  postEmployee(body:any){
+
+
+    return this.http.post(paths.CreateEmployee,body)
+  }
+
+  updateEmployee(CI:any , body:any){
+    return this.http.put(paths.UpdateEmployee+CI,body);
+  }
+  
+
+  getSubsidiaryId(idSub:any){
+    var path = paths.GetSubsidiaryId + idSub;
+    var data = this.http.get(path);
+    return this.http.get(path)
+  }
+
+  deleteEmployee(CI:any){
+    return this.http.delete(paths.DeleteEmployee+CI);
+  }
+
+  createSubsidiary(body:any){
+    
+    return this.http.post(paths.CreateSubsidiary, body)
+  }
+  updateSubsidiary(idSub:any , body:any){
+    
+    return this.http.put(paths.UpdateSubdidiaryId+idSub, body)
+  }
+  deleteSucursal(id:any){
+    return this.http.delete(paths.DeleteSubsidiary+id);
+  }
+  getEmployeesByDomain(idDom:any){
+    return this.http.get(paths.GetEmployeesbyDomain+idDom)
+  }
+
+  getRegisterCuenta(){
+    return this.http.get(paths.GetRegisterCuentas);
+  }
+
+  getRegisterCuentaBySubsidiary(idCuenta:any){
+    return this.http.get(paths.GetRegisterCuentaBySubsidiary+idCuenta)
+  }
+
+
+  postArqueo(body:any){
+    return this.http.post(paths.CreateRegisterCuenta,body)
+  } 
 
 }

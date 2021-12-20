@@ -16,6 +16,7 @@ import { MSubsidiaryComponent } from './modules/management/m-subsidiary/m-subsid
 import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inventary/ms-inventary.component';
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -117,7 +118,8 @@ import {  MatRadioModule} from '@angular/material/radio';
     HttpClientModule,
     MatRadioModule,
     AgmCoreModule.forRoot({
-      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
+      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I",
+      libraries: ['places']
     }),
     // provideFirebaseApp(() => initializeApp(environment)),
     // provideFirestore(() => getFirestore())

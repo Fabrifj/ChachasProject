@@ -1,13 +1,10 @@
-
- 
-
-
 <div class="inventarySection">
 
-    
     <!-- 
 
    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true" (mapReady)="clickReadyMap($event)">
+
+    <div class="row">
 
         <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
             <agm-info-window>
@@ -20,27 +17,28 @@
         </agm-marker>
     </agm-map>
      -->
- 
+
 
 
 
     <input type="text" [(ngModel)]="prLat">
     <input type="text" [(ngModel)]="prLon">
-    <div class="row" >
+    <div class="row">
+
         <div *ngIf="isAlert" id="myAlert">
             <div class="col-md-11">
                 <p>{{msgAlert}}</p>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button> 
+                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button>
             </div>
         </div>
 
     </div>
-      
-    
-   
-    <div class="row" >
+
+
+
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de los Refrescos</h1>
             <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
@@ -48,7 +46,7 @@
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de los insumos de sucursal</h1>
             <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameInsCButtons" (parentMethod)="functionChooseObj($event)">
@@ -56,23 +54,23 @@
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de las Salsas</h1>
             <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
-    
+
             </app-reusable-table>
         </div>
     </div>
-    
 
-    <div class="row" >
+
+    <div class="row">
         <div class="col-md-12">
 
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de las Chachas</h1>
             <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
@@ -80,21 +78,21 @@
         </div>
     </div>
 
-   
 
-    
-    <div class="row" >
+
+
+    <div class="row">
         <div class="col-md-12">
             <hr />
-        <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
-        <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
-        <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
+            <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
+            <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+            <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
+            <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
+            <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
         </div>
     </div>
 
- 
+
 </div>
 
 
@@ -114,6 +112,7 @@
         <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue">
         <option selected>None</option>
         <option *ngFor="let sucursal of infoSubs;" >{{sucursal.Nombre}}</option>
+        
         
     </select>
 
