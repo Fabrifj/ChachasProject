@@ -14,7 +14,9 @@
         <div class="col-md-3">
             <button class="btn" (click)="seeHistoryM();">Historial de mermas</button>
         </div>
-        
+        <div class="col-md-3" routerLinkActive="active">
+            <button class="btn" (click)="this.modalService.abrir('modalSellIng')">Comprar Ingredientes</button>
+        </div>
 
          
         
@@ -371,4 +373,12 @@
         <button class="btnCerrar" (click)="modalService.cerrar('modalIng-03');">Cancelar</button>
     </div>
 
+</jw-modal>
+
+<!-- Comprar Ingredientes -->
+<jw-modal id="modalSellIng" altura="90" ancho="95">
+    <div class="botones modal-header">
+        <button class="btnCerrar" (click)="modalService.cerrar('modalSellIng');">Cancelar</button>
+    </div>
+    <app-mfi-sales></app-mfi-sales>
 </jw-modal>

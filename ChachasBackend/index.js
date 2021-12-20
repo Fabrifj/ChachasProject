@@ -17,6 +17,7 @@ const fnHerramientas = require("./herramientas");
 const fnTransaction = require("./transaction");
 const fnMerma = require("./merma");
 const fnIngredient = require('./ingredient');
+const fnRegister = require('./register');
 
 /*=================================
           CRUD PRODUCT
@@ -26,6 +27,25 @@ const fnIngredient = require('./ingredient');
 app.get("/api/product", async (req, res) => {
   const products = await fnProduct.getAllProducts();
   res.send(products);
+});
+
+app.post("/api/product/refresco", async (req, res) => {
+  var newproduct = req.body;
+  const response = await fnProduct.createProduct(newproduct);
+  res.send(response);
+});
+
+app.delete("/api/product/:idproduct", async (req, res) => {
+  var productToDelete = req.params.idproduct;
+  const response = await fnProduct.deleteProduct(productToDelete);
+  res.send(response);
+});
+
+app.put("/api/product/:idproduct", async (req, res) => {
+  var productToUpdate = req.params.idproduct;
+  var body = req.body;
+  const response = await fnProduct.updateProduct(productToUpdate, body);
+  res.send(response);
 });
 
 //Get a product by its ID
@@ -54,8 +74,8 @@ app.get("/api/product/subsidiary/:idSub", async (req, res) => {
 app.get("/api/product/ChachaRefresco/:idSub", async (req ,res) => {
   var idSub = req.params.idSub;
   var respuesta;
-  var chachas = await fnProduct.getProductEntityType(idSub, "Chacha");
-  var refrescos = await fnProduct.getProductEntityType(idSub, "Refresco");
+  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+  var refrescos = await fnProduct.getProductSubsidiaryType(idSub, "Refresco");
   if (chachas == null || refrescos == null){
     respuesta = null;
   }else{
@@ -531,6 +551,68 @@ app.delete("/api/ingredient/:id", async (req, res) => {
   const respuesta = await fnIngredient.deleteIngredient(idIn);
   res.send(respuesta);
 });
+
+
+/*===================================
+          CRUD REGISTER
+===================================*/
+
+//Create register document of type cuenta
+app.post("/api/register/cuenta", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterCuentas(body);
+  res.send(response);
+});
+
+//Create register document of type ingreso or egreso
+app.post("/api/register/ingreso_egreso", async (req, res) => {
+  var body = req.body;
+  const response = await fnRegister.createRegisterIngresoEgreso(body);
+  res.send(response);
+});
+
+// Get all the registers of type cuenta
+app.get("/api/register/cuenta", async (req, res) => {
+  const response = await fnRegister.getRegisterCuentas();
+  res.send(response);
+});
+
+// Get Cuenta by Date
+app.get("/api/register/cuenta/:date", async (req, res) => {
+  const date = req.params.date;
+  const response = await fnRegister.getCuentaByDate(date);
+  res.send(response);
+});
+
+// Get a register by ID
+app.get("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const response = await fnRegister.getRegisterByID(id);
+  res.send(response);
+});
+
+//Update Cuenta
+app.put("/api/register/cuenta/:id", async (req, res) => {
+  const body = req.body;
+  const id = req.params.id;
+  const respuesta = await fnRegister.updateRegisterCuenta(id, body);
+  res.send(respuesta);
+});
+
+//Delete Register
+app.delete("/api/register/:id", async (req, res) => {
+  const id = req.params.id;
+  const respuesta = await fnRegister.deleteRegister(id);
+  res.send(respuesta);
+});
+
+
+
+
+
+
+
+
 
 
 app.listen(4000, () => console.log("Up and Running on 4000"));
