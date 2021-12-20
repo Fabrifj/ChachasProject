@@ -11,13 +11,31 @@ async function getMerma(idMerma)
 }
 async function getMermabySubsidiary(idSubsidiary){
   var mermas = await fnHerramientas.getDocs("Merma");
+  var menus = await fnHerramientas.getDocs("Menu");
   var respuesta = [];
   mermas.forEach(element => {
     console.log(element);
     if(element.IdSucursal == idSubsidiary)
       {
-        respuesta.push(element);
+        //respuesta.push(element);
         console.log("entra",element);
+        menus.forEach(m => {
+          if(element.IdMenu == m.id){
+            console.log("entra para m",m);
+            respuesta.push({
+              "Cantidad":element.Cantidad,
+              "CantidadResultante":element.CantidadResultante,
+              "Estado":element.Estado,
+              "Fecha":element.Fecha,
+              "IdMenu":element.IdMenu,
+              "IdSucursal":element.IdSucursal,
+              "Observacion":element.Observacion,
+              "NombreMenu":m.Nombre
+            })
+          }
+        });
+
+
       }
   });
   return respuesta;
