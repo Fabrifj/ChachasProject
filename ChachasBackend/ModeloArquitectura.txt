@@ -189,6 +189,7 @@ Pedido:
 		"RazonSocial": //Este es el apellido del cliente
 	}
 	"IdSucursal":"",
+	"Fecha": "YYYY-MM-DD",
 }
 =========================================================================
 Empleado:
