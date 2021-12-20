@@ -21,9 +21,10 @@ export class MoSucursalesComponent implements OnInit {
   infoSub:any="";
   idSubsidiary:any="";
 
-  latitude:any="";
-  longitude:any="";
-  zoom=16;
+  title: string = 'AGM project';
+  latitude!: number;
+  longitude!: number;
+  zoom!:number;
   
   columnsSucursal = [
     {field:'id',header:'ID Sucursal'},

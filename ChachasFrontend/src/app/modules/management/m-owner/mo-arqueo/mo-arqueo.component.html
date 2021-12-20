@@ -1,6 +1,6 @@
-<!-- <div class="elegirSucursal">
+<div class="elegirSucursal">
     <h1> Filtrar:</h1>
-    <select id="" class="options" aria-label="Default select example" [(ngModel)]="selectedValue">
+    <select id="" class="options" aria-label="Default select example" [(ngModel)]="selectedValueFilter">
    
     
     <option *ngFor="let sucursal of infoSub;" >
@@ -18,13 +18,13 @@
           </ng-template>
         
     </option>
-    <option >Administrador</option>
     
     
-
 </select>
+    <button class="btn_filter m-3" (click)="filterA()"> Filtrar</button>
 </div>
- -->
+
+
 <div class="arqueoSection">
     <div class="getSection">
         <h1>Tabla de Arqueos</h1>

@@ -11,7 +11,13 @@ export class MoArqueoComponent implements OnInit {
 
   constructor(private serviceHttp: AppHttpService) { }
 
+  selectedObject:any = {}
+  selectedInfo:any ={}
+  selectedValueFilter:any;
+
+
   infoArqueo:any="";
+
   todayDate:any = undefined;
 
 
@@ -26,10 +32,40 @@ export class MoArqueoComponent implements OnInit {
     
   ];
 
+  infoSub:any="";
+  columnsSub = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'Direccion',header:'Direccion'},
+    {field:'Departamento',header:'Departamento'},
+    {field:'Telefono',header:'Telefono'},
+    {field:'Tipo',header:'Tipo'},
+  ];
+
   ngOnInit(): void {
       this.getArqueo()
+      this.getSubsidiary()
       this.todayDate=new Date().toISOString().slice(0, 10);
   }
+
+  changeFun(){
+    var selectBox = document.getElementById("selectBox")!;
+    //var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    //alert(selectedValue);
+    
+    console.log(selectBox)
+  }
+
+  fechaDisplay(){
+
+
+    this.infoArqueo.forEach((element:any) => {
+     let fecha = element.Fecha.seconds;
+     let date ;
+     date = new Date(fecha * 1000).toISOString().slice(0, 10);
+
+     element.Fecha = date;
+    });
+  } 
 
   getArqueo(){
 
@@ -37,6 +73,7 @@ export class MoArqueoComponent implements OnInit {
      
       
       this.infoArqueo =jsonFile;
+      this.fechaDisplay();
       
 
     } ,(error)=>{
@@ -45,4 +82,63 @@ export class MoArqueoComponent implements OnInit {
     } )
   }
 
+  getSubsidiary(){
+
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
+    /* const x = this.getSubsidiary(Nombre); 
+    x.snapshotChanges().getSubsidiary() */
+      
+      this.infoSub = jsonFile;
+      console.log(this.infoSub)
+
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+  }
+
+  getRegisterByCuenta(idCuenta:any){
+    this.serviceHttp.getRegisterCuentaBySubsidiary(idCuenta).subscribe((jsonFile:any)=>{
+     
+      
+      this.infoArqueo =jsonFile;
+      
+
+    } ,(error)=>{
+      console.log('-----------------------------')
+        console.log("hubo error con arqueo por cuenta")
+        console.log('-----------------------------')
+
+    } )
+    console.log('-----------------------------')
+    console.log("yess, Entro a getRegisterByCuenta")
+    console.log(this.infoArqueo)
+    console.log('-----------------------------')
+  }
+
+  filterA(){
+    var idSub = "";
+
+    this.infoSub.forEach((element:any) => {
+      if (element.Nombre == this.selectedValueFilter && this.selectedValueFilter!='None'){
+        idSub = element.id;
+        console.log('entro al primer if')
+      }
+    });
+
+    if (this.selectedValueFilter!='None'){
+      
+      /* console.log("NOMBRE");
+      console.log(this.selectedValueFilter);
+      console.log("DOMINIO")
+      console.log(idDominio) */
+      return this.getRegisterByCuenta(idSub);
+      
+    }
+
+    else{
+      return this.getArqueo();
+    }
+  }
 }
+

@@ -191,4 +191,14 @@ export class AppHttpService {
   getRegisterCuenta(){
     return this.http.get(paths.GetRegisterCuentas);
   }
+
+  getRegisterCuentaBySubsidiary(idCuenta:any){
+    return this.http.get(paths.GetRegisterCuentaBySubsidiary+idCuenta)
+  }
+
+
+  postArqueo(body:any){
+    return this.http.post(paths.CreateRegisterCuenta,body)
+  } 
+
 }

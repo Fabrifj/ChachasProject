@@ -72,7 +72,7 @@
     "GetRegisterCuentas": "/api/register/cuenta",
     "GetCuentaByDate": "/api/register/cuenta/:date",
     "GetRegisterByID": "/api/register/:id",
-    "GetRegisterCuentaBySubsidiary": "/api/register/cuenta/subsidiary/:idSub",
+    "GetRegisterCuentaBySubsidiary": "/api/register/cuenta/subsidiary/",
     "UpdateRegisterCuenta": "/api/register/cuenta/:id",
     "DeleteRegister": "/api/register/:id",
 

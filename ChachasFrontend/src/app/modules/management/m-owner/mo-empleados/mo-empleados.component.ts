@@ -368,8 +368,10 @@ export class MoEmpleadosComponent implements OnInit {
     this.infoSub.forEach((element:any) => {
       if (element.Nombre == this.selectedValueFilter && this.selectedValueFilter!='Administrador' && this.selectedValueFilter!='None'){
         idDominio = element.id;
+        console.log('entro al primer if')
       }
     });
+    
     if (this.selectedValueFilter!='None' && this.selectedValueFilter!='Administrador'){
       
       /* console.log("NOMBRE");
