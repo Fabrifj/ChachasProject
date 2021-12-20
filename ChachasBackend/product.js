@@ -161,7 +161,7 @@ async function getProductSubsidiaryType(idSub, type) {
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
+  console.log(list);
   // Get more information of products of type chachas.
   if (type == "Chacha") {
     for await (const product of list) {
