@@ -70,15 +70,19 @@ export class MfInventaryComponent implements OnInit {
   ];
 
 
-  infoMerm:any | undefined ; 
+  infoMerm:any = [] ; 
   columnsMerm = [
-    {field:'Nombre',header:'Nombre'},
-    {field:'Cantidad',header:'Tipo de unidad'},
+    {field:'IdMenu',header:'Id Menu'},
+    {field:'Cantidad',header:'Cantidad'},
+    {field:'CantidadRecibida',header:'cantidad recibida'},
     {field:'Fecha',header:'Fecha'},
-    {field:'Sucursal',header:'Sucursal'}
+    {field:'IdSucursal',header:'Sucursal'}
  
-    
   ];
+
+
+
+
 
   nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
   nameSauceButtons :string[] = ["Ver Ingredientes","Modificar Salsa","Reservar Salsa"];
@@ -119,13 +123,44 @@ export class MfInventaryComponent implements OnInit {
     this.getChachasFabrica();
     this.getIngredients();
     //this.getMermas();
-    
+    this.getSubsidiaries();
     //this.getProducts();
     
 
     
     
   
+  }
+
+
+  getSubsidiaries(){
+
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
+     
+      this.getMermaBySucursal(jsonFile);
+      
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+  }
+  getMermaBySucursal(otherJson:any){
+
+    otherJson.forEach((element:any) => {
+      
+      this.serviceHttp.getMermaBySubsidiary(element.id).subscribe((jsonFile:any)=>{
+        this.infoMerm.push(jsonFile);
+        console.log(jsonFile);
+        
+      } ,(error)=>{
+          console.log("hubo error con productos")
+  
+      } )
+  
+
+    });
+   
+
   }
 
   getProducts(){

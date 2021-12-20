@@ -171,4 +171,17 @@ export class AppHttpService {
   }
 
 
+
+
+
+  //Mermas
+  getMermaBySubsidiary(id:any){
+
+    var path = paths.GetMermabySubsidiary + id;
+    return this.http.get(path);
+
+
+  }
+
+
 }

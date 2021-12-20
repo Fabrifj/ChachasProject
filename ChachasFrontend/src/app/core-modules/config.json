@@ -70,6 +70,15 @@
     
   "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
   "crearCompra": "/api/purchase",
-  "Authenticate": "/api/employee/"
+  "Authenticate": "/api/employee/",
+
+
+
+
+  "CreateMerma":"/api/merma",
+  "GetMermabySubsidiary":"/api/merma/bySubsidiary/",
+  "GetMerma":"/api/merma/:id",
+  "UpdateMerma":"/api/merma/:id",
+  "DeleteMerma":"/api/merma/:id"
 
 }

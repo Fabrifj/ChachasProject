@@ -126,6 +126,7 @@ export class MsInventaryComponent implements OnInit {
   prLat = "he4"
   prLon = ""
 
+  position:any = {}
   msgAlert : string = "";
   constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { 
 
@@ -133,10 +134,17 @@ export class MsInventaryComponent implements OnInit {
 
   }
   clickReadyMap(map: google.maps.Map){
+
+    
     map.addListener('click',(e: google.maps.MouseEvent)=>{
 
       this.check(e.latLng,map);
-
+      this.position = JSON.parse(JSON.stringify(e.latLng.toJSON()));
+      console.log(this.position);
+      this.prLat = this.position.lat;
+      this.prLon = this.position.lng;
+      console.log(this.prLat);
+      console.log(this.prLon);
     })
     
 
@@ -151,7 +159,7 @@ export class MsInventaryComponent implements OnInit {
 
 
     });
-    console.log(mark.getPosition());
+    console.log("position",mark.getPosition());
     console.log(latLng.lat)
     console.log(latLng.lng)
     map.panTo(latLng);
