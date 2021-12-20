@@ -75,3 +75,12 @@ ifModific{
     font-size: 14px;
     text-transform: capitalize;
 }
+#myAlert{
+    margin-left: 10px;
+    padding-top: 10px;
+    background-color: #ead9a9;
+    width: 100%;
+    color: rgb(92, 64, 44);
+    border-radius: 7px;
+    word-wrap: break-word;
+}
