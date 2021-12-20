@@ -107,31 +107,36 @@ export class MfSubsidiaryComponent implements OnInit {
 
   acceptEdition(newQuantity: string) {
     var value = Number(newQuantity);
+    console.log(this.productInfo);
 
-    var productInFactory = <productInfo> this.factory.productElements.find(e => e.id == this.productInfo.id);
-    if (productInFactory != undefined) {
-      if ((value > 0) || (value <= productInFactory.CantidadInventario)) {
-        var transaction = <transaction> this.transactions.find(e => e.IdDestino == this.subsidiaryInfo.id);
-        transaction.ListaProductos.push({
-          IdProducto: this.productInfo.id,
-          Tipo: this.productInfo.Tipo,
-          Cantidad: value,
-          NombreProducto: this.productInfo.Nombre
-        });
-
-        productInFactory.CantidadInventario -= value;
-        this.productInfo.CantidadInventario += value;
-        alert("Transaction saved");
-
-        this.productInfo = this.baseProductInfo;
-        this.subsidiaryInfo = this.baseSubsidiaryInfo;
-        this.editAmount = false;
-
-      } else {
-        alert("Value not valid");
-      }
+    if (this.productInfo.Tipo == "Chacha") {
+      var productInFactory = <productInfo> this.factory.productElements.find(e => e.IdMenu == this.productInfo.IdMenu);
     } else {
+      var productInFactory = <productInfo> this.factory.productElements.find(e => e.Nombre == this.productInfo.Nombre);
+    }
+
+    if (productInFactory == undefined) {
       alert("Product not available in factory");
+    }
+    else if ((value < 0) || (value > productInFactory.CantidadInventario)) {
+      alert("Value not valid");
+    }
+    else {
+      var transaction = <transaction> this.transactions.find(e => e.IdDestino == this.subsidiaryInfo.id);
+      transaction.ListaProductos.push({
+        IdProducto: this.productInfo.id,
+        Tipo: this.productInfo.Tipo,
+        Cantidad: value,
+        NombreProducto: this.productInfo.Nombre
+      });
+
+      productInFactory.CantidadInventario -= value;
+      this.productInfo.CantidadInventario += value;
+      alert("Transaction saved");
+
+      this.productInfo = this.baseProductInfo;
+      this.subsidiaryInfo = this.baseSubsidiaryInfo;
+      this.editAmount = false;
     }
 
     console.log(this.transactions)
@@ -143,16 +148,12 @@ export class MfSubsidiaryComponent implements OnInit {
 
       if (element.ListaProductos.length > 0) {
         console.log(JSON.stringify(element));
-        //this.appHttpService.performFactorySubsidiaryTransaction(JSON.stringify(element));
+        this.appHttpService.performFactorySubsidiaryTransaction(element);
       }      
     }
 
     alert("Chages saved in backend");
   }
-
-  // createCopy(objectToCopy: infoChacha): infoChacha{
-  //   return (JSON.parse(JSON.stringify(objectToCopy)));
-  // }
 }
 
 interface subsidiaryInfo {
