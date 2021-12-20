@@ -449,19 +449,15 @@ async function getProductsFabrica() {
   const snapshot = await product.orderBy("ListaIngredientes").get();
   const list = snapshot.docs.map((doc) => ({
     ListaIngredientes: doc.Receta,
+    Id:doc.id,
     ...doc.data(),
   }));
   for (i in list) {
     if (list[i].IdMenu) {
       menuItem = await fnMenu.getMenuId(list[i].IdMenu);
       list[i].Nombre = menuItem.Nombre;
-      list[i].ImgURL = menuItem.ImgURL
-      //delete list[i].IdMenu;
-    }/*
-    delete list[i].Origen;
-    delete list[i].id;
-    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ IdIngrediente, ...rest }) => rest);
-    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ Costo, ...rest }) => rest);*/
+      list[i].ImgURL = menuItem.ImgURL;
+    }
   }
 
   if (list.length == 0) {
