@@ -16,7 +16,21 @@
     cursor: pointer;
     font-size: 14px;
 }
+.myImg{
 
+width: 200px;
+height: 200px;
+object-fit: cover;
+
+}
+
+#prodImgUrl{
+    width: 100%;
+}
+#prob{
+
+    align-items: center;
+}
 h1{
 
     margin: 5px;

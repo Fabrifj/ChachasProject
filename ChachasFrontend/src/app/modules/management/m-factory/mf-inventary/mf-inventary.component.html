@@ -2,13 +2,16 @@
     <div class="row">
 
          
-    <div class="col-md-4">
-            <button class="btn" (click)="openProductC('Crear');">Crear Producto</button>
+        <div class="col-md-3">
+            <button class="btn" (click)="openProductC('Crear Chacha');">Crear Chacha</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <button class="btn" (click)="openProductS('Crear Salsa');">Crear Salsa</button>
+        </div>
+        <div class="col-md-3">
             <button class="btn" (click)="openIngC('Crear');this.siModificoIng = false">Crear Ingrediente</button>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <button class="btn" (click)="seeHistoryM();">Historial de mermas</button>
         </div>
         
@@ -29,7 +32,7 @@
                 [columnas]="columnsProd" 
                 colorLetra="black" 
                 [nombreBotones]="nameProdButtons" 
-                (parentMethod)="functionSelectObj($event)">
+                (parentMethod)="functionAddModProd($event)">
                 </app-reusable-table>
                  
                 
@@ -53,7 +56,7 @@
                 [columnas]="columnsSauce" 
                 colorLetra="black" 
                 [nombreBotones]="nameSauceButtons" 
-                (parentMethod)="functionSelectObj($event)">
+                (parentMethod)="functionAddModProd($event)">
                 </app-reusable-table>
                  
                 
@@ -90,63 +93,165 @@
 
 
 <!-- registro y modificarcion -->
-<jw-modal id="modalProd-01" altura="85" ancho="80">
+<jw-modal id="modalProd-01" altura="90" ancho="100">
     <div class="modal-header">
-        <h4 class="modal-title">Crear producto</h4>
+        <h4 class="modal-title">Crear/Modificar producto</h4>
     </div>
    
-    <div class="row">
-
-
-
-    </div>
-
-
-
-
-
-
-    <div class="botones">
-        <button class="btnCerrar" (click)="modalService.cerrar('modalProd-01');">Cancelar</button>
-    </div>
-
-</jw-modal>
-
-<!-- produccion -->
-<jw-modal id="modalProd-02" altura="85" ancho="80">
-    <div class="modal-header">
-        <h4 class="modal-title">Hacer producto</h4>
-    </div>
     <div class="row" *ngIf="siModificoProd">
         <div class="col-md-12" >
-            <h3> Ingrediente a modificar:</h3>
-            <input class="inputTxt" id="ingMod" [(ngModel)]="this.selectedObj.Nombre" type="text" readonly> 
+            <h3> Producto a modificar:</h3>
+            <input class="inputTxt" id="prodMod" [(ngModel)]="this.selectedObj.Nombre" type="text" readonly> 
         </div>
 
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h3> Nombre Ingrediente:</h3>
-            <input class="inputTxt" id="ingName" type="text" [(ngModel)]="this.selectedObj.Nombre"> 
+            <h3> Nombre Porducto:</h3>
+            <input class="inputTxt" id="prodName" type="text" [(ngModel)]="this.selectedObj.Nombre"> 
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="siChacha">
+        <div class="col-md-8">
+                <h3> ImagenUrl:</h3>
+                <input class="inputTxt" id="prodImgUrl" type="text" [(ngModel)]="this.selectedObj.ImgURL" > 
+                
+                
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="prob" (click)="probarImg()">Probar imagen</button>
+                    
+                </div>
+                
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <img src={{this.imgUrl}} class="myImg" alt="Imagen Producto">
+                </div>
+            </div>
+        </div>
+        
+       
+        
+    </div>
+    <div class="row" *ngIf="siChacha==false">
         <div class="col-md-12">
                 <h3> Tipo Unidad:</h3>
-                <input class="inputTxt" id="inUnitType" type="text" [(ngModel)]="this.selectedObj.TipoUnidad"> 
+                <input class="inputTxt" id="prodUnitType" type="text" [(ngModel)]="this.selectedObj.TipoUnidad"> 
             
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
                 <h3> Cantidad Minima:</h3>
-                <input class="inputTxt" id="inUnitType" type="number" [(ngModel)]="this.selectedObj.CantidadMinima"> 
+                <input class="inputTxt" id="prodCant" type="number" [(ngModel)]="this.selectedObj.CantidadMinima"> 
             
         </div>
     </div>
+    <div class="row" *ngIf="siChacha == false">
+        <div class="col-md-12">
+                <h3> Cantidad Resultante:</h3>
+                <input class="inputTxt" id="prodCantR" type="number" [(ngModel)]="this.selectedObj.CantidadMedida"> 
+            
+        </div>
+    </div>
+    <div class="row" *ngIf="siChacha">
+        <div class="col-md-12" >
+                <h3> Costo:</h3>
+                <input class="inputTxt" id="prodCost" type="number" [(ngModel)]="this.selectedObj.Costo" readonly> 
+            
+        </div>
+    </div>
+    <div class="row" *ngIf="siChacha">
+        <div class="col-md-12">
+                <h3> Precio:</h3>
+                <input class="inputTxt" id="prodPrecio" type="number" [(ngModel)]="this.selectedObj.Precio"> 
+            
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="contendorListadoSi">
+
+            <h1>Ingredientes que estan:</h1>
+            <app-reusable-table 
+            [datos]="infoIngMini" 
+            [columnas]="columnsIngMini" 
+            [nombreBotones] = "nombreBotonesIng2"
+            (parentMethod) = "functionAddModProd($event)"
+            colorLetra="black"
+            [titulosTextos]="titulosIng"
+            botonGuardarDatos = 'si'
+            nombreDistintivo="textoCantidadIng"
+            indice="10">
+            </app-reusable-table> 
+        
+        </div>
+        
+    </div>
+    <div class="col-md-6">
+
+   
+        <div class="contendorListadoNo">
+    
+            <h1>Ingredientes por añadir:</h1>
+            <app-reusable-table 
+            [datos]="infoIng" 
+            [columnas]="columnsIng" 
+            [nombreBotones] = "nombreBotonesIng1"
+            (parentMethod) = "functionAddModProd($event)"
+            colorLetra="black"
+            indice = "11"
+            >
+            </app-reusable-table> 
+        
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
     <div class="botones">
+        <button class="btnOk" id="btnOkIng" (click)="createProduct()">{{nameButtonProd}}</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalProd-01');this.getIngredients();">Cancelar</button>
+    </div>
+
+</jw-modal>
+
+<!-- produccion -->
+<jw-modal id="modalProd-02" altura="85" ancho="80">
+    
+
+    <div class="modal-header">
+        <h4 class="modal-title">Producir Producto: {{this.selectedObj.Nombre}}</h4>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <h4>Cantidad:</h4>
+            <input type="number" [(ngModel)]="cantidadPChacha">
+        </div>
+    </div>
+    <div class="botones">
+        <hr>
+        <button class="btnOk" (click)="modalService.cerrar('modalProd-02'); producirChacha();">Producir</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalProd-02');">Cancelar</button>
     </div>
+
 
 </jw-modal>
 
@@ -196,17 +301,7 @@
 
 </jw-modal>
 
-<!-- compra -->
-<jw-modal id="modalIng-02" altura="85" ancho="80">
-    <div class="modal-header">
-        <h4 class="modal-title">Comprar Ingrediente</h4>
-    </div>
-   
-    <div class="botones">
-        <button class="btnCerrar" (click)="modalService.cerrar('modalIng-02');">Cancelar</button>
-    </div>
 
-</jw-modal>
 
 
 
@@ -232,12 +327,26 @@
     </div>
 
 </jw-modal>
-<jw-modal id="modalSauce-01" altura="85" ancho="80">
+
+
+
+
+<!-- Reservar -->
+<jw-modal id="modalSauce-01" altura="50" ancho="50">
+    
     <div class="modal-header">
-        <h4 class="modal-title">Salsas</h4>
+        <h4 class="modal-title">Reservar salsa: {{this.selectedObj.Nombre}}</h4>
     </div>
-   
+    <div class="row">
+
+        <div class="col-md-12">
+            <h4>Cantidad:</h4>
+            <input type="number" [(ngModel)]="cantidadRSalsa">
+        </div>
+    </div>
     <div class="botones">
+        <hr>
+        <button class="btnOk" (click)="modalService.cerrar('modalSauce-01'); reservarSalsa();">Reservar</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalSauce-01');">Cancelar</button>
     </div>
 
@@ -250,14 +359,15 @@
    
 
     <app-reusable-table 
-    [datos]="infoIngMini" 
-    [columnas]="columnsIngMini" 
+    [datos]="infoIngMini2" 
+    [columnas]="columnsIngMini2" 
     colorLetra="black"
     altura=50>
     </app-reusable-table>
 
 
     <div class="botones">
+        
         <button class="btnCerrar" (click)="modalService.cerrar('modalIng-03');">Cancelar</button>
     </div>
 

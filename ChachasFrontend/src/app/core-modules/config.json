@@ -2,7 +2,7 @@
     
 
 
-    "GetAllProducts":"/api/product",
+  "GetAllProducts":"/api/product",
   "GetProductById":"/api/product/:idproduct",
   "CreateProduct(Generic)":"/api/product",
   "UpdateProduct":"/api/product/",
@@ -25,7 +25,9 @@
 
   "GetProductsWithIngredients":"/api/products",
   "CreateProductFactory":"/api/productFactory",
-  "UpdateProductFactory":"/api/productFactory/:idproduct",
+  "UpdateProductFactory":"/api/productFactory/",
+  "GetSalsasFabrica":"/api/products/salsas",
+  "GetChachasFabrica":"/api/products/chachas",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",
@@ -40,7 +42,7 @@
   "CreateMenu":"/api/menu",
   "GetMenus":"/api/menu",
   "GetMenuName":"/api/menu/getMenuName",
-  "UpdateMenu":"/api/menu/:id",
+  "UpdateMenu":"/api/menu/",
   "DeleteMenuId":"/api/menu/:id",
 
   "CreateEmployee":"/api/employee",
@@ -69,21 +71,16 @@
   "UpdateIngredient":"/api/ingredient/",
   "DeleteIngredient":"/api/ingredient/:id",
     
-    "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
+  "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
 
-
-    
-
-
-    "crearCompra": "/api/purchase",
 
   
+  "crearCompra": "/api/purchase",
 
 
-    "Authenticate": "/api/employee/"
+  "Authenticate": "/api/employee/"
 
-    
-
+  
 
 
 
