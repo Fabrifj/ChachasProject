@@ -84,12 +84,20 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
 app.get("/api/product/inventory/:idSub", async (req ,res) => {
   var idSub = req.params.idSub;
   var respuesta = null;
-  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
-  var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
-  if (chachas != null && insumos != null){
-    respuesta = chachas.concat(insumos);
+  var infoSub = await fnSubsidiary.getSubsidiary(idSub);
+  if(infoSub.Tipo == "Fabrica"){
+    console.log("Is factory");
+    respuesta = await fnProduct.getProductSubsidiary(idSub);
+    console.log(respuesta);
+  }else{
+    console.log("Is subsidiary");
+    var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+    var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+    if (chachas != null && insumos != null){
+      respuesta = chachas.concat(insumos);
+    }
   }
-  res.send(respuesta);
+   res.send(respuesta);
 });
 
 // Get the transation of a product
@@ -230,7 +238,13 @@ app.get("/api/products/chachas", async (req, res) => {
   res.send(response);
 });
 
-
+// Create Product-Salsa with ingredients (id's) and cantidadMedida
+app.post("/api/product/salsa/:idfabrica", async (req, res) => {
+  var newSalsa = req.body;
+  var idFabrica = req.params.idfabrica;
+  const response = await fnProduct.createProductSalsaRecetaInformacion(idFabrica, newSalsa);
+  res.send(response);
+});
 
 /*=================================
           CRUD ORDER
