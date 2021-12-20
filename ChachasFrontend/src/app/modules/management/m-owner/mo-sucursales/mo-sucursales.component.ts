@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone  } from '@angular/core';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
-import { MapsAPILoader} from '@agm/core';
+import { MapsAPILoader, MouseEvent} from '@agm/core';
 
 @Component({
   selector: 'app-mo-sucursales',
@@ -43,8 +43,8 @@ export class MoSucursalesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.latitude = -16.489689;
-    this.longitude= -68.119293;
+    //this.latitude = -16.489689;
+    //this.longitude= -68.119293;
     this.getSubsidiary()
     //load Places Autocomplete
 
@@ -192,4 +192,7 @@ functionChooseObj(response:any){
 
     this.getSubsidiary();
   }
+
+ 
 }
+  
