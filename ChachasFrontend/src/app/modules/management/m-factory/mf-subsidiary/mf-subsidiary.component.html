@@ -1,1 +1,45 @@
-<p>mf-subsidiary works!</p>
+<div class="wrapper">
+    <div class="subsidiary-info">
+        <li *ngFor="let edComp of components" class="list-group">
+            <div class="deploy-info">
+                <h3>{{ edComp.subsidiaryElement.Nombre }}</h3>
+                <li *ngFor="let prod of edComp.productElements" class="list-group">
+                    <button type="button"
+                        class="list-group-item list-group-item-action"
+                        (click)="editSubsidiary(edComp.subsidiaryElement, prod)">
+                        {{ prod.Nombre }}
+                        <span class="badge bg-primary rounded-pill">{{ prod.CantidadInventario }}</span>
+                    </button>
+                </li>
+            </div>
+        </li>
+    </div>
+    <div class="factory-admi">
+        <h1>Fabrica</h1>
+        <li *ngFor="let chacha of factory.productElements" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ chacha.Nombre }}
+            <span class="badge bg-primary rounded-pill">{{ chacha.CantidadInventario }}</span>
+        </li>
+        <ng-container *ngIf="editAmount">
+            <div class="edit-amount">
+                <h1>Agregar {{ productInfo.Nombre }} a {{ subsidiaryInfo.Nombre }}</h1>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ productInfo.Nombre }}
+                    <input type="number" placeholder="0" #chachaQuantity class="quantity-input">
+                </li>
+                <button type="button"
+                    class="btn btn-info btn-sm" 
+                    (click)="acceptEdition(chachaQuantity.value)">
+                    Accept
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div>
+    <button type="button"
+        class="btn btn-info btn-sm" 
+        (click)="saveTransactions()">
+        Guardar Cambios
+    </button>
+</div>

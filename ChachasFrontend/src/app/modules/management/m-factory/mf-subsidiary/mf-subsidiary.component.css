@@ -1,0 +1,43 @@
+div {
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.wrapper {
+    overflow: hidden;
+    background-color: #D09106;
+    border-radius: 8px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.subsidiary-info {
+    float: left;
+    width: 50%;
+}
+
+.deploy-info {
+    background-color: #969226;
+    width: 100%;
+}
+
+.list-info {
+    width: 100%;
+}
+
+li {
+    border-radius: 8px;
+    margin-top: 1%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 1%; 
+}
+
+.factory-admi {
+    overflow: hidden;
+    align-self: center;
+}
