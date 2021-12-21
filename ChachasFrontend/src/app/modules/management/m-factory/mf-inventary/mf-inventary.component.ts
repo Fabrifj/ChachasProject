@@ -195,7 +195,11 @@ export class MfInventaryComponent implements OnInit {
   modificarFecha(jsonFile:any){
 
     jsonFile.forEach((element:any) => {
-        var newFecha = new Date(element.Fecha.seconds).toLocaleDateString() ;
+        //var newFecha = new Date(element.Fecha.seconds).toLocaleDateString() ;
+        var newFecha = new Date(element.Fecha.seconds*1000).toISOString().slice(0, 10);
+        //var date = new Date();
+        //date.setSeconds(element.Fecha.seconds);
+        
         element.Fecha = newFecha;
         this.infoMerm.push(element)
         
