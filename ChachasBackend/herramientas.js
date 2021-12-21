@@ -29,11 +29,19 @@ function dateAFirebaseTimestamp(date)
   return timestamp;
 }
 //Create doc
-async function createDoc(data, nombreEntidad){
-  await db.collection(nombreEntidad).add(data);
+async function createDoc(data, nombreEntidad)
+{
+  await db.collection(nombreEntidad).add(data)
+  .then(docRef => {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(error =>{
+      console.error("Error adding document: ", error);
+  });
   respuesta = {
     "Mensaje" : `${nombreEntidad} agregado correctamente`,
-    "Elemento": data
+    "Elemento": data,
+    "id":docRef.id
   }
   return respuesta;
 }

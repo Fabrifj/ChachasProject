@@ -9,6 +9,29 @@ async function getMerma(idMerma)
 {
     return await fnHerramientas.getDoc(idMerma,"Merma");
 }
+async function getMermasWithNameMenu(){
+  var mermas = await fnHerramientas.getDocs("Merma");
+  var menus = await fnHerramientas.getDocs("Menu");
+  var respuesta = [];
+  mermas.forEach(element => {
+        menus.forEach(m => {
+          if(element.IdMenu == m.id){
+            respuesta.push({
+              "Cantidad":element.Cantidad,
+              "CantidadResultante":element.CantidadResultante,
+              "Estado":element.Estado,
+              "Fecha":element.Fecha,
+              "IdMenu":element.IdMenu,
+              "IdSucursal":element.IdSucursal,
+              "Observacion":element.Observacion,
+              "NombreMenu":m.Nombre
+            });
+          }
+        });
+  });
+  return respuesta;
+}
+
 //CrearMerma
 /**
  * 
@@ -50,6 +73,7 @@ async function deleteMerma(idMerma)
 
   module.exports = {
     getMermas,
+    getMermasWithNameMenu,
     createMerma,
     deleteMerma,
     updateMerma,

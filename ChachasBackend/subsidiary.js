@@ -10,7 +10,7 @@ async function getSubsidiary(idSubsidiary)
   // console.log("Test subsidiary hola")
     return await fnHerramientas.getDoc(idSubsidiary,"Sucursal");
 }
-//CrearCategoria
+//CrearSucursal
 /**
  * 
  * @param {} body tiene que tener la siguiente estructura:
@@ -26,6 +26,7 @@ async function getSubsidiary(idSubsidiary)
     },//Es el punto geografico con latitud y longitud
 	"Telefono":
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
+  "Tipo":"Sucursal"//"Fabrica"
 }
  * 
  * 

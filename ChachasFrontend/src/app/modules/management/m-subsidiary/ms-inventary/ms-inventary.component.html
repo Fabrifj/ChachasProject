@@ -1,49 +1,89 @@
 <div class="inventarySection">
 
-
-    <div class="drinkSection">
-        <h1>Tabla de los Refrescos</h1>
-        <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
-        </app-reusable-table>
-
-    </div>
+    
+    
 
 
-    <div class="insumoSucSection">
-        <h1>Tabla de los insumos de sucursal</h1>
-        <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
-        </app-reusable-table>
-
-    </div>
-    <div class="sauceSection">
-        <h1>Tabla de las Salsas</h1>
-        <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
-
-        </app-reusable-table>
 
 
-    </div>
+    <div class="row">
 
-    <div class="productSection">
-        <h1>Tabla de las Chachas</h1>
-        <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
-        </app-reusable-table>
+        <div *ngIf="isAlert" id="myAlert">
+            <div class="col-md-11">
+                <p>{{msgAlert}}</p>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button>
+            </div>
+        </div>
 
     </div>
 
 
 
-    <div class="buttonsSection">
-        <hr />
-        <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
-        <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
-        <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
-        <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
-
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Tabla de los Refrescos</h1>
+            <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
+            </app-reusable-table>
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Tabla de los insumos de sucursal</h1>
+            <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameInsCButtons" (parentMethod)="functionChooseObj($event)">
+            </app-reusable-table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Tabla de las Salsas</h1>
+            <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
+
+            </app-reusable-table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Tabla de las Chachas</h1>
+            <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
+            </app-reusable-table>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+            <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
+            <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
+            <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
+            <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
+            <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
+        </div>
+    </div>
+
 
 </div>
+
+
+
+
+
+
+
 
 <!--   boton realizar transaccion -->
 <jw-modal id="modalTransaction-01" altura="80" ancho="90">
@@ -55,6 +95,7 @@
         <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue">
         <option selected>None</option>
         <option *ngFor="let sucursal of infoSubs;" >{{sucursal.Nombre}}</option>
+        
         
     </select>
 
@@ -299,14 +340,17 @@
 
         <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
             <agm-info-window>
-                <h2>
+                <h4>
                     {{sub.Nombre}}
-                </h2>
+                </h4>
 
             </agm-info-window>
 
         </agm-marker>
     </agm-map>
+
+
+
 
 
     <div class="botones">

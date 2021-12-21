@@ -1,7 +1,14 @@
 import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { documentId } from '@angular/fire/firestore';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+
+
+
+
+
+
 @Component({
   selector: 'app-ms-inventary',
   templateUrl: './ms-inventary.component.html',
@@ -38,6 +45,7 @@ export class MsInventaryComponent implements OnInit {
   columnsInsFab = [
     {field:'Nombre',header:'Nombre'},
     {field:'CantidadInventario',header:'Stock en Inventario'},
+    {field:'CantidadMinima',header:'Stock Minimo'},
     {field:'CantidadMedida',header:'Cantidad Medida'},
     {field:'TipoUnidad',header:'Tipo Unidad'},
     {field:'Costo',header:'Costo'}
@@ -93,6 +101,7 @@ export class MsInventaryComponent implements OnInit {
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
+  nameInsCButtons: string[] = ["Registrar Compra", "Registrar Consumo"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
   titlesProd:string [] = ['CantidadParaSucursal'];
@@ -107,7 +116,25 @@ export class MsInventaryComponent implements OnInit {
   zoom=16;
 
 
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
+
+
+
+  isAlert= false;
+
+
+
+  prLat = "he4"
+  prLon = ""
+
+  position:any = {}
+  msgAlert : string = "";
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { 
+
+    
+
+  }
+  
+ 
 
   ngOnInit(): void {
 
@@ -139,9 +166,20 @@ export class MsInventaryComponent implements OnInit {
 
 
  
+    
   }
 
-  
+
+
+
+  giveAlert(){
+    this.isAlert = true;
+   
+  }
+  closeAlert(){
+    this.isAlert = false;
+    
+  }
 
   getProductsBySubsidiary(){
   
@@ -152,11 +190,31 @@ export class MsInventaryComponent implements OnInit {
     } )
 
   }
+
+  miniumVerification(objs:any){
+
+      var mustAlert = false;
+      objs.forEach((element:any) => {
+
+        if(element.CantidadInventario <= element.CantidadMinima){
+        // if(element.CantidadInventario <= 100){
+            console.log("entro a if");
+            this.msgAlert = this.msgAlert + element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadInventario +" "+ "\n";
+            mustAlert = true;
+        }
+      });
+      if(mustAlert){
+        this.giveAlert();
+      }
+  }
+
+
   getProdChachas(){
 
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Chacha").subscribe((jsonFile:any)=>{
       
       this.infoProd =jsonFile;
+      this.miniumVerification(this.infoProd);
     } ,(error)=>{
         console.log("hubo error con productos");
     } )
@@ -164,11 +222,9 @@ export class MsInventaryComponent implements OnInit {
   }
   getSauce(){
 
-    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{
-     
-     
+    this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"InsumoFabrica").subscribe((jsonFile:any)=>{    
       this.infoInsFab =jsonFile;
-      
+      this.miniumVerification(this.infoInsFab);
 
     } ,(error)=>{
         console.log("hubo error con productos")
@@ -183,6 +239,8 @@ export class MsInventaryComponent implements OnInit {
     this.serviceHttp.getProductsBySubsidiaryAndType(this.idSubsidiary,"Refresco").subscribe((jsonFile:any)=>{
      
       this.infoDri = jsonFile;
+      this.miniumVerification(this.infoDri);
+
     } ,(error)=>{
         console.log("hubo error con productos")
     } )
@@ -226,13 +284,7 @@ export class MsInventaryComponent implements OnInit {
     } )
 
   }
-
-  
-
-
   createTransaction(body:any){
-
-    
     this.serviceHttp.postTransaction(body)
     .subscribe((jsonFile:any)=>{
 
@@ -261,6 +313,11 @@ export class MsInventaryComponent implements OnInit {
     {
       this.modalService.abrir("modalStock-01");
     }
+
+     else if (response[0] == "Registrar Consumo")
+    {
+      this.modalService.abrir("modalIns-01");
+    }
     else if (response[0] == "Registrar Consumo Insumo")
     {
       this.modalService.abrir("modalIns-01");
@@ -269,15 +326,9 @@ export class MsInventaryComponent implements OnInit {
       this.selectedObject = [];
       let indice = response[2];
       this.selectedInfo[indice] = response[1]
-      
-
-      
     }
 
   }
-  
-
-
   sendTransaction(){
     var date = this.todayDate;
     
@@ -300,14 +351,12 @@ export class MsInventaryComponent implements OnInit {
         
         listaProdSend.push({
           IdProducto:producto.id,
-          Tipo : "Chacha",
+          Tipo : "Intercambio",
           IdMenu:producto.IdMenu,
           Cantidad: cantidadPSucursal,
           Nombre :producto.IdMenu
   
-        });
-        
-        }
+        }); }
 
       });
 
