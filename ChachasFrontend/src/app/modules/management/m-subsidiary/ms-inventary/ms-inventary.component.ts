@@ -58,6 +58,12 @@ export class MsInventaryComponent implements OnInit {
 
   ];
 
+  columnsInsFabMini = [
+    {field:'Nombre',header:'Nombre'},
+    {field:'CantidadInventario',header:'Stock en Inventario'}
+
+  ];
+
   infoDri: any | undefined;
   columnsDri = [
     {field:'Nombre',header:'Nombre'},
@@ -98,6 +104,7 @@ export class MsInventaryComponent implements OnInit {
    // {field:'Imagen',header:'Imagen'}
     
   ];
+
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];

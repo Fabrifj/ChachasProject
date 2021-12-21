@@ -589,8 +589,9 @@ async function calculateCostSalsaFactory(listaIngredientes) {
   var costoTot = 0;
   for await (const ing of listaIngredientes) {
     const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    //console.log("Procesando", myIng);
     ing.Nombre = myIng.Nombre;
-    delete ing.Cantidad;
+    //delete ing.CantidadMedida;
     ing.Costo =
       parseFloat(ing.CantidadMedida) *
       parseFloat(myIng.CostoMedio);
@@ -600,40 +601,77 @@ async function calculateCostSalsaFactory(listaIngredientes) {
   return { Costo: costoTot, ListaIngredientes: listaIngredientes };
 }
 
+/*
+{
+"TipoOrigen": "Fabrica",
+"Nombre" : "salsa cebolla pollo y res",
+"CantidadMedida": 50, 
+"CantidadInventario": 0,
+"CantidadMinima": 100,
+"TipoUnidad": "ml",
+"ListaIngredientes":[
+    {
+      "IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+      "CantidadMedida": 0.5
+    },
+    {
+      "IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+      "CantidadMedida": 0.25
+    },
+	  {
+			"IdIngrediente": "OPbb9e3SOlXffrSxBiHx",
+      "CantidadMedida": 0.15
+		}
+  ]
+}
+*/
 // Create product salsa receta informacion
-async function createProductSalsaRecetaInformacion(idFabrica, body) {
+async function createProductSalsaRecetaInformacion(body) {
   var res = null;
   const calculo = await calculateCostSalsaFactory(body.ListaIngredientes);
-  res = { Origen: idFabrica, TipoOrigen: "Fabrica", Nombre: body.Nombre, 
-    ListaIngredientes: calculo.ListaIngredientes, CantidadMedida: body.CantidadMedida, 
-    Costo: calculo.Costo, TipoUnidad: body.TipoUnidad};
+  res = { TipoOrigen: body.TipoOrigen, Nombre: body.Nombre, 
+    CantidadMedida: body.CantidadMedida, CantidadInventario: body.CantidadInventario,
+    CantidadMinima: body.CantidadMinima, Costo: calculo.Costo, TipoUnidad: body.TipoUnidad,
+    ListaIngredientes: calculo.ListaIngredientes};
+  console.log(res);
   await product.add(res);
+  
   return res;
 }
-/* 11.- modificar producto salsa receta informacion
+
+/*
+Para que anote:
+
 {
-	"Origen": "Lbh5237VEKHWHzRlhnwB",
 	"TipoOrigen": "Fabrica",
-	"Nombre": "Salsa test",
+	"Nombre": "salsa cebolla pollo y res",
+	"CantidadMedida": 50,
+	"CantidadInventario": 0,
+	"CantidadMinima": 100,
+	"Costo": 8.226190476190476,
+	"TipoUnidad": "ml",
 	"ListaIngredientes": [
 		{
 			"IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+			"CantidadMedida": 0.5,
 			"Nombre": "Cebolla",
-			"CantidadMedida": 0.25,
-			"TipoUnidad": "kg",
-			"Costo": 0.7916666666666666
+			"Costo": 1.5833333333333333
 		},
 		{
 			"IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+			"CantidadMedida": 0.25,
 			"Nombre": "Carne de Res",
-			"CantidadMedida": 0.5,
-			"TipoUnidad": "kg",
-			"Costo": 10
+			"Costo": 5
+		},
+		{
+			"IdIngrediente": "OPbb9e3SOlXffrSxBiHx",
+			"CantidadMedida": 0.15,
+			"Nombre": "Carne de pollo molida",
+			"Costo": 1.6428571428571428
 		}
-	],
-	"Costo": 10.791666666666666,
-  "TipoUnidad": "ml"
-} */
+	]
+}
+*/
 // Update product salsa receta informacion
 async function updateProductSalsaRecetaInforacion(idproduct, body) {
   var res = null;
