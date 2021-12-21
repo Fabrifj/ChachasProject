@@ -231,10 +231,9 @@ app.get("/api/products/chachas", async (req, res) => {
 });
 
 // Create Product-Salsa with ingredients (id's) and cantidadMedida
-app.post("/api/product/salsa/:idfabrica", async (req, res) => {
+app.post("/api/product/salsa/", async (req, res) => {
   var newSalsa = req.body;
-  var idFabrica = req.params.idfabrica;
-  const response = await fnProduct.createProductSalsaRecetaInformacion(idFabrica, newSalsa);
+  const response = await fnProduct.createProductSalsaRecetaInformacion(newSalsa);
   res.send(response);
 });
 
