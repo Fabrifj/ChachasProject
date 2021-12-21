@@ -253,6 +253,15 @@ app.put("/api/product/menu/:idproduct", async (req, res) => {
   res.send(response);
 });
 
+// Update fields by the reservation of product of type "Salsa"
+app.put("/api/product/salsa/reservation", async (req, res) => {
+  var body = req.body
+  const response = await fnProduct.updateReservationSalsa(body);
+  res.send(response);
+});
+
+
+
 /*=================================
           CRUD ORDER
 ==================================*/
