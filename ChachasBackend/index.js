@@ -245,6 +245,14 @@ app.post("/api/product/salsa/", async (req, res) => {
   res.send(response);
 });
 
+// Make Product Chacha with idMenu
+app.put("/api/product/menu/:idproduct", async (req, res) => {
+  const body = req.body;
+  const idProduct = req.params.idproduct;
+  const response = await fnProduct.makeProductProductChacha(idProduct,body);
+  res.send(response);
+});
+
 /*=================================
           CRUD ORDER
 ==================================*/

@@ -686,6 +686,42 @@ async function updateProductSalsaRecetaInforacion(idproduct, body) {
     });
   return res;
 }
+// Aux function for makeProductProductChacha 
+async function calculateInventoryForMenuAndIngredientes(listaIngredientes, cantidadRealizada) {
+  var res = null;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    myIng.CantidadInventario =
+    parseFloat(myIng.CantidadInventario) - (parseFloat(cantidadRealizada)*parseFloat(ing.CantidadMedida));
+    console.log("Nueva Cantidad Inventario", myIng.CantidadInventario);
+
+    var ingActualizado = { CantidadInventario: myIng.CantidadInventario, CantidadMedida: myIng.CantidadMedida,
+      CantidadMinima: myIng.CantidadMinima, CostoMedio: myIng.CostoMedio, Id: myIng.Id, Nombre: myIng.Nombre, TipoUnidad: myIng.TipoUnidad
+    };
+    fnHerramientas.updateDoc(myIng.Id, ingActualizado, "Ingrediente");
+    console.log("Nuevo ingrediente actualizado:", myIng);
+    //res = res.concat(ing.CantidadInventario);
+  }
+  return res;
+}
+
+/*
+Pasamos a path: http://localhost:4000/api/product/menu/W3jHvAlBEfA9yEkyzvol
+lo siguiente:
+{
+	"CantidadRealizada":5,
+}
+Se actualiza cada Ingrediente que se necesita para hacer la Chacha y tambien la CantidadInventario de este producto
+*/
+// Make Product Chacha with idProduct
+async function makeProductProductChacha(idproduct, body) {
+  var res = null;
+  const productoAux = await fnHerramientas.getDoc(idproduct, "Producto");
+  calculateInventoryForMenuAndIngredientes(productoAux.ListaIngredientes, body.CantidadRealizada);
+  productoAux.CantidadInventario = productoAux.CantidadInventario + body.CantidadRealizada;
+  fnHerramientas.updateDoc(idproduct, productoAux, "Producto")
+  return productoAux;
+}
 
 module.exports = {
   getAllProducts,
@@ -710,5 +746,6 @@ module.exports = {
   updateProductFactory,
   getChachasFabrica,
   getSalsasFabrica,
-  createProductSalsaRecetaInformacion
+  createProductSalsaRecetaInformacion,
+  makeProductProductChacha
 };
