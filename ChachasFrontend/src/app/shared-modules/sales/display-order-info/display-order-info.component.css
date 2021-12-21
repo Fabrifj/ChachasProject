@@ -50,6 +50,7 @@ h1 {
 .chachas-image {
     max-width: 15%;
     align-content: left;
+    
 }
 
 .wrapper {
@@ -68,3 +69,11 @@ h1 {
 .image-parent {
     font-weight: bolder;
 }
+
+.myImg{
+
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    
+    }
