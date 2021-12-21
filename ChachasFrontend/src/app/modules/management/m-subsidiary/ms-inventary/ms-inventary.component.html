@@ -1,28 +1,11 @@
 <div class="inventarySection">
 
-    <!-- 
-
-   <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true" (mapReady)="clickReadyMap($event)">
-
-    <div class="row">
-
-        <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
-            <agm-info-window>
-                <h4>
-                    {{sub.Nombre}}
-                </h4>
-
-            </agm-info-window>
-
-        </agm-marker>
-    </agm-map>
-     -->
+    
+    
 
 
 
 
-    <input type="text" [(ngModel)]="prLat">
-    <input type="text" [(ngModel)]="prLon">
     <div class="row">
 
         <div *ngIf="isAlert" id="myAlert">

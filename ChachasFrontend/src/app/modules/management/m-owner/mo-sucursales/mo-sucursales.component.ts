@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone  } from '@angular/core';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
-import { MapsAPILoader, MouseEvent} from '@agm/core';
+import { MapsAPILoader} from '@agm/core';
 
 @Component({
   selector: 'app-mo-sucursales',

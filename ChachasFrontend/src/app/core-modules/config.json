@@ -46,11 +46,30 @@
     "UpdateCostInventoryByMean": "/api/product/costInventoryByMean/",
     "UpdateExpenseSupplySubsidiary": "/api/product/expense/",
 
+ 
+  "GetIngredients":"/api/ingredient",
+  "CreateIngInfo":"/api/ingredientInfo",
+  "GetIngredientId":"/api/ingredient/:id",
+  "UpdateIngredient":"/api/ingredient/",
+  "DeleteIngredient":"/api/ingredient/:id",
+    
+
+
+
+
+  "CreateMerma":"/api/merma",
+  "GetMermabySubsidiary":"/api/merma/bySubsidiary/",
+  "GetMerma":"/api/merma/:id",
+  "UpdateMerma":"/api/merma/:id",
+  "DeleteMerma":"/api/merma/:id",
+  "getMermasWithNameMen":"/api/merma/withNameMenu",
+
     "GetProductsWithIngredients": "/api/products",
     "CreateProductFactory": "/api/productFactory",
     "UpdateProductFactory": "/api/productFactory/",
     "GetSalsasFabrica": "/api/products/salsas",
     "GetChachasFabrica": "/api/products/chachas",
+    "CreateSalsaFactory":"/api/product/salsa/Lbh5237VEKHWHzRlhnwB",
 
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",
@@ -75,11 +94,6 @@
     "UpdateTransaction": "/api/transaction/:id",
     "DeleteTransaction": "/api/transaction/:id",
 
-    "GetIngredients": "/api/ingredient",
-    "CreateIngInfo": "/api/ingredientInfo",
-    "GetIngredientId": "/api/ingredient/:id",
-    "UpdateIngredient": "/api/ingredient/",
-    "DeleteIngredient": "/api/ingredient/:id",
 
     "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
     "crearCompra": "/api/purchase",
