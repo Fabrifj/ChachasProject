@@ -45,10 +45,7 @@ jobs:
         with:
           name: ChachasProject
           path: ./ChachasFrontend/dist/ChachasProject
-      # Enable Firestore Server
-      - name: Enable Firestore Server
-        working-directory: ./ChachasBackend
-        run: nodemon index.js    
+ 
   # deploy job   
   deploy:
     name: Deploy to firebase
@@ -71,6 +68,10 @@ jobs:
       - name: Build the app artifact for prod
         working-directory: ./ChachasFrontend
         run: npm run build --prod
+      # Enable Firestore Server
+      - name: Enable Firestore Server
+        working-directory: ./ChachasBackend
+        run: nodemon index.js   
       # ddeploy the app artifact to firebase
       - name: Deploy angular app to Firebase
         uses: w9jds/firebase-action@master
