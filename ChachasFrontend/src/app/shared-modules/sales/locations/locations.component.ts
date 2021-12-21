@@ -13,10 +13,12 @@ export class LocationsComponent implements OnInit {
 
   prLat = "";
   prLon = "";
-  zoom=16;
+  zoom=4;
   
-  latitude:any="";
-  longitude:any="";
+  latitude:any="-16.5";
+  longitude:any="-68.15";
+
+  marker:any = {};
   ngOnInit(): void {
   }
   acceptClientLocation(){
@@ -46,16 +48,22 @@ export class LocationsComponent implements OnInit {
   }
 
   check(latLng: google.maps.LatLng , map: google.maps.Map){
-    const mark = new google.maps.Marker({
+   
+    var mapMarkers:any;
+    console.log(this.marker);
+    this.marker = null;
+
+
+    var marker2 = new google.maps.Marker({
       
       position: latLng,
       map:map,
 
 
     });
-    console.log("position",mark.getPosition());
-    console.log(latLng.lat)
-    console.log(latLng.lng)
+    
+    this.marker = marker2;
     map.panTo(latLng);
+   
   }
 }

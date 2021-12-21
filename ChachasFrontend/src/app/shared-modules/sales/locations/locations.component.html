@@ -17,15 +17,17 @@
                 <label>Aclaracion de direccion</label>
                 <input type="text" class="form-control" placeholder="Aclaracion" aria-describedby="sizing-addon2" id="aclaration">
             
+                <hr>
+                <agm-map [latitude]="latitude" [longitude]="longitude" [fitBounds]="true" (mapReady)="clickReadyMap($event)">
+                    <agm-marker [latitude]="latitude" [longitude]="longitude" [agmFitBounds]="true">
 
-                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true" (mapReady)="clickReadyMap($event)">
-
-                    
-                    
+                    </agm-marker> 
                 </agm-map>
                 
-
+                <hr>
+                <label > Latitud:</label>
                 <input type="text" [(ngModel)]="prLat">
+                <label > Longitud:</label>
                 <input type="text" [(ngModel)]="prLon">
             
             

@@ -8,3 +8,7 @@
     width: 80%;
     /* The width is the width of the web page */
   }
+
+  input{
+    margin-bottom:20px
+  }
