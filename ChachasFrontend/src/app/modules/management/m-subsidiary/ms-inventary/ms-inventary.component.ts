@@ -58,11 +58,7 @@ export class MsInventaryComponent implements OnInit {
 
   ];
 
-  columnsInsFabMini = [
-    {field:'Nombre',header:'Nombre'},
-    {field:'CantidadInventario',header:'Stock en Inventario'}
-
-  ];
+ 
 
   infoDri: any | undefined;
   columnsDri = [
@@ -344,6 +340,9 @@ export class MsInventaryComponent implements OnInit {
 
   }
   sendTransaction(){
+
+
+    console.log("Inicio de transaccion================");
     var date = this.todayDate;
     
     var idSubDestiny = "";
@@ -399,7 +398,8 @@ export class MsInventaryComponent implements OnInit {
     
     var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
     
-    this.createTransaction(JSON.parse(transaction));
+    console.log("Transaccion:", transaction)
+    //this.createTransaction(JSON.parse(transaction));
    
   }
 
