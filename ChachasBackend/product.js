@@ -686,7 +686,7 @@ async function updateProductSalsaRecetaInforacion(idproduct, body) {
     });
   return res;
 }
-
+// Aux function for makeProductProductChacha 
 async function calculateInventoryForMenuAndIngredientes(listaIngredientes, cantidadRealizada) {
   var res = null;
   for await (const ing of listaIngredientes) {
@@ -713,7 +713,7 @@ lo siguiente:
 }
 Se actualiza cada Ingrediente que se necesita para hacer la Chacha y tambien la CantidadInventario de este producto
 */
-// Make Product Chacha with idMenu
+// Make Product Chacha with idProduct
 async function makeProductProductChacha(idproduct, body) {
   var res = null;
   const productoAux = await fnHerramientas.getDoc(idproduct, "Producto");
