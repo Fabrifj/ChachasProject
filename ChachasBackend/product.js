@@ -527,6 +527,7 @@ async function getChachasFabrica() {
 } body 
  */
 async function updateProductFactory(idProd, body) {
+  
   if (body.hasOwnProperty("ListaIngredientes")) {
     const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
     body.ListaIngredientes = calculo.ListaIngredientes;
@@ -589,8 +590,9 @@ async function calculateCostSalsaFactory(listaIngredientes) {
   var costoTot = 0;
   for await (const ing of listaIngredientes) {
     const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    //console.log("Procesando", myIng);
     ing.Nombre = myIng.Nombre;
-    delete ing.Cantidad;
+    //delete ing.CantidadMedida;
     ing.Costo =
       parseFloat(ing.CantidadMedida) *
       parseFloat(myIng.CostoMedio);
@@ -600,41 +602,76 @@ async function calculateCostSalsaFactory(listaIngredientes) {
   return { Costo: costoTot, ListaIngredientes: listaIngredientes };
 }
 
+/*
+{
+"TipoOrigen": "Fabrica",
+"Nombre" : "salsa cebolla pollo y res",
+"CantidadMedida": 50, 
+"CantidadInventario": 0,
+"CantidadMinima": 100,
+"TipoUnidad": "ml",
+"ListaIngredientes":[
+    {
+      "IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+      "CantidadMedida": 0.5
+    },
+    {
+      "IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+      "CantidadMedida": 0.25
+    },
+	  {
+			"IdIngrediente": "OPbb9e3SOlXffrSxBiHx",
+      "CantidadMedida": 0.15
+		}
+  ]
+}
+*/
 // Create product salsa receta informacion
-async function createProductSalsaRecetaInformacion(idFabrica, body) {
+async function createProductSalsaRecetaInformacion(body) {
   var res = null;
   const calculo = await calculateCostSalsaFactory(body.ListaIngredientes);
-  res = { Origen: idFabrica, TipoOrigen: "Fabrica", Nombre: body.Nombre, 
-    ListaIngredientes: calculo.ListaIngredientes, CantidadMedida: body.CantidadMedida, 
-    Costo: calculo.Costo, TipoUnidad: body.TipoUnidad};
+  res = { TipoOrigen: body.TipoOrigen, Nombre: body.Nombre, 
+    CantidadMedida: body.CantidadMedida, CantidadInventario: body.CantidadInventario,
+    CantidadMinima: body.CantidadMinima, Costo: calculo.Costo, TipoUnidad: body.TipoUnidad,
+    ListaIngredientes: calculo.ListaIngredientes};
+  console.log(res);
   await product.add(res);
+  
   return res;
 }
-/* 11.- modificar producto salsa receta informacion
+
+/*
+Para que anote:
+
 {
-	"Origen": "Lbh5237VEKHWHzRlhnwB",
 	"TipoOrigen": "Fabrica",
-	"Nombre": "Salsa test",
+	"Nombre": "salsa cebolla pollo y res",
+	"CantidadMedida": 50,
+	"CantidadInventario": 0,
+	"CantidadMinima": 100,
+	"Costo": 8.226190476190476,
+	"TipoUnidad": "ml",
 	"ListaIngredientes": [
 		{
 			"IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+			"CantidadMedida": 0.5,
 			"Nombre": "Cebolla",
-			"CantidadMedida": 0.25,
-			"TipoUnidad": "kg",
-			"Costo": 0.7916666666666666
+			"Costo": 1.5833333333333333
 		},
 		{
 			"IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+			"CantidadMedida": 0.25,
 			"Nombre": "Carne de Res",
-			"CantidadMedida": 0.5,
-			"TipoUnidad": "kg",
-			"Costo": 10
+			"Costo": 5
+		},
+		{
+			"IdIngrediente": "OPbb9e3SOlXffrSxBiHx",
+			"CantidadMedida": 0.15,
+			"Nombre": "Carne de pollo molida",
+			"Costo": 1.6428571428571428
 		}
-	],
-	"Costo": 10.791666666666666,
-  "TipoUnidad": "ml"
-} */
-
+	]
+}
 // Update product salsa receta informacion
 async function updateProductSalsaRecetaInforacion(idproduct, body) {
   var res = null;
@@ -648,6 +685,42 @@ async function updateProductSalsaRecetaInforacion(idproduct, body) {
       res = "Error updating product";
     });
   return res;
+}
+// Aux function for makeProductProductChacha 
+async function calculateInventoryForMenuAndIngredientes(listaIngredientes, cantidadRealizada) {
+  var res = null;
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    myIng.CantidadInventario =
+    parseFloat(myIng.CantidadInventario) - (parseFloat(cantidadRealizada)*parseFloat(ing.CantidadMedida));
+    console.log("Nueva Cantidad Inventario", myIng.CantidadInventario);
+
+    var ingActualizado = { CantidadInventario: myIng.CantidadInventario, CantidadMedida: myIng.CantidadMedida,
+      CantidadMinima: myIng.CantidadMinima, CostoMedio: myIng.CostoMedio, Id: myIng.Id, Nombre: myIng.Nombre, TipoUnidad: myIng.TipoUnidad
+    };
+    fnHerramientas.updateDoc(myIng.Id, ingActualizado, "Ingrediente");
+    console.log("Nuevo ingrediente actualizado:", myIng);
+    //res = res.concat(ing.CantidadInventario);
+  }
+  return res;
+}
+
+/*
+Pasamos a path: http://localhost:4000/api/product/menu/W3jHvAlBEfA9yEkyzvol
+lo siguiente:
+{
+	"CantidadRealizada":5,
+}
+Se actualiza cada Ingrediente que se necesita para hacer la Chacha y tambien la CantidadInventario de este producto
+*/
+// Make Product Chacha with idProduct
+async function makeProductProductChacha(idproduct, body) {
+  var res = null;
+  const productoAux = await fnHerramientas.getDoc(idproduct, "Producto");
+  calculateInventoryForMenuAndIngredientes(productoAux.ListaIngredientes, body.CantidadRealizada);
+  productoAux.CantidadInventario = productoAux.CantidadInventario + body.CantidadRealizada;
+  fnHerramientas.updateDoc(idproduct, productoAux, "Producto")
+  return productoAux;
 }
 
 // Create reservation of product of Factory "Salsa"
@@ -744,5 +817,7 @@ module.exports = {
   getChachasFabrica,
   getSalsasFabrica,
   createProductSalsaRecetaInformacion,
-  updateReservationSalsa
+  updateReservationSalsa,
+  makeProductProductChacha
+
 };

@@ -1,0 +1,10 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+  agm-map {
+
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 80%;
+    /* The width is the width of the web page */
+  }

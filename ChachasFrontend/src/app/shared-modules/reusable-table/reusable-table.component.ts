@@ -1,12 +1,12 @@
-import { Component, OnInit,OnChanges,Input, Output, EventEmitter } from '@angular/core';
-import { ReusableTableService } from './reusable-table-service';
+import { Component, OnInit,OnChanges,Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+
 
 @Component({
   selector: 'app-reusable-table',
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.css']
 })
-export class ReusableTableComponent implements OnInit {
+export class ReusableTableComponent implements OnInit{
 
   
   @Input() datos : any ;
@@ -23,7 +23,9 @@ export class ReusableTableComponent implements OnInit {
   @Input() botonGuardarDatos : string="no";
 
 
-  @Input() nombreDistintivo : string = "textoCantidad"
+  @Input() nombreDistintivo : string = "textoCantidad";
+
+
   @Output() parentMethod = new EventEmitter<any>();
 
   espacioCantidadI :any ;
@@ -31,9 +33,11 @@ export class ReusableTableComponent implements OnInit {
   lenDatos :any;
   lenTitulos : any; 
 
+  indiceb : string = "0";
 
   misDatos :any;
-  constructor( private servicioTabla : ReusableTableService ) { }
+  constructor( ) { }
+ 
   ngOnInit()  {
     
     this.espacioCantidadI = parseInt(this.espacioTexto);
@@ -45,12 +49,8 @@ export class ReusableTableComponent implements OnInit {
        e.style.color = this.colorLetra;
    }
 
-
-   this.servicioTabla.cambioTabla.subscribe(
-      (nuevosDatos:any)=>{
-
-
-   });
+    
+  
 
     /*for (let i =0 ; i< elem.length ; i++){
         console.log(i);
@@ -74,6 +74,9 @@ export class ReusableTableComponent implements OnInit {
   }
   
   guardarDT(){
+
+    
+
     this.misDatos = this.datos;
     
     var indice1 = 0 ;
@@ -83,10 +86,10 @@ export class ReusableTableComponent implements OnInit {
       this.titulosTextos.forEach((titulo:any) => {
 
         var nombreCC  = this.nombreDistintivo + indice1 + indice2 ; 
-        console.log(nombreCC)
+        
         var valor = (<HTMLInputElement>document.getElementById(nombreCC)).value ;
 
-        element[titulo] = valor
+        element[titulo] = parseInt(valor)
         indice2 = indice2 +1;
       });
       
@@ -95,8 +98,7 @@ export class ReusableTableComponent implements OnInit {
     });
     
     
-   
-
+    
     this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }
 

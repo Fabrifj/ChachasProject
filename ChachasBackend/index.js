@@ -239,10 +239,17 @@ app.get("/api/products/chachas", async (req, res) => {
 });
 
 // Create Product-Salsa with ingredients (id's) and cantidadMedida
-app.post("/api/product/salsa/:idfabrica", async (req, res) => {
+app.post("/api/product/salsa/", async (req, res) => {
   var newSalsa = req.body;
-  var idFabrica = req.params.idfabrica;
-  const response = await fnProduct.createProductSalsaRecetaInformacion(idFabrica, newSalsa);
+  const response = await fnProduct.createProductSalsaRecetaInformacion(newSalsa);
+  res.send(response);
+});
+
+// Make Product Chacha with idMenu
+app.put("/api/product/menu/:idproduct", async (req, res) => {
+  const body = req.body;
+  const idProduct = req.params.idproduct;
+  const response = await fnProduct.makeProductProductChacha(idProduct,body);
   res.send(response);
 });
 
