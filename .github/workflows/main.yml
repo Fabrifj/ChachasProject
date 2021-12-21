@@ -42,7 +42,7 @@ jobs:
       # Enable Firestore Server
       - name: Enable Firestore Server
         working-directory: ./ChachasBackend
-        run: nodemon index.js   
+        run: node index.js   
       # Runs a set of commands to build
       - name: Build
         working-directory: ./ChachasFrontend
