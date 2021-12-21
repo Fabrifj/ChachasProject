@@ -10,9 +10,16 @@
             <mat-icon>home</mat-icon> Home
         </a>
 
+
     </div>
 
+    <!-- Sucursal -->
+
     <div *ngIf="isShownS" class="sucursal">
+
+        <a mat-list-item (click)="modalService.abrir('modal-IniciarCaja');datoUsuario();" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>attach_money</mat-icon> Inicializar Caja</a>
+
         <a mat-list-item [routerLink]="['/m-subsidiary/inventary']" routerLinkActive="list-item-active" class="upper">
             <mat-icon>store</mat-icon> Inventario
         </a>
@@ -21,16 +28,28 @@
             <mat-icon>add_shopping_cart</mat-icon> Ventas</a>
 
         <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
-            <mat-icon>attach_money</mat-icon> Transaccion</a>
+            <mat-icon>payment</mat-icon> Transaccion</a>
 
     </div>
 
+    <!-- Fabrica -->
+
+
     <div *ngIf="isShownF" class="factory">
+
         <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
             <mat-icon>fastfood</mat-icon> Agregar Ingredientes</a>
     </div>
 
+    <!-- Owner -->
+
+
     <div *ngIf="isShownO" class="owner">
+
+        <!-- <a mat-list-item (click)="modalService.abrir('modal-IniciarCaja');datoUsuario();" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>attach_money</mat-icon> Inicializar Caja</a> -->
+
+
         <a mat-list-item [routerLink]="['/mo-empleados']" routerLinkActive="list-item-active" class="upper" id="prueba">
             <mat-icon>person_pin</mat-icon> Agregar Empleados</a>
         <a mat-list-item [routerLink]="['/mo-sucursal']" routerLinkActive="list-item-active" class="upper" id="prueba">
@@ -108,6 +127,34 @@
             </div>
         </div>
     </jw-modal> -->
+
+
+    <jw-modal id="modal-IniciarCaja" altura="80" ancho="90">
+
+        <div class="modal-header">
+
+            <h2>Inicializar Caja</h2>
+
+
+        </div>
+        <div class="iniciar-caja">
+            <p>Ingrese monto en bolivianos</p>
+            <input type="text" id="montoCaja">
+            <p>Fecha</p>
+            <input type="text" id="fechaM" value={{todayDate}} disabled>
+            <!-- <p>Origen</p>
+            <input type="text" name="" id="origenID" value={{user}} disabled> -->
+
+        </div>
+        <div class="botones">
+
+            <div class="botones">
+                <button class="btn" (click)="modalService.abrir('modal-IniciarCaja');mandarMonto();">Mandar</button>
+                <button class="btnCerrar" (click)="modalService.cerrar('modal-IniciarCaja');">Cancelar</button>
+            </div>
+        </div>
+
+    </jw-modal>
 
 
 

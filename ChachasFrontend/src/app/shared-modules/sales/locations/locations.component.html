@@ -16,6 +16,21 @@
                 <br>
                 <label>Aclaracion de direccion</label>
                 <input type="text" class="form-control" placeholder="Aclaracion" aria-describedby="sizing-addon2" id="aclaration">
+            
+
+                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fitBounds]="true" (mapReady)="clickReadyMap($event)">
+
+                    
+
+            
+                    
+                </agm-map>
+                
+
+                <input type="text" [(ngModel)]="prLat">
+                <input type="text" [(ngModel)]="prLon">
+            
+            
             </div>
 		</div>
      
