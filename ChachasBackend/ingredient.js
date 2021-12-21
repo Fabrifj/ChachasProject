@@ -63,14 +63,7 @@ async function getIngredient(idIn)
 async function updateIngredient(idIn, body)
 {
 	var respuesta = null;
-	await ingredient.doc(idIn).set(
-		{
-			"Nombre": body.Nombre,
-			"TipoUnidad": body.TipoUnidad,
-			"CantidadMinima": body.CantidadMinima
-		},
-		{ merge : true}
-	);	
+	await ingredient.doc(idIn).set(body,{ merge : true});	
 	
 	respuesta = await getIngredient(idIn);
 	return respuesta;
