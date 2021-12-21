@@ -360,20 +360,32 @@ export class MfInventaryComponent implements OnInit {
   updateprProduct(id:any,body:any){
 
     this.serviceHttp.updateProductionProducto(id,body).subscribe((jsonFile:any)=>{
-
+      alert("Logro registrar la produccion del producto");
       console.log("Todo bien con la produccion de producto");
     },(error)=>{
-      console.log("hubo error con ingredientes")
+      console.log("hubo error")
     }
     );
    
   }
+  updateSalsaReservation(body:any){
 
+    this.serviceHttp.updateReservationSalsa(body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la reserva salsas");
+      alert("Logro hacer la reserva de ingredientes correctamente");
+    },(error)=>{
+      console.log("hubo error ")
+    }
+    );
+   
+  }
   updateProduct(id:any,body:any){
 
     this.serviceHttp.updateProductFactory(id,body).subscribe((jsonFile:any)=>{
 
       console.log("Todo bien con la modificacion de product");
+      alert("Logro modificar el producto correctamente");
     },(error)=>{
       console.log("hubo error con product")
     }
@@ -782,11 +794,15 @@ export class MfInventaryComponent implements OnInit {
 
 
   reservarSalsa(){
-    var id = this.selectedObj.id;
+    var id = this.selectedObj.Id;
     var cantidad = this.cantidadRSalsa;
 
-    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+    var cantRes = JSON.stringify({idProducto:id , cantidadReserva:cantidad, tipoUnidad: this.selectedObj.TipoUnidad});
+    console.log(cantRes);
 
+    this.updateSalsaReservation(JSON.parse(cantRes));
+    this.getChachasFabrica();
+    this.getIngredients();
   }
 
   producirChacha(){

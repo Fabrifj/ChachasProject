@@ -71,6 +71,7 @@
     "GetChachasFabrica": "/api/products/chachas",
     "CreateSalsaFactory":"/api/product/salsa/",
     "UpdatePrProduct":"/api/product/menu/",
+    "UpdateReservationSalsa":"/api/product/salsa/reservation",
 
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",

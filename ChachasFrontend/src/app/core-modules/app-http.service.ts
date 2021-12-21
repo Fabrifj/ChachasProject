@@ -158,6 +158,14 @@ export class AppHttpService {
 
   }
 
+  updateReservationSalsa(body:any){
+
+  
+    
+    console.log(body);
+    return this.http.put(paths.UpdateReservationSalsa,body);
+
+  }
 
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
