@@ -149,7 +149,14 @@ export class AppHttpService {
     return this.http.get(paths.GetChachasFabrica);
 
   }
+  updateProductionProducto(id:any,body:any){
 
+    var path = paths.UpdatePrProduct + id;
+    console.log("path",path);
+    console.log(body);
+    return this.http.put(path,body);
+
+  }
 
 
   createProductFactory(body:any){
@@ -160,8 +167,7 @@ export class AppHttpService {
   updateProductFactory(id:any,body:any){
     var path = paths.UpdateProductFactory + id;
 
-    console.log("path",path);
-    console.log("body",body);
+    
     return this.http.put(path,body);
   }
 

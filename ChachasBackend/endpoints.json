@@ -27,6 +27,8 @@
   "UpdateProductFactory":"/api/productFactory/:idproduct",
   "GetSalsasFabrica":"/api/products/salsas",
   "GetChachasFabrica":"/api/products/chachas",
+  "CreateSalsaFactory":"/api/product/salsa/",
+  "UpdateProductionProducto":"/api/product/menu/:idproduct",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",

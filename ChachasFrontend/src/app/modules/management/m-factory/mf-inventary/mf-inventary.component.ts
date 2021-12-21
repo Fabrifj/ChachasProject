@@ -357,6 +357,18 @@ export class MfInventaryComponent implements OnInit {
    
   }
 
+  updateprProduct(id:any,body:any){
+
+    this.serviceHttp.updateProductionProducto(id,body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la produccion de producto");
+    },(error)=>{
+      console.log("hubo error con ingredientes")
+    }
+    );
+   
+  }
+
   updateProduct(id:any,body:any){
 
     this.serviceHttp.updateProductFactory(id,body).subscribe((jsonFile:any)=>{
@@ -475,6 +487,7 @@ export class MfInventaryComponent implements OnInit {
     }
     else if( response[0] == "Producir Producto"){
       this.selectedObj = response[1] ;
+      
       this.modalService.abrir('modalProd-02');
 
     }
@@ -527,25 +540,15 @@ export class MfInventaryComponent implements OnInit {
             this.infoIng = this.infoIng.filter((obj:any) => obj.id !== element.IdIngrediente);
         });
 
-
-        
       if(this.cont ==2 ){
-
-  
-        
         this.openProductS('Modificar Salsa');
-        
-        	this.cont = 1;
+        this.cont = 1;
       }
       else{
-
         this.cont ++;  
-
       }
      
       //rellenamos los valores
-
-
 
     }
     else if(response[0]== "Reservar Salsa"){
@@ -563,9 +566,6 @@ export class MfInventaryComponent implements OnInit {
 
   }
 
-  
-
-  
 
   openProductC(action:any){
 
@@ -580,13 +580,9 @@ export class MfInventaryComponent implements OnInit {
       var indice2 = 0 ;
       this.titulosIng.forEach((titulo:any) => {
 
-        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ; 
-
-      
-        
+        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ;   
         (<HTMLInputElement>document.getElementById(nombreCC)).value = element.CantidadMedida ;
 
-        
         indice2 = indice2 +1;
       });
       
@@ -644,7 +640,7 @@ export class MfInventaryComponent implements OnInit {
     this.modalService.cerrar('modalProd-01');
 
     if(this.datosIngrendientesCCantidad != []){
-      console.log("no es undefined");
+      console.log("cambio ingredientes");
       this.selectedObj.ListaIngredientes = this.datosIngrendientesCCantidad;
     }
     
@@ -692,10 +688,19 @@ export class MfInventaryComponent implements OnInit {
     }
     else{
       //se crea salsa
-      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadInventario:0, CantidadMedida:this.selectedObj.CantidadMedida});
+
+
+      this.selectedObj.ListaIngredientes2 = []
+      this.selectedObj.ListaIngredientes.forEach((element:any) => {
+        var obj = {}
+        obj={IdIngrediente:element.IdIngrediente , CantidadMedida: element.Cantidad}
+
+        this.selectedObj.ListaIngredientes2.push(obj);
+      });
+      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes2 ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadInventario:0, CantidadMedida:this.selectedObj.CantidadMedida,TipoOrigen:"Fabrica"});
     
      
-      console.log("this.selectedObj:",this.selectedObj);
+      console.log(JSON.parse(newProd));
 
 
       this.createSalsaFactory(JSON.parse(newProd));
@@ -785,10 +790,16 @@ export class MfInventaryComponent implements OnInit {
   }
 
   producirChacha(){
-    var id = this.selectedObj.id;
-    var cantidad = this.cantidadPChacha;
 
-    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+    
+    var id = this.selectedObj.Id;
+    var cantidad = this.cantidadPChacha;
+    
+    var cantRes = JSON.stringify({CantidadRealizada:cantidad});
+   console.log(cantRes);
+    this.updateprProduct(id,JSON.parse(cantRes));
+    this.getChachasFabrica();
+    this.getIngredients();
 
   }
 

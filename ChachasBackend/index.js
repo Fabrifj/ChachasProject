@@ -249,6 +249,9 @@ app.post("/api/product/salsa/", async (req, res) => {
 app.put("/api/product/menu/:idproduct", async (req, res) => {
   const body = req.body;
   const idProduct = req.params.idproduct;
+
+  console.log("BODY",body);
+  console.log("IDPROD",idProduct)
   const response = await fnProduct.makeProductProductChacha(idProduct,body);
   res.send(response);
 });

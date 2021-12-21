@@ -46,30 +46,31 @@
     "UpdateCostInventoryByMean": "/api/product/costInventoryByMean/",
     "UpdateExpenseSupplySubsidiary": "/api/product/expense/",
 
- 
-  "GetIngredients":"/api/ingredient",
-  "CreateIngInfo":"/api/ingredientInfo",
-  "GetIngredientId":"/api/ingredient/:id",
-  "UpdateIngredient":"/api/ingredient/",
-  "DeleteIngredient":"/api/ingredient/:id",
+  
+    "GetIngredients":"/api/ingredient",
+    "CreateIngInfo":"/api/ingredientInfo",
+    "GetIngredientId":"/api/ingredient/:id",
+    "UpdateIngredient":"/api/ingredient/",
+    "DeleteIngredient":"/api/ingredient/:id",
     
 
 
 
 
-  "CreateMerma":"/api/merma",
-  "GetMermabySubsidiary":"/api/merma/bySubsidiary/",
-  "GetMerma":"/api/merma/:id",
-  "UpdateMerma":"/api/merma/:id",
-  "DeleteMerma":"/api/merma/:id",
-  "getMermasWithNameMen":"/api/merma/withNameMenu",
+    "CreateMerma":"/api/merma",
+    "GetMermabySubsidiary":"/api/merma/bySubsidiary/",
+    "GetMerma":"/api/merma/:id",
+    "UpdateMerma":"/api/merma/:id",
+    "DeleteMerma":"/api/merma/:id",
+    "getMermasWithNameMen":"/api/merma/withNameMenu",
 
     "GetProductsWithIngredients": "/api/products",
     "CreateProductFactory": "/api/productFactory",
     "UpdateProductFactory": "/api/productFactory/",
     "GetSalsasFabrica": "/api/products/salsas",
     "GetChachasFabrica": "/api/products/chachas",
-    "CreateSalsaFactory":"/api/product/salsa/Lbh5237VEKHWHzRlhnwB",
+    "CreateSalsaFactory":"/api/product/salsa/",
+    "UpdatePrProduct":"/api/product/menu/",
 
     "GetAllOrders": "/api/order",
     "CreateOrder": "/api/order",
