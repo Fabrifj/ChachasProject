@@ -396,7 +396,54 @@
 <!-- Comprar Ingredientes -->
 <jw-modal id="modalSellIng" altura="90" ancho="95">
     <div class="botones modal-header">
-        <button class="btnCerrar" (click)="modalService.cerrar('modalSellIng');">Cancelar</button>
+        <button class="btnOk" id="btnOkIng" (click)="modalService.cerrar('modalSellIng');this.modalService.abrir('modalFactura')">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalSellIng');hacerCompraService.ingredientes=[]">Cancelar</button>
     </div>
     <app-mfi-sales></app-mfi-sales>
 </jw-modal>
+
+<!-- Facturacion -->
+<jw-modal id="modalFactura" altura="90" ancho="95">
+    <div class="botones modal-header">
+        <h4 class="modal-title">Datos Facturación</h4>
+        <button class="btnOk" id="btnOkIng" (click)="realizarCompra()">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalFactura');hacerCompraService.ingredientes=[]">Cancelar</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Proveedor:</h3>
+            <input class="inputTxt" id="nitProv" type="text" [(ngModel)]="this.nitProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Nombre Proveedor:</h3>
+            <input class="inputTxt" id="nameProv" type="text" [(ngModel)]="this.nameProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Número de Factura:</h3>
+            <input class="inputTxt" id="numBill" type="text" [(ngModel)]="this.numBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Factura:</h3>
+            <input class="inputTxt" id="nitBill" type="text" [(ngModel)]="this.nitBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Número de autorización:</h3>
+                <input class="inputTxt" id="numAut" type="text" [(ngModel)]="this.numAut"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Fecha límite de Emisión:</h3>
+                <input class="inputTxt" id="limitDate" type="date" [(ngModel)]="this.limitDate" (ngModelChange)="this.limitDate = $event"> 
+        </div>
+    </div>
+</jw-modal>
+

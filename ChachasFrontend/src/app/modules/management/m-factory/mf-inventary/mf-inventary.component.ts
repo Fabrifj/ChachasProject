@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { delay } from 'rxjs';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+import { HacerCompraService } from 'src/app/modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.service';
 import { ReusableTableComponent } from 'src/app/shared-modules/reusable-table/reusable-table.component';
 
 
@@ -81,9 +82,6 @@ export class MfInventaryComponent implements OnInit {
   ];
 
 
-
-
-
   nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
   nameSauceButtons :string[] = ["Ver Ingredientes","Modificar Salsa","Reservar Salsa"];
   nameIngButtons :string[] = ["Modificar Ingrediente"];
@@ -94,6 +92,13 @@ export class MfInventaryComponent implements OnInit {
 
   siModificoIng: boolean = false;
   siModificoProd: boolean = false;
+
+  nameProv: string="";
+  nitProv: string="";
+  numBill:string="";
+  nitBill:string="";
+  numAut:string="";
+  limitDate:any;
 
   titulosIng = ['Cantidad']
 
@@ -120,8 +125,9 @@ export class MfInventaryComponent implements OnInit {
   //contador de click en modificar producto
   cont = 1;
 
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService, public hacerCompraService:HacerCompraService) { }
   async ngOnInit(): Promise<void> {
+
 
     
     this.getChachasFabrica();
@@ -725,11 +731,18 @@ export class MfInventaryComponent implements OnInit {
     this.selectedObj = {}
     this.siModificoIng = false;
     this.getIngredients();
-
-
-
-
-
+  }
+  
+  realizarCompra(){
+    this.hacerCompraService.registrarCompra(this.nitProv,this.nameProv,this.numBill,this.nitBill,this.numAut,this.limitDate);
+    this.modalService.cerrar('modalFactura');
+    this.hacerCompraService.ingredientes=[];
+    this.nitProv='';
+    this.nameProv='';
+    this.numBill='';
+    this.nitBill='';
+    this.numAut='';
+    this.limitDate=undefined;
   }
   miniumVerification(objs:any){
 

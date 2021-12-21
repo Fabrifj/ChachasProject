@@ -12,7 +12,4 @@ export class MfiSalesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  registrarCompra(){
-    this.hacerCompraServicio.registrarCompra()
-  }
 }
