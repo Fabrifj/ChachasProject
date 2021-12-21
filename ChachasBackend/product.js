@@ -1,6 +1,7 @@
 const { firebase, product, menu } = require("./config");
 const fnHerramientas = require("./herramientas");
 const fnMenu = require("./menu");
+const fnIngredient = require('./ingredient');
 const fnSubsidiary = require("./subsidiary");
 const db = firebase.firestore();
 
@@ -633,6 +634,7 @@ async function createProductSalsaRecetaInformacion(idFabrica, body) {
 	"Costo": 10.791666666666666,
   "TipoUnidad": "ml"
 } */
+
 // Update product salsa receta informacion
 async function updateProductSalsaRecetaInforacion(idproduct, body) {
   var res = null;
@@ -647,6 +649,76 @@ async function updateProductSalsaRecetaInforacion(idproduct, body) {
     });
   return res;
 }
+
+// Create reservation of product of Factory "Salsa"
+/* 
+{
+  idProducto: (id de alguna salsa),
+  cantidadReserva: 200
+  tipoUnidad: “ml”
+} 
+ */
+
+
+async function updateReservationSalsa(body){
+  var res = null; 
+
+  //Body parameters
+  var id = body.idProducto;
+  var cantidadReserva = body.cantidadReserva;
+  var tipoUnidadReserva = body.tipoUnidad;
+
+  //Get the salsa
+  var salsa = await getProductById(id);
+  
+  if (salsa.Tipo == "Salsa"){
+    console.log("\n\nProduct of type Salsa\n")
+    var cantidadMedida = salsa.CantidadMedida;
+    var cantidadInventario = salsa.CantidadInventario;
+
+    // Calculate the ratio
+    if(salsa.TipoUnidad == tipoUnidadReserva){
+      console.log("Metrics match");
+      var ratio = cantidadReserva / cantidadMedida;
+      console.log("The ratio is: ", ratio);
+
+      var listaIng = salsa.ListaIngredientes
+      console.log(listaIng);
+      console.log("=============================");
+
+      for await (const ing of listaIng) {
+        var idIng = ing.IdIngrediente;
+        var ingredient = await fnIngredient.getIngredient(idIng);
+        var newCantInvIng = ingredient.CantidadInventario - (ing.CantidadMedida * ratio);
+        console.log("NewCantidadInventario of the ingredient", newCantInvIng);
+
+        //Update the ingredient
+        fnIngredient.updateIngredient(idIng, {"CantidadInventario":newCantInvIng});
+      }
+
+      console.log("=============================");
+
+      //Update the CantidadInvetario of the Salsa
+      cantidadInventario += cantidadReserva;
+      console.log("NewCantidadInventario of the salsa: ", cantidadInventario);
+
+      //Update the product salsa
+      await product.doc(id).set(
+        {
+          "CantidadInventario": cantidadInventario
+        },
+        { merge: true }
+      );
+      
+      res = await getProductById(id);
+    }else{
+      console.log("Mismatch in field Tipo Unidad");
+      return res;
+    }
+  }
+  return res;
+}
+
 
 module.exports = {
   getAllProducts,
@@ -671,5 +743,6 @@ module.exports = {
   updateProductFactory,
   getChachasFabrica,
   getSalsasFabrica,
-  createProductSalsaRecetaInformacion
+  createProductSalsaRecetaInformacion,
+  updateReservationSalsa
 };

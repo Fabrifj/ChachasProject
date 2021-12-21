@@ -246,6 +246,15 @@ app.post("/api/product/salsa/:idfabrica", async (req, res) => {
   res.send(response);
 });
 
+// Update fields by the reservation of product of type "Salsa"
+app.put("/api/product/salsa/reservation", async (req, res) => {
+  var body = req.body
+  const response = await fnProduct.updateReservationSalsa(body);
+  res.send(response);
+});
+
+
+
 /*=================================
           CRUD ORDER
 ==================================*/
