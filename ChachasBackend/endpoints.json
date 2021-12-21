@@ -19,10 +19,14 @@
   "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
   "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
   "UpdateExpenseSupplySubsidiary":"/api/product/expense/:idproduct",
+  "get mermas from subsidiary":"/api/subsidiaryMermas/:id",
+  "GetInventoryOfProductsofSubsidiary":"/api/product/inventory/:idSub",
 
   "GetProductsWithIngredients":"/api/products",
   "CreateProductFactory":"/api/productFactory",
   "UpdateProductFactory":"/api/productFactory/:idproduct",
+  "GetSalsasFabrica":"/api/products/salsas",
+  "GetChachasFabrica":"/api/products/chachas",
 
   "GetAllOrders":"/api/order",
   "CreateOrder":"/api/order",
@@ -43,6 +47,7 @@
   "CreateEmployee":"/api/employee",
   "GetEmployees":"/api/employee",
   "GetEmployeeId":"/api/employee/:id",
+  "GetEmployeesbyDomain":"/api/employee/domain/:idDomain",
   "UpdateEmployee":"/api/employee/:id",
   "UpdatePasswordEmployee":"/api/employee",
   "DeleteEmployee":"/api/employee/:id",
@@ -64,6 +69,23 @@
   "CreateIngInfo":"/api/ingredientInfo",
   "GetIngredientId":"/api/ingredient/:id",
   "UpdateIngredient":"/api/ingredient/",
-  "DeleteIngredient":"/api/ingredient/:id"
+  "DeleteIngredient":"/api/ingredient/:id",
+
+  "CreateRegisterCuenta":"/api/register/cuenta",
+  "CreateRegisterIngresoEgreso":"/api/register/ingreso_egreso",
+  "GetRegisterCuentas":"/api/register/cuenta",
+  "GetCuentaByDate":"/api/register/cuenta/:date",
+  "GetRegisterByID":"/api/register/:id",
+  "GetRegisterCuentaBySubsidiary":"/api/register/cuenta/subsidiary/:idSub",
+  "UpdateRegisterCuenta":"/api/register/cuenta/:id",
+  "DeleteRegister":"/api/register/:id",
+
+  "CreateMerma":"/api/merma",
+  "getMermasWithNameMen":"/api/merma/withNameMenu",
+  "GetMerma":"/api/merma/:id",
+  "UpdateMerma":"/api/merma/:id",
+  "DeleteMerma":"/api/merma/:id"
+
+
 
 }

@@ -17,6 +17,7 @@ import { MsInventaryComponent } from './modules/management/m-subsidiary/ms-inven
 import { MfSubsidiaryComponent } from './modules/management/m-factory/mf-subsidiary/mf-subsidiary.component';
 import { MfInventaryComponent } from './modules/management/m-factory/mf-inventary/mf-inventary.component';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -46,15 +47,28 @@ import { CatalogCardComponent } from './shared-modules/catalog/catalog-card/cata
 import { ClientInfoComponent } from './shared-modules/sales/client-info/client-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppHttpService } from './core-modules/app-http.service';
+import { LocationsComponent } from './shared-modules/sales/locations/locations.component';
 import { MFactoryComponent } from './modules/management/m-factory/m-factory.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+
+import { MfiSalesComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.component';
+import { SalesListComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/sales-list/sales-list.component';
+import { ShowIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/show-ingredients.component';
+import { ListIngredientsComponent } from './modules/management/m-factory/mf-inventary/mfi-sales/show-ingredients/list-ingredients/list-ingredients.component';
+
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
 
 
+
+import {  MatRadioModule} from '@angular/material/radio';
+import { MsiPurchaseComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/msi-purchase.component';
+import { PurchaseListComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/purchase-list/purchase-list.component';
+import { ShowElementComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/show-element/show-element.component';
+import { ElementListComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/show-element/element-list/element-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,9 +93,20 @@ import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursale
     DisplayOrderInfoComponent,
     CatalogCardComponent,
     ClientInfoComponent,
+
+    MfiSalesComponent,
+    SalesListComponent,
+    ShowIngredientsComponent,
+    ListIngredientsComponent,
+
+    LocationsComponent,
     MoArqueoComponent,
     MoEmpleadosComponent,
-    MoSucursalesComponent
+    MoSucursalesComponent,
+    MsiPurchaseComponent,
+    PurchaseListComponent,
+    ShowElementComponent,
+    ElementListComponent,
   ],
   imports: [
     FormsModule,
@@ -99,11 +124,13 @@ import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursale
     NgbModule,
     CommonModule,
     HttpClientModule,
+    MatRadioModule,
     AgmCoreModule.forRoot({
-      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I"
+      apiKey:"AIzaSyDdHDplMzz8rBW2mzx2OWoUAZk4am-dB9I",
+      libraries: ['places']
     }),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    // provideFirebaseApp(() => initializeApp(environment)),
+    // provideFirestore(() => getFirestore())
   ],
   
   exports:[CatalogCardComponent],

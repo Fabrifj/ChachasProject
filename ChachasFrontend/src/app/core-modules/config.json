@@ -1,91 +1,102 @@
 {
-    
+    "CreateSubsidiary": "/api/subsidiary",
+    "GetSubsidiary": "/api/subsidiary",
+    "GetSubsidiaryId": "/api/subsidiary/",
+    "UpdateSubdidiaryId": "/api/subsidiary/",
+    "DeleteSubsidiary": "/api/subsidiary/",
 
 
-    "GetAllProducts":"/api/product",
-  "GetProductById":"/api/product/:idproduct",
-  "CreateProduct(Generic)":"/api/product",
-  "UpdateProduct":"/api/product/:idproduct",
-  "DeleteProduct":"/api/product/:idproduct",
-  
-  "GetProductsBySubsidiaryAndType":"/api/product/subsidiary/:idSub/type/:type",
-  "GetProductsBySubsidiary":"/api/product/subsidiary/:idSub",
-  "GetProductBySubisidiary_Chacha_Refresco":"/api/product/ChachaRefresco/:idSub",
-  "GetProductBySubsidiary_Chacha_InsumoFabrica_InfoSubsidiary":"/api/product/ChachaInsumo/:idSub",
-  "GetProductBySubsidiary_Just_Product":"/api/product/inventory/",
-  "GetProductTransaction":"/api/productTransaction",
-  "GetMermasofaProduct":"/api/product/mermas/:idProd",
-  "CreateProductChacha":"/api/productChacha",
-  "CreateProductRefresco":"/api/productRefresco",
-  "CreateProductInsumoSucursal":"/api/productInsumoSucursal",
-  "CreateProductInsumoFabrica":"/api/productoInsumoFabrica",
-  "UpdateProductAfterSales":"/api/product/afterSale/:idproduct",
-  "UpdateMermasOfAProduct":"/api/product/mermas/:idproduct",
-  "UpdateCostInventoryByMean":"/api/product/costInventoryByMean/:idproduct",
-  "UpdateExpenseSupplySubsidiary":"/api/product/expense/:idproduct",
+    "CreateEmployee": "/api/employee",
+    "GetEmployees": "/api/employee",
+    "GetEmployeeId": "/api/employee/:id",
+    "GetEmployeesbyDomain": "/api/employee/domain/",
+    "UpdateEmployee": "/api/employee/",
+    "UpdatePasswordEmployee": "/api/employee",
+    "DeleteEmployee": "/api/employee/",
+    "AuthenticateEmployee": "/api/employee/username/:username/pass/:pass",
 
-  "GetProductsWithIngredients":"/api/products",
-  "CreateProductFactory":"/api/productFactory",
-  "UpdateProductFactory":"/api/productFactory/:idproduct",
 
-  "GetAllOrders":"/api/order",
-  "CreateOrder":"/api/order",
-  "DeleteOrder":"/api/order/:idOrder",
+    "CreateRegisterCuenta": "/api/register/cuenta",
+    "CreateRegisterIngresoEgreso": "/api/register/ingreso_egreso",
+    "GetRegisterCuentas": "/api/register/cuenta",
+    "GetCuentaByDate": "/api/register/cuenta/:date",
+    "GetRegisterByID": "/api/register/:id",
+    "GetRegisterCuentaBySubsidiary": "/api/register/cuenta/subsidiary/",
+    "UpdateRegisterCuenta": "/api/register/cuenta/:id",
+    "DeleteRegister": "/api/register/:id",
 
-  "CreateSubsidiary":"/api/subsidiary",
-  "GetSubsidiary":"/api/subsidiary",
-  "GetSubsidiaryId":"/api/subsidiary/:id",
-  "UpdateSubdidiaryId":"/api/subsidiary/:id",
-  "DeleteSubsidiary":"/api/subsidiary/:id",
+    "GetAllProducts": "/api/product",
+    "GetProductById": "/api/product/:idproduct",
+    "CreateProduct(Generic)": "/api/product",
+    "UpdateProduct": "/api/product/",
+    "DeleteProduct": "/api/product/",
 
-  "CreateMenu":"/api/menu",
-  "GetMenus":"/api/menu",
-  "GetMenuName":"/api/menu/getMenuName",
-  "UpdateMenu":"/api/menu/:id",
-  "DeleteMenuId":"/api/menu/:id",
+    "GetProductsBySubsidiaryAndType": "/api/product/subsidiary/",
+    "GetProductsBySubsidiary": "/api/product/subsidiary/",
+    "GetProductBySubisidiary_Chacha_Refresco": "/api/product/ChachaRefresco/:idSub",
+    "GetProductBySubsidiary_Chacha_InsumoFabrica_InfoSubsidiary": "/api/product/ChachaInsumo/",
+    "GetProductTransaction": "/api/productTransaction",
+    "GetMermasofaProduct": "/api/product/mermas/",
+    "CreateProductChacha": "/api/productChacha",
+    "CreateProductRefresco": "/api/productRefresco",
+    "CreateProductInsumoSucursal": "/api/productInsumoSucursal",
+    "CreateProductInsumoFabrica": "/api/productoInsumoFabrica",
+    "UpdateProductAfterSales": "/api/product/afterSale/",
+    "UpdateMermasOfAProduct": "/api/product/mermas/",
+    "UpdateCostInventoryByMean": "/api/product/costInventoryByMean/",
+    "UpdateExpenseSupplySubsidiary": "/api/product/expense/",
 
-  "CreateEmployee":"/api/employee",
-  "GetEmployees":"/api/employee",
-  "GetEmployeeId":"/api/employee/:id",
-  "UpdateEmployee":"/api/employee/:id",
-  "UpdatePasswordEmployee":"/api/employee",
-  "DeleteEmployee":"/api/employee/:id",
-  "AuthenticateEmployee":"/api/employee/username/:username/pass/:pass",
-
-  "CreatePurchase":"/api/purchase",
-  "GetPurchases":"/api/purchase",
-  "GetPurchase":"/api/purchase/:id",
-  "UpdatePurchase":"/api/purchase/:id",
-  "DeletePurchase":"/api/subsidiary/:id",
-
-  "CreateTransaction":"/api/transaction",
-  "GetTransaction":"/api/transaction",
-  "GetTransactionId":"/api/transaction/:id",
-  "UpdateTransaction":"/api/transaction/:id",
-  "DeleteTransaction":"/api/transaction/:id",
-
+ 
   "GetIngredients":"/api/ingredient",
   "CreateIngInfo":"/api/ingredientInfo",
   "GetIngredientId":"/api/ingredient/:id",
   "UpdateIngredient":"/api/ingredient/",
   "DeleteIngredient":"/api/ingredient/:id",
     
+
+
+
+
+  "CreateMerma":"/api/merma",
+  "GetMermabySubsidiary":"/api/merma/bySubsidiary/",
+  "GetMerma":"/api/merma/:id",
+  "UpdateMerma":"/api/merma/:id",
+  "DeleteMerma":"/api/merma/:id",
+  "getMermasWithNameMen":"/api/merma/withNameMenu",
+
+    "GetProductsWithIngredients": "/api/products",
+    "CreateProductFactory": "/api/productFactory",
+    "UpdateProductFactory": "/api/productFactory/",
+    "GetSalsasFabrica": "/api/products/salsas",
+    "GetChachasFabrica": "/api/products/chachas",
+    "CreateSalsaFactory":"/api/product/salsa/Lbh5237VEKHWHzRlhnwB",
+
+    "GetAllOrders": "/api/order",
+    "CreateOrder": "/api/order",
+    "DeleteOrder": "/api/order/:idOrder",
+
+
+    "CreateMenu": "/api/menu",
+    "GetMenus": "/api/menu",
+    "GetMenuName": "/api/menu/getMenuName",
+    "UpdateMenu": "/api/menu/",
+    "DeleteMenuId": "/api/menu/:id",
+
+    "CreatePurchase": "/api/purchase",
+    "GetPurchases": "/api/purchase",
+    "GetPurchase": "/api/purchase/:id",
+    "UpdatePurchase": "/api/purchase/:id",
+    "DeletePurchase": "/api/subsidiary/:id",
+
+    "CreateTransaction": "/api/transaction",
+    "GetTransaction": "/api/transaction",
+    "GetTransactionId": "/api/transaction/:id",
+    "UpdateTransaction": "/api/transaction/:id",
+    "DeleteTransaction": "/api/transaction/:id",
+
+
     "GetAllProductFromASubsidiary": "/api/product/ChachaRefresco/mAlmWL1myFMGbZW8WHw3",
-
-
-    
-
-
     "crearCompra": "/api/purchase",
-
-  
-
-
     "Authenticate": "/api/employee/"
-
-    
-
-
-
 
 }

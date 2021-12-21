@@ -1,0 +1,19 @@
+<h3>Listado Insumos</h3>
+<div class="list-group">
+    <div class="row">
+    <div class="col-md-6">
+        <app-element-list
+                        *ngFor="let ingredientesEle of insumos; let i = index"
+                        [element] = "ingredientesEle"
+                        [index] = "i"
+                        ></app-element-list>
+    </div>
+    <div class="col-md-6">
+        <app-element-list
+                        *ngFor="let ingredientesEle of refrescos; let i = index"
+                        [element] = "ingredientesEle"
+                        [index] = "i"
+                        ></app-element-list>
+        </div>
+    </div>
+</div>

@@ -1,26 +1,27 @@
-
- 
 <div class="inventarySection">
 
     
-
-
     
-    <div class="row" >
+
+
+
+
+
+    <div class="row">
         <div *ngIf="isAlert" id="myAlert">
             <div class="col-md-11">
                 <p>{{msgAlert}}</p>
             </div>
             <div class="col-md-1">
-                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button> 
+                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button>
             </div>
         </div>
 
     </div>
-      
-    
-   
-    <div class="row" >
+
+
+
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de los Refrescos</h1>
             <app-reusable-table [datos]="infoDri" [columnas]="columnsDri" colorLetra="black" [nombreBotones]="nameDrinkButtons" (parentMethod)="functionChooseObj($event)">
@@ -28,7 +29,7 @@
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de los insumos de sucursal</h1>
             <app-reusable-table [datos]="infoInsSub" [columnas]="columnsInsSub" colorLetra="black" [nombreBotones]="nameInsCButtons" (parentMethod)="functionChooseObj($event)">
@@ -36,23 +37,23 @@
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de las Salsas</h1>
             <app-reusable-table [datos]="infoInsFab" [columnas]="columnsInsFab" colorLetra="black" [nombreBotones]="nameInsButtons" (parentMethod)="functionChooseObj($event)">
-    
+
             </app-reusable-table>
         </div>
     </div>
-    
 
-    <div class="row" >
+
+    <div class="row">
         <div class="col-md-12">
 
         </div>
     </div>
 
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12">
             <h1>Tabla de las Chachas</h1>
             <app-reusable-table [datos]="infoProd" [columnas]="columnsProd" colorLetra="black" [nombreBotones]="nameProdButtons" (parentMethod)="functionChooseObj($event)">
@@ -60,21 +61,23 @@
         </div>
     </div>
 
-   
 
-    
-    <div class="row" >
+
+
+    <div class="row">
         <div class="col-md-12">
             <hr />
         <button class="btn" (click)="modalService.abrir('modalSubsidiaries-01');">Ver Sucursales</button>
         <button class="btn" (click)="modalService.abrir('modalTransaction-01');">Realizar Transaccion</button>
         <button class="btn" (click)="modalService.abrir('modalProducto-01');">Agregar Refrescos</button>
         <button class="btn" (click)="modalService.abrir('modalProducto-02');">Agregar Aceites</button>
+        <button class="btn" (click)="modalService.abrir('modalPurchase');">Comprar Insumos</button>
         <!--   <button class="btn" (click)="modalService.abrir('modalProducto-03');">Agregar Salsas</button> -->
+
         </div>
     </div>
 
- 
+
 </div>
 
 
@@ -94,6 +97,7 @@
         <select class="btnSend" aria-label="Default select example" [(ngModel)]="selectedValue">
         <option selected>None</option>
         <option *ngFor="let sucursal of infoSubs;" >{{sucursal.Nombre}}</option>
+        
         
     </select>
 
@@ -338,14 +342,17 @@
 
         <agm-marker *ngFor="let sub of infoSub" [latitude]="sub.Localizacion.latitude" [longitude]="sub.Localizacion.longitude" [agmFitBounds]="true">
             <agm-info-window>
-                <h2>
+                <h4>
                     {{sub.Nombre}}
-                </h2>
+                </h4>
 
             </agm-info-window>
 
         </agm-marker>
     </agm-map>
+
+
+
 
 
     <div class="botones">
@@ -363,5 +370,61 @@
     <div class="botones">
         <button class="btnSend" (click)="modalService.cerrar('modalConfirmation');modalService.cerrar('modalTransaction-01');sendTransaction();">OK</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmation');">Cancelar</button>
+    </div>
+</jw-modal>
+
+<!-- Comprar Insumos -->
+<jw-modal id="modalPurchase" altura="90" ancho="95">
+    <div class="botones modal-header">
+        <button class="btnSend" id="btnOkIng" (click)="modalService.cerrar('modalPurchase');this.modalService.abrir('modalFactura')">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalPurchase');purchaseService.elementos=[]">Cancelar</button>
+    </div>
+    <app-msi-purchase
+        [idSubsidiary]='idSubsidiary'
+    ></app-msi-purchase>
+</jw-modal>
+
+<!-- Facturacion -->
+<jw-modal id="modalFactura" altura="90" ancho="95">
+    <div class="botones modal-header">
+        <h4 class="modal-title">Datos Facturación</h4>
+        <button class="btnSend" id="btnOkIng" (click)="realizarCompra()">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalFactura');purchaseService.elementos=[]">Cancelar</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Proveedor:</h3>
+            <input class="inputTxt" id="nitProv" type="text" [(ngModel)]="this.nitProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Nombre Proveedor:</h3>
+            <input class="inputTxt" id="nameProv" type="text" [(ngModel)]="this.nameProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Número de Factura:</h3>
+            <input class="inputTxt" id="numBill" type="text" [(ngModel)]="this.numBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Factura:</h3>
+            <input class="inputTxt" id="nitBill" type="text" [(ngModel)]="this.nitBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Número de autorización:</h3>
+                <input class="inputTxt" id="numAut" type="text" [(ngModel)]="this.numAut"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Fecha límite de Emisión:</h3>
+                <input class="inputTxt" id="limitDate" type="date" [(ngModel)]="this.limitDate" (ngModelChange)="this.limitDate = $event"> 
+        </div>
     </div>
 </jw-modal>

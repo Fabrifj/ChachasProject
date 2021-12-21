@@ -15,6 +15,7 @@ Producto
 {
 	"Id":"BCHEBCOOQCBDOH",
 	"Origen": "Fabrica",
+	"Tipo":"Chacha",
 	"Receta": 
 	[
 		{
@@ -37,7 +38,34 @@ Producto
   "CantidadMinima":,
   "IdMenu":,
 },
+{
+	"Origen":"Fabrica",
+	"Nombre":"Salsa de Mani",
+	"Tipo":"Salsa",
+	"ListaIngredientes":
+	[
+		{
+			"IdIngrediente":"ybibbijboijoij",
+			"Nombre":"Carne",
+			"CantidadMedida":0.25,
+			"TipoUnidad":"kg",
+			"Costo":5
+		},
+		{
+			"IdIngrediente":"rbibijberijfbid",
+			"Nombre":"Tomate",
+			"CantidadMedida":0.5,
+			"TipoUnidad":"kg",
+			"Costo":2
+		}
 
+	],
+	"CantidadMedida":100,
+	"Costo":7,
+	"CantidadInventario":700,
+	"TipoUnidad":"ml",
+	"CantidadMinima":100
+},
 {
 	"Id":"BCHEBCOOkkkBDOH",
 	"Tipo":"Chacha"
@@ -161,6 +189,7 @@ Pedido:
 		"RazonSocial": //Este es el apellido del cliente
 	}
 	"IdSucursal":"",
+	"Fecha": "YYYY-MM-DD",
 }
 =========================================================================
 Empleado:
@@ -233,3 +262,49 @@ Transaccion
 =========================================================================
 Pedido/Confirmacion para el siguiente modulo
 =========================================================================
+Caja
+{
+  "Descripcion":"",
+	"Fecha":(Timestamp),
+  "Monto":800 (Monto de la compra o venta),
+  "Origen":(IdSucursal),
+	"Saldo":,(Cantidad antes de sumar o restar monto), 
+	"Tipo":"Ingreso",//"Egreso"
+},
+{
+  "CuentaInicial":(Nos dan los de frontend),
+  "Egresos":(Lo que se gasto),
+  "Fecha":(Timestamp),
+  "Ingresos":(Lo que se gano),
+	"Origen":(IdSucursal),
+	"Saldo":(inicio_caja + ventas - compras),
+  "Tipo":"Cuenta",
+} 
+  Este ultimo documento se crea de manera manual
+===========================================================
+Compra: //Todavia falta discutirlo, esta sujeto a cambios
+//Esta solo es para el tipo refrescos
+{
+	"Id":"",
+	"Tipo":"Refresco"//O puede ser "InsumoSucursal" --- En compra fabrica no existe tipo
+	"Fecha":"2021-11-25",
+	"ListaObjetos":
+	[
+		{
+			"IdObjeto":"",//Puede ser "ID-PRODUCTO "(para sucursal) o "ID-INGREDIENTE" para fabrica
+			"Costo":200,
+			"Cantidad":10,//Lo que se introduzca tiene que estar medido como su producto
+		}
+	]
+	"Origen":"ID-SUCURSAL", //"Fabrica"
+	"Factura":
+	{
+		"NITProveedor":"",
+		"NombreProveedor":"",
+		"NumeroFactura":"",
+		"NITFactura":"",
+		"NumeroAutorizacion":"",
+		"FechaLimiteEmision":""
+	}
+}
+

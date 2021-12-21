@@ -7,9 +7,10 @@ async function getSubsidiaries()
 }
 async function getSubsidiary(idSubsidiary)
 {
+  // console.log("Test subsidiary hola")
     return await fnHerramientas.getDoc(idSubsidiary,"Sucursal");
 }
-//CrearCategoria
+//CrearSucursal
 /**
  * 
  * @param {} body tiene que tener la siguiente estructura:
@@ -25,6 +26,7 @@ async function getSubsidiary(idSubsidiary)
     },//Es el punto geografico con latitud y longitud
 	"Telefono":
 	"Departamento":"Cochabamba"//Tambien puede ser "La Paz"
+  "Tipo":"Sucursal"//"Fabrica"
 }
  * 
  * 
@@ -48,6 +50,61 @@ async function updateSubsidiary(idSubsidiary, body)
 async function deleteSubsidiary(idSubsidiary)
 {
     return await fnHerramientas.deleteDoc(idSubsidiary,"Sucursal");
+}
+
+/*
+10.- crear producto salsa receta informacion
+{
+	"Nombre" : "salsa de mani",
+	"CantidadResultante":,
+	"TipoDeUnidad": "ml"
+	"CantidadMinima":100 
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+		
+	]
+}
+*/
+// Create product salsa receta informacion
+async function createProductSalsaRecetaInformacion(body, type) {
+  body.Tipo = type;
+  body.Costo = 0;
+  await product.add(body);
+  return body;
+}
+/*
+11.- modificar producto salsa receta informacion
+{
+	"Nombre" : "salsa de mani",
+	"CantidadResultante":,
+	"TipoDeUnidad": "",
+	"CantidadMinima":, 
+	"ListaIngredientes":[
+		{
+			"Nombre":"",
+			"Cantidad": , 
+			"TipoUnidad" :  
+		}
+	]
+}
+*/
+// Update product salsa receta informacion
+async function updateProductSalsaRecetaInforacion(idproduct, body) {
+  var res = null;
+  await product
+    .doc(idproduct)
+    .update(body)
+    .then(() => {
+      res = body;
+    })
+    .catch((error) => {
+      res = "Error updating product";
+    });
+  return res;
 }
 
 
