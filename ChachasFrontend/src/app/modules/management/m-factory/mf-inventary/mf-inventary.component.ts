@@ -75,7 +75,6 @@ export class MfInventaryComponent implements OnInit {
     
     {field:'Cantidad',header:'Cantidad'},
     {field:'NombreMenu',header:'Nombre Menu'},
-    {field:'IdMenu',header:'Id Menu'},
     {field:'Fecha',header:'Fecha'},
     {field:'IdSucursal',header:'Sucursal'}
  
@@ -175,7 +174,7 @@ export class MfInventaryComponent implements OnInit {
    
       
       this.serviceHttp.getMermasWithNameMen().subscribe((jsonFile:any)=>{
-        this.infoMerm = jsonFile;
+        this.modificarFecha(jsonFile);
         
       } ,(error)=>{
           console.log("hubo error con productos")
@@ -190,7 +189,9 @@ export class MfInventaryComponent implements OnInit {
   modificarFecha(jsonFile:any){
 
     jsonFile.forEach((element:any) => {
-        var newFecha = element.Fecha.seconds ;
+        var newFecha = new Date(element.Fecha.seconds).toLocaleDateString() ;
+        element.Fecha = newFecha;
+        this.infoMerm.push(element)
         
     });
 

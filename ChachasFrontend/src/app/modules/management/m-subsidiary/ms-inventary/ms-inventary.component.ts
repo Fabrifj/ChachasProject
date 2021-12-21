@@ -330,6 +330,9 @@ export class MsInventaryComponent implements OnInit {
 
   }
   sendTransaction(){
+
+
+    console.log("Inicio de transaccion================");
     var date = this.todayDate;
     
     var idSubDestiny = "";
@@ -385,7 +388,8 @@ export class MsInventaryComponent implements OnInit {
     
     var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
     
-    this.createTransaction(JSON.parse(transaction));
+    console.log("Transaccion:", transaction)
+    //this.createTransaction(JSON.parse(transaction));
    
   }
 
