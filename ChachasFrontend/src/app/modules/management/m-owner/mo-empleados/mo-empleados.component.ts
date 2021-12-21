@@ -26,8 +26,10 @@ export class MoEmpleadosComponent implements OnInit {
   infoEmployee:any="";
   infoEmployeeF:any="";
   idEmp:any="";
-
+  name:any=""; 
   todayDate:any = undefined;
+
+  
 
   columnsEmployee = [
     {field:'Nombre',header:'Nombre'},
@@ -35,8 +37,9 @@ export class MoEmpleadosComponent implements OnInit {
     {field:'ApellidoP',header:'Apellido Paterno'},
     {field:'id',header:'CI'},
     {field:'Cargo',header:'Cargo'}, 
+    {field:'Origen', header:'Origen'},
     {field: 'Dominio' ,header:'Dominio'},
-    {field:'Tipo',header:'Tipo'},
+    //{field:'Tipo',header:'Tipo'},
     
   ];
 
@@ -67,7 +70,7 @@ export class MoEmpleadosComponent implements OnInit {
      
       
       this.infoEmployee =jsonFile;
-      
+      this.nameDisplay();
 
     } ,(error)=>{
         console.log("hubo error con empleados")
@@ -80,7 +83,7 @@ export class MoEmpleadosComponent implements OnInit {
      
       
       this.infoEmployee =jsonFile;
-      
+      this.nameDisplay();
 
     } ,(error)=>{
         console.log("hubo error con mpleados por dominio")
@@ -172,28 +175,6 @@ export class MoEmpleadosComponent implements OnInit {
     } )
 
   }
-
-  /* updateEmployees(idEmp:any, body:any){
-
-    idEmp = this.selectedObject.id; 
-    console.log("dentro de update" + idEmp)
-
-    this.serviceHttp.updateEmployee(idEmp, body)
-    .subscribe((jsonFile:any)=>{
-
-      alert('empleado actualizado correctamente');
-
-      this.getSubsidiary();
-      this.getEmployees();
-      
-
-    } ,(error)=>{
-        console.log("hubo error al actualizar el empleado")
-
-    } )
-      this.getSubsidiary();
-      this.getEmployees();
-  } */
   
   sendupdateEmployee(){
     var idSubDestiny = "";
@@ -339,6 +320,7 @@ export class MoEmpleadosComponent implements OnInit {
       this.createEmployee(JSON.parse(empleado))
     }    
 
+    window.location.reload();
     }
 
    eliminarEmployee(){
@@ -361,6 +343,7 @@ export class MoEmpleadosComponent implements OnInit {
     //this.updateEmployees()
   }
   filter(){
+    
     var idDominio = "";
     var Tipo = "";
     /* console.log("porque")
@@ -389,7 +372,33 @@ export class MoEmpleadosComponent implements OnInit {
       // console.log("es None")
       return this.getEmployees();
     }
-  }    
+  }   
+  
+  nameDisplay(){
+
+    this.infoEmployee.forEach((element:any) => {
+ 
+      let nombre = element.Dominio;
+      console.log('este es el id: ')    
+      console.log(nombre)
+      if(nombre != 'Administrador')
+      {
+        this.serviceHttp.getSubsidiaryId(nombre).subscribe((jsonFile:any)=>{
+          //this.infoSubById = jsonFile;     
+          this.name = jsonFile.Nombre;
+          element.Origen = this.name;
+          //console.log("el origen: " + element.Origen)
+
+        }) 
+      }
+      else{
+        element.Origen = 'Administrador'
+      }
+
+     });
+    
+  } 
+
 }
    
   

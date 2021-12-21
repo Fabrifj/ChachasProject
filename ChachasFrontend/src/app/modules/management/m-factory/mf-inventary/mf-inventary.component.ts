@@ -76,7 +76,6 @@ export class MfInventaryComponent implements OnInit {
     
     {field:'Cantidad',header:'Cantidad'},
     {field:'NombreMenu',header:'Nombre Menu'},
-    {field:'IdMenu',header:'Id Menu'},
     {field:'Fecha',header:'Fecha'},
     {field:'IdSucursal',header:'Sucursal'}
  
@@ -181,7 +180,7 @@ export class MfInventaryComponent implements OnInit {
    
       
       this.serviceHttp.getMermasWithNameMen().subscribe((jsonFile:any)=>{
-        this.infoMerm = jsonFile;
+        this.modificarFecha(jsonFile);
         
       } ,(error)=>{
           console.log("hubo error con productos")
@@ -196,7 +195,9 @@ export class MfInventaryComponent implements OnInit {
   modificarFecha(jsonFile:any){
 
     jsonFile.forEach((element:any) => {
-        var newFecha = element.Fecha.seconds ;
+        var newFecha = new Date(element.Fecha.seconds).toLocaleDateString() ;
+        element.Fecha = newFecha;
+        this.infoMerm.push(element)
         
     });
 
@@ -356,11 +357,35 @@ export class MfInventaryComponent implements OnInit {
    
   }
 
+  updateprProduct(id:any,body:any){
+
+    this.serviceHttp.updateProductionProducto(id,body).subscribe((jsonFile:any)=>{
+      alert("Logro registrar la produccion del producto");
+      console.log("Todo bien con la produccion de producto");
+    },(error)=>{
+      console.log("hubo error")
+    }
+    );
+   
+  }
+  updateSalsaReservation(body:any){
+
+    this.serviceHttp.updateReservationSalsa(body).subscribe((jsonFile:any)=>{
+
+      console.log("Todo bien con la reserva salsas");
+      alert("Logro hacer la reserva de ingredientes correctamente");
+    },(error)=>{
+      console.log("hubo error ")
+    }
+    );
+   
+  }
   updateProduct(id:any,body:any){
 
     this.serviceHttp.updateProductFactory(id,body).subscribe((jsonFile:any)=>{
 
       console.log("Todo bien con la modificacion de product");
+      alert("Logro modificar el producto correctamente");
     },(error)=>{
       console.log("hubo error con product")
     }
@@ -474,6 +499,7 @@ export class MfInventaryComponent implements OnInit {
     }
     else if( response[0] == "Producir Producto"){
       this.selectedObj = response[1] ;
+      
       this.modalService.abrir('modalProd-02');
 
     }
@@ -526,25 +552,15 @@ export class MfInventaryComponent implements OnInit {
             this.infoIng = this.infoIng.filter((obj:any) => obj.id !== element.IdIngrediente);
         });
 
-
-        
       if(this.cont ==2 ){
-
-  
-        
         this.openProductS('Modificar Salsa');
-        
-        	this.cont = 1;
+        this.cont = 1;
       }
       else{
-
         this.cont ++;  
-
       }
      
       //rellenamos los valores
-
-
 
     }
     else if(response[0]== "Reservar Salsa"){
@@ -562,9 +578,6 @@ export class MfInventaryComponent implements OnInit {
 
   }
 
-  
-
-  
 
   openProductC(action:any){
 
@@ -579,13 +592,9 @@ export class MfInventaryComponent implements OnInit {
       var indice2 = 0 ;
       this.titulosIng.forEach((titulo:any) => {
 
-        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ; 
-
-      
-        
+        var nombreCC  = 'textoCantidadIng' + indice1 + indice2 ;   
         (<HTMLInputElement>document.getElementById(nombreCC)).value = element.CantidadMedida ;
 
-        
         indice2 = indice2 +1;
       });
       
@@ -643,7 +652,7 @@ export class MfInventaryComponent implements OnInit {
     this.modalService.cerrar('modalProd-01');
 
     if(this.datosIngrendientesCCantidad != []){
-      console.log("no es undefined");
+      console.log("cambio ingredientes");
       this.selectedObj.ListaIngredientes = this.datosIngrendientesCCantidad;
     }
     
@@ -691,10 +700,19 @@ export class MfInventaryComponent implements OnInit {
     }
     else{
       //se crea salsa
-      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadInventario:0, CantidadMedida:this.selectedObj.CantidadMedida});
+
+
+      this.selectedObj.ListaIngredientes2 = []
+      this.selectedObj.ListaIngredientes.forEach((element:any) => {
+        var obj = {}
+        obj={IdIngrediente:element.IdIngrediente , CantidadMedida: element.Cantidad}
+
+        this.selectedObj.ListaIngredientes2.push(obj);
+      });
+      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes2 ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadInventario:0, CantidadMedida:this.selectedObj.CantidadMedida,TipoOrigen:"Fabrica"});
     
      
-      console.log("this.selectedObj:",this.selectedObj);
+      console.log(JSON.parse(newProd));
 
 
       this.createSalsaFactory(JSON.parse(newProd));
@@ -776,18 +794,28 @@ export class MfInventaryComponent implements OnInit {
 
 
   reservarSalsa(){
-    var id = this.selectedObj.id;
+    var id = this.selectedObj.Id;
     var cantidad = this.cantidadRSalsa;
 
-    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+    var cantRes = JSON.stringify({idProducto:id , cantidadReserva:cantidad, tipoUnidad: this.selectedObj.TipoUnidad});
+    console.log(cantRes);
 
+    this.updateSalsaReservation(JSON.parse(cantRes));
+    this.getChachasFabrica();
+    this.getIngredients();
   }
 
   producirChacha(){
-    var id = this.selectedObj.id;
-    var cantidad = this.cantidadPChacha;
 
-    var cantRes = JSON.stringify({id:id , cantidad:cantidad});
+    
+    var id = this.selectedObj.Id;
+    var cantidad = this.cantidadPChacha;
+    
+    var cantRes = JSON.stringify({CantidadRealizada:cantidad});
+   console.log(cantRes);
+    this.updateprProduct(id,JSON.parse(cantRes));
+    this.getChachasFabrica();
+    this.getIngredients();
 
   }
 

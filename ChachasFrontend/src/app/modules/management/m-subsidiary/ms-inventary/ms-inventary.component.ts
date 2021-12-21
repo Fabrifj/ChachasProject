@@ -58,6 +58,8 @@ export class MsInventaryComponent implements OnInit {
 
   ];
 
+ 
+
   infoDri: any | undefined;
   columnsDri = [
     {field:'Nombre',header:'Nombre'},
@@ -98,6 +100,7 @@ export class MsInventaryComponent implements OnInit {
    // {field:'Imagen',header:'Imagen'}
     
   ];
+
 
   nameProdButtons: string[]= ["Registrar Merma"];
   nameDrinkButtons: string[] = ["Registrar Compra"];
@@ -337,6 +340,9 @@ export class MsInventaryComponent implements OnInit {
 
   }
   sendTransaction(){
+
+
+    console.log("Inicio de transaccion================");
     var date = this.todayDate;
     
     var idSubDestiny = "";
@@ -358,7 +364,7 @@ export class MsInventaryComponent implements OnInit {
         
         listaProdSend.push({
           IdProducto:producto.id,
-          Tipo : "Intercambio",
+          Tipo:"Chacha",
           IdMenu:producto.IdMenu,
           Cantidad: cantidadPSucursal,
           Nombre :producto.IdMenu
@@ -380,9 +386,9 @@ export class MsInventaryComponent implements OnInit {
           listaProdSend.push({
             
             IdProducto:producto.id,
-            Tipo : "InsumoFabrica",
+            Tipo:"InsumoFabrica",
             Cantidad: cantidadPSucursal,
-            CantidadMedida : producto.CantidadMedida,
+
             TipoUnidad : producto.TipoUnidad,
             Nombre : producto.Nombre
           });
@@ -390,9 +396,13 @@ export class MsInventaryComponent implements OnInit {
         });
     }
     
-    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
+    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, Tipo:"Intercambio", IdDestino: idSubDestiny, ListaProductos:listaProdSend })
     
+    console.log("Transaccion:", transaction)
     this.createTransaction(JSON.parse(transaction));
+
+    this.getProdChachas();
+    this.getSauce();
    
   }
 

@@ -61,9 +61,6 @@ import { ListIngredientsComponent } from './modules/management/m-factory/mf-inve
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
-
-
-
 import {  MatRadioModule} from '@angular/material/radio';
 import { MsiPurchaseComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/msi-purchase.component';
 import { PurchaseListComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/purchase-list/purchase-list.component';

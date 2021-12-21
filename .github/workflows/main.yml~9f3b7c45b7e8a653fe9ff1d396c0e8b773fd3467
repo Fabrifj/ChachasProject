@@ -35,10 +35,6 @@ jobs:
       - name: Install Dependencies from Backend
         working-directory: ./ChachasBackend
         run: npm install
-      # Install nodemon
-      - name: Install Nodemon
-        working-directory: ./ChachasBackend
-        run: npm install nodemon 
       # Runs a set of commands to build
       - name: Build
         working-directory: ./ChachasFrontend
@@ -49,7 +45,9 @@ jobs:
         with:
           name: ChachasProject
           path: ./ChachasFrontend/dist/ChachasProject
- 
+      - name: Enable Firestore Server
+        working-directory: ./ChachasBackend
+        run: nodemon index.js
   # deploy job   
   deploy:
     name: Deploy to firebase
@@ -79,7 +77,3 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: 1//0h3vGLpifQMqQCgYIARAAGBESNwF-L9IrpXVOPCmuaoGgI_LStxHG_SxcE7KVinFfvk5y3JFD77Z_F_sPTexbhbbjrEdGSHaZ1CQ
-      # Enable Firestore Server
-      #- name: Enable Firestore Server
-      #  working-directory: ./ChachasBackend
-      #  run: node index.js   

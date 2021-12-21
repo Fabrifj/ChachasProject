@@ -27,9 +27,6 @@
         <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper">
             <mat-icon>add_shopping_cart</mat-icon> Ventas</a>
 
-        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
-            <mat-icon>payment</mat-icon> Transaccion</a>
-
     </div>
 
     <!-- Fabrica -->
@@ -37,8 +34,12 @@
 
     <div *ngIf="isShownF" class="factory">
 
-        <a mat-list-item [routerLink]="['/m-subsidiary/sales']" routerLinkActive="list-item-active" class="upper" id="prueba">
-            <mat-icon>fastfood</mat-icon> Agregar Ingredientes</a>
+
+        <a mat-list-item [routerLink]="['/m-factory/inventary']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>ballot</mat-icon> Inventario</a>
+
+        <a mat-list-item [routerLink]="['/m-factory/subsidiary']" routerLinkActive="list-item-active" class="upper" id="prueba">
+            <mat-icon>store</mat-icon> Sucursales</a>
     </div>
 
     <!-- Owner -->
@@ -72,9 +73,9 @@
     <jw-modal id="modalConfirmationLogout" altura="50" ancho="70">
 
         <h3>Esta seguro que desea realizar la transaccion?</h3>
-    
+
         <div class="botones">
-            <button class="btnSend" (click)="modalService.cerrar('modalConfirmationLogout');logout();">OK</button>
+            <button class="btn" (click)="modalService.cerrar('modalConfirmationLogout');logout();">OK</button>
             <button class="btnCerrar" (click)="modalService.cerrar('modalConfirmationLogout');">Cancelar</button>
         </div>
     </jw-modal>

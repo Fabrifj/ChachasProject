@@ -89,7 +89,7 @@ export class SidenavComponent implements OnInit {
         break;
       }
       default:{
-        alert("Error");
+        
         window.location.reload();
       }                            
     }
