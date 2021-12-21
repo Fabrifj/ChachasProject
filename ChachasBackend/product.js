@@ -526,6 +526,7 @@ async function getChachasFabrica() {
 } body 
  */
 async function updateProductFactory(idProd, body) {
+  
   if (body.hasOwnProperty("ListaIngredientes")) {
     const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
     body.ListaIngredientes = calculo.ListaIngredientes;
