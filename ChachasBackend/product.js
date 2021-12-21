@@ -161,7 +161,7 @@ async function getProductSubsidiaryType(idSub, type) {
     .where("Tipo", "==", type)
     .get();
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
+  console.log(list);
   // Get more information of products of type chachas.
   if (type == "Chacha") {
     for await (const product of list) {
@@ -449,19 +449,15 @@ async function getProductsFabrica() {
   const snapshot = await product.orderBy("ListaIngredientes").get();
   const list = snapshot.docs.map((doc) => ({
     ListaIngredientes: doc.Receta,
+    Id:doc.id,
     ...doc.data(),
   }));
   for (i in list) {
     if (list[i].IdMenu) {
       menuItem = await fnMenu.getMenuId(list[i].IdMenu);
       list[i].Nombre = menuItem.Nombre;
-      list[i].ImgURL = menuItem.ImgURL
-      //delete list[i].IdMenu;
-    }/*
-    delete list[i].Origen;
-    delete list[i].id;
-    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ IdIngrediente, ...rest }) => rest);
-    list[i].ListaIngredientes = list[i].ListaIngredientes.map(({ Costo, ...rest }) => rest);*/
+      list[i].ImgURL = menuItem.ImgURL;
+    }
   }
 
   if (list.length == 0) {
@@ -476,7 +472,7 @@ async function getSalsasFabrica() {
   var list = await getProductsFabrica(); 
   list = list.filter(filterByName)
   function filterByName(item){
-    if (item.Nombre.includes("Salsa")){
+    if (item.Nombre && item.Nombre.includes("Salsa")){
       return true;
     }
   } 
@@ -493,7 +489,7 @@ async function getChachasFabrica() {
   var list = await getProductsFabrica();
   list = list.filter(filterByName)
   function filterByName(item){
-    if (item.Nombre.includes("Chacha")){
+    if (item.Nombre && item.Nombre.includes("Chacha")){
       return true;
     }
   } 

@@ -84,12 +84,20 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
 app.get("/api/product/inventory/:idSub", async (req ,res) => {
   var idSub = req.params.idSub;
   var respuesta = null;
-  var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
-  var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
-  if (chachas != null && insumos != null){
-    respuesta = chachas.concat(insumos);
+  var infoSub = await fnSubsidiary.getSubsidiary(idSub);
+  if(infoSub.Tipo == "Fabrica"){
+    console.log("Is factory");
+    respuesta = await fnProduct.getProductSubsidiary(idSub);
+    console.log(respuesta);
+  }else{
+    console.log("Is subsidiary");
+    var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+    var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+    if (chachas != null && insumos != null){
+      respuesta = chachas.concat(insumos);
+    }
   }
-  res.send(respuesta);
+   res.send(respuesta);
 });
 
 // Get the transation of a product
@@ -499,6 +507,14 @@ app.get("/api/merma", async (req, res) => {
   const respuesta = await fnMerma.getMermas();
   res.send(respuesta);
 });
+
+//Get all mermas by id Subsidiary
+app.get("/api/merma/withNameMenu", async (req, res) => {
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnMerma.getMermasWithNameMenu();
+  res.send(respuesta);
+});
+
 //Get Merma by Id
 app.get("/api/merma/:id", async (req, res) => {
   const idMerma = req.params.id;
