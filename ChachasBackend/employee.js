@@ -11,6 +11,20 @@ async function getEmployee(idEmp)
     return await fnHerramientas.getDoc(idEmp,"Empleado");
 }
 
+
+// Get employee by domain
+async function getEmployeesByDomain(idDom){
+  var resp = null;
+  var snapshot = await employee.where("Dominio", "==", idDom).get();
+  var employees = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+
+  if(employees.length > 0){
+    resp = employees;
+  }
+
+  return resp;
+}
+
 /**
  * 
  * @param 
@@ -66,8 +80,8 @@ async function authenticateEmployee(username, pass){
   var resp = null;
 
   const snapshot = await employee
-    .where("Nombre", '==', username)
-   .where("Password", "==", pass)
+    .where( firebase.firestore.FieldPath.documentId(), "==",username)
+    .where("Password", "==", pass)
     .get();
   
   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -76,7 +90,7 @@ async function authenticateEmployee(username, pass){
     resp = 
       {
         "Status": true,
-        "Cargo": list[0].Cargo,
+        "Tipo": list[0].Tipo,
         "Dominio": list[0].Dominio
       }
   }else{
@@ -119,6 +133,7 @@ async function getEntityByEmployeeUserAndPass(username,pass)
 
 module.exports = {
     getEmployees,
+    getEmployeesByDomain,
     createEmployee,
     deleteEmployee,
     updateEmployee,

@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ProductModel } from 'src/app/models/product.model';
@@ -13,14 +13,13 @@ export class SalesService implements OnInit{
   purchase: PurchaseModel|any;
   productsToPurchase: ProductToPurchaseModel[]=[];
   productList: ProductModel[]=[]
-
+  ProductsChanged = new  EventEmitter<ProductModel[]>();
 
   constructor(private appHttpService : AppHttpService) { 
     appHttpService.getProductListHttp().subscribe(
       (jsonFile) => {
-        console.log(jsonFile);
         this.productList = <ProductModel[]>jsonFile;
-        console.log(this.productList)
+        this.ProductsChanged.emit(this.getProductList());
       });
 
   }
@@ -29,7 +28,7 @@ export class SalesService implements OnInit{
   }
 
   // Get the product list from a http request
-  getProductList(){
+  getProductList():ProductModel[]{
     return this.productList;
   }
   // get the modify purchase detail from details 

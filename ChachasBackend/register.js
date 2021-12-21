@@ -5,7 +5,7 @@ const fnHerramientas = require("./herramientas");
 /*  Body Structure
   {
     "CuentaInicial":(Number),
-    "Fecha":(Timestamp),
+    "Fecha":"YYYY-MM-DD" o "YYYY-MM-DDTHH-MM-SS",
     "Origen":(IdSucursal)
   }
 */
@@ -34,7 +34,7 @@ async function createRegisterCuenta(body)
 /*  Body Structure
   {
     "Descripcion":"",
-    "Fecha":(Timestamp),
+    "Fecha":"YYYY-MM-DD" o "YYYY-MM-DDTHH-MM-SS",
     "Monto":(Number),
     "Origen":(IdSucursal),
     "Tipo":(Ingreso or Egreso)
@@ -124,6 +124,22 @@ async function getRegisterByID(id){
   return res;
 }
 
+// Get Register Cuenta by subsidiary
+async function getRegisterCuentaBySubsidiary(idSub){
+  var res = null;
+  const snapshot = await register
+    .where("Tipo", "==", "Cuenta")
+    .where("Origen", "==", idSub)
+    .get();
+  const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  console.log("Hola");
+  console.log(list);
+  if(list.length > 0){
+    res = list;
+  } 
+  return res; 
+}
+
 // Update a register of type Cuenta
 async function updateRegisterCuenta(idCuenta, body)
 {
@@ -149,6 +165,7 @@ module.exports = {
   getRegisterCuentas,
   getCuentaByDate,
   getRegisterByID,
+  getRegisterCuentaBySubsidiary,
   updateRegisterCuenta,
   deleteRegister
 };
