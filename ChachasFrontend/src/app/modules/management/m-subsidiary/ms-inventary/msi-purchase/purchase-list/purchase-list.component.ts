@@ -9,9 +9,6 @@ import { PurchaseService } from '../../msi-purchase.service';
 })
 export class PurchaseListComponent implements OnInit {
 
-  @ViewChild('amountInput', { static: false }) amount: ElementRef ;
-  @ViewChild('costInput', { static: false }) cost: ElementRef ;
-
   ingredientes:ingredientModel[]=[];
   catidadIngredientes:number=0;
   totalCompra:number=0;
@@ -44,17 +41,6 @@ export class PurchaseListComponent implements OnInit {
     alert('Elimino un elemento');
     this.calcularActualizacion();
   }
-
-  cambioCantidad(i:number ){
-    this.purchaseService.elementos[i].Cantidad = +this.amount.nativeElement.value;
-    this.calcularActualizacion();
-  }
-
-  cambioCosto(i:number ){
-    this.purchaseService.elementos[i].Costo = +this.cost.nativeElement.value; 
-    this.calcularActualizacion();
-  }
-
   
 
 }

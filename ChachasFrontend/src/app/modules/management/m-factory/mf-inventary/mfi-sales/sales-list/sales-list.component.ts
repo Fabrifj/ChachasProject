@@ -8,8 +8,6 @@ import { HacerCompraService } from '../mfi-sales.service';
   styleUrls: ['./sales-list.component.css']
 })
 export class SalesListComponent implements OnInit {
-  @ViewChild('amountInput', { static: false }) amount: ElementRef ;
-  @ViewChild('costInput', { static: false }) cost: ElementRef ;
 
   ingredientes:ingredientModel[]=[];
   catidadIngredientes:number=0;
@@ -40,16 +38,6 @@ export class SalesListComponent implements OnInit {
     let foo_object  = this.hacerCompraServicio.ingredientes[i]// Item to remove
     this.hacerCompraServicio.ingredientes = this.hacerCompraServicio.ingredientes.filter(obj => obj !== foo_object);
     alert('Elimino un elemento');
-    this.calcularActualizacion();
-  }
-
-  cambioCantidad(i:number ){
-    this.hacerCompraServicio.ingredientes[i].Cantidad = +this.amount.nativeElement.value;
-    this.calcularActualizacion();
-  }
-
-  cambioCosto(i:number ){
-    this.hacerCompraServicio.ingredientes[i].Costo = +this.cost.nativeElement.value; 
     this.calcularActualizacion();
   }
 

@@ -394,7 +394,7 @@
 <!-- Comprar Insumos -->
 <jw-modal id="modalPurchase" altura="90" ancho="95">
     <div class="botones modal-header">
-        <button class="btnOk" id="btnOkIng" (click)="modalService.cerrar('modalPurchase');this.modalService.abrir('modalFactura')">Realizar Compra</button>
+        <button class="btnSend" id="btnOkIng" (click)="modalService.cerrar('modalPurchase');this.modalService.abrir('modalFactura')">Realizar Compra</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalPurchase');purchaseService.elementos=[]">Cancelar</button>
     </div>
     <app-msi-purchase
@@ -406,7 +406,7 @@
 <jw-modal id="modalFactura" altura="90" ancho="95">
     <div class="botones modal-header">
         <h4 class="modal-title">Datos Facturación</h4>
-        <button class="btnOk" id="btnOkIng" (click)="realizarCompra()">Realizar Compra</button>
+        <button class="btnSend" id="btnOkIng" (click)="realizarCompra()">Realizar Compra</button>
         <button class="btnCerrar" (click)="modalService.cerrar('modalFactura');purchaseService.elementos=[]">Cancelar</button>
     </div>
     <div class="row">
