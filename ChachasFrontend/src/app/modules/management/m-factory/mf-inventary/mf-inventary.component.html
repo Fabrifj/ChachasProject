@@ -1,20 +1,31 @@
 <div class="container-fluid">
+    <div class="row" >
+        <div *ngIf="isAlert" id="myAlert">
+            <div class="col-md-11">
+                <p>{{msgAlert}}</p>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btnCloseA" (click)="closeAlert()">x</button> 
+            </div>
+        </div>
+
+    </div>
     <div class="row">
 
          
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openProductC('Crear Chacha');">Crear Chacha</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openProductS('Crear Salsa');">Crear Salsa</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openIngC('Crear');this.siModificoIng = false">Crear Ingrediente</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="seeHistoryM();">Historial de mermas</button>
         </div>
-        <div class="col-md-3" routerLinkActive="active">
+        <div class="col-md-2" routerLinkActive="active">
             <button class="btn" (click)="this.modalService.abrir('modalSellIng')">Comprar Ingredientes</button>
         </div>
 
@@ -157,6 +168,13 @@
     </div>
     <div class="row" *ngIf="siChacha == false">
         <div class="col-md-12">
+                <h3> Cantidad Medida:</h3>
+                <input class="inputTxt" id="prodCant" type="number" [(ngModel)]="this.selectedObj.CantidadMedida"> 
+            
+        </div>
+    </div>
+    <div class="row" *ngIf="siChacha == false">
+        <div class="col-md-12">
                 <h3> Cantidad Resultante:</h3>
                 <input class="inputTxt" id="prodCantR" type="number" [(ngModel)]="this.selectedObj.CantidadMedida"> 
             
@@ -186,13 +204,13 @@
             <app-reusable-table 
             [datos]="infoIngMini" 
             [columnas]="columnsIngMini" 
-            [nombreBotones] = "nombreBotonesIng2"
-            (parentMethod) = "functionAddModProd($event)"
-            colorLetra="black"
-            [titulosTextos]="titulosIng"
-            botonGuardarDatos = 'si'
-            nombreDistintivo="textoCantidadIng"
-            indice="10">
+            [nombreBotones] = "nombreBotonesIng2" 
+            indice="20" 
+            (parentMethod) = "functionAddModProd($event)" 
+            colorLetra="black" 
+            [titulosTextos]="titulosIng" 
+            botonGuardarDatos = 'si' 
+            nombreDistintivo="textoCantidadIng" > 
             </app-reusable-table> 
         
         </div>
@@ -210,7 +228,7 @@
             [nombreBotones] = "nombreBotonesIng1"
             (parentMethod) = "functionAddModProd($event)"
             colorLetra="black"
-            indice = "11"
+            indice="21"
             >
             </app-reusable-table> 
         
@@ -378,7 +396,54 @@
 <!-- Comprar Ingredientes -->
 <jw-modal id="modalSellIng" altura="90" ancho="95">
     <div class="botones modal-header">
-        <button class="btnCerrar" (click)="modalService.cerrar('modalSellIng');">Cancelar</button>
+        <button class="btnOk" id="btnOkIng" (click)="modalService.cerrar('modalSellIng');this.modalService.abrir('modalFactura')">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalSellIng');hacerCompraService.ingredientes=[]">Cancelar</button>
     </div>
     <app-mfi-sales></app-mfi-sales>
 </jw-modal>
+
+<!-- Facturacion -->
+<jw-modal id="modalFactura" altura="90" ancho="95">
+    <div class="botones modal-header">
+        <h4 class="modal-title">Datos Facturación</h4>
+        <button class="btnOk" id="btnOkIng" (click)="realizarCompra()">Realizar Compra</button>
+        <button class="btnCerrar" (click)="modalService.cerrar('modalFactura');hacerCompraService.ingredientes=[]">Cancelar</button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Proveedor:</h3>
+            <input class="inputTxt" id="nitProv" type="text" [(ngModel)]="this.nitProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Nombre Proveedor:</h3>
+            <input class="inputTxt" id="nameProv" type="text" [(ngModel)]="this.nameProv"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> Número de Factura:</h3>
+            <input class="inputTxt" id="numBill" type="text" [(ngModel)]="this.numBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3> NIT Factura:</h3>
+            <input class="inputTxt" id="nitBill" type="text" [(ngModel)]="this.nitBill"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Número de autorización:</h3>
+                <input class="inputTxt" id="numAut" type="text" [(ngModel)]="this.numAut"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <h3>Fecha límite de Emisión:</h3>
+                <input class="inputTxt" id="limitDate" type="date" [(ngModel)]="this.limitDate" (ngModelChange)="this.limitDate = $event"> 
+        </div>
+    </div>
+</jw-modal>
+

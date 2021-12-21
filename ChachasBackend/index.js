@@ -29,25 +29,6 @@ app.get("/api/product", async (req, res) => {
   res.send(products);
 });
 
-app.post("/api/product/refresco", async (req, res) => {
-  var newproduct = req.body;
-  const response = await fnProduct.createProduct(newproduct);
-  res.send(response);
-});
-
-app.delete("/api/product/:idproduct", async (req, res) => {
-  var productToDelete = req.params.idproduct;
-  const response = await fnProduct.deleteProduct(productToDelete);
-  res.send(response);
-});
-
-app.put("/api/product/:idproduct", async (req, res) => {
-  var productToUpdate = req.params.idproduct;
-  var body = req.body;
-  const response = await fnProduct.updateProduct(productToUpdate, body);
-  res.send(response);
-});
-
 //Get a product by its ID
 app.get("/api/product/:idproduct", async (req, res) => {
   var productToGet = req.params.idproduct;
@@ -97,6 +78,26 @@ app.get("/api/product/ChachaInsumo/:idSub", async (req ,res) => {
     respuesta = (chachas.concat(insumos)).concat(sucursalInfo);
   }
   res.send(respuesta);
+});
+
+// Endpoints to get the inventory of a Sucursal (Chachas and Salsas)
+app.get("/api/product/inventory/:idSub", async (req ,res) => {
+  var idSub = req.params.idSub;
+  var respuesta = null;
+  var infoSub = await fnSubsidiary.getSubsidiary(idSub);
+  if(infoSub.Tipo == "Fabrica"){
+    console.log("Is factory");
+    respuesta = await fnProduct.getProductSubsidiary(idSub);
+    console.log(respuesta);
+  }else{
+    console.log("Is subsidiary");
+    var chachas = await fnProduct.getProductSubsidiaryType(idSub, "Chacha");
+    var insumos = await fnProduct.getProductSubsidiaryType(idSub, "InsumoFabrica");
+    if (chachas != null && insumos != null){
+      respuesta = chachas.concat(insumos);
+    }
+  }
+   res.send(respuesta);
 });
 
 // Get the transation of a product
@@ -229,17 +230,21 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/products/salsas", async (req, res) => {
   const response = await fnProduct.getSalsasFabrica();
   res.send(response);
-  console.log("en salsas");
 });
 
 //Get chachas fabrica with ingredients
 app.get("/api/products/chachas", async (req, res) => {
   const response = await fnProduct.getChachasFabrica();
   res.send(response);
-  console.log("en chachas");
 });
 
-
+// Create Product-Salsa with ingredients (id's) and cantidadMedida
+app.post("/api/product/salsa/:idfabrica", async (req, res) => {
+  var newSalsa = req.body;
+  var idFabrica = req.params.idfabrica;
+  const response = await fnProduct.createProductSalsaRecetaInformacion(idFabrica, newSalsa);
+  res.send(response);
+});
 
 /*=================================
           CRUD ORDER
@@ -370,6 +375,15 @@ app.get("/api/employee/:id", async (req, res) => {
   const respuesta = await fnEmployee.getEmployee(idEmp);
   res.send(respuesta);
 });
+
+//Get Employees by Domain
+app.get("/api/employee/domain/:id", async (req, res) => {
+  const id = req.params.id;
+  const respuesta = await fnEmployee.getEmployeesByDomain(id);
+  res.send(respuesta);
+});
+
+
 //Update Employee
 app.put("/api/employee/:id", async (req, res) => {
   const body = req.body;
@@ -394,7 +408,6 @@ app.delete("/api/employee/:id", async (req, res) => {
 app.get("/api/employee/username/:username/pass/:pass", async (req, res) => {
   const username = req.params.username;
   const pass = req.params.pass;
-
   const resp = await fnEmployee.authenticateEmployee(username, pass);
   res.send(resp);
 });
@@ -495,6 +508,14 @@ app.get("/api/merma", async (req, res) => {
   const respuesta = await fnMerma.getMermas();
   res.send(respuesta);
 });
+
+//Get all mermas by id Subsidiary
+app.get("/api/merma/withNameMenu", async (req, res) => {
+  const idSubsidiary = req.params.id;
+  const respuesta = await fnMerma.getMermasWithNameMenu();
+  res.send(respuesta);
+});
+
 //Get Merma by Id
 app.get("/api/merma/:id", async (req, res) => {
   const idMerma = req.params.id;
@@ -560,7 +581,7 @@ app.delete("/api/ingredient/:id", async (req, res) => {
 //Create register document of type cuenta
 app.post("/api/register/cuenta", async (req, res) => {
   var body = req.body;
-  const response = await fnRegister.createRegisterCuentas(body);
+  const response = await fnRegister.createRegisterCuenta(body);
   res.send(response);
 });
 
@@ -591,6 +612,14 @@ app.get("/api/register/:id", async (req, res) => {
   res.send(response);
 });
 
+// Get a register Cuenta by Subsidiary
+app.get("/api/register/cuenta/subsidiary/:idSub", async (req, res) => {
+  const idSub = req.params.idSub;
+  const response = await fnRegister.getRegisterCuentaBySubsidiary(idSub);
+  res.send(response);
+});
+
+
 //Update Cuenta
 app.put("/api/register/cuenta/:id", async (req, res) => {
   const body = req.body;
@@ -607,8 +636,13 @@ app.delete("/api/register/:id", async (req, res) => {
 });
 
 
-
-
+/*===================================
+          CRUD REGISTER
+===================================*/
+app.get("/api/prueba", async (req, res) => {
+  const response = await fnHerramientas.getDoc("1GQcA1ELZufELjBGbgoo","Producto");
+  res.send(response);
+});
 
 
 

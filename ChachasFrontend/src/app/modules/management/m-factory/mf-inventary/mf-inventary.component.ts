@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { delay } from 'rxjs';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
+import { HacerCompraService } from 'src/app/modules/management/m-factory/mf-inventary/mfi-sales/mfi-sales.service';
 import { ReusableTableComponent } from 'src/app/shared-modules/reusable-table/reusable-table.component';
 
 
@@ -70,15 +71,17 @@ export class MfInventaryComponent implements OnInit {
   ];
 
 
-  infoMerm:any | undefined ; 
+  infoMerm:any = [] ; 
   columnsMerm = [
-    {field:'Nombre',header:'Nombre'},
-    {field:'Cantidad',header:'Tipo de unidad'},
-    {field:'Fecha',header:'Fecha'},
-    {field:'Sucursal',header:'Sucursal'}
- 
     
+    {field:'Cantidad',header:'Cantidad'},
+    {field:'NombreMenu',header:'Nombre Menu'},
+    {field:'IdMenu',header:'Id Menu'},
+    {field:'Fecha',header:'Fecha'},
+    {field:'IdSucursal',header:'Sucursal'}
+ 
   ];
+
 
   nameProdButtons :string[] = ["Ver Ingredientes","Modificar Producto","Producir Producto"];
   nameSauceButtons :string[] = ["Ver Ingredientes","Modificar Salsa","Reservar Salsa"];
@@ -91,14 +94,21 @@ export class MfInventaryComponent implements OnInit {
   siModificoIng: boolean = false;
   siModificoProd: boolean = false;
 
+  nameProv: string="";
+  nitProv: string="";
+  numBill:string="";
+  nitBill:string="";
+  numAut:string="";
+  limitDate:any;
+
   titulosIng = ['Cantidad']
 
   nombreBotonesIng1: string[] = ['Agregar'];
   nombreBotonesIng2: string[] = ['Quitar'];
 
-  datosIngrendientesCCantidad :any;
+  datosIngrendientesCCantidad =[];
   imgUrl:any= "";
-
+  msgAlert:string="";
   siChacha = true;
 
 
@@ -106,33 +116,99 @@ export class MfInventaryComponent implements OnInit {
   cantidadRSalsa=0;
   cantidadPChacha=0;
 
-  @ViewChild(ReusableTableComponent) hijoTabla:ReusableTableComponent | undefined ;
+
+
+  isAlert= false;
+
+  
   
 
   //contador de click en modificar producto
   cont = 1;
 
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { }
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService, public hacerCompraService:HacerCompraService) { }
   async ngOnInit(): Promise<void> {
+
 
     
     this.getChachasFabrica();
     this.getIngredients();
     //this.getMermas();
     
+    
+    //this.getSubsidiaries();
     //this.getProducts();
     
-
+    this.getMermasWithNameMen()
     
     
   
   }
 
+
+  getSubsidiaries(){
+
+    this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
+     
+      this.getMermaBySucursal(jsonFile);
+      
+    } ,(error)=>{
+        console.log("hubo error con productos")
+
+    } )
+  }
+  getMermaBySucursal(otherJson:any){
+
+    otherJson.forEach((element:any) => {
+      
+      this.serviceHttp.getMermaBySubsidiary(element.id).subscribe((jsonFile:any)=>{
+        this.infoMerm.push(jsonFile);
+        console.log(jsonFile);
+        
+      } ,(error)=>{
+          console.log("hubo error con productos")
+  
+      } )
+  
+
+    });
+   
+
+  }
+
+  getMermasWithNameMen(){
+
+   
+      
+      this.serviceHttp.getMermasWithNameMen().subscribe((jsonFile:any)=>{
+        this.infoMerm = jsonFile;
+        
+      } ,(error)=>{
+          console.log("hubo error con productos")
+  
+      } )
+  
+
+    
+
+  }
+
+  modificarFecha(jsonFile:any){
+
+    jsonFile.forEach((element:any) => {
+        var newFecha = element.Fecha.seconds ;
+        
+    });
+
+  }
+ 
   getProducts(){
 
     this.serviceHttp.getAllProducts().subscribe((jsonFile:any)=>{
       console.log("productos",jsonFile);
       var infoProducts : any = [];
+      this.miniumVerification(jsonFile);
+
       jsonFile.forEach((element:any) => {
         if(element.TipoOrigen == "Fabrica"){
 
@@ -253,6 +329,21 @@ export class MfInventaryComponent implements OnInit {
 
   }
 
+
+  createSalsaFactory(body:any){
+
+    this.serviceHttp.createSalsaFactory(body).subscribe((jsonFile:any)=>{
+      
+      console.log("Todo bien con la creacion de salsa");
+    },(error)=>{
+      console.log("hubo error con product")
+    }
+    );
+
+    
+  }
+
+
   updateIngredient(id:any,body:any){
 
     this.serviceHttp.updateIngredient(id,body).subscribe((jsonFile:any)=>{
@@ -362,11 +453,12 @@ export class MfInventaryComponent implements OnInit {
     }
     else if(response[0]=="GuardarTodo"){
 
-      if(response[2] == "10") {
-
+      
+      if(response[2]=="20") {
 
         
-
+        
+        console.log("para guardar: ", response[1]) ;
         this.datosIngrendientesCCantidad = response[1];
         var costo = 0 ;
         this.datosIngrendientesCCantidad.forEach((element:any) => {
@@ -391,7 +483,7 @@ export class MfInventaryComponent implements OnInit {
 
         this.selectedObj = response[1] ;
         this.infoIngMini = this.selectedObj.ListaIngredientes;
-  
+
         this.probarImg();
        
         this.infoIngMini.forEach((element:any) => {
@@ -461,7 +553,9 @@ export class MfInventaryComponent implements OnInit {
 
     }
     else if( response[0] == "Ver Ingredientes"){
+      console.log("-------------");
       this.selectedObj = response[1];
+      console.log(this.selectedObj);
       this.infoIngMini2 = this.selectedObj.ListaIngredientes;
       this.modalService.abrir('modalIng-03');
     }
@@ -545,26 +639,40 @@ export class MfInventaryComponent implements OnInit {
   createProduct(){
 
   
-    this.hijoTabla?.guardarDT();
     
     this.modalService.cerrar('modalProd-01');
-    this.selectedObj.ListaIngredientes = this.datosIngrendientesCCantidad;
+
+    if(this.datosIngrendientesCCantidad != []){
+      console.log("no es undefined");
+      this.selectedObj.ListaIngredientes = this.datosIngrendientesCCantidad;
+    }
+    
     if(this.nameButtonProd == 'Modificar Chacha'){
 
       var newMenu = JSON.stringify({ Nombre:this.selectedObj.Nombre , ImgURL: this.selectedObj.ImgURL });
       this.updateMenu(this.selectedObj.IdMenu , JSON.parse(newMenu));
       console.log("this.selectedObj:",this.selectedObj);
 
-      var newProd = JSON.stringify({ IdMenu:this.selectedObj.IdMenu ,CantidadMinima: this.selectedObj.CantidadMinima, Precio:this.selectedObj.Precio ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad });
+
+      this.selectedObj.ListaIngredientes2 = []
+      this.selectedObj.ListaIngredientes.forEach((element:any) => {
+        var obj = {}
+        obj={IdIngrediente:element.IdIngrediente , Cantidad: element.Cantidad , TipoUnidad:element.TipoUnidad}
+
+        this.selectedObj.ListaIngredientes2.push(obj);
+      });
+
+
+
+      var newProd = JSON.stringify({ IdMenu:this.selectedObj.IdMenu , ImgURL:this.selectedObj.ImgUrl,CantidadMinima: this.selectedObj.CantidadMinima, Precio:this.selectedObj.Precio ,ListaIngredientes: this.selectedObj.ListaIngredientes2  });
       console.log(newProd);
-      this.updateProduct(this.selectedObj.id , JSON.parse(newProd));
+      
+      this.updateProduct(this.selectedObj.Id , JSON.parse(newProd));
 
     }
     else if(this.nameButtonProd=='Crear Chacha'){
       //se crea el ingrediente
       var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes });
-    
-     
       console.log("this.selectedObj:",this.selectedObj);
 
 
@@ -576,24 +684,24 @@ export class MfInventaryComponent implements OnInit {
     
       console.log("this.selectedObj:",this.selectedObj);
 
-      var newProd = JSON.stringify({ CantidadMinima: this.selectedObj.CantidadMinima,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre});
+      var newProd = JSON.stringify({ CantidadMinima: this.selectedObj.CantidadMinima,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadMedida:this.selectedObj.CantidadMedida});
       console.log(newProd);
       //this.updateProduct(this.selectedObj.id , JSON.parse(newProd));
 
     }
     else{
       //se crea salsa
-      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre});
+      var newProd = JSON.stringify({CantidadMinima: this.selectedObj.CantidadMinima ,ListaIngredientes: this.selectedObj.ListaIngredientes ,TipoUnidad:this.selectedObj.TipoUnidad , Nombre:this.selectedObj.Nombre, CantidadInventario:0, CantidadMedida:this.selectedObj.CantidadMedida});
     
      
       console.log("this.selectedObj:",this.selectedObj);
 
 
-      //this.createProductFactory(JSON.parse(newProd));
+      this.createSalsaFactory(JSON.parse(newProd));
     }
 
 
-
+    this.datosIngrendientesCCantidad = []
     this.selectedObj = {};
     this.infoIngMini = []
     this.siModificoProd = false;
@@ -618,14 +726,46 @@ export class MfInventaryComponent implements OnInit {
       this.createIngredient(this.selectedObj);
     }
     
+    this.imgUrl = "";
     this.selectedObj = {}
     this.siModificoIng = false;
     this.getIngredients();
+  }
+  
+  realizarCompra(){
+    this.hacerCompraService.registrarCompra(this.nitProv,this.nameProv,this.numBill,this.nitBill,this.numAut,this.limitDate);
+    this.modalService.cerrar('modalFactura');
+    this.hacerCompraService.ingredientes=[];
+    this.nitProv='';
+    this.nameProv='';
+    this.numBill='';
+    this.nitBill='';
+    this.numAut='';
+    this.limitDate=undefined;
+  }
+  miniumVerification(objs:any){
 
+    var mustAlert = false;
+    objs.forEach((element:any) => {
 
-
-
-
+      if(element.CantidadInventario <= element.CantidadMinima){
+      // if(element.CantidadInventario <= 100){
+          console.log("entro a if");
+          this.msgAlert = this.msgAlert +"--"+ element.Nombre + " : Llegó a la cantidad mímina de " + element.CantidadInventario +" "+ "\n";
+          mustAlert = true;
+      }
+    });
+    if(mustAlert){
+      this.giveAlert();
+    }
+  }
+  giveAlert(){
+   this.isAlert = true;
+   
+  }
+  closeAlert(){
+    this.isAlert = false;
+    
   }
 
 

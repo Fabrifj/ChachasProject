@@ -1,10 +1,10 @@
 <table class="tabla">
     <thead>
       <tr>
-        <th scope="col">Ingrediente</th>
-        <th scope="col">Tipo Unidad</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Costo</th>
         <th scope="col">Cantidad</th>
-        <th scope="col">Precio</th>
+        <th scope="col">Tipo de Unidad</th>
         <th scope="col">Eliminar</th>
       </tr>
     </thead>
@@ -12,10 +12,10 @@
       <tr 
       *ngFor="let ingredientesEle of hacerCompraServicio.ingredientes; let i = index">
 
-        <td>{{ingredientesEle.Nombre}}</td>
-        <td>{{ingredientesEle.TipoUnidad}}</td>
-        <td><input class="quantity" id="amount" min="1" name="cantidad" value={{ingredientesEle.Cantidad}} type="number" (click)="cambioCantidad(i)" #amountInput></td>
-        <td>{{ingredientesEle.Costo}}</td>
+      <td>{{ingredientesEle.Nombre}}</td>
+      <td><input class="quantity" id="cost" min="0" name="Costo{{i}}" (ngModelChange)="calcularActualizacion()" type="number" (click)="calcularActualizacion()" [(ngModel)]="hacerCompraServicio.ingredientes[i].Costo"></td>
+      <td><input class="quantity" id="amount" min="1" name="cantidad{{i}}" (ngModelChange)="calcularActualizacion()" type="number" (click)="calcularActualizacion()" [(ngModel)]="hacerCompraServicio.ingredientes[i].Cantidad"></td>
+      <td>{{ingredientesEle.TipoUnidad}}</td>
   
   
         <button (click)="eliminarPedido(i)" >-</button>
