@@ -4,7 +4,6 @@ export class ingredientModel {
     public TipoUnidad: string;
     public Cantidad: number;
     public Costo: number;
-    public Precio: number;
 
   
     constructor(id: string, name: string, UM: string, cantidad:number, precio:number) {
@@ -13,6 +12,5 @@ export class ingredientModel {
       this.TipoUnidad = UM;
       this.Cantidad = cantidad;
       this.Costo = precio;
-      this.Precio = precio;
     }
   }

@@ -13,6 +13,7 @@ export class MoSucursalesComponent implements OnInit {
 
   constructor(public modalService:ModalService, 
     private serviceHttp: AppHttpService,
+    
     ) { }
 
   selectedObject:any = {}
@@ -25,6 +26,9 @@ export class MoSucursalesComponent implements OnInit {
   latitude!: number;
   longitude!: number;
   zoom!:number;
+  position:any= {}
+  prLat:any=""
+  prLon:any=""
   
   columnsSucursal = [
     {field:'id',header:'ID Sucursal'},
@@ -52,7 +56,38 @@ export class MoSucursalesComponent implements OnInit {
   }
 
 
-  
+  clickReadyMap(map: google.maps.Map){
+
+    
+    map.addListener('click',(e: google.maps.MouseEvent)=>{
+      
+      this.check(e.latLng,map);
+      this.position = JSON.parse(JSON.stringify(e.latLng.toJSON()));
+      console.log(this.position);
+      this.prLat = this.position.lat;
+      this.prLon = this.position.lng;
+      console.log(this.prLat);
+      console.log(this.prLon);
+    })
+    
+
+
+  }
+
+  check(latLng: google.maps.LatLng , map: google.maps.Map){
+    const mark = new google.maps.Marker({
+      
+      position: latLng,
+      map:map,
+
+
+    });
+    console.log("position",mark.getPosition());
+    console.log(latLng.lat)
+    console.log(latLng.lng)
+    map.panTo(latLng);
+  }
+
   getSubsidiary(){
 
     this.serviceHttp.getSubsidiary().subscribe((jsonFile:any)=>{
@@ -143,7 +178,7 @@ functionChooseObj(response:any){
 
 
     //var Admin = "Admin"
-    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Localizacion:{Latitud:"0",Longitud:"0"},Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
+    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Localizacion:{Latitud:this.prLat,Longitud:this.prLon},Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
     this.crearSucursales(JSON.parse(sucursal))
     console.log("SEND SUCURSAL")
     console.log(sucursal)

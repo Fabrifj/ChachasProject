@@ -61,10 +61,11 @@ import { ListIngredientsComponent } from './modules/management/m-factory/mf-inve
 import { MoArqueoComponent } from './modules/management/m-owner/mo-arqueo/mo-arqueo.component';
 import { MoEmpleadosComponent } from './modules/management/m-owner/mo-empleados/mo-empleados.component';
 import { MoSucursalesComponent } from './modules/management/m-owner/mo-sucursales/mo-sucursales.component';
-
-
-
 import {  MatRadioModule} from '@angular/material/radio';
+import { MsiPurchaseComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/msi-purchase.component';
+import { PurchaseListComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/purchase-list/purchase-list.component';
+import { ShowElementComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/show-element/show-element.component';
+import { ElementListComponent } from './modules/management/m-subsidiary/ms-inventary/msi-purchase/show-element/element-list/element-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,6 +100,10 @@ import {  MatRadioModule} from '@angular/material/radio';
     MoArqueoComponent,
     MoEmpleadosComponent,
     MoSucursalesComponent,
+    MsiPurchaseComponent,
+    PurchaseListComponent,
+    ShowElementComponent,
+    ElementListComponent,
   ],
   imports: [
     FormsModule,
