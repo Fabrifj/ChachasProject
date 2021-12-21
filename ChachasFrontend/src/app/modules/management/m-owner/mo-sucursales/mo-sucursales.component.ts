@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone  } from '@angular/core';
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
-import { MapsAPILoader} from '@agm/core';
+import { MatRadioChange } from '@angular/material/radio';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mo-sucursales',
@@ -13,6 +14,7 @@ export class MoSucursalesComponent implements OnInit {
 
   constructor(public modalService:ModalService, 
     private serviceHttp: AppHttpService,
+    private router: Router,
     
     ) { }
 
@@ -22,19 +24,21 @@ export class MoSucursalesComponent implements OnInit {
   infoSub:any="";
   idSubsidiary:any="";
 
-  title: string = 'AGM project';
-  latitude!: number;
-  longitude!: number;
-  zoom!:number;
-  position:any= {}
-  prLat:any=""
-  prLon:any=""
+  value:number=0;
+
+
+  prLat = "";
+  prLon = "";
+  zoom=16;
+  
+  latitude:any="";
+  longitude:any="";
+
+  isShown:Boolean = true;
   
   columnsSucursal = [
-    {field:'id',header:'ID Sucursal'},
     {field:'Nombre',header:'Nombre'},
     {field:'Direccion',header:'Direccion'},
-    {field:'Localizacion',header:'Ubicacion'},
     {field:'Telefono',header:'Telefono'}, 
     {field:'Departamento',header:'Departamento'}
 
@@ -55,17 +59,24 @@ export class MoSucursalesComponent implements OnInit {
     
   }
 
+  acceptClientLocation(){
+
+  }
+  radioChange(event:MatRadioChange){
+    console.log(event.value);
+    this.value = event.value;
+  }
 
   clickReadyMap(map: google.maps.Map){
 
     
     map.addListener('click',(e: google.maps.MouseEvent)=>{
-      
+
       this.check(e.latLng,map);
-      this.position = JSON.parse(JSON.stringify(e.latLng.toJSON()));
-      console.log(this.position);
-      this.prLat = this.position.lat;
-      this.prLon = this.position.lng;
+      var position = JSON.parse(JSON.stringify(e.latLng.toJSON()));
+     
+      this.prLat = position.lat;
+      this.prLon = position.lng;
       console.log(this.prLat);
       console.log(this.prLon);
     })
@@ -136,7 +147,7 @@ functionChooseObj(response:any){
       
   }
 
-}
+  }
 
   crearSucursales(body:any){
     this.serviceHttp.createSubsidiary(body)
@@ -161,10 +172,7 @@ functionChooseObj(response:any){
     } )
   }
 
-  sendSucursales(){
-    
-    var Tipo = "Sucursal";
-    //Nombre
+  addUSucursal(){
     var Nombre = ((<HTMLInputElement>document.getElementById("nomSucursal")).value)
     
     //Apellido Paterno
@@ -172,20 +180,40 @@ functionChooseObj(response:any){
     
     //Apellido materno
     var Telefono = ((<HTMLInputElement>document.getElementById("telfSuc")).value)
-        
+    
+    this.isShown = false;
+    //this.sendSucursales(Nombre,Direccion, Telefono)
+}
+
+  sendSucursales(){
+    
+    this.isShown = true;
+    var Tipo = "Sucursal";
+    //Nombre
+    var Name = ((<HTMLInputElement>document.getElementById("nomSucursal")).value)
+    
+    //Apellido Paterno
+    var Address = ((<HTMLInputElement>document.getElementById("dirSucursal")).value)
+    
+    //Apellido materno
+    var Phone = ((<HTMLInputElement>document.getElementById("telfSuc")).value)
+      
    //Cargo
     var Departamento = "La Paz"
 
-
     //var Admin = "Admin"
-    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Localizacion:{Latitud:this.prLat,Longitud:this.prLon},Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
+    
+    var sucursal = JSON.stringify({ Nombre:Name, Direccion:Address, Localizacion:{Latitud:this.prLat,Longitud:this.prLon},Telefono:Phone, Tipo:Tipo, Departamento: Departamento});
     this.crearSucursales(JSON.parse(sucursal))
     console.log("SEND SUCURSAL")
     console.log(sucursal)
-    
-    
+    this.getSubsidiary();
   }
+  
   sendSucursalesUpdate(){
+
+    //this.isShown = false;
+
     var idSubDestiny = this.selectedObject.id;
     var Tipo = "Sucursal";
     //Nombre
@@ -202,11 +230,11 @@ functionChooseObj(response:any){
 
 
     //var Admin = "Admin"
-    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Localizacion:{Latitud:"0",Longitud:"0"},Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
+    var sucursal = JSON.stringify({ Nombre:Nombre, Direccion:Direccion, Localizacion:{Latitud:this.prLat,Longitud:this.prLon},Telefono:Telefono, Tipo:Tipo, Departamento: Departamento});
     this.updateSucursales(idSubDestiny,JSON.parse(sucursal))
     console.log("SEND SUCURSAL")
     console.log(sucursal)
-    
+    this.getSubsidiary();
     
   }
   eliminarSucursal(){
@@ -228,6 +256,7 @@ functionChooseObj(response:any){
     this.getSubsidiary();
   }
 
+  
  
 }
   

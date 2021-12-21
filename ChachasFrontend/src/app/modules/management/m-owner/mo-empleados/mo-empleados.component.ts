@@ -173,6 +173,7 @@ export class MoEmpleadosComponent implements OnInit {
         console.log("hubo error al crear empleado")
 
     } )
+    //this.getEmployees();
 
   }
   
@@ -319,8 +320,8 @@ export class MoEmpleadosComponent implements OnInit {
       var empleado = JSON.stringify({ CI: CI, Nombre:Nombre, ApellidoP:ApellidoP, ApellidoM:ApellidoM, Password:Password, Cargo:Cargo, Tipo:Tipo, Dominio: idSubDestiny});
       this.createEmployee(JSON.parse(empleado))
     }    
-
-    window.location.reload();
+    this.getEmployees();
+    //window.location.reload();
     }
 
    eliminarEmployee(){
