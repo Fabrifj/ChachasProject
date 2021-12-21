@@ -39,10 +39,6 @@ jobs:
       - name: Install Nodemon
         working-directory: ./ChachasBackend
         run: npm install nodemon 
-      # Enable Firestore Server
-      - name: Enable Firestore Server
-        working-directory: ./ChachasBackend
-        run: node index.js   
       # Runs a set of commands to build
       - name: Build
         working-directory: ./ChachasFrontend
@@ -83,3 +79,14 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: 1//0h3vGLpifQMqQCgYIARAAGBESNwF-L9IrpXVOPCmuaoGgI_LStxHG_SxcE7KVinFfvk5y3JFD77Z_F_sPTexbhbbjrEdGSHaZ1CQ
+
+  firestore:
+    name: Firestore
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Enable Firestore Server
+      - name: Enable Firestore Server
+        working-directory: ./ChachasBackend
+        run: node index.js   
