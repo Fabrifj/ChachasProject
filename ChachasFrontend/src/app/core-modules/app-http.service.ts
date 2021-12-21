@@ -149,8 +149,23 @@ export class AppHttpService {
     return this.http.get(paths.GetChachasFabrica);
 
   }
+  updateProductionProducto(id:any,body:any){
 
+    var path = paths.UpdatePrProduct + id;
+    console.log("path",path);
+    console.log(body);
+    return this.http.put(path,body);
 
+  }
+
+  updateReservationSalsa(body:any){
+
+  
+    
+    console.log(body);
+    return this.http.put(paths.UpdateReservationSalsa,body);
+
+  }
 
   createProductFactory(body:any){
     return this.http.post(paths.CreateProductFactory , body);
@@ -160,8 +175,7 @@ export class AppHttpService {
   updateProductFactory(id:any,body:any){
     var path = paths.UpdateProductFactory + id;
 
-    console.log("path",path);
-    console.log("body",body);
+    
     return this.http.put(path,body);
   }
 

@@ -364,7 +364,7 @@ export class MsInventaryComponent implements OnInit {
         
         listaProdSend.push({
           IdProducto:producto.id,
-          Tipo : "Intercambio",
+          Tipo:"Chacha",
           IdMenu:producto.IdMenu,
           Cantidad: cantidadPSucursal,
           Nombre :producto.IdMenu
@@ -386,9 +386,9 @@ export class MsInventaryComponent implements OnInit {
           listaProdSend.push({
             
             IdProducto:producto.id,
-            Tipo : "InsumoFabrica",
+            Tipo:"InsumoFabrica",
             Cantidad: cantidadPSucursal,
-            CantidadMedida : producto.CantidadMedida,
+
             TipoUnidad : producto.TipoUnidad,
             Nombre : producto.Nombre
           });
@@ -396,10 +396,13 @@ export class MsInventaryComponent implements OnInit {
         });
     }
     
-    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, IdDestino: idSubDestiny, ListaProductos:listaProdSend })
+    var transaction = JSON.stringify({IdOrigen:this.idSubsidiary  , Fecha: this.todayDate, Tipo:"Intercambio", IdDestino: idSubDestiny, ListaProductos:listaProdSend })
     
     console.log("Transaccion:", transaction)
-    //this.createTransaction(JSON.parse(transaction));
+    this.createTransaction(JSON.parse(transaction));
+
+    this.getProdChachas();
+    this.getSauce();
    
   }
 
