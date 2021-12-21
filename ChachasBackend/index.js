@@ -245,6 +245,14 @@ app.post("/api/product/salsa/", async (req, res) => {
   res.send(response);
 });
 
+app.put("/api/product/salsa/:idsalsa", async (req, res) => {
+  const body = req.body;
+  const idSalsa = req.params.idsalsa;
+  const response = await fnProduct.updateProductSalsaRecetaInformacion(idSalsa,body);
+  res.send(response);
+});
+
+
 // Make Product Chacha with idMenu
 app.put("/api/product/menu/:idproduct", async (req, res) => {
   const body = req.body;

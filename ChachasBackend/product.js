@@ -705,6 +705,75 @@ async function calculateInventoryForMenuAndIngredientes(listaIngredientes, canti
   return res;
 }
 
+/* 
+{
+"TipoOrigen": "Fabrica",
+"Nombre" : "salsa cebolla pollo y res",
+"CantidadMedida": 50, 
+"CantidadInventario": 0,
+"CantidadMinima": 100,
+"TipoUnidad": "ml",
+"ListaIngredientes":[
+    {
+      "IdIngrediente": "1yFlLhTcIoYj6t18S6Qt",
+      "CantidadMedida": 0.5
+    },
+    {
+      "IdIngrediente": "sofwzoZRrv7lRgnp8F5X",
+      "CantidadMedida": 0.25
+    },
+	  {
+			"IdIngrediente": "OPbb9e3SOlXffrSxBiHx",
+      "CantidadMedida": 0.15
+		}
+  ]
+}
+
+CantidadInventario 200
+CantidadMedida 50
+CantidadMinima 100
+Costo 8.226190476190476
+ListaIngredientes 
+  CantidadMedida 0.5
+  Costo 1.5833333333333333
+  IdIngrediente "1yFlLhTcIoYj6t18S6Qt"
+  Nombre "Cebolla"
+  TipoUnidad "kg"
+  CantidadMedida 0.25
+  Costo 5
+  IdIngrediente "sofwzoZRrv7lRgnp8F5X"
+  Nombre "Carne de Res"
+  TipoUnidad "lb"
+  CantidadMedida 0.15
+  Costo 1.6428571428571428
+  IdIngrediente "OPbb9e3SOlXffrSxBiHx"
+  Nombre "Carne de pollo molida"
+  TipoUnidad "kg"
+Nombre "Salsa cebolla pollo y res"
+Origen "Lbh5237VEKHWHzRlhnwB"
+Tipo "Salsa"
+TipoUnidad "ml"
+*/
+async function getListIngredientesFromAListWithIdIngredienteAndCantidadMedidaAndUpdate(listaIngredientes) {
+  for await (const ing of listaIngredientes) {
+    const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
+    myIng.CantidadMedida = ing.CantidadMedida;
+    fnHerramientas.updateDoc(ing.IdIngrediente, myIng, "Ingrediente")
+  }
+  return { ListaIngredientes: listaIngredientes };
+}
+
+async function updateProductSalsaRecetaInformacion(idsalsa, body) {
+  var res = null;
+  const listaIng = await getListIngredientesFromAListWithIdIngredienteAndCantidadMedidaAndUpdate(body.ListaIngredientes);
+  const ing = await fnHerramientas.getDoc(idsalsa, "Producto")
+  res = { CantidadInventario: body.CantidadInventario, CantidadMedida: body.CantidadMedida,
+    CantidadMinima: body.CantidadMinima, Costo: ing.Costo, ListaIngredientes: listaIng.ListaIngredientes,
+    Nombre: body.Nombre, Origen: ing.Origen, Tipo: ing.Tipo, TipoUnidad: body.TipoUnidad
+  }
+  fnHerramientas.updateDoc(idsalsa, res, "Producto")
+  return res;
+}
 /*
 Pasamos a path: http://localhost:4000/api/product/menu/W3jHvAlBEfA9yEkyzvol
 lo siguiente:
@@ -817,6 +886,7 @@ module.exports = {
   getChachasFabrica,
   getSalsasFabrica,
   createProductSalsaRecetaInformacion,
+  updateProductSalsaRecetaInformacion,
   updateReservationSalsa,
   makeProductProductChacha
 
