@@ -6,7 +6,7 @@ import { Component, OnInit,OnChanges,Input, Output, EventEmitter, SimpleChanges 
   templateUrl: './reusable-table.component.html',
   styleUrls: ['./reusable-table.component.css']
 })
-export class ReusableTableComponent implements OnInit,OnChanges {
+export class ReusableTableComponent implements OnInit{
 
   
   @Input() datos : any ;
@@ -33,13 +33,11 @@ export class ReusableTableComponent implements OnInit,OnChanges {
   lenDatos :any;
   lenTitulos : any; 
 
+  indiceb : string = "0";
 
   misDatos :any;
   constructor( ) { }
-  ngOnChanges(): void {
-      
-
-  }
+ 
   ngOnInit()  {
     
     this.espacioCantidadI = parseInt(this.espacioTexto);
@@ -51,7 +49,7 @@ export class ReusableTableComponent implements OnInit,OnChanges {
        e.style.color = this.colorLetra;
    }
 
-
+    
   
 
     /*for (let i =0 ; i< elem.length ; i++){
@@ -76,6 +74,9 @@ export class ReusableTableComponent implements OnInit,OnChanges {
   }
   
   guardarDT(){
+
+    
+
     this.misDatos = this.datos;
     
     var indice1 = 0 ;
@@ -97,8 +98,7 @@ export class ReusableTableComponent implements OnInit,OnChanges {
     });
     
     
-   
-
+    
     this.parentMethod.emit(['GuardarTodo',this.misDatos,this.indice])
   }
 

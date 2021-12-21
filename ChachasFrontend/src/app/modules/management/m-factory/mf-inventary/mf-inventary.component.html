@@ -13,19 +13,19 @@
     <div class="row">
 
          
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openProductC('Crear Chacha');">Crear Chacha</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openProductS('Crear Salsa');">Crear Salsa</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="openIngC('Crear');this.siModificoIng = false">Crear Ingrediente</button>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <button class="btn" (click)="seeHistoryM();">Historial de mermas</button>
         </div>
-        <div class="col-md-3" routerLinkActive="active">
+        <div class="col-md-2" routerLinkActive="active">
             <button class="btn" (click)="this.modalService.abrir('modalSellIng')">Comprar Ingredientes</button>
         </div>
 
@@ -168,6 +168,13 @@
     </div>
     <div class="row" *ngIf="siChacha == false">
         <div class="col-md-12">
+                <h3> Cantidad Medida:</h3>
+                <input class="inputTxt" id="prodCant" type="number" [(ngModel)]="this.selectedObj.CantidadMedida"> 
+            
+        </div>
+    </div>
+    <div class="row" *ngIf="siChacha == false">
+        <div class="col-md-12">
                 <h3> Cantidad Resultante:</h3>
                 <input class="inputTxt" id="prodCantR" type="number" [(ngModel)]="this.selectedObj.CantidadMedida"> 
             
@@ -197,13 +204,13 @@
             <app-reusable-table 
             [datos]="infoIngMini" 
             [columnas]="columnsIngMini" 
-            [nombreBotones] = "nombreBotonesIng2"
-            (parentMethod) = "functionAddModProd($event)"
-            colorLetra="black"
-            [titulosTextos]="titulosIng"
-            botonGuardarDatos = 'si'
-            nombreDistintivo="textoCantidadIng"
-            indice="10">
+            [nombreBotones] = "nombreBotonesIng2" 
+            indice="20" 
+            (parentMethod) = "functionAddModProd($event)" 
+            colorLetra="black" 
+            [titulosTextos]="titulosIng" 
+            botonGuardarDatos = 'si' 
+            nombreDistintivo="textoCantidadIng" > 
             </app-reusable-table> 
         
         </div>
@@ -221,7 +228,7 @@
             [nombreBotones] = "nombreBotonesIng1"
             (parentMethod) = "functionAddModProd($event)"
             colorLetra="black"
-            indice = "11"
+            indice="21"
             >
             </app-reusable-table> 
         

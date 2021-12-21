@@ -159,7 +159,15 @@ export class AppHttpService {
 
   updateProductFactory(id:any,body:any){
     var path = paths.UpdateProductFactory + id;
+
+    console.log("path",path);
+    console.log("body",body);
     return this.http.put(path,body);
+  }
+
+  createSalsaFactory(body:any){
+    return this.http.post(paths.CreateSalsaFactory,body);
+
   }
 
   //Menu
@@ -232,6 +240,12 @@ export class AppHttpService {
     var path = paths.GetMermabySubsidiary + id;
     return this.http.get(path);
 
+
+  }
+  getMermasWithNameMen(){
+
+    
+    return this.http.get(paths.getMermasWithNameMen);
 
   }
 
