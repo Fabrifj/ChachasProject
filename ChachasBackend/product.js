@@ -762,7 +762,7 @@ async function getListIngredientesFromAListWithIdIngredienteAndCantidadMedidaAnd
   }
   return { ListaIngredientes: listaIngredientes };
 }
-
+// modificar producto salsa informacion
 async function updateProductSalsaRecetaInformacion(idsalsa, body) {
   var res = null;
   const listaIng = await getListIngredientesFromAListWithIdIngredienteAndCantidadMedidaAndUpdate(body.ListaIngredientes);

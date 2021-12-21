@@ -244,7 +244,7 @@ app.post("/api/product/salsa/", async (req, res) => {
   const response = await fnProduct.createProductSalsaRecetaInformacion(newSalsa);
   res.send(response);
 });
-
+// modificar producto salsa informacion
 app.put("/api/product/salsa/:idsalsa", async (req, res) => {
   const body = req.body;
   const idSalsa = req.params.idsalsa;
