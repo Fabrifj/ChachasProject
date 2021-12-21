@@ -103,8 +103,8 @@ export class MsInventaryComponent implements OnInit {
 
 
   nameProdButtons: string[]= ["Registrar Merma"];
-  nameDrinkButtons: string[] = ["Registrar Compra"];
-  nameInsCButtons: string[] = ["Registrar Compra", "Registrar Consumo"];
+  
+  nameInsCButtons: string[] = ["Registrar Consumo"];
   nameInsButtons: string[] = ["Registrar Consumo Insumo"];
 
   titlesProd:string [] = ['CantidadParaSucursal'];
