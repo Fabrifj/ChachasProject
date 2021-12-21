@@ -3,7 +3,7 @@ import { documentId } from '@angular/fire/firestore';
 import { AppHttpService } from 'src/app/core-modules/app-http.service';
 
 import { ModalService } from 'src/app/shared-modules/modal/modal.service';
-
+import {PurchaseService} from './msi-purchase.service';
 
 
 
@@ -128,7 +128,14 @@ export class MsInventaryComponent implements OnInit {
 
   position:any = {}
   msgAlert : string = "";
-  constructor(public modalService:ModalService , private serviceHttp: AppHttpService) { 
+
+  nameProv: string="";
+  nitProv: string="";
+  numBill:string="";
+  nitBill:string="";
+  numAut:string="";
+  limitDate:any;
+  constructor(public modalService:ModalService , private serviceHttp: AppHttpService, public purchaseService:PurchaseService) { 
 
     
 
@@ -164,9 +171,9 @@ export class MsInventaryComponent implements OnInit {
     //get chachas
     this.getProdChachas();
 
-
- 
-    
+    this.purchaseService.SucursalId= this.idSubsidiary
+     
+    console.log("SucursalID recibido",this.purchaseService.SucursalId)   
   }
 
 
@@ -619,5 +626,16 @@ export class MsInventaryComponent implements OnInit {
       this.getProdChachas();
   }
 
+  realizarCompra(){
+    this.purchaseService.registrarCompra(this.nitProv,this.nameProv,this.numBill,this.nitBill,this.numAut,this.limitDate);
+    this.modalService.cerrar('modalFactura');
+    this.purchaseService.elementos=[];
+    this.nitProv='';
+    this.nameProv='';
+    this.numBill='';
+    this.nitBill='';
+    this.numAut='';
+    this.limitDate=undefined;
+  }
 }
       

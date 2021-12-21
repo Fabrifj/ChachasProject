@@ -5,12 +5,14 @@ import { AppHttpService } from 'src/app/core-modules/app-http.service';
 @Injectable({
   providedIn: 'root'
 })
-export class HacerCompraService implements OnInit{
+export class PurchaseService implements OnInit{
 
   comprasCambio = new EventEmitter<ingredientModel[]>();
 
-  ingredientes:ingredientModel[] =[] ; 
-  ListIngredients:any;
+  elementos:ingredientModel[] =[] ; 
+  ListRefrescos:any;
+  ListInsumos:any;
+  SucursalId:string='';
   constructor(private httpService: AppHttpService) {
 
    }
@@ -18,32 +20,25 @@ export class HacerCompraService implements OnInit{
   ngOnInit(): void {
 
   }
-  obtenerElementosHttp(){
-    this.httpService.getIngredients().subscribe(
-      (jsonFile: any) => {
-        this.ListIngredients=jsonFile;
-        
-      });
-  }
-
+  
 
   // para lista 
   addIngrediente(id:string,nombre:string,TU:string,amount: number,precio:number, ) {
     let newOrderComprado = new ingredientModel(id,nombre,TU, amount, precio);
-    this.ingredientes.push(newOrderComprado);
+    this.elementos.push(newOrderComprado);
     this.comprasCambio.emit(this.obtenerListaCompras());
   }
 
   obtenerListaCompras() {
-    return this.ingredientes.slice();
+    return this.elementos.slice();
   }
 /// para selecionar 
   obtenerElementos(ele:string){
-    if(ele==""){return this.ingredientes}
-    return this.ingredientes.find( (element)=> element.Nombre == ele); 
+    if(ele==""){return this.elementos}
+    return this.elementos.find( (element)=> element.Nombre == ele); 
   }
   registrarCompra(nitProv:string,nameProv:string,numBill:string,nitBill:string,numAut:string,limitDate:any){
-    var ingList = this.ingredientes.map((elem)=>({
+    var ingList = this.elementos.map((elem)=>({
       'IdObjeto':elem.Id,
       'Costo':elem.Costo,
       'Cantidad':elem.Cantidad
@@ -55,7 +50,7 @@ export class HacerCompraService implements OnInit{
     let body = {
       "Fecha": date,
       "ListaObjetos":ingList,
-      "Origen":"Fabrica",
+      "Origen":this.SucursalId,
       "Factura":{
         "NITProveedor":nitProv,
         "NombreProveedor":nameProv,
@@ -72,4 +67,5 @@ export class HacerCompraService implements OnInit{
       console.log('Error',error);
     })
   }
+  
 }
