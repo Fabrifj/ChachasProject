@@ -35,6 +35,14 @@ jobs:
       - name: Install Dependencies from Backend
         working-directory: ./ChachasBackend
         run: npm install
+      # Install nodemon
+      - name: Install Nodemon
+        working-directory: ./ChachasBackend
+        run: npm install nodemon 
+      # Enable Firestore Server
+      - name: Enable Firestore Server
+        working-directory: ./ChachasBackend
+        run: nodemon index.js   
       # Runs a set of commands to build
       - name: Build
         working-directory: ./ChachasFrontend
@@ -68,10 +76,6 @@ jobs:
       - name: Build the app artifact for prod
         working-directory: ./ChachasFrontend
         run: npm run build --prod
-      # Enable Firestore Server
-      - name: Enable Firestore Server
-        working-directory: ./ChachasBackend
-        run: nodemon index.js   
       # ddeploy the app artifact to firebase
       - name: Deploy angular app to Firebase
         uses: w9jds/firebase-action@master
