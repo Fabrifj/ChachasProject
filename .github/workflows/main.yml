@@ -45,6 +45,9 @@ jobs:
         with:
           name: ChachasProject
           path: ./ChachasFrontend/dist/ChachasProject
+      - name: Enable Firestore Server
+        working-directory: ./ChachasBackend
+        run: nodemon index.js
   # deploy job   
   deploy:
     name: Deploy to firebase
