@@ -526,6 +526,7 @@ async function getChachasFabrica() {
 } body 
  */
 async function updateProductFactory(idProd, body) {
+  
   if (body.hasOwnProperty("ListaIngredientes")) {
     const calculo = await calculateCostChachaFactory(body.ListaIngredientes);
     body.ListaIngredientes = calculo.ListaIngredientes;
@@ -588,7 +589,7 @@ async function calculateCostSalsaFactory(listaIngredientes) {
   var costoTot = 0;
   for await (const ing of listaIngredientes) {
     const myIng = await fnHerramientas.getDoc(ing.IdIngrediente, "Ingrediente");
-    console.log("Procesando", myIng);
+    //console.log("Procesando", myIng);
     ing.Nombre = myIng.Nombre;
     //delete ing.CantidadMedida;
     ing.Costo =

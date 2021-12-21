@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductToPurchaseModel } from 'src/app/models/productToPurchase.model';
+import { LoginService } from 'src/app/modules/login/login.service';
 import { SalesService } from '../sales.service';
 
 @Component({
@@ -14,8 +15,11 @@ export class DisplayOrderInfoComponent implements OnInit {
   productsQuantity: number = 0
 
   productosPrueba: ProductToPurchaseModel[] = [];
-
-  constructor(private salesService:SalesService) { 
+  state:string="";
+  nextStep:string="";
+  constructor(
+    private salesService:SalesService,
+    private loginService:LoginService) { 
     this.productosPrueba = salesService.getPurchaseDetail();
     for (let producto of this.productosPrueba){
       let total = producto.Price * producto.Quantity
@@ -26,6 +30,14 @@ export class DisplayOrderInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.state = this.loginService.getStatus();
+    console.log(this.state)
+    if(this.state=="Login"){
+      this.nextStep= "../client-info";
+    }else{
+      
+      this.nextStep= "../location";
+    }
   }
 
   editProductQuantity(comp: editComponent) {
@@ -48,10 +60,10 @@ export class DisplayOrderInfoComponent implements OnInit {
     this.updatedList()
   }
  
-  acceptProductChoice() {
+ /*acceptProductChoice() {
     this.updatedList();
     this.salesService.getPurchaseDetailEdited(this.productosPrueba)
-  }
+  }*/
   updatedList(){
     this.productosPrueba = [];
     this.productComponents.forEach((element)=>{
